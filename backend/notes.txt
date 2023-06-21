@@ -1,0 +1,8 @@
+1. Create a new Django project: django-admin startproject <projectname>
+2. Run the development server in the project directory: python manage.py runserver
+3. Create new Django app (like the eTaman_backend/ directory in the parent eTaman_backend/ directory): 
+    python manage.py startapp <appname>
+4. Run database migrations: python manage.py migrate
+5. Need to make migrations before can run migrations: python manage.py makemigrations
+6. Create superuser account: python manage.py createsuperuser
+    Go to http://localhost:8000/admin to access the admin dashboard
