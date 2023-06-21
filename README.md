@@ -1,5 +1,5 @@
 # eTaman Mobile Application
-### Reducing neighbourhood crime by increasing neigbhbourhhod collaboration and familiar feelings
+### Reducing neighbourhood crime by increasing neighbourhood collaboration and familiar feelings
 
 ---
 
