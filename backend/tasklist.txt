@@ -1,0 +1,81 @@
+Neighbourhood group
+    - Attributes: [X]
+        -> ID
+        -> Name
+        -> Address
+            -> State
+            -> City
+            -> Postcode
+            -> Street
+
+Residents
+    - Attributes: [X]
+        -> ID
+        -> Name
+        -> Email
+        -> Address 
+            -> State
+            -> City
+            -> Postcode
+            -> Street
+        -> Contact No.
+        -> Username
+        -> Password
+        -> isLeader
+        -> groupID
+
+    - Create Posts
+        -> Crime Sightings
+        -> Suggestions
+        -> Events
+        -> General information / Discussion
+
+    - View all posts
+    - Modify / Delete Own Posts
+    - Join neighborhood groups (need verification)
+    - View group rules
+    - Leave group
+    - Vote for resident leader (raise post)
+    - Register account [X]
+    - Update account information
+    - Login
+    - Logout
+
+Resident Leader
+    - Attributes: [X]
+        -> ID
+        -> Name
+        -> Email
+        -> Address 
+            -> State
+            -> City
+            -> Postcode
+            -> Street
+        -> Contact No.
+        -> Username
+        -> Password
+        -> isLeader
+        -> groupID
+
+    - Create Posts
+        -> Crime Sightings
+        -> Suggestions
+        -> Events
+        -> General information / Discussion
+
+    - View & Modify & Delete All Posts within the group
+    - Approve / Deny resident join request
+    - View & Modify group rules
+    - Leave group
+    - Register account [X]
+    - Update account information
+    - Login
+    - Logout
+
+Government
+    -
+    -
+
+Admin
+    -
+    -

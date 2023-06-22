@@ -6,3 +6,6 @@
 5. Need to make migrations before can run migrations: python manage.py makemigrations
 6. Create superuser account: python manage.py createsuperuser
     Go to http://localhost:8000/admin to access the admin dashboard
+7. Show migrations: python manage.py showmigrations
+8. Roll back migrations: python manage.py migrate <appname> <000X_migration_name> --fake
+    Followed by: python manage.py migrate --fake-initial (to remigrate the latest migration)

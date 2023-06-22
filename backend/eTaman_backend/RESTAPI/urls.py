@@ -6,5 +6,9 @@ urlpatterns = [
     path('testGET/', views.testGetAPI),
     path('testPOST/', views.testPostAPI),
     path('testPUT/<int:id>', views.testPutAPI),
-    path('testDELETE/<int:id>', views.testDeleteAPI)
+    path('testDELETE/<int:id>', views.testDeleteAPI),
+
+    # Resident API
+    path('getResidentAll/', views.getAllResidentData),
+    path('registerResident/', views.registerResidentAccount),
 ]
