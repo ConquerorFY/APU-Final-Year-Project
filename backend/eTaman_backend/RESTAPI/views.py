@@ -42,7 +42,19 @@ def getAllResidentData(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({'message': RESIDENT_DATABASE_NOT_EXIST}, status=404)
 
-
+# Get particular resident information
+@api_view(['GET'])
+def getResidentData(request):
+    try:
+        # Get resident ID
+        id = request.data["id"]
+        resident = ResidentSerializer(ResidentModel.objects.get(pk=id))
+        residentData = resident.data
+        # Filter out password in data entry
+        filteredResidentData = dict(filter(lambda item: item[0] != "password", residentData.items()))
+        return JsonResponse(filteredResidentData, status=201)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'message': RESIDENT_DATABASE_NOT_EXIST}, status=404)
 
 
 
@@ -93,7 +105,10 @@ def registerResidentAccount(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({'message': RESIDENT_DATABASE_NOT_EXIST}, status=404)
 
-
+# Login resident account
+@api_view(['POST'])
+def loginResidentAccount(request):
+    pass
 
 
 

@@ -9,6 +9,7 @@ urlpatterns = [
     path('testDELETE/<int:id>', views.testDeleteAPI),
 
     # Resident API
+    path('getResident/', views.getResidentData),
     path('getResidentAll/', views.getAllResidentData),
     path('registerResident/', views.registerResidentAccount),
     path('updateResident/', views.updateResidentAccount)

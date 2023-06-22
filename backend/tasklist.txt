@@ -37,6 +37,7 @@ Residents
     - Leave group
     - Vote for resident leader (raise post)
     - Register account [X]
+    - View account information [X]
     - Update account information [X]
     - Login
     - Logout
@@ -68,6 +69,7 @@ Resident Leader
     - View & Modify group rules
     - Leave group
     - Register account [X]
+    - View account information [X]
     - Update account information [X]
     - Login
     - Logout
