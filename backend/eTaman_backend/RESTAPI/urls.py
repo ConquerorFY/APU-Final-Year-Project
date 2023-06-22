@@ -11,4 +11,5 @@ urlpatterns = [
     # Resident API
     path('getResidentAll/', views.getAllResidentData),
     path('registerResident/', views.registerResidentAccount),
+    path('updateResident/', views.updateResidentAccount)
 ]

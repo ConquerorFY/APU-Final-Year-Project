@@ -1,6 +1,7 @@
 RESIDENT_DATABASE_NOT_EXIST = "The Resident Database Does Not Exist!"
 RESIDENT_REGISTER_SUCCESSFUL = "The Resident Account Has Been Successfully Registered!"
 RESIDENT_USERNAME_TAKEN = "The Resident's Username Has Been Taken!"
+RESIDENT_ACCOUNT_UPDATED = "The Resident Account's Data Has Been Successfully Updated!"
 DEFAULT_RESIDENT_LEADER_STATUS = False
 DEFAULT_NEW_RESIDENT_GROUP_ID = None
 

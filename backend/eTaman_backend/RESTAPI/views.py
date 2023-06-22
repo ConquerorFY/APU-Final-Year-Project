@@ -114,16 +114,29 @@ def testPutAPI(request, id):
     try:
         testData = TestModel.objects.get(pk=id)
         serializer = TestSerializer(testData, data=request.data, partial=True)
-
         if serializer.is_valid():
             serializer.save()
             return JsonResponse({'message': 'Message has been successfully updated in database'}, status=201)
-
         return JsonResponse({'message': 'An error has occured! Please try again!'}, status=400)
     except TestModel.DoesNotExist:
         return JsonResponse({'message': 'The Data is Not Found!'}, status=404)
 
-
+# Update resident account
+@api_view(['PATCH'])
+def updateResidentAccount(request):
+    try:
+        # Get resident ID
+        id = request.data["id"]
+        residentData = ResidentSerializer(ResidentModel.objects.get(pk=id), data=request.data, partial=True)
+        # Check whether data is valid
+        if residentData.is_valid():
+            residentData.save()
+            return JsonResponse({'message': RESIDENT_ACCOUNT_UPDATED}, status=201)
+        else:
+            # An error has occured
+            return JsonResponse({'message': DATABASE_WRITE_ERROR}, status=400)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'message': RESIDENT_DATABASE_NOT_EXIST}, status=404)
 
 
 
