@@ -12,5 +12,7 @@ urlpatterns = [
     path('getResident/', views.getResidentData),
     path('getResidentAll/', views.getAllResidentData),
     path('registerResident/', views.registerResidentAccount),
-    path('updateResident/', views.updateResidentAccount)
+    path('updateResident/', views.updateResidentAccount),
+    path('loginResident/', views.loginResidentAccount),
+    path('logoutResident/', views.logoutResidentAccount)
 ]

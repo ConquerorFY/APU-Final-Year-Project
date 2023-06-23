@@ -46,8 +46,8 @@ def getAllResidentData(request):
 @api_view(['GET'])
 def getResidentData(request):
     try:
-        # Get resident ID
-        id = request.data["id"]
+        # Get resident ID from JWT
+        id = decodeJWTToken(request.data["token"])["id"]
         resident = ResidentSerializer(ResidentModel.objects.get(pk=id))
         residentData = resident.data
         # Filter out password in data entry
@@ -55,6 +55,8 @@ def getResidentData(request):
         return JsonResponse({"data": filteredResidentData, "status": SUCCESS_CODE}, status=201)
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}, status=404)
+
+
 
 
 
@@ -108,7 +110,26 @@ def registerResidentAccount(request):
 # Login resident account
 @api_view(['POST'])
 def loginResidentAccount(request):
-    pass
+    try:
+        # Get username and password
+        username = request.data['username']
+        password = request.data['password']
+        # Check whether username and password match
+        residentData = ResidentSerializer(ResidentModel.objects.get(username=username))
+        if decryptPassword(password, residentData.data["password"]):
+            token = generateJWTToken({"id": residentData.data["id"]})
+            return JsonResponse({"data": {"message": RESIDENT_LOGIN_SUCCESS, "token": token}, "status": SUCCESS_CODE}, status=201)
+        return JsonResponse({"data": RESIDENT_PASSWORD_MISMATCH, "status": ERROR_CODE}, status=400)
+    except ResidentModel.DoesNotExist:
+        # If username does not exist
+        return JsonResponse({"data": RESIDENT_USERNAME_NOT_EXIST, "status": ERROR_CODE}, status=404)
+
+# Logout resident account
+@api_view(['POST'])
+def logoutResidentAccount(request):
+    return JsonResponse({"data": RESIDENT_LOGOUT_SUCCESS, "status": SUCCESS_CODE}, status=200)
+
+
 
 
 
@@ -152,6 +173,8 @@ def updateResidentAccount(request):
             return JsonResponse({'data': DATABASE_WRITE_ERROR, "status": ERROR_CODE}, status=400)
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}, status=404)
+
+
 
 
 

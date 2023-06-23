@@ -39,8 +39,10 @@ Residents
     - Register account [X]
     - View account information [X]
     - Update account information [X]
-    - Login
-    - Logout
+    - Login [X]
+    - Logout [X]
+    - Book Facilities
+    - Return Facilities
 
 Resident Leader
     - Attributes: [X]
@@ -71,8 +73,10 @@ Resident Leader
     - Register account [X]
     - View account information [X]
     - Update account information [X]
-    - Login
-    - Logout
+    - Login [X]
+    - Logout [X]
+    - Book Facilities
+    - Return Facilities
 
 Government
     -
