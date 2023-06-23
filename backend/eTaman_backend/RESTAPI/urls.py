@@ -14,5 +14,9 @@ urlpatterns = [
     path('registerResident/', views.registerResidentAccount),
     path('updateResident/', views.updateResidentAccount),
     path('loginResident/', views.loginResidentAccount),
-    path('logoutResident/', views.logoutResidentAccount)
+    path('logoutResident/', views.logoutResidentAccount),
+
+    # Neigborhood Group API
+    path('getGroup/', views.getNeighborhoodGroup),
+    path('createGroup/', views.createNeighborhoodGroup)
 ]

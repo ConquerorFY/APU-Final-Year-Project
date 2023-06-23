@@ -38,7 +38,7 @@ def getAllResidentData(request):
         # Filter out password in all data entries
         for i in range(len(residentsData)):
             filteredResidentsData.append(OrderedDict((key, value) for key, value in residentsData[i].items() if key != "password"))
-        return JsonResponse({"data": filteredResidentsData, "status": SUCCESS_CODE}, safe=False)
+        return JsonResponse({"data": filteredResidentsData, "status": SUCCESS_CODE})
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}, status=404)
 
@@ -55,6 +55,24 @@ def getResidentData(request):
         return JsonResponse({"data": filteredResidentData, "status": SUCCESS_CODE}, status=201)
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}, status=404)
+
+# Find neighborhood groups
+@api_view(['GET'])
+def getNeighborhoodGroup(request):
+    try:
+        # Get neighborhood group using criteria
+        state = request.data["state"]
+        city = request.data["city"]
+        street = request.data["street"]
+        postcode = request.data["postcode"]
+        neighborhoodGroup = NeighborhoodGroupSerializer(NeighborhoodGroupModel.objects.get(state=state, city=city, street=street, postcode=postcode))
+        # Get neighborhood name and id
+        name = neighborhoodGroup.data["name"]
+        id = neighborhoodGroup.data["id"]
+        return JsonResponse({"data": {"message": NEIGHBORHOOD_GROUP_FOUND, "name": name, "id": id}, "status": SUCCESS_CODE}, status=201)
+    except NeighborhoodGroupModel.DoesNotExist:
+        return JsonResponse({'data': {"message": NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
+
 
 
 
@@ -129,7 +147,20 @@ def loginResidentAccount(request):
 def logoutResidentAccount(request):
     return JsonResponse({"data": RESIDENT_LOGOUT_SUCCESS, "status": SUCCESS_CODE}, status=200)
 
-
+# Create neighborhood group
+@api_view(['POST'])
+def createNeighborhoodGroup(request):
+    try:
+        neighborhoodGroupData = NeighborhoodGroupSerializer(data = request.data)
+        # Check whether all data is valid
+        if neighborhoodGroupData.is_valid():
+            neighborhoodGroupData.save()
+            return JsonResponse({'data': NEIGHBORHOOD_GROUP_CREATED_SUCCESSFUL, "status": SUCCESS_CODE}, status=201)
+        else:
+            # An error has occured
+            return JsonResponse({'data': DATABASE_WRITE_ERROR, "status": ERROR_CODE}, status=400)
+    except NeighborhoodGroupModel.DoesNotExist:
+        return JsonResponse({'data': {'message': NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
 
 
 

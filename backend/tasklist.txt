@@ -32,6 +32,7 @@ Residents
 
     - View all posts
     - Modify / Delete Own Posts
+    - Find neighborhood groups [X]
     - Join neighborhood groups (need verification)
     - View group rules
     - Leave group
@@ -67,6 +68,8 @@ Resident Leader
         -> General information / Discussion
 
     - View & Modify & Delete All Posts within the group
+    - Find neighborhood groups [X]
+    - Join neighborhood groups 
     - Approve / Deny resident join request
     - View & Modify group rules
     - Leave group
