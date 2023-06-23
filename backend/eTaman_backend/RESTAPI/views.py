@@ -38,9 +38,9 @@ def getAllResidentData(request):
         # Filter out password in all data entries
         for i in range(len(residentsData)):
             filteredResidentsData.append(OrderedDict((key, value) for key, value in residentsData[i].items() if key != "password"))
-        return JsonResponse(filteredResidentsData, safe=False)
+        return JsonResponse({"data": filteredResidentsData, "status": SUCCESS_CODE}, safe=False)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'message': RESIDENT_DATABASE_NOT_EXIST}, status=404)
+        return JsonResponse({'data': RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}, status=404)
 
 # Get particular resident information
 @api_view(['GET'])
@@ -52,9 +52,9 @@ def getResidentData(request):
         residentData = resident.data
         # Filter out password in data entry
         filteredResidentData = dict(filter(lambda item: item[0] != "password", residentData.items()))
-        return JsonResponse(filteredResidentData, status=201)
+        return JsonResponse({"data": filteredResidentData, "status": SUCCESS_CODE}, status=201)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'message': RESIDENT_DATABASE_NOT_EXIST}, status=404)
+        return JsonResponse({'data': RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}, status=404)
 
 
 
@@ -94,16 +94,16 @@ def registerResidentAccount(request):
         # Check whether username has been taken
         username = residentData.initial_data['username']
         if ResidentModel.objects.filter(username=username).exists():
-            return JsonResponse({'message': RESIDENT_USERNAME_TAKEN}, status=400)
+            return JsonResponse({'data': RESIDENT_USERNAME_TAKEN, "status": ERROR_CODE}, status=400)
         # Check whether all data is valid
         if residentData.is_valid():
             residentData.save()
-            return JsonResponse({'message': RESIDENT_REGISTER_SUCCESSFUL}, status=201)
+            return JsonResponse({'data': RESIDENT_REGISTER_SUCCESSFUL, "status": SUCCESS_CODE}, status=201)
         else:
             # An error has occured
-            return JsonResponse({'message': DATABASE_WRITE_ERROR}, status=400)
+            return JsonResponse({'data': DATABASE_WRITE_ERROR, "status": ERROR_CODE}, status=400)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'message': RESIDENT_DATABASE_NOT_EXIST}, status=404)
+        return JsonResponse({'data': RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}, status=404)
 
 # Login resident account
 @api_view(['POST'])
@@ -146,12 +146,12 @@ def updateResidentAccount(request):
         # Check whether data is valid
         if residentData.is_valid():
             residentData.save()
-            return JsonResponse({'message': RESIDENT_ACCOUNT_UPDATED}, status=201)
+            return JsonResponse({'data': RESIDENT_ACCOUNT_UPDATED, "status": SUCCESS_CODE}, status=201)
         else:
             # An error has occured
-            return JsonResponse({'message': DATABASE_WRITE_ERROR}, status=400)
+            return JsonResponse({'data': DATABASE_WRITE_ERROR, "status": ERROR_CODE}, status=400)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'message': RESIDENT_DATABASE_NOT_EXIST}, status=404)
+        return JsonResponse({'data': RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}, status=404)
 
 
 

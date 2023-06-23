@@ -1,3 +1,6 @@
+ERROR_CODE = 0
+SUCCESS_CODE = 1
+
 RESIDENT_DATABASE_NOT_EXIST = "The Resident Database Does Not Exist!"
 RESIDENT_REGISTER_SUCCESSFUL = "The Resident Account Has Been Successfully Registered!"
 RESIDENT_USERNAME_TAKEN = "The Resident's Username Has Been Taken!"
