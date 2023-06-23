@@ -12,7 +12,7 @@ class TestModel(models.Model):
 
 # Neighborhood Group Model
 class NeighborhoodGroupModel(models.Model):
-    name = models.CharField(max_length=100, blank=False)
+    name = models.CharField(max_length=100, blank=False, unique=True)
     state = models.CharField(max_length=20, blank=False)
     city = models.CharField(max_length=100, blank=False)
     street = models.CharField(max_length=100, blank=False)

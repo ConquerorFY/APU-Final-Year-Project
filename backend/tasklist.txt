@@ -69,6 +69,7 @@ Resident Leader
 
     - View & Modify & Delete All Posts within the group
     - Find neighborhood groups [X]
+    - Create neighborhood groups [X]
     - Join neighborhood groups 
     - Approve / Deny resident join request
     - View & Modify group rules

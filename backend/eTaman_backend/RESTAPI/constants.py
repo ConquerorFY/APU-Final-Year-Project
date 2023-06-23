@@ -1,6 +1,8 @@
 ERROR_CODE = 0
 SUCCESS_CODE = 1
 
+ALL_RESIDENT_DATA_FOUND = "All Resident Information Has Been Successfully Discovered!"
+RESIDENT_DATA_FOUND = "Resident Information Has Been Successfully Discovered!"
 RESIDENT_DATABASE_NOT_EXIST = "The Resident Does Not Exist!"
 RESIDENT_REGISTER_SUCCESSFUL = "The Resident Account Has Been Successfully Registered!"
 RESIDENT_USERNAME_TAKEN = "The Resident's Username Has Been Taken!"
@@ -16,5 +18,6 @@ DEFAULT_NEW_RESIDENT_GROUP_ID = None
 NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST = "The Neighborhood Group Does Not Exist!"
 NEIGHBORHOOD_GROUP_FOUND = "The Neighborhood Group Has Been Found!"
 NEIGHBORHOOD_GROUP_CREATED_SUCCESSFUL = "The Neighborhood Group Has Been Successfully Created!"
+NEIGHBORHOOD_GROUP_NAME_TAKEN = "The Neighborhood Group Name Has Already Been Taken!"
 
 DATABASE_WRITE_ERROR = "An Error Has Occured! Please Try Again!"
