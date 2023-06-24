@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
-from .models import TestModel, ResidentModel, NeighborhoodGroupModel
-from .serializers import TestSerializer, ResidentSerializer, NeighborhoodGroupSerializer
+from .models import TestModel, ResidentModel, NeighborhoodGroupModel, JoinRequestModel
+from .serializers import TestSerializer, ResidentSerializer, NeighborhoodGroupSerializer, JoinRequestSerializer
 from .constants import * 
 from .password import *
 from collections import OrderedDict
@@ -52,7 +52,7 @@ def getResidentData(request):
         residentData = resident.data
         # Filter out password in data entry
         filteredResidentData = dict(filter(lambda item: item[0] != "password", residentData.items()))
-        return JsonResponse({"data": {"message": "RESIDENT_DATA_FOUND", "list": filteredResidentData}, "status": SUCCESS_CODE}, status=201)
+        return JsonResponse({"data": {"message": RESIDENT_DATA_FOUND, "list": filteredResidentData}, "status": SUCCESS_CODE}, status=201)
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': {"message": RESIDENT_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
 
@@ -73,6 +73,20 @@ def getNeighborhoodGroup(request):
     except NeighborhoodGroupModel.DoesNotExist:
         return JsonResponse({'data': {"message": NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
 
+# Get all neighborhood group join requests (for particular group)
+@api_view(['GET'])
+def getAllNeighborhoodGroupJoinRequest(request):
+    try:
+        # Get neighborhood group ID
+        id = request.data["id"]
+        neighborhoodGroup = NeighborhoodGroupModel.objects.get(id=id)
+        # Get all neighborhood group join requests with the same group ID (use filter() instead of get() in this case)
+        requestData = JoinRequestSerializer(JoinRequestModel.objects.filter(groupID=neighborhoodGroup), many=True)
+        return JsonResponse({"data": {"message": ALL_JOIN_REQUEST_DATA_FOUND, "list": requestData.data, "status": SUCCESS_CODE}}, status=201)
+    except JoinRequestModel.DoesNotExist:
+        return JsonResponse({"data": {"message": JOIN_REQUEST_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+    except NeighborhoodGroupModel.DoesNotExist:
+        return JsonResponse({"data": {"message": NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
 
 
 
@@ -172,6 +186,50 @@ def createNeighborhoodGroup(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
 
+# Create neighborhood group join request
+@api_view(['POST'])
+def createNeighborhoodGroupJoinRequest(request):
+    try:
+        # Get resident id and neighborhood group id
+        residentId = decodeJWTToken(request.data["token"])["id"]
+        groupId = request.data["groupId"]
+        # Serialize request data
+        requestData = JoinRequestSerializer(data = {"residentID": residentId, "groupID": groupId})
+        # Check whether all datga is valid
+        if requestData.is_valid():
+            requestData.save()
+            return JsonResponse({'data': {"message": JOIN_REQUEST_CREATED_SUCCESSFUL, "status": SUCCESS_CODE}}, status=201)
+        else:
+            # An existing request already exists
+            return JsonResponse({"data": {"message": JOIN_REQUEST_ALREADY_EXIST, "status": ERROR_CODE}}, status=400)
+    except NeighborhoodGroupModel.DoesNotExist:
+        return JsonResponse({"data": {"message": NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+
+# Approve / Reject neighborhood group join request
+@api_view(['POST'])
+def approveRejectNeighborhoodGroupJoinRequest(request):
+    try:
+        # Get action
+        action = request.data["action"]
+        # Get Neighborhood Group Join Request ID
+        requestId = request.data["id"]
+        requestData = JoinRequestModel.objects.get(id=requestId)
+        if action == "approve":
+            # Update resident group ID
+            residentData = requestData.residentID
+            groupData = requestData.groupID
+            residentData.groupID = groupData
+            # Update resident data
+            residentData.save()
+            # Delete request data
+            requestData.delete()
+            return JsonResponse({'data': {"message": JOIN_REQUEST_APPROVED_SUCCESSFULLY, "status": SUCCESS_CODE}}, status=201)
+        elif action == "reject":
+            # Delete request data
+            requestData.delete()
+            return JsonResponse({'data': {"message": JOIN_REQUEST_REJECTED_SUCCESSFULLY, "status": SUCCESS_CODE}}, status=201)
+    except JoinRequestModel.DoesNotExist:
+        return JsonResponse({"data": {"message": JOIN_REQUEST_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
 
 
 

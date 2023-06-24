@@ -20,4 +20,12 @@ NEIGHBORHOOD_GROUP_FOUND = "The Neighborhood Group Has Been Found!"
 NEIGHBORHOOD_GROUP_CREATED_SUCCESSFUL = "The Neighborhood Group Has Been Successfully Created!"
 NEIGHBORHOOD_GROUP_NAME_TAKEN = "The Neighborhood Group Name Has Already Been Taken!"
 
+ALL_JOIN_REQUEST_DATA_FOUND = "All Neighborhood Group Join Request Has Been Successfully Discovered!"
+JOIN_REQUEST_CREATED_SUCCESSFUL = "The Neighborhood Group Join Request Has Been Created Successfully!"
+JOIN_REQUEST_ALREADY_EXIST = "An Existing Neighborhood Group Join Request Is Present!"
+JOIN_REQUEST_DATABASE_NOT_EXIST = "The Neighborhood Group Join Request Does Not Exist!"
+JOIN_REQUEST_APPROVED_SUCCESSFULLY = "The Neighborhood Group Join Request Has Been Approved Successfully!"
+JOIN_REQUEST_REJECTED_SUCCESSFULLY = "The Neighborhood Group Join Request Has Been Rejected!"
+
+
 DATABASE_WRITE_ERROR = "An Error Has Occured! Please Try Again!"

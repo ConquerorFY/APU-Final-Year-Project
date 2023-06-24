@@ -33,7 +33,7 @@ Residents
     - View all posts
     - Modify / Delete Own Posts
     - Find neighborhood groups [X]
-    - Join neighborhood groups (need verification)
+    - Join neighborhood groups (need verification) [X]
     - View group rules
     - Leave group
     - Vote for resident leader (raise post)
@@ -70,8 +70,9 @@ Resident Leader
     - View & Modify & Delete All Posts within the group
     - Find neighborhood groups [X]
     - Create neighborhood groups [X]
-    - Join neighborhood groups 
-    - Approve / Deny resident join request
+    - Join neighborhood groups [X]
+    - Get all pending approvals [X]
+    - Approve / Deny resident join request [X]
     - View & Modify group rules
     - Leave group
     - Register account [X]

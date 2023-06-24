@@ -37,3 +37,8 @@ class ResidentModel(models.Model):
 
     def __str__(self):
         return self.name
+
+# Join Request Model
+class JoinRequestModel(models.Model):
+    residentID = models.OneToOneField(ResidentModel, null=True, on_delete=models.SET_NULL)
+    groupID = models.ForeignKey(NeighborhoodGroupModel, null=True, on_delete=models.SET_NULL)

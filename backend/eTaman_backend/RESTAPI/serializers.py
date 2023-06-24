@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import TestModel, ResidentModel, NeighborhoodGroupModel
+from .models import TestModel, ResidentModel, NeighborhoodGroupModel, JoinRequestModel
 
 # Create your serializers here.
 
@@ -20,3 +20,9 @@ class ResidentSerializer(serializers.ModelSerializer):
     class Meta:
         model = ResidentModel
         fields = ('id', 'name', 'email', 'contact', 'state', 'city', 'street', 'postcode', 'username', 'password', 'isLeader', 'groupID')
+
+# Join Request Serializer
+class JoinRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JoinRequestModel
+        fields = ('id', 'residentID', 'groupID')
