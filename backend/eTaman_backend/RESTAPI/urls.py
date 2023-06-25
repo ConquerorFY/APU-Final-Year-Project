@@ -25,4 +25,5 @@ urlpatterns = [
     path('handleJoinRequest/', views.approveRejectNeighborhoodGroupJoinRequest),
     path('viewGroupRule/', views.getNeighborhoodGroupRule),
     path('updateGroupRule/', views.updateNeighborhoodGroupRules),
+    path('leaveGroup/', views.leaveNeighborhoodGroup)
 ]

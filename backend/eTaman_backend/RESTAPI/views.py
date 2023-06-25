@@ -215,7 +215,7 @@ def createNeighborhoodGroupJoinRequest(request):
         groupId = request.data["groupId"]
         # Serialize request data
         requestData = JoinRequestSerializer(data = {"residentID": residentId, "groupID": groupId})
-        # Check whether all datga is valid
+        # Check whether all data is valid
         if requestData.is_valid():
             requestData.save()
             return JsonResponse({'data': {"message": JOIN_REQUEST_CREATED_SUCCESSFUL, "status": SUCCESS_CODE}}, status=201)
@@ -251,7 +251,22 @@ def approveRejectNeighborhoodGroupJoinRequest(request):
     except JoinRequestModel.DoesNotExist:
         return JsonResponse({"data": {"message": JOIN_REQUEST_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
 
-
+# Leave neighborhood group
+@api_view(['POST'])
+def leaveNeighborhoodGroup(request):
+    try:
+        # Get resident ID
+        residentId = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentSerializer(ResidentModel.objects.get(pk=residentId), data={"groupID": None}, partial=True)
+        # Check whether all data is valid
+        if residentData.is_valid():
+            residentData.save()
+            return JsonResponse({'data': {'message': RESIDENT_LEAVE_NEIGHBORHOOD_GROUP_SUCCESSUL, 'status': SUCCESS_CODE}}, status=201)
+        else:
+            # An error has occured
+            return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
 
 
 
