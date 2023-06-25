@@ -17,8 +17,12 @@ DEFAULT_NEW_RESIDENT_GROUP_ID = None
 
 NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST = "The Neighborhood Group Does Not Exist!"
 NEIGHBORHOOD_GROUP_FOUND = "The Neighborhood Group Has Been Found!"
+ALL_NEIGHBORHOOD_GROUP_FOUND = "All Neighborhood Groups Has Been Found!"
 NEIGHBORHOOD_GROUP_CREATED_SUCCESSFUL = "The Neighborhood Group Has Been Successfully Created!"
 NEIGHBORHOOD_GROUP_NAME_TAKEN = "The Neighborhood Group Name Has Already Been Taken!"
+NEIGHBORHOOD_GROUP_RULE_UPDATED_SUCCESSFUL = "The Neighborhood Group Rules Has Been Successfully Updated!"
+NEIGHBORHOOD_GROUP_NOT_PART_OF_NOT_LEADER = "You are not part of the Neighborhood Group / You are not the resident leader of the Neighborhood Group!"
+NEIGHBORHOOD_GROUP_RULE_FOUND = "The Neighborhood Group Rule Have Been Successfully Retrieved!"
 
 ALL_JOIN_REQUEST_DATA_FOUND = "All Neighborhood Group Join Request Has Been Successfully Discovered!"
 JOIN_REQUEST_CREATED_SUCCESSFUL = "The Neighborhood Group Join Request Has Been Created Successfully!"

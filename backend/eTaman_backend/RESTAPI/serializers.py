@@ -13,7 +13,7 @@ class TestSerializer(serializers.ModelSerializer):
 class NeighborhoodGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = NeighborhoodGroupModel
-        fields = ('id', 'name', 'state', 'city', 'street', 'postcode')
+        fields = ('id', 'name', 'state', 'city', 'street', 'postcode', 'rules')
 
 # Resident Serializer
 class ResidentSerializer(serializers.ModelSerializer):

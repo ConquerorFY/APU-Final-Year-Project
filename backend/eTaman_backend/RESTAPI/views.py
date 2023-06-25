@@ -56,7 +56,17 @@ def getResidentData(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': {"message": RESIDENT_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
 
-# Find neighborhood groups
+# Get all neighborhood groups
+@api_view(['GET'])
+def getAllNeighborhoodGroup(request):
+    try:
+        groups = NeighborhoodGroupSerializer(NeighborhoodGroupModel.objects.all(), many=True)
+        groupsData = groups.data
+        return JsonResponse({"data": {"message": ALL_NEIGHBORHOOD_GROUP_FOUND, "list": groupsData, "status": SUCCESS_CODE}}, status=201)
+    except NeighborhoodGroupModel.DoesNotExist:
+        return JsonResponse({"data": {"message": NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+
+# Find neighborhood group
 @api_view(['GET'])
 def getNeighborhoodGroup(request):
     try:
@@ -88,7 +98,17 @@ def getAllNeighborhoodGroupJoinRequest(request):
     except NeighborhoodGroupModel.DoesNotExist:
         return JsonResponse({"data": {"message": NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
 
-
+# Get neighborhood rules (for particular group)
+@api_view(['GET'])
+def getNeighborhoodGroupRule(request):
+    try:
+        # Get group ID
+        id = request.data['groupId']
+        groupData = NeighborhoodGroupModel.objects.get(pk=id)
+        rules = groupData.rules
+        return JsonResponse({'data': {'message': NEIGHBORHOOD_GROUP_RULE_FOUND, 'rules': rules, 'status': SUCCESS_CODE}}, status=201)
+    except NeighborhoodGroupModel.DoesNotExist:
+        return JsonResponse({'data': {'message': NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
 
 
 
@@ -233,6 +253,8 @@ def approveRejectNeighborhoodGroupJoinRequest(request):
 
 
 
+
+
 #############################################################
 #   _____     _______ _____ _    _            _____ _____   #
 #  |  __ \ /\|__   __/ ____| |  | |     /\   |  __ \_   _|  #
@@ -261,7 +283,7 @@ def testPutAPI(request, id):
 def updateResidentAccount(request):
     try:
         # Get resident ID
-        id = request.data["id"]
+        id = decodeJWTToken(request.data["token"])["id"]
         residentData = ResidentSerializer(ResidentModel.objects.get(pk=id), data=request.data, partial=True)
         # Check whether data is valid
         if residentData.is_valid():
@@ -273,8 +295,33 @@ def updateResidentAccount(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': {"message": RESIDENT_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
 
-
-
+# Update neighborhood group rules
+@api_view(['PATCH'])
+def updateNeighborhoodGroupRules(request):
+    try:
+        # Get neighborhood group ID
+        groupId = request.data["groupId"]
+        groupData = NeighborhoodGroupModel.objects.get(pk=groupId)
+        # Get resident ID
+        residentId = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentId)
+        # Check whether resident belongs to the group and is the resident leader
+        if residentData.groupID.id == groupData.id and residentData.isLeader:
+            newGroupData = NeighborhoodGroupSerializer(groupData, data={"rules": request.data["rules"]}, partial=True)
+            # Check whether data is valid
+            if newGroupData.is_valid():
+                newGroupData.save()
+                return JsonResponse({"data": {"message": NEIGHBORHOOD_GROUP_RULE_UPDATED_SUCCESSFUL, "status": SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {"message": NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=400)
+        else:
+            # Not belong to the group or not the leader
+            return JsonResponse({'data': {'message': NEIGHBORHOOD_GROUP_NOT_PART_OF_NOT_LEADER, 'status': ERROR_CODE}}, status=400)
+    except NeighborhoodGroupModel.DoesNotExist:
+        return JsonResponse({"data": {"message": NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
 
 
 

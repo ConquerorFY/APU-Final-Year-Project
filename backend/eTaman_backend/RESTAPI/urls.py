@@ -19,7 +19,10 @@ urlpatterns = [
     # Neigborhood Group API
     path('getAllJoinRequests/', views.getAllNeighborhoodGroupJoinRequest),
     path('getGroup/', views.getNeighborhoodGroup),
+    path('getGroupAll/', views.getAllNeighborhoodGroup),
     path('createGroup/', views.createNeighborhoodGroup),
     path('joinGroup/', views.createNeighborhoodGroupJoinRequest),
-    path('handleJoinRequest/', views.approveRejectNeighborhoodGroupJoinRequest)
+    path('handleJoinRequest/', views.approveRejectNeighborhoodGroupJoinRequest),
+    path('viewGroupRule/', views.getNeighborhoodGroupRule),
+    path('updateGroupRule/', views.updateNeighborhoodGroupRules),
 ]

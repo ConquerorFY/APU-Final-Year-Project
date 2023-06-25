@@ -17,6 +17,7 @@ class NeighborhoodGroupModel(models.Model):
     city = models.CharField(max_length=100, blank=False)
     street = models.CharField(max_length=100, blank=False)
     postcode = models.IntegerField(blank=False)
+    rules = models.CharField(max_length=10000, default="")
 
     def __str__(self):
         return self.name
