@@ -43,3 +43,38 @@ class ResidentModel(models.Model):
 class JoinRequestModel(models.Model):
     residentID = models.OneToOneField(ResidentModel, null=True, on_delete=models.SET_NULL)
     groupID = models.ForeignKey(NeighborhoodGroupModel, null=True, on_delete=models.SET_NULL)
+
+# Crime Post Model
+class CrimePostModel(models.Model):
+    datetime = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='images/')
+    title = models.CharField(max_length=500, blank=False)
+    description = models.CharField(max_length=2000, blank=False)
+    actions = models.CharField(max_length=2000, blank=False)
+    reporterID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
+
+# Complaint Post Model
+class ComplaintPostModel(models.Model):
+    datetime = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=500, blank=False)
+    description = models.CharField(max_length=2000, blank=False)
+    target = models.CharField(max_length=100, blank=False)
+    isAnonymous = models.BooleanField(default=False)
+    reporterID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
+
+# Event Post Model
+class EventPostModel(models.Model):
+    date = models.DateField()
+    time = models.TimeField()
+    venue = models.CharField(max_length=500, blank=False)
+    title = models.CharField(max_length=500, blank=False)
+    description = models.CharField(max_length=2000, blank=False)
+    participants = models.CharField(max_length=1000, default='')
+    organizerID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
+
+# General Post Model
+class GeneralPostModel(models.Model):
+    datetime = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=500, blank=False)
+    description = models.CharField(max_length=2000, blank=False)
+    authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)

@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
-from .models import TestModel, ResidentModel, NeighborhoodGroupModel, JoinRequestModel
-from .serializers import TestSerializer, ResidentSerializer, NeighborhoodGroupSerializer, JoinRequestSerializer
+from .models import *
+from .serializers import *
 from .constants import * 
 from .password import *
 from collections import OrderedDict

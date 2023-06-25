@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import TestModel, ResidentModel, NeighborhoodGroupModel, JoinRequestModel
+from .models import *
 
 # Create your serializers here.
 
@@ -26,3 +26,27 @@ class JoinRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = JoinRequestModel
         fields = ('id', 'residentID', 'groupID')
+
+# Crime Post Serializer
+class CrimePostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CrimePostModel
+        fields = ('id', 'datetime', 'image', 'title', 'description', 'actions', 'reporterID')
+
+# Complaint Post Serializer
+class ComplaintPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ComplaintPostModel
+        fields = ('id', 'datetime', 'title', 'description', 'target', 'isAnonymous', 'reporterID')
+
+# Event Post Serializer
+class EventPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventPostModel
+        fields = ('id', 'date', 'time', 'venue', 'title', 'description', 'participants', 'organizerID')
+
+# General Post Serializer
+class GeneralPostSerialiser(serializers.ModelSerializer):
+    class Meta:
+        model = GeneralPostModel
+        fields = ('id', 'datetime', 'title', 'description', 'authorID')

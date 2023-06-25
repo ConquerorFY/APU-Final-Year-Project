@@ -25,10 +25,40 @@ Residents
         -> groupID
 
     - Create Posts
-        -> Crime Sightings
+        -> Crime Sightings 
+            - Attributes: [X]
+                -> ID
+                -> Datetime
+                -> Image
+                -> Title
+                -> Description
+                -> Actions Taken
+                -> Reporter
         -> Complaints
+            - Attributes: [X]
+                -> ID
+                -> Datetime
+                -> Target (Individual / House Number / ...)
+                -> Title 
+                -> Description
+                -> Reporter
+                -> isAnonymous
         -> Events
+            - Attributes: [X]
+                -> ID
+                -> Datetime
+                -> Venue
+                -> Title 
+                -> Description
+                -> Organizer
+                -> Participants (List of Resident IDs)
         -> General information / Discussion / Suggestions
+            - Attributes: [X]
+                -> ID
+                -> Datetime
+                -> Title
+                -> Description
+                -> Author
 
     - View all posts
     - Modify / Delete Own Posts
@@ -64,9 +94,41 @@ Resident Leader
 
     - Create Posts
         -> Crime Sightings
+            - Attributes: [X]
+                -> ID
+                -> Date
+                -> Time
+                -> Image
+                -> Title
+                -> Description
+                -> Actions Taken
+                -> Reporter
+                -> Type of Crime
         -> Complaints
+            - Attributes: [X]
+                -> ID
+                -> Date
+                -> Target (Individual / House Number / ...)
+                -> Title 
+                -> Description
+                -> Reporter
+                -> isAnonymous
         -> Events
+            - Attributes: [X]
+                -> ID
+                -> Date
+                -> Time
+                -> Venue
+                -> Title 
+                -> Description
+                -> Organizer
+                -> Participants (List of Resident IDs)
         -> General information / Discussion / Suggestions
+            - Attributes: [X]
+                -> ID
+                -> Title
+                -> Description
+                -> Author
 
     - View & Modify & Delete All Posts within the group
     - Find neighborhood groups [X]
