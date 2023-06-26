@@ -46,7 +46,7 @@ class JoinRequestModel(models.Model):
 
 # Crime Post Model
 class CrimePostModel(models.Model):
-    datetime = models.DateTimeField(auto_now_add=True)
+    datetime = models.DateTimeField()
     image = models.ImageField(upload_to='images/')
     title = models.CharField(max_length=500, blank=False)
     description = models.CharField(max_length=2000, blank=False)
@@ -64,8 +64,7 @@ class ComplaintPostModel(models.Model):
 
 # Event Post Model
 class EventPostModel(models.Model):
-    date = models.DateField()
-    time = models.TimeField()
+    datetime = models.DateTimeField()
     venue = models.CharField(max_length=500, blank=False)
     title = models.CharField(max_length=500, blank=False)
     description = models.CharField(max_length=2000, blank=False)

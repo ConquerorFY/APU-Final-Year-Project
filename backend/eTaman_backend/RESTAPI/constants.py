@@ -32,5 +32,7 @@ JOIN_REQUEST_DATABASE_NOT_EXIST = "The Neighborhood Group Join Request Does Not 
 JOIN_REQUEST_APPROVED_SUCCESSFULLY = "The Neighborhood Group Join Request Has Been Approved Successfully!"
 JOIN_REQUEST_REJECTED_SUCCESSFULLY = "The Neighborhood Group Join Request Has Been Rejected!"
 
+CRIME_POST_DATABASE_NOT_EXIST = "The Crime Post Does Not Exist!"
+CRIME_POST_CREATED_SUCCESSFUL = "The Crime Post Has Been Created Successfully!"
 
 DATABASE_WRITE_ERROR = "An Error Has Occured! Please Try Again!"

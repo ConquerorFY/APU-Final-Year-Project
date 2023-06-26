@@ -5,6 +5,7 @@ from .serializers import *
 from .constants import * 
 from .password import *
 from collections import OrderedDict
+from datetime import datetime
 
 # Create your views here.
 
@@ -268,6 +269,42 @@ def leaveNeighborhoodGroup(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
 
+# Create crime post
+@api_view(['POST'])
+def createCrimePost(request):
+    global datetime
+    try:
+        # Get resident id
+        residentId = decodeJWTToken(request.data["token"])["id"]
+        # Get datetime field attributes and values
+        date = datetime.strptime(request.data["date"], "%Y-%m-%d").date()
+        time = datetime.strptime(request.data["time"], "%H:%M:%S").time()
+        dt = datetime.combine(date, time)
+        # Get image field attributes and values
+        image = request.FILES['image']
+        # Create new crime post serializer
+        crimeData = (
+            {
+                'datetime': dt, 
+                'image': image, 
+                'reporterID': residentId, 
+                'title': request.data['title'],
+                'description': request.data['description'],
+                'actions': request.data['actions']
+            }
+        )
+        crimePostData = CrimePostSerializer(data = crimeData)
+        # Check whether all data is valid
+        if crimePostData.is_valid(raise_exception=True):
+            crimePostData.save()
+            return JsonResponse({'data': {'message': CRIME_POST_CREATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+        else:
+            # An error has occured
+            return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+    except CrimePostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': CRIME_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
 
 
 #############################################################
