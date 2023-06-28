@@ -34,16 +34,20 @@ urlpatterns = [
     # Crime Post API
     path('createCrimePost/', views.createCrimePost),
     path('updateCrimePost/', views.updateCrimePost),
+    path('deleteCrimePost/', views.deleteCrimePost),
 
     # Complaint Post API
     path('createComplaintPost/', views.createComplaintPost),
     path('updateComplaintPost/', views.updateComplaintPost),
+    path('deleteComplaintPost/', views.deleteComplaintPost),
 
     # Event Post API
     path('createEventPost/', views.createEventPost),
     path('updateEventPost/', views.updateEventPost),
+    path('deleteEventPost/', views.deleteEventPost),
 
     # General Post API
     path('createGeneralPost/', views.createGeneralPost),
     path('updateGeneralPost/', views.updateGeneralPost),
+    path('deleteGeneralPost/', views.deleteGeneralPost),
 ]

@@ -61,7 +61,7 @@ Residents
                 -> Author
 
     - View all posts [X]
-    - Modify / Delete Own Posts
+    - Modify / Delete Own Posts [X]
     - Find neighborhood groups [X]
     - Find all neighborhood groups [X]
     - Join neighborhood groups (need verification) [X]
@@ -130,7 +130,7 @@ Resident Leader
                 -> Author
 
     - View All Posts within the group [X]
-    - Modify / Delete Posts within the group
+    - Modify / Delete Posts within the group [X]
     - Find neighborhood groups [X]
     - Find all neighborhood groups [X]
     - Create neighborhood groups [X]
