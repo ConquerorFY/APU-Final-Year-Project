@@ -111,6 +111,33 @@ def getNeighborhoodGroupRule(request):
     except NeighborhoodGroupModel.DoesNotExist:
         return JsonResponse({'data': {'message': NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
 
+# Get all posts
+@api_view(['GET'])
+def getAllPost(request):
+    try:
+        # Get all posts data
+        crimePostData = CrimePostSerializer(CrimePostModel.objects.all(), many=True).data
+        complaintPostData = ComplaintPostSerializer(ComplaintPostModel.objects.all(), many=True).data
+        eventPostData = EventPostSerializer(EventPostModel.objects.all(), many=True).data
+        generalPostData = GeneralPostSerializer(GeneralPostModel.objects.all(), many=True).data
+        return JsonResponse({
+            'data': {
+                'message': ALL_POSTS_FOUND,
+                'crime': crimePostData,
+                'complaint': complaintPostData,
+                'event': eventPostData,
+                'general': generalPostData
+            },
+            'status': SUCCESS_CODE
+        }, status = 201)
+    except CrimePostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': CRIME_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ComplaintPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except EventPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': EVENT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except GeneralPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
 
 
 
@@ -456,6 +483,7 @@ def updateNeighborhoodGroupRules(request):
         return JsonResponse({"data": {"message": NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
     except ResidentModel.DoesNotExist:
         return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+
 
 
 

@@ -60,7 +60,7 @@ Residents
                 -> Description
                 -> Author
 
-    - View all posts
+    - View all posts [X]
     - Modify / Delete Own Posts
     - Find neighborhood groups [X]
     - Find all neighborhood groups [X]
@@ -129,7 +129,7 @@ Resident Leader
                 -> Description
                 -> Author
 
-    - View All Posts within the group
+    - View All Posts within the group [X]
     - Modify / Delete Posts within the group
     - Find neighborhood groups [X]
     - Find all neighborhood groups [X]

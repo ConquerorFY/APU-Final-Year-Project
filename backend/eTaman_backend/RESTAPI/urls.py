@@ -27,6 +27,9 @@ urlpatterns = [
     path('updateGroupRule/', views.updateNeighborhoodGroupRules),
     path('leaveGroup/', views.leaveNeighborhoodGroup),
 
+    # Post API
+    path('getPostAll/', views.getAllPost),
+
     # Crime Post API
     path('createCrimePost/', views.createCrimePost),
 
