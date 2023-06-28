@@ -456,6 +456,32 @@ def updateResidentAccount(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': {"message": RESIDENT_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
 
+# Update neighborhood group name
+@api_view(['PATCH'])
+def updateNeighborhoodGroupName(request):
+    try:
+        # Get neighborhood group ID
+        groupId = request.data["groupId"]
+        groupData = NeighborhoodGroupModel.objects.get(pk=groupId)
+        # Get resident ID
+        residentId = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentId)
+        # Check whether resident belongs to the group and is the resident leader
+        if residentData.groupID.id == groupData.id and residentData.isLeader:
+            newGroupData = NeighborhoodGroupSerializer(groupData, data={"name": request.data["name"]}, partial=True)
+            # Check whether data is valid
+            if newGroupData.is_valid():
+                newGroupData.save()
+                return JsonResponse({"data": {"message": NEIGHBORHOOD_GROUP_NAME_UPDATED_SUCCESSFUL, "status": SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {"message": DATABASE_WRITE_ERROR}, "status": ERROR_CODE}, status=400)
+        else:
+            # Not belong to the group or not the leader
+            return JsonResponse({'data': {'message': NEIGHBORHOOD_GROUP_NOT_PART_OF_NOT_LEADER, 'status': ERROR_CODE}}, status=400)
+    except NeighborhoodGroupModel.DoesNotExist:
+        return JsonResponse({'data': {'message': NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
 # Update neighborhood group rules
 @api_view(['PATCH'])
 def updateNeighborhoodGroupRules(request):

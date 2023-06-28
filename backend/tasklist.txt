@@ -134,6 +134,7 @@ Resident Leader
     - Find neighborhood groups [X]
     - Find all neighborhood groups [X]
     - Create neighborhood groups [X]
+    - Modify neighborhood name [X] 
     - Join neighborhood groups [X]
     - Get all pending approvals [X]
     - Approve / Deny resident join request [X]

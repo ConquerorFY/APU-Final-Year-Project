@@ -25,6 +25,7 @@ urlpatterns = [
     path('handleJoinRequest/', views.approveRejectNeighborhoodGroupJoinRequest),
     path('viewGroupRule/', views.getNeighborhoodGroupRule),
     path('updateGroupRule/', views.updateNeighborhoodGroupRules),
+    path('updateGroupName/', views.updateNeighborhoodGroupName),
     path('leaveGroup/', views.leaveNeighborhoodGroup),
 
     # Post API
