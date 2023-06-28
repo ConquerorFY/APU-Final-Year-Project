@@ -37,14 +37,22 @@ ALL_POSTS_FOUND = "All Posts Has Been Successfully Discovered!"
 
 CRIME_POST_DATABASE_NOT_EXIST = "The Crime Post Does Not Exist!"
 CRIME_POST_CREATED_SUCCESSFUL = "The Crime Post Has Been Created Successfully!"
+CRIME_POST_UPDATED_SUCCESSFUL = "The Crime Post Has Been Updated Successfully!"
+CRIME_POST_NOT_OWNER_RESIDENT_LEADER = "You are not the owner of the crime post / You are not the resident leader of the neighborhood group!"
 
 COMPLAINT_POST_DATABASE_NOT_EXIST = "The Complaint Post Does Not Exist!"
 COMPLAINT_POST_CREATED_SUCCESSFUL = "The Complaint Post Has Been Created Successfully!"
+COMPLAINT_POST_UPDATED_SUCCESSFUL = "The Complaint Post Has Been Updated Successfully!"
+COMPLAINT_POST_NOT_OWNER_RESIDENT_LEADER = "You are not the owner of the complaint post / You are not the resident leader of the neighborhood group!"
 
 EVENT_POST_DATABASE_NOT_EXIST = "The Event Post Does Not Exist!"
 EVENT_POST_CREATED_SUCCESSFUL = "The Event Post Has Been Created Successfully!"
+EVENT_POST_UPDATED_SUCCESSFUL = "The Event Post Has Been Updated Successfully!"
+EVENT_POST_NOT_OWNER_RESIDENT_LEADER = "You are not the owner of the event post / You are not the resident leader of the neighborhood group!"
 
 GENERAL_POST_DATABASE_NOT_EXIST = "The General Post Does Not Exist!"
 GENERAL_POST_CREATED_SUCCESSFUL = "The General Post Has Been Created Successfully!"
+GENERAL_POST_UPDATED_SUCCESSFUL = "The General Post Has Been Updated Successfully!"
+GENERAL_POST_NOT_OWNER_RESIDENT_LEADER = "You are not the owner of the general post / You are not the resident leader of the neighborhood group!"
 
 DATABASE_WRITE_ERROR = "An Error Has Occured! Please Try Again!"

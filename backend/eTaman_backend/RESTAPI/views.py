@@ -481,6 +481,8 @@ def updateNeighborhoodGroupName(request):
             return JsonResponse({'data': {'message': NEIGHBORHOOD_GROUP_NOT_PART_OF_NOT_LEADER, 'status': ERROR_CODE}}, status=400)
     except NeighborhoodGroupModel.DoesNotExist:
         return JsonResponse({'data': {'message': NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
 
 # Update neighborhood group rules
 @api_view(['PATCH'])
@@ -510,6 +512,117 @@ def updateNeighborhoodGroupRules(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
 
+# Update crime post
+@api_view(['PATCH'])
+def updateCrimePost(request):
+    try:
+        # Get Crime Post ID
+        crimePostID = request.data["crimePostID"]
+        crimePostData = CrimePostModel.objects.get(pk=crimePostID)
+        # Get Resident ID
+        residentID = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Check if either the resident is the owner or the resident is the resident leader
+        if crimePostData.reporterID.id == residentData.id or (crimePostData.reporterID.groupID.id == residentData.groupID.id and residentData.isLeader):
+            newCrimePostData = CrimePostSerializer(crimePostData, data=request.data, partial=True)
+            # Check whether data is valid
+            if newCrimePostData.is_valid():
+                newCrimePostData.save()
+                return JsonResponse({'data': {'message': CRIME_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            # The resident is either not the owner or not the resident leader of the neighborhood group
+            return JsonResponse({'data': {'message': CRIME_POST_NOT_OWNER_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+    except CrimePostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': CRIME_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+
+# Update complaint post
+@api_view(['PATCH'])
+def updateComplaintPost(request):
+    try:
+        # Get Complaint Post ID
+        complaintPostID = request.data["complaintPostID"]
+        complaintPostData = ComplaintPostModel.objects.get(pk=complaintPostID)
+        # Get Resident ID
+        residentID = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Check if either the resident is the owner or the resident is the resident leader
+        if complaintPostData.reporterID.id == residentData.id or (complaintPostData.reporterID.groupID.id == residentData.groupID.id and residentData.isLeader):
+            newComplaintPostData = ComplaintPostSerializer(complaintPostData, data=request.data, partial=True)
+            # Check whether data is valid
+            if newComplaintPostData.is_valid():
+                newComplaintPostData.save()
+                return JsonResponse({'data': {'message': COMPLAINT_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            # The resident is either not the owner or not the resident leader of the neighborhood group
+            return JsonResponse({'data': {'message': COMPLAINT_POST_NOT_OWNER_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+    except ComplaintPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+
+# Update event post
+@api_view(['PATCH'])
+def updateEventPost(request):
+    try:
+        # Get Event Post ID
+        eventPostID = request.data["eventPostID"]
+        eventPostData = EventPostModel.objects.get(pk=eventPostID)
+        # Get Resident ID
+        residentID = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Check if either the resident is the owner or the resident is the resident leader
+        if eventPostData.organizerID.id == residentData.id or (eventPostData.organizerID.groupID.id == residentData.groupID.id and residentData.isLeader):
+            newEventPostData = EventPostSerializer(eventPostData, data=request.data, partial=True)
+            # Check whether data is valid
+            if newEventPostData.is_valid():
+                newEventPostData.save()
+                return JsonResponse({'data': {'message': EVENT_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            # The resident is either not the owner or not the resident leader of the neighborhood group
+            return JsonResponse({'data': {'message': EVENT_POST_NOT_OWNER_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+    except EventPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': EVENT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+
+# Update general post
+@api_view(['PATCH'])
+def updateGeneralPost(request):
+    try:
+        # Get General Post ID
+        generalPostID = request.data["generalPostID"]
+        generalPostData = GeneralPostModel.objects.get(pk=generalPostID)
+        # Get Resident ID
+        residentID = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Check if either the resident is the owner or the resident is the resident leader
+        if generalPostData.authorID.id == residentData.id or (generalPostData.authorID.groupID.id == residentData.groupID.id and residentData.isLeader):
+            newGeneralPostData = GeneralPostSerializer(generalPostData, data=request.data, partial=True)
+            # Check whether data is valid
+            if newGeneralPostData.is_valid():
+                newGeneralPostData.save()
+                return JsonResponse({'data': {'message': GENERAL_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            # The resident is either not the owner or not the resident leader of the neighborhood group
+            return JsonResponse({'data': {'message': GENERAL_POST_NOT_OWNER_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+    except GeneralPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
 
 
 
