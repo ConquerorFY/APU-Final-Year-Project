@@ -35,4 +35,13 @@ JOIN_REQUEST_REJECTED_SUCCESSFULLY = "The Neighborhood Group Join Request Has Be
 CRIME_POST_DATABASE_NOT_EXIST = "The Crime Post Does Not Exist!"
 CRIME_POST_CREATED_SUCCESSFUL = "The Crime Post Has Been Created Successfully!"
 
+COMPLAINT_POST_DATABASE_NOT_EXIST = "The Complaint Post Does Not Exist!"
+COMPLAINT_POST_CREATED_SUCCESSFUL = "The Complaint Post Has Been Created Successfully!"
+
+EVENT_POST_DATABASE_NOT_EXIST = "The Event Post Does Not Exist!"
+EVENT_POST_CREATED_SUCCESSFUL = "The Event Post Has Been Created Successfully!"
+
+GENERAL_POST_DATABASE_NOT_EXIST = "The General Post Does Not Exist!"
+GENERAL_POST_CREATED_SUCCESSFUL = "The General Post Has Been Created Successfully!"
+
 DATABASE_WRITE_ERROR = "An Error Has Occured! Please Try Again!"

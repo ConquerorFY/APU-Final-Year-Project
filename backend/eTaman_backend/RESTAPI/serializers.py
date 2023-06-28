@@ -43,10 +43,10 @@ class ComplaintPostSerializer(serializers.ModelSerializer):
 class EventPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = EventPostModel
-        fields = ('id', 'date', 'time', 'venue', 'title', 'description', 'participants', 'organizerID')
+        fields = ('id', 'datetime', 'venue', 'title', 'description', 'participants', 'organizerID')
 
 # General Post Serializer
-class GeneralPostSerialiser(serializers.ModelSerializer):
+class GeneralPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = GeneralPostModel
         fields = ('id', 'datetime', 'title', 'description', 'authorID')

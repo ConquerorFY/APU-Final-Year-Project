@@ -29,4 +29,13 @@ urlpatterns = [
 
     # Crime Post API
     path('createCrimePost/', views.createCrimePost),
+
+    # Complaint Post API
+    path('createComplaintPost/', views.createComplaintPost),
+
+    # Event Post API
+    path('createEventPost/', views.createEventPost),
+
+    # General Post API
+    path('createGeneralPost/', views.createGeneralPost),
 ]

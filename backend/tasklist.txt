@@ -24,7 +24,7 @@ Residents
         -> isLeader
         -> groupID
 
-    - Create Posts
+    - Create Posts [X] 
         -> Crime Sightings 
             - Attributes: [X]
                 -> ID
@@ -92,7 +92,7 @@ Resident Leader
         -> isLeader
         -> groupID
 
-    - Create Posts
+    - Create Posts [X] 
         -> Crime Sightings
             - Attributes: [X]
                 -> ID
@@ -107,7 +107,6 @@ Resident Leader
         -> Complaints
             - Attributes: [X]
                 -> ID
-                -> Date
                 -> Target (Individual / House Number / ...)
                 -> Title 
                 -> Description
@@ -130,7 +129,8 @@ Resident Leader
                 -> Description
                 -> Author
 
-    - View & Modify & Delete All Posts within the group
+    - View All Posts within the group
+    - Modify / Delete Posts within the group
     - Find neighborhood groups [X]
     - Find all neighborhood groups [X]
     - Create neighborhood groups [X]
