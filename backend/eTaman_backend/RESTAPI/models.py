@@ -105,3 +105,11 @@ class GeneralPostCommentModel(models.Model):
     content = models.CharField(max_length=2000, blank=False)
     postID = models.ForeignKey(GeneralPostModel, null=True, on_delete=models.SET_NULL)
     authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
+
+# Facilities Model
+class FacilitiesModel(models.Model):
+    name = models.CharField(max_length=100, blank=False)
+    description = models.CharField(max_length=1000, blank=False)
+    status = models.CharField(max_length=100, blank=False)
+    holder = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
+    groupID = models.ForeignKey(NeighborhoodGroupModel, null=True, on_delete=models.SET_NULL)

@@ -74,3 +74,9 @@ class GeneralPostCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = GeneralPostCommentModel
         fields = ('id', 'datetime', 'content', 'postID', 'authorID')
+
+# Facilities Serializer
+class FacilitiesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FacilitiesModel
+        fields = ('id', 'name', 'description', 'status', 'holder', 'groupID')

@@ -132,6 +132,15 @@ Resident Leader
                 -> Description
                 -> Author
 
+    - Facilities:
+        - Attributes:
+            -> ID
+            -> Name
+            -> Description
+            -> Status [Available / Occupied / Maintenance]
+            -> Holder
+            -> groupID
+
     - View All Posts within the group [X]
     - Modify / Delete Posts within the group [X]
     - View all comments [X]
