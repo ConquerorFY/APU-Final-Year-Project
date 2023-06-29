@@ -53,6 +53,13 @@ class CrimePostModel(models.Model):
     actions = models.CharField(max_length=2000, blank=False)
     reporterID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
 
+# Crime Post Comment Model
+class CrimePostCommentModel(models.Model):
+    datetime = models.DateTimeField(auto_now_add=True)
+    content = models.CharField(max_length=2000, blank=False)
+    postID = models.ForeignKey(CrimePostModel, null=True, on_delete=models.SET_NULL)
+    authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
+
 # Complaint Post Model
 class ComplaintPostModel(models.Model):
     datetime = models.DateTimeField(auto_now_add=True)
@@ -61,6 +68,13 @@ class ComplaintPostModel(models.Model):
     target = models.CharField(max_length=100, blank=False)
     isAnonymous = models.BooleanField(default=False)
     reporterID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
+
+# Complaint Post Comment Model
+class ComplaintPostCommentModel(models.Model):
+    datetime = models.DateTimeField(auto_now_add=True)
+    content = models.CharField(max_length=2000, blank=False)
+    postID = models.ForeignKey(ComplaintPostModel, null=True, on_delete=models.SET_NULL)
+    authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
 
 # Event Post Model
 class EventPostModel(models.Model):
@@ -71,9 +85,23 @@ class EventPostModel(models.Model):
     participants = models.CharField(max_length=1000, default='')
     organizerID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
 
+# Event Post Comment Model
+class EventPostCommentModel(models.Model):
+    datetime = models.DateTimeField(auto_now_add=True)
+    content = models.CharField(max_length=2000, blank=False)
+    postID = models.ForeignKey(EventPostModel, null=True, on_delete=models.SET_NULL)
+    authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
+
 # General Post Model
 class GeneralPostModel(models.Model):
     datetime = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=500, blank=False)
     description = models.CharField(max_length=2000, blank=False)
+    authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
+
+# General Post Comment Model
+class GeneralPostCommentModel(models.Model):
+    datetime = models.DateTimeField(auto_now_add=True)
+    content = models.CharField(max_length=2000, blank=False)
+    postID = models.ForeignKey(GeneralPostModel, null=True, on_delete=models.SET_NULL)
     authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)

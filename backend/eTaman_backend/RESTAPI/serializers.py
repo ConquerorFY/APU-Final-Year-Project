@@ -33,11 +33,23 @@ class CrimePostSerializer(serializers.ModelSerializer):
         model = CrimePostModel
         fields = ('id', 'datetime', 'image', 'title', 'description', 'actions', 'reporterID')
 
+# Crime Post Comment Serializer
+class CrimePostCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CrimePostCommentModel
+        fields = ('id', 'datetime', 'content', 'postID', 'authorID')
+
 # Complaint Post Serializer
 class ComplaintPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = ComplaintPostModel
         fields = ('id', 'datetime', 'title', 'description', 'target', 'isAnonymous', 'reporterID')
+
+# Complaint Post Comment Serializer
+class ComplaintPostCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ComplaintPostCommentModel
+        fields = ('id', 'datetime', 'content', 'postID', 'authorID')
 
 # Event Post Serializer
 class EventPostSerializer(serializers.ModelSerializer):
@@ -45,8 +57,20 @@ class EventPostSerializer(serializers.ModelSerializer):
         model = EventPostModel
         fields = ('id', 'datetime', 'venue', 'title', 'description', 'participants', 'organizerID')
 
+# EVent Post Comment Serializer
+class EventPostCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventPostCommentModel
+        fields = ('id', 'datetime', 'content', 'postID', 'authorID')
+
 # General Post Serializer
 class GeneralPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = GeneralPostModel
         fields = ('id', 'datetime', 'title', 'description', 'authorID')
+
+# General Post Comment Serializer
+class GeneralPostCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GeneralPostCommentModel
+        fields = ('id', 'datetime', 'content', 'postID', 'authorID')
