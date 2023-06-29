@@ -64,7 +64,7 @@ Residents
     - Modify / Delete Own Posts [X]
     - View all comments [X]
     - Write comments [X]
-    - Modify / Delete Own Comment
+    - Modify / Delete Own Comment [X]
     - Find neighborhood groups [X]
     - Find all neighborhood groups [X]
     - Join neighborhood groups (need verification) [X]
@@ -136,7 +136,7 @@ Resident Leader
     - Modify / Delete Posts within the group [X]
     - View all comments [X]
     - Write comments [X]
-    - Modify / Delete All Comments
+    - Modify / Delete All Comments [X]
     - Find neighborhood groups [X]
     - Find all neighborhood groups [X]
     - Create neighborhood groups [X]

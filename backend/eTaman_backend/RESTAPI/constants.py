@@ -44,6 +44,8 @@ CRIME_POST_DELETED_SUCCESSFUL = 'The Crime Post Has Been Deleted Successfully!'
 CRIME_POST_COMMENT_DATABASE_NOT_EXIST = "The Crime Post Comment Does Not Exist!"
 CRIME_POST_COMMENT_NOT_SAME_GROUP = "You are not the same group as the author of the crime post!"
 CRIME_POST_COMMENT_CREATED_SUCCESSFUL = "The Crime Post Comment Has Been Created Successfully!"
+CRIME_POST_COMMENT_UPDATED_SUCCESSFUL = "The Crime Post Comment Has Been Updated Successfully!"
+CRIME_POST_COMMENT_DELETED_SUCCESSFUL = 'The Crime Post Comment Has Been Deleted Successfully!'
 
 COMPLAINT_POST_DATABASE_NOT_EXIST = "The Complaint Post Does Not Exist!"
 COMPLAINT_POST_CREATED_SUCCESSFUL = "The Complaint Post Has Been Created Successfully!"
@@ -53,6 +55,8 @@ COMPLAINT_POST_DELETED_SUCCESSFUL = 'The Complaint Post Has Been Deleted Success
 COMPLAINT_POST_COMMENT_DATABASE_NOT_EXIST = "The Complaint Post Comment Does Not Exist!"
 COMPLAINT_POST_COMMENT_NOT_SAME_GROUP = "You are not the same group as the author of the complaint post!"
 COMPLAINT_POST_COMMENT_CREATED_SUCCESSFUL = "The Complaint Post Comment Has Been Created Successfully!"
+COMPLAINT_POST_COMMENT_UPDATED_SUCCESSFUL = "The Complaint Post Comment Has Been Updated Successfully!"
+COMPLAINT_POST_COMMENT_DELETED_SUCCESSFUL = 'The Complaint Post Comment Has Been Deleted Successfully!'
 
 EVENT_POST_DATABASE_NOT_EXIST = "The Event Post Does Not Exist!"
 EVENT_POST_CREATED_SUCCESSFUL = "The Event Post Has Been Created Successfully!"
@@ -62,6 +66,8 @@ EVENT_POST_DELETED_SUCCESSFUL = 'The Event Post Has Been Deleted Successfully!'
 EVENT_POST_COMMENT_DATABASE_NOT_EXIST = "The Event Post Comment Does Not Exist!"
 EVENT_POST_COMMENT_NOT_SAME_GROUP = "You are not the same group as the author of the event post!"
 EVENT_POST_COMMENT_CREATED_SUCCESSFUL = "The Event Post Comment Has Been Created Successfully!"
+EVENT_POST_COMMENT_UPDATED_SUCCESSFUL = "The Event Post Comment Has Been Updated Successfully!"
+EVENT_POST_COMMENT_DELETED_SUCCESSFUL = 'The Event Post Comment Has Been Deleted Successfully!'
 
 GENERAL_POST_DATABASE_NOT_EXIST = "The General Post Does Not Exist!"
 GENERAL_POST_CREATED_SUCCESSFUL = "The General Post Has Been Created Successfully!"
@@ -71,5 +77,7 @@ GENERAL_POST_DELETED_SUCCESSFUL = 'The General Post Has Been Deleted Successfull
 GENERAL_POST_COMMENT_DATABASE_NOT_EXIST = "The General Post Comment Does Not Exist!"
 GENERAL_POST_COMMENT_NOT_SAME_GROUP = "You are not the same group as the author of the general post!"
 GENERAL_POST_COMMENT_CREATED_SUCCESSFUL = "The General Post Comment Has Been Created Successfully!"
+GENERAL_POST_COMMENT_UPDATED_SUCCESSFUL = "The General Post Comment Has Been Updated Successfully!"
+GENERAL_POST_COMMENT_DELETED_SUCCESSFUL = 'The General Post Comment Has Been Deleted Successfully!'
 
 DATABASE_WRITE_ERROR = "An Error Has Occured! Please Try Again!"

@@ -742,6 +742,36 @@ def updateCrimePost(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
 
+# Update crime post comment
+@api_view(["PATCH"])
+def updateCrimePostComment(request):
+    try:
+        # Get Crime Post Comment ID
+        crimePostCommentID = request.data["crimePostCommentID"]
+        crimePostCommentData = CrimePostCommentModel.objects.get(pk=crimePostCommentID)
+        # Get Resident ID
+        residentID = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Check if either the resident is the owner or the resident is the resident leader
+        if crimePostCommentData.authorID.id == residentData.id or (crimePostCommentData.authorID.groupID.id == residentData.groupID.id and residentData.isLeader):
+            newCrimePostCommentData = CrimePostCommentSerializer(crimePostCommentData, data=request.data, partial=True)
+            # Check whether data is valid
+            if newCrimePostCommentData.is_valid():
+                newCrimePostCommentData.save()
+                return JsonResponse({'data': {'message': CRIME_POST_COMMENT_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            # The resident is either not the owner or not the resident leader of the neighborhood group
+            return JsonResponse({'data': {'message': CRIME_POST_NOT_OWNER_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+    except CrimePostCommentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': CRIME_POST_COMMENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except CrimePostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': CRIME_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+
 # Update complaint post
 @api_view(['PATCH'])
 def updateComplaintPost(request):
@@ -765,6 +795,36 @@ def updateComplaintPost(request):
         else:
             # The resident is either not the owner or not the resident leader of the neighborhood group
             return JsonResponse({'data': {'message': COMPLAINT_POST_NOT_OWNER_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+    except ComplaintPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+
+# Update complaint post comment
+@api_view(["PATCH"])
+def updateComplaintPostComment(request):
+    try:
+        # Get Complaint Post Comment ID
+        complaintPostCommentID = request.data["complaintPostCommentID"]
+        complaintPostCommentData = ComplaintPostCommentModel.objects.get(pk=complaintPostCommentID)
+        # Get Resident ID
+        residentID = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Check if either the resident is the owner or the resident is the resident leader
+        if complaintPostCommentData.authorID.id == residentData.id or (complaintPostCommentData.authorID.groupID.id == residentData.groupID.id and residentData.isLeader):
+            newComplaintPostCommentData = ComplaintPostCommentSerializer(complaintPostCommentData, data=request.data, partial=True)
+            # Check whether data is valid
+            if newComplaintPostCommentData.is_valid():
+                newComplaintPostCommentData.save()
+                return JsonResponse({'data': {'message': COMPLAINT_POST_COMMENT_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            # The resident is either not the owner or not the resident leader of the neighborhood group
+            return JsonResponse({'data': {'message': COMPLAINT_POST_NOT_OWNER_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+    except ComplaintPostCommentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': COMPLAINT_POST_COMMENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
     except ComplaintPostModel.DoesNotExist:
         return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
     except ResidentModel.DoesNotExist:
@@ -798,6 +858,36 @@ def updateEventPost(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
 
+# Update event post comment
+@api_view(["PATCH"])
+def updateEventPostComment(request):
+    try:
+        # Get Event Post Comment ID
+        eventPostCommentID = request.data["eventPostCommentID"]
+        eventPostCommentData = EventPostCommentModel.objects.get(pk=eventPostCommentID)
+        # Get Resident ID
+        residentID = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Check if either the resident is the owner or the resident is the resident leader
+        if eventPostCommentData.authorID.id == residentData.id or (eventPostCommentData.authorID.groupID.id == residentData.groupID.id and residentData.isLeader):
+            newEventPostCommentData = EventPostCommentSerializer(eventPostCommentData, data=request.data, partial=True)
+            # Check whether data is valid
+            if newEventPostCommentData.is_valid():
+                newEventPostCommentData.save()
+                return JsonResponse({'data': {'message': EVENT_POST_COMMENT_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            # The resident is either not the owner or not the resident leader of the neighborhood group
+            return JsonResponse({'data': {'message': COMPLAINT_POST_NOT_OWNER_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+    except EventPostCommentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': EVENT_POST_COMMENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except EventPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': EVENT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+
 # Update general post
 @api_view(['PATCH'])
 def updateGeneralPost(request):
@@ -826,6 +916,35 @@ def updateGeneralPost(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
 
+# Update general post comment
+@api_view(["PATCH"])
+def updateGeneralPostComment(request):
+    try:
+        # Get General Post Comment ID
+        generalPostCommentID = request.data["generalPostCommentID"]
+        generalPostCommentData = GeneralPostCommentModel.objects.get(pk=generalPostCommentID)
+        # Get Resident ID
+        residentID = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Check if either the resident is the owner or the resident is the resident leader
+        if generalPostCommentData.authorID.id == residentData.id or (generalPostCommentData.authorID.groupID.id == residentData.groupID.id and residentData.isLeader):
+            newGeneralPostCommentData = GeneralPostCommentSerializer(generalPostCommentData, data=request.data, partial=True)
+            # Check whether data is valid
+            if newGeneralPostCommentData.is_valid():
+                newGeneralPostCommentData.save()
+                return JsonResponse({'data': {'message': GENERAL_POST_COMMENT_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            # The resident is either not the owner or not the resident leader of the neighborhood group
+            return JsonResponse({'data': {'message': COMPLAINT_POST_NOT_OWNER_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+    except GeneralPostCommentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': GENERAL_POST_COMMENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except GeneralPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
 
 
 
@@ -873,6 +992,30 @@ def deleteCrimePost(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
 
+# Delete crime post comment
+@api_view(['DELETE'])
+def deleteCrimePostComment(request):
+    try:
+        # Get Crime Post Comment ID
+        crimePostCommentID = request.data["crimePostCommentID"]
+        crimePostCommentData = CrimePostCommentModel.objects.get(pk=crimePostCommentID)
+        # Get Resident ID
+        residentID = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Check if either the resident is the owner or the resident is the resident leader
+        if crimePostCommentData.authorID.id == residentData.id or (crimePostCommentData.authorID.groupID.id == residentData.groupID.id and residentData.isLeader):
+            crimePostCommentData.delete()
+            return JsonResponse({'data': {'message': CRIME_POST_COMMENT_DELETED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+        else:
+            # The resident is either not the owner or not the resident leader of the neighborhood group
+            return JsonResponse({'data': {'message': CRIME_POST_NOT_OWNER_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+    except CrimePostCommentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': CRIME_POST_COMMENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except CrimePostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': CRIME_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+
 # Delete complaint post
 @api_view(['DELETE'])
 def deleteComplaintPost(request):
@@ -890,6 +1033,30 @@ def deleteComplaintPost(request):
         else:
             # The resident is either not the owner or not the resident leader of the neighborhood group
             return JsonResponse({'data': {'message': COMPLAINT_POST_NOT_OWNER_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+    except ComplaintPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+
+# Delete complaint post comment
+@api_view(['DELETE'])
+def deleteComplaintPostComment(request):
+    try:
+        # Get Complaint Post Comment ID
+        complaintPostCommentID = request.data["complaintPostCommentID"]
+        complaintPostCommentData = ComplaintPostCommentModel.objects.get(pk=complaintPostCommentID)
+        # Get Resident ID
+        residentID = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Check if either the resident is the owner or the resident is the resident leader
+        if complaintPostCommentData.authorID.id == residentData.id or (complaintPostCommentData.authorID.groupID.id == residentData.groupID.id and residentData.isLeader):
+            complaintPostCommentData.delete()
+            return JsonResponse({'data': {'message': COMPLAINT_POST_COMMENT_DELETED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+        else:
+            # The resident is either not the owner or not the resident leader of the neighborhood group
+            return JsonResponse({'data': {'message': COMPLAINT_POST_NOT_OWNER_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+    except ComplaintPostCommentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': COMPLAINT_POST_COMMENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
     except ComplaintPostModel.DoesNotExist:
         return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
     except ResidentModel.DoesNotExist:
@@ -917,6 +1084,30 @@ def deleteEventPost(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
 
+# Delete event post comment
+@api_view(['DELETE'])
+def deleteEventPostComment(request):
+    try:
+        # Get Event Post Comment ID
+        eventPostCommentID = request.data["eventPostCommentID"]
+        eventPostCommentData = EventPostCommentModel.objects.get(pk=eventPostCommentID)
+        # Get Resident ID
+        residentID = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Check if either the resident is the owner or the resident is the resident leader
+        if eventPostCommentData.authorID.id == residentData.id or (eventPostCommentData.authorID.groupID.id == residentData.groupID.id and residentData.isLeader):
+            eventPostCommentData.delete()
+            return JsonResponse({'data': {'message': EVENT_POST_COMMENT_DELETED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+        else:
+            # The resident is either not the owner or not the resident leader of the neighborhood group
+            return JsonResponse({'data': {'message': EVENT_POST_NOT_OWNER_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+    except EventPostCommentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': EVENT_POST_COMMENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except EventPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': EVENT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+
 # Delete general post
 @api_view(['DELETE'])
 def deleteGeneralPost(request):
@@ -934,6 +1125,30 @@ def deleteGeneralPost(request):
         else:
             # The resident is either not the owner or not the resident leader of the neighborhood group
             return JsonResponse({'data': {'message': GENERAL_POST_NOT_OWNER_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+    except GeneralPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+
+# Delete general post comment
+@api_view(['DELETE'])
+def deleteGeneralPostComment(request):
+    try:
+        # Get General Post Comment ID
+        generalPostCommentID = request.data["generalPostCommentID"]
+        generalPostCommentData = GeneralPostCommentModel.objects.get(pk=generalPostCommentID)
+        # Get Resident ID
+        residentID = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Check if either the resident is the owner or the resident is the resident leader
+        if generalPostCommentData.authorID.id == residentData.id or (generalPostCommentData.authorID.groupID.id == residentData.groupID.id and residentData.isLeader):
+            generalPostCommentData.delete()
+            return JsonResponse({'data': {'message': GENERAL_POST_COMMENT_DELETED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+        else:
+            # The resident is either not the owner or not the resident leader of the neighborhood group
+            return JsonResponse({'data': {'message': GENERAL_POST_NOT_OWNER_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+    except GeneralPostCommentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': GENERAL_POST_COMMENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
     except GeneralPostModel.DoesNotExist:
         return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
     except ResidentModel.DoesNotExist:
