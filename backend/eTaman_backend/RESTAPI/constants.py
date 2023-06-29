@@ -34,29 +34,42 @@ JOIN_REQUEST_APPROVED_SUCCESSFULLY = "The Neighborhood Group Join Request Has Be
 JOIN_REQUEST_REJECTED_SUCCESSFULLY = "The Neighborhood Group Join Request Has Been Rejected!"
 
 ALL_POSTS_FOUND = "All Posts Has Been Successfully Discovered!"
+ALL_COMMENTS_FOUND = "All Comments Has Been Successfully Discovered!"
 
 CRIME_POST_DATABASE_NOT_EXIST = "The Crime Post Does Not Exist!"
 CRIME_POST_CREATED_SUCCESSFUL = "The Crime Post Has Been Created Successfully!"
 CRIME_POST_UPDATED_SUCCESSFUL = "The Crime Post Has Been Updated Successfully!"
 CRIME_POST_NOT_OWNER_RESIDENT_LEADER = "You are not the owner of the crime post / You are not the resident leader of the neighborhood group!"
 CRIME_POST_DELETED_SUCCESSFUL = 'The Crime Post Has Been Deleted Successfully!'
+CRIME_POST_COMMENT_DATABASE_NOT_EXIST = "The Crime Post Comment Does Not Exist!"
+CRIME_POST_COMMENT_NOT_SAME_GROUP = "You are not the same group as the author of the crime post!"
+CRIME_POST_COMMENT_CREATED_SUCCESSFUL = "The Crime Post Comment Has Been Created Successfully!"
 
 COMPLAINT_POST_DATABASE_NOT_EXIST = "The Complaint Post Does Not Exist!"
 COMPLAINT_POST_CREATED_SUCCESSFUL = "The Complaint Post Has Been Created Successfully!"
 COMPLAINT_POST_UPDATED_SUCCESSFUL = "The Complaint Post Has Been Updated Successfully!"
 COMPLAINT_POST_NOT_OWNER_RESIDENT_LEADER = "You are not the owner of the complaint post / You are not the resident leader of the neighborhood group!"
 COMPLAINT_POST_DELETED_SUCCESSFUL = 'The Complaint Post Has Been Deleted Successfully!'
+COMPLAINT_POST_COMMENT_DATABASE_NOT_EXIST = "The Complaint Post Comment Does Not Exist!"
+COMPLAINT_POST_COMMENT_NOT_SAME_GROUP = "You are not the same group as the author of the complaint post!"
+COMPLAINT_POST_COMMENT_CREATED_SUCCESSFUL = "The Complaint Post Comment Has Been Created Successfully!"
 
 EVENT_POST_DATABASE_NOT_EXIST = "The Event Post Does Not Exist!"
 EVENT_POST_CREATED_SUCCESSFUL = "The Event Post Has Been Created Successfully!"
 EVENT_POST_UPDATED_SUCCESSFUL = "The Event Post Has Been Updated Successfully!"
 EVENT_POST_NOT_OWNER_RESIDENT_LEADER = "You are not the owner of the event post / You are not the resident leader of the neighborhood group!"
 EVENT_POST_DELETED_SUCCESSFUL = 'The Event Post Has Been Deleted Successfully!'
+EVENT_POST_COMMENT_DATABASE_NOT_EXIST = "The Event Post Comment Does Not Exist!"
+EVENT_POST_COMMENT_NOT_SAME_GROUP = "You are not the same group as the author of the event post!"
+EVENT_POST_COMMENT_CREATED_SUCCESSFUL = "The Event Post Comment Has Been Created Successfully!"
 
 GENERAL_POST_DATABASE_NOT_EXIST = "The General Post Does Not Exist!"
 GENERAL_POST_CREATED_SUCCESSFUL = "The General Post Has Been Created Successfully!"
 GENERAL_POST_UPDATED_SUCCESSFUL = "The General Post Has Been Updated Successfully!"
 GENERAL_POST_NOT_OWNER_RESIDENT_LEADER = "You are not the owner of the general post / You are not the resident leader of the neighborhood group!"
 GENERAL_POST_DELETED_SUCCESSFUL = 'The General Post Has Been Deleted Successfully!'
+GENERAL_POST_COMMENT_DATABASE_NOT_EXIST = "The General Post Comment Does Not Exist!"
+GENERAL_POST_COMMENT_NOT_SAME_GROUP = "You are not the same group as the author of the general post!"
+GENERAL_POST_COMMENT_CREATED_SUCCESSFUL = "The General Post Comment Has Been Created Successfully!"
 
 DATABASE_WRITE_ERROR = "An Error Has Occured! Please Try Again!"

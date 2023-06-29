@@ -139,6 +139,65 @@ def getAllPost(request):
     except GeneralPostModel.DoesNotExist:
         return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
 
+# Get all comments for a specific crime post
+@api_view(['GET'])
+def getAllCommentsForCrimePost(request):
+    try:
+        # Get crime post ID
+        crimePostID = request.data["crimePostID"]
+        # Get all comment data for the specific crime post
+        crimePostData = CrimePostCommentModel.objects.filter(postID=crimePostID)
+        crimePostCommentData = CrimePostCommentSerializer(crimePostData, many=True).data
+        return JsonResponse({'data': {'message': ALL_COMMENTS_FOUND, 'comments': crimePostCommentData}}, status=201)
+    except CrimePostCommentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': CRIME_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except CrimePostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': CRIME_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
+# Get all comments for a specific complaint post
+@api_view(['GET'])
+def getAllCommentsForComplaintPost(request):
+    try:
+        # Get complaint post ID
+        complaintPostID = request.data["complaintPostID"]
+        # Get all comment data for the specific complaint post
+        complaintPostData = ComplaintPostCommentModel.objects.filter(postID=complaintPostID)
+        complaintPostCommentData = ComplaintPostCommentSerializer(complaintPostData, many=True).data
+        return JsonResponse({'data': {'message': ALL_COMMENTS_FOUND, 'comments': complaintPostCommentData}}, status=201)
+    except ComplaintPostCommentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ComplaintPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
+# Get all comments for a specific event post
+@api_view(['GET'])
+def getAllCommentsForEventPost(request):
+    try:
+        # Get event post ID
+        eventPostID = request.data["eventPostID"]
+        # Get all comment data for the specific event post
+        eventPostData = EventPostCommentModel.objects.filter(postID=eventPostID)
+        eventPostCommentData = EventPostCommentSerializer(eventPostData, many=True).data
+        return JsonResponse({'data': {'message': ALL_COMMENTS_FOUND, 'comments': eventPostCommentData}}, status=201)
+    except EventPostCommentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': EVENT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except EventPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': EVENT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
+# Get all comments for a specific general post
+@api_view(['GET'])
+def getAllCommentsForGeneralPost(request):
+    try:
+        # Get general post ID
+        generalPostID = request.data["generalPostID"]
+        # Get all comment data for the specific general post
+        generalPostData = GeneralPostCommentModel.objects.filter(postID=generalPostID)
+        generalPostCommentData = GeneralPostCommentSerializer(generalPostData, many=True).data
+        return JsonResponse({'data': {'message': ALL_COMMENTS_FOUND, 'comments': generalPostCommentData}}, status=201)
+    except GeneralPostCommentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except GeneralPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
 
 
 
@@ -334,6 +393,40 @@ def createCrimePost(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
 
+# Create crime post comment
+@api_view(['POST'])
+def createCrimePostComment(request):
+    try:
+        # Get crime post ID
+        crimePostID = request.data["crimePostID"]
+        crimePostData = CrimePostModel.objects.get(pk=crimePostID)
+        # Get resident ID
+        residentID = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Check whether resident belongs to the same neighborhood group as the crime post author
+        if residentData.groupID.id == crimePostData.reporterID.groupID.id:
+            newCrimePostComment = {
+                'content': request.data['content'],
+                'postID': crimePostID,
+                'authorID': residentID
+            }
+            newCrimePostCommentData = CrimePostCommentSerializer(data = newCrimePostComment)
+            # Check whether all data is valid
+            if newCrimePostCommentData.is_valid():
+                newCrimePostCommentData.save()
+                return JsonResponse({'data': {'message': CRIME_POST_COMMENT_CREATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            return JsonResponse({'data': {'message': CRIME_POST_COMMENT_NOT_SAME_GROUP, 'status': ERROR_CODE}}, status=400)
+    except CrimePostCommentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': CRIME_POST_COMMENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except CrimePostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': CRIME_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
 # Create complaint post
 @api_view(['POST'])
 def createComplaintPost(request):
@@ -356,6 +449,40 @@ def createComplaintPost(request):
         else:
             # An error has occured
             return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+    except ComplaintPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
+# Create complaint post comment
+@api_view(['POST'])
+def createComplaintPostComment(request):
+    try:
+        # Get complaint post ID
+        complaintPostID = request.data["complaintPostID"]
+        complaintPostData = ComplaintPostModel.objects.get(pk=complaintPostID)
+        # Get resident ID
+        residentID = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Check whether resident belongs to the same neighborhood group as the complaint post author
+        if residentData.groupID.id == complaintPostData.reporterID.groupID.id:
+            newComplaintPostComment = {
+                'content': request.data['content'],
+                'postID': complaintPostID,
+                'authorID': residentID
+            }
+            newComplaintPostCommentData = ComplaintPostCommentSerializer(data = newComplaintPostComment)
+            # Check whether all data is valid
+            if newComplaintPostCommentData.is_valid():
+                newComplaintPostCommentData.save()
+                return JsonResponse({'data': {'message': COMPLAINT_POST_COMMENT_CREATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            return JsonResponse({'data': {'message': COMPLAINT_POST_COMMENT_NOT_SAME_GROUP, 'status': ERROR_CODE}}, status=400)
+    except ComplaintPostCommentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': COMPLAINT_POST_COMMENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
     except ComplaintPostModel.DoesNotExist:
         return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
     except ResidentModel.DoesNotExist:
@@ -393,6 +520,40 @@ def createEventPost(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
 
+# Create event post comment
+@api_view(['POST'])
+def createEventPostComment(request):
+    try:
+        # Get event post ID
+        eventPostID = request.data["eventPostID"]
+        eventPostData = EventPostModel.objects.get(pk=eventPostID)
+        # Get resident ID
+        residentID = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Check whether resident belongs to the same neighborhood group as the event post author
+        if residentData.groupID.id == eventPostData.organizerID.groupID.id:
+            newEventPostComment = {
+                'content': request.data['content'],
+                'postID': eventPostID,
+                'authorID': residentID
+            }
+            newEventPostCommentData = EventPostCommentSerializer(data = newEventPostComment)
+            # Check whether all data is valid
+            if newEventPostCommentData.is_valid():
+                newEventPostCommentData.save()
+                return JsonResponse({'data': {'message': EVENT_POST_COMMENT_CREATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            return JsonResponse({'data': {'message': EVENT_POST_COMMENT_NOT_SAME_GROUP, 'status': ERROR_CODE}}, status=400)
+    except EventPostCommentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': EVENT_POST_COMMENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except EventPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': EVENT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
 # Create general post
 @api_view(['POST'])
 def createGeneralPost(request):
@@ -416,6 +577,41 @@ def createGeneralPost(request):
         return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
+# Create general post comment
+@api_view(['POST'])
+def createGeneralPostComment(request):
+    try:
+        # Get general post ID
+        generalPostID = request.data["generalPostID"]
+        generalPostData = GeneralPostModel.objects.get(pk=generalPostID)
+        # Get resident ID
+        residentID = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Check whether resident belongs to the same neighborhood group as the general post author
+        if residentData.groupID.id == generalPostData.authorID.groupID.id:
+            newGeneralPostComment = {
+                'content': request.data['content'],
+                'postID': generalPostID,
+                'authorID': residentID
+            }
+            newGeneralPostCommentData = GeneralPostCommentSerializer(data = newGeneralPostComment)
+            # Check whether all data is valid
+            if newGeneralPostCommentData.is_valid():
+                newGeneralPostCommentData.save()
+                return JsonResponse({'data': {'message': GENERAL_POST_COMMENT_CREATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            return JsonResponse({'data': {'message': GENERAL_POST_COMMENT_NOT_SAME_GROUP, 'status': ERROR_CODE}}, status=400)
+    except GeneralPostCommentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': GENERAL_POST_COMMENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except GeneralPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
 
 
 

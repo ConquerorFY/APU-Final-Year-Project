@@ -62,8 +62,8 @@ Residents
 
     - View all posts [X]
     - Modify / Delete Own Posts [X]
-    - View all comments
-    - Write comments
+    - View all comments [X]
+    - Write comments [X]
     - Modify / Delete Own Comment
     - Find neighborhood groups [X]
     - Find all neighborhood groups [X]
@@ -134,8 +134,8 @@ Resident Leader
 
     - View All Posts within the group [X]
     - Modify / Delete Posts within the group [X]
-    - View all comments
-    - Write comments
+    - View all comments [X]
+    - Write comments [X]
     - Modify / Delete All Comments
     - Find neighborhood groups [X]
     - Find all neighborhood groups [X]

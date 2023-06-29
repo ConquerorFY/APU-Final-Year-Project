@@ -35,19 +35,27 @@ urlpatterns = [
     path('createCrimePost/', views.createCrimePost),
     path('updateCrimePost/', views.updateCrimePost),
     path('deleteCrimePost/', views.deleteCrimePost),
+    path('createCrimePostComment/', views.createCrimePostComment),
+    path('getAllCrimePostComment/', views.getAllCommentsForCrimePost),
 
     # Complaint Post API
     path('createComplaintPost/', views.createComplaintPost),
     path('updateComplaintPost/', views.updateComplaintPost),
     path('deleteComplaintPost/', views.deleteComplaintPost),
+    path('createComplaintPostComment/', views.createComplaintPostComment),
+    path('getAllComplaintPostComment/', views.getAllCommentsForComplaintPost),
 
     # Event Post API
     path('createEventPost/', views.createEventPost),
     path('updateEventPost/', views.updateEventPost),
     path('deleteEventPost/', views.deleteEventPost),
+    path('createEventPostComment/', views.createEventPostComment),
+    path('getAllEventPostComment/', views.getAllCommentsForEventPost),
 
     # General Post API
     path('createGeneralPost/', views.createGeneralPost),
     path('updateGeneralPost/', views.updateGeneralPost),
     path('deleteGeneralPost/', views.deleteGeneralPost),
+    path('createGeneralPostComment/', views.createGeneralPostComment),
+    path('getAllGeneralPostComment/', views.getAllCommentsForGeneralPost),
 ]
