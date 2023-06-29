@@ -66,4 +66,8 @@ urlpatterns = [
     path('getAllGeneralPostComment/', views.getAllCommentsForGeneralPost),
     path('updateGeneralPostComment/', views.updateGeneralPostComment),
     path('deleteGeneralPostComment/', views.deleteGeneralPostComment),
+
+    # Facilities API
+    path('registerFacilities/', views.registerNeighborhoodFacilities),
+    path('getAllFacilities/', views.getAllFacilitiesForNeighborhoodGroup),
 ]

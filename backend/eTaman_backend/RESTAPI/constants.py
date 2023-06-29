@@ -80,4 +80,9 @@ GENERAL_POST_COMMENT_CREATED_SUCCESSFUL = "The General Post Comment Has Been Cre
 GENERAL_POST_COMMENT_UPDATED_SUCCESSFUL = "The General Post Comment Has Been Updated Successfully!"
 GENERAL_POST_COMMENT_DELETED_SUCCESSFUL = 'The General Post Comment Has Been Deleted Successfully!'
 
+FACILITIES_DATABASE_NOT_EXIST = "The Neighborhood Facilities Does Not Exist!"
+FACILITIES_NOT_RESIDENT_LEADER = "You are not the resident leader of the neighborhood group"
+FACILITIES_CREATED_SUCCESSFUL = "The Neighborhood Facilities Has Been Created Successfully!"
+ALL_FACILITIES_FOUND = "All Neighborhood Facilities Have Been Successfully Discovered!"
+
 DATABASE_WRITE_ERROR = "An Error Has Occured! Please Try Again!"

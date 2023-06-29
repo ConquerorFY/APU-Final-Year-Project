@@ -199,6 +199,20 @@ def getAllCommentsForGeneralPost(request):
     except GeneralPostModel.DoesNotExist:
         return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
 
+# Get all facilities for a specific neighborhood group
+@api_view(['GET'])
+def getAllFacilitiesForNeighborhoodGroup(request):
+    try:
+        # Get Neighborhood Group ID
+        groupID = request.data["groupID"]
+        facilities = FacilitiesModel.objects.filter(groupID=groupID)
+        facilitiesData = FacilitiesSerializer(facilities, many=True).data
+        return JsonResponse({'data': {'message': ALL_FACILITIES_FOUND, 'list': facilitiesData, 'status': SUCCESS_CODE}}, status=201)
+    except FacilitiesModel.DoesNotExist:
+        return JsonResponse({'data': {'message': FACILITIES_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except NeighborhoodGroupModel.DoesNotExist:
+        return JsonResponse({'data': {'message': NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
 
 
 
@@ -612,6 +626,36 @@ def createGeneralPostComment(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
 
+# Register facilities into neighborhood groups
+@api_view(['POST'])
+def registerNeighborhoodFacilities(request):
+    try:
+        # Get resident ID
+        residentID = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Check whether resident is the resident leader
+        if residentData.isLeader:
+            groupID = residentData.groupID.id
+            newFacilities = {
+                'name': request.data['name'],
+                'description': request.data['description'],
+                'status': 'Available',
+                'groupID': groupID
+            }
+            newFacilitiesData = FacilitiesSerializer(data = newFacilities)
+            # Check whether all data is valid
+            if newFacilitiesData.is_valid():
+                newFacilitiesData.save()
+                return JsonResponse({'data': {'message': FACILITIES_CREATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            return JsonResponse({'data': {'message': FACILITIES_NOT_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+    except FacilitiesModel.DoesNotExist:
+        return JsonResponse({'data': {'message': FACILITIES_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
 
 
 

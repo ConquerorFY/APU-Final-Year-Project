@@ -76,6 +76,7 @@ Residents
     - Update account information [X]
     - Login [X]
     - Logout [X]
+    - View Facilities [X]
     - Book Facilities
     - Return Facilities
 
@@ -132,8 +133,8 @@ Resident Leader
                 -> Description
                 -> Author
 
-    - Facilities:
-        - Attributes:
+    - Facilities: [X]
+        - Attributes: 
             -> ID
             -> Name
             -> Description
@@ -160,8 +161,12 @@ Resident Leader
     - Update account information [X]
     - Login [X]
     - Logout [X]
+    - Register Facilities [X]
+    - View Facilities [X]
     - Book Facilities
     - Return Facilities
+    - Update Facilities
+    - Delete Facilities
 
 Government
     -
