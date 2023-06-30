@@ -23,6 +23,7 @@ Residents
         -> Password
         -> isLeader
         -> groupID
+        -> userData
 
     - Create Posts [X] 
         -> Crime Sightings 
@@ -33,6 +34,8 @@ Residents
                 -> Title
                 -> Description
                 -> Actions Taken
+                -> Like Count
+                -> Dislike Count
                 -> Reporter
         -> Complaints
             - Attributes: [X]
@@ -41,6 +44,8 @@ Residents
                 -> Target (Individual / House Number / ...)
                 -> Title 
                 -> Description
+                -> Like Count
+                -> Dislike Count
                 -> Reporter
                 -> isAnonymous
         -> Events
@@ -50,6 +55,8 @@ Residents
                 -> Venue
                 -> Title 
                 -> Description
+                -> Like Count
+                -> Dislike Count
                 -> Organizer
                 -> Participants (List of Resident IDs)
         -> General information / Discussion / Suggestions
@@ -58,6 +65,8 @@ Residents
                 -> Datetime
                 -> Title
                 -> Description
+                -> Like Count
+                -> Dislike Count
                 -> Author
 
     - View all posts [X]
@@ -70,11 +79,11 @@ Residents
     - Join neighborhood groups (need verification) [X]
     - View group rules [X]
     - Leave group [X]
-    - Vote for resident leader (raise post)
+    - Vote for resident leader (raise post) (resident leader give position)
     - Join Events [X]
     - Leave Events [X]
-    - Like Post
-    = Dislike Post
+    - Like Post [X]
+    = Dislike Post [X]
     - Register account [X]
     - View account information [X]
     - Update account information [X]
@@ -99,6 +108,7 @@ Resident Leader
         -> Password
         -> isLeader
         -> groupID
+        -> userData
 
     - Create Posts [X] 
         -> Crime Sightings
@@ -109,6 +119,8 @@ Resident Leader
                 -> Image
                 -> Title
                 -> Description
+                -> Like Count
+                -> Dislike Count
                 -> Actions Taken
                 -> Reporter
                 -> Type of Crime
@@ -118,6 +130,8 @@ Resident Leader
                 -> Target (Individual / House Number / ...)
                 -> Title 
                 -> Description
+                -> Like Count
+                -> Dislike Count
                 -> Reporter
                 -> isAnonymous
         -> Events
@@ -128,6 +142,8 @@ Resident Leader
                 -> Venue
                 -> Title 
                 -> Description
+                -> Like Count
+                -> Dislike Count
                 -> Organizer
                 -> Participants (List of Resident IDs)
         -> General information / Discussion / Suggestions
@@ -135,6 +151,8 @@ Resident Leader
                 -> ID
                 -> Title
                 -> Description
+                -> Like Count
+                -> Dislike Count
                 -> Author
 
     - Facilities: [X]
@@ -160,8 +178,8 @@ Resident Leader
     - Approve / Deny resident join request [X]
     - Join Events [X]
     - Leave Events [X]
-    - Like Post
-    - Dislike Post
+    - Like Post [X]
+    - Dislike Post [X]
     - View & Modify group rules [X]
     - Leave group [X]
     - Register account [X]

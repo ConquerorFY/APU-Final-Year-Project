@@ -46,6 +46,7 @@ CRIME_POST_COMMENT_NOT_SAME_GROUP = "You are not the same group as the author of
 CRIME_POST_COMMENT_CREATED_SUCCESSFUL = "The Crime Post Comment Has Been Created Successfully!"
 CRIME_POST_COMMENT_UPDATED_SUCCESSFUL = "The Crime Post Comment Has Been Updated Successfully!"
 CRIME_POST_COMMENT_DELETED_SUCCESSFUL = 'The Crime Post Comment Has Been Deleted Successfully!'
+CRIME_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP = "You are not part of the neighborhood group!"
 
 COMPLAINT_POST_DATABASE_NOT_EXIST = "The Complaint Post Does Not Exist!"
 COMPLAINT_POST_CREATED_SUCCESSFUL = "The Complaint Post Has Been Created Successfully!"
@@ -57,6 +58,7 @@ COMPLAINT_POST_COMMENT_NOT_SAME_GROUP = "You are not the same group as the autho
 COMPLAINT_POST_COMMENT_CREATED_SUCCESSFUL = "The Complaint Post Comment Has Been Created Successfully!"
 COMPLAINT_POST_COMMENT_UPDATED_SUCCESSFUL = "The Complaint Post Comment Has Been Updated Successfully!"
 COMPLAINT_POST_COMMENT_DELETED_SUCCESSFUL = 'The Complaint Post Comment Has Been Deleted Successfully!'
+COMPLAINT_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP = "You are not part of the neighborhood group!"
 
 EVENT_POST_DATABASE_NOT_EXIST = "The Event Post Does Not Exist!"
 EVENT_POST_CREATED_SUCCESSFUL = "The Event Post Has Been Created Successfully!"
@@ -80,6 +82,7 @@ GENERAL_POST_COMMENT_NOT_SAME_GROUP = "You are not the same group as the author 
 GENERAL_POST_COMMENT_CREATED_SUCCESSFUL = "The General Post Comment Has Been Created Successfully!"
 GENERAL_POST_COMMENT_UPDATED_SUCCESSFUL = "The General Post Comment Has Been Updated Successfully!"
 GENERAL_POST_COMMENT_DELETED_SUCCESSFUL = 'The General Post Comment Has Been Deleted Successfully!'
+GENERAL_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP = "You are not part of the neighborhood group!"
 
 FACILITIES_DATABASE_NOT_EXIST = "The Neighborhood Facilities Does Not Exist!"
 FACILITIES_NOT_RESIDENT_LEADER = "You are not the resident leader of the neighborhood group"

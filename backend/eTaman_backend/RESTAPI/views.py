@@ -218,6 +218,7 @@ def getAllFacilitiesForNeighborhoodGroup(request):
 
 
 
+
 ###########################################################
 #   _____   ____   _____ _______            _____ _____   #
 #  |  __ \ / __ \ / ____|__   __|     /\   |  __ \_   _|  #
@@ -408,6 +409,98 @@ def createCrimePost(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
 
+# Like crime post
+@api_view(['POST'])
+def likeCrimePost(request):
+    try:
+        # Get resident ID
+        residentID = decodeJWTToken(request.data['token'])['id']
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Get crime post ID
+        crimePostID = request.data['crimePostID']
+        crimePostData = CrimePostModel.objects.get(pk=crimePostID)
+        # Check whether the resident is within the same neighborhood as the crime post owner
+        if crimePostData.reporterID.groupID.id == residentData.groupID.id:
+            # Get user data and crime post like count
+            residentUserData = json.loads(residentData.userData)
+            crimePostLikeCount = crimePostData.likes
+            crimePostDislikeCount = crimePostData.dislikes
+            if crimePostID not in residentUserData['crimePostLikes']:
+                residentUserData['crimePostLikes'].append(crimePostID)
+                crimePostLikeCount = crimePostData.likes + 1
+            if crimePostID in residentUserData['crimePostDislikes']:
+                residentUserData['crimePostDislikes'].remove(crimePostID)
+                crimePostDislikeCount = crimePostData.dislikes - 1
+            newResidentData = {
+                'userData': json.dumps(residentUserData)
+            }
+            newCrimePostData = {
+                'likes': crimePostLikeCount,
+                'dislikes': crimePostDislikeCount
+            }
+            newResident = ResidentSerializer(residentData, data=newResidentData, partial=True)
+            newCrimePost = CrimePostSerializer(crimePostData, data=newCrimePostData, partial=True)
+            # Check if data is valid
+            if newResident.is_valid() and newCrimePost.is_valid():
+                newResident.save()
+                newCrimePost.save()
+                return JsonResponse({'data': {'message': CRIME_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            return JsonResponse({'data': {'message': CRIME_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
+    except CrimePostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': CRIME_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
+# Dislike crime post
+@api_view(['POST'])
+def dislikeCrimePost(request):
+    try:
+        # Get resident ID
+        residentID = decodeJWTToken(request.data['token'])['id']
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Get crime post ID
+        crimePostID = request.data['crimePostID']
+        crimePostData = CrimePostModel.objects.get(pk=crimePostID)
+        # Check whether the resident is within the same neighborhood as the crime post owner
+        if crimePostData.reporterID.groupID.id == residentData.groupID.id:
+            # Get user data and crime post dislike count
+            residentUserData = json.loads(residentData.userData)
+            crimePostLikeCount = crimePostData.likes
+            crimePostDislikeCount = crimePostData.dislikes
+            if crimePostID not in residentUserData['crimePostDislikes']:
+                residentUserData['crimePostDislikes'].append(crimePostID)
+                crimePostDislikeCount = crimePostData.dislikes + 1
+            if crimePostID in residentUserData['crimePostLikes']:
+                residentUserData['crimePostLikes'].remove(crimePostID)
+                crimePostLikeCount = crimePostData.likes - 1
+            newResidentData = {
+                'userData': json.dumps(residentUserData)
+            }
+            newCrimePostData = {
+                'likes': crimePostLikeCount,
+                'dislikes': crimePostDislikeCount
+            }
+            newResident = ResidentSerializer(residentData, data=newResidentData, partial=True)
+            newCrimePost = CrimePostSerializer(crimePostData, data=newCrimePostData, partial=True)
+            # Check if data is valid
+            if newResident.is_valid() and newCrimePost.is_valid():
+                newResident.save()
+                newCrimePost.save()
+                return JsonResponse({'data': {'message': CRIME_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            return JsonResponse({'data': {'message': CRIME_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
+    except CrimePostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': CRIME_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
 # Create crime post comment
 @api_view(['POST'])
 def createCrimePostComment(request):
@@ -464,6 +557,98 @@ def createComplaintPost(request):
         else:
             # An error has occured
             return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+    except ComplaintPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
+# Like complaint post
+@api_view(['POST'])
+def likeComplaintPost(request):
+    try:
+        # Get resident ID
+        residentID = decodeJWTToken(request.data['token'])['id']
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Get complaint post ID
+        complaintPostID = request.data['complaintPostID']
+        complaintPostData = ComplaintPostModel.objects.get(pk=complaintPostID)
+        # Check whether the resident is within the same neighborhood as the complaint post owner
+        if complaintPostData.reporterID.groupID.id == residentData.groupID.id:
+            # Get user data and complaint post like count
+            residentUserData = json.loads(residentData.userData)
+            complaintPostLikeCount = complaintPostData.likes
+            complaintPostDislikeCount = complaintPostData.dislikes
+            if complaintPostID not in residentUserData['complaintPostLikes']:
+                residentUserData['complaintPostLikes'].append(complaintPostID)
+                complaintPostLikeCount = complaintPostData.likes + 1
+            if complaintPostID in residentUserData['complaintPostDislikes']:
+                residentUserData['complaintPostDislikes'].remove(complaintPostID)
+                complaintPostDislikeCount = complaintPostData.dislikes - 1
+            newResidentData = {
+                'userData': json.dumps(residentUserData)
+            }
+            newComplaintPostData = {
+                'likes': complaintPostLikeCount,
+                'dislikes': complaintPostDislikeCount
+            }
+            newResident = ResidentSerializer(residentData, data=newResidentData, partial=True)
+            newComplaintPost = ComplaintPostSerializer(complaintPostData, data=newComplaintPostData, partial=True)
+            # Check if data is valid
+            if newResident.is_valid() and newComplaintPost.is_valid():
+                newResident.save()
+                newComplaintPost.save()
+                return JsonResponse({'data': {'message': COMPLAINT_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            return JsonResponse({'data': {'message': COMPLAINT_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
+    except ComplaintPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
+# Dislike complaint post
+@api_view(['POST'])
+def dislikeComplaintPost(request):
+    try:
+        # Get resident ID
+        residentID = decodeJWTToken(request.data['token'])['id']
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Get complaint post ID
+        complaintPostID = request.data['complaintPostID']
+        complaintPostData = ComplaintPostModel.objects.get(pk=complaintPostID)
+        # Check whether the resident is within the same neighborhood as the complaint post owner
+        if complaintPostData.reporterID.groupID.id == residentData.groupID.id:
+            # Get user data and complaint post dislike count
+            residentUserData = json.loads(residentData.userData)
+            complaintPostLikeCount = complaintPostData.likes
+            complaintPostDislikeCount = complaintPostData.dislikes
+            if complaintPostID not in residentUserData['complaintPostDislikes']:
+                residentUserData['complaintPostDislikes'].append(complaintPostID)
+                complaintPostDislikeCount = complaintPostData.dislikes + 1
+            if complaintPostID in residentUserData['complaintPostLikes']:
+                residentUserData['complaintPostLikes'].remove(complaintPostID)
+                complaintPostLikeCount = complaintPostData.likes - 1
+            newResidentData = {
+                'userData': json.dumps(residentUserData)
+            }
+            newComplaintPostData = {
+                'likes': complaintPostLikeCount,
+                'dislikes': complaintPostDislikeCount
+            }
+            newResident = ResidentSerializer(residentData, data=newResidentData, partial=True)
+            newComplaintPost = ComplaintPostSerializer(complaintPostData, data=newComplaintPostData, partial=True)
+            # Check if data is valid
+            if newResident.is_valid() and newComplaintPost.is_valid():
+                newResident.save()
+                newComplaintPost.save()
+                return JsonResponse({'data': {'message': COMPLAINT_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            return JsonResponse({'data': {'message': COMPLAINT_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
     except ComplaintPostModel.DoesNotExist:
         return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
     except ResidentModel.DoesNotExist:
@@ -530,6 +715,98 @@ def createEventPost(request):
             return JsonResponse({'data': {'message': EVENT_POST_CREATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
         else:
             return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+    except EventPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': EVENT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
+# Like event post
+@api_view(['POST'])
+def likeEventPost(request):
+    try:
+        # Get resident ID
+        residentID = decodeJWTToken(request.data['token'])['id']
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Get event post ID
+        eventPostID = request.data['eventPostID']
+        eventPostData = EventPostModel.objects.get(pk=eventPostID)
+        # Check whether the resident is within the same neighborhood as the event post owner
+        if eventPostData.organizerID.groupID.id == residentData.groupID.id:
+            # Get user data and event post like count
+            residentUserData = json.loads(residentData.userData)
+            eventPostLikeCount = eventPostData.likes
+            eventPostDislikeCount = eventPostData.dislikes
+            if eventPostID not in residentUserData['eventPostLikes']:
+                residentUserData['eventPostLikes'].append(eventPostID)
+                eventPostLikeCount = eventPostData.likes + 1
+            if eventPostID in residentUserData['eventPostDislikes']:
+                residentUserData['eventPostDislikes'].remove(eventPostID)
+                eventPostDislikeCount = eventPostData.dislikes - 1
+            newResidentData = {
+                'userData': json.dumps(residentUserData)
+            }
+            newEventPostData = {
+                'likes': eventPostLikeCount,
+                'dislikes': eventPostDislikeCount
+            }
+            newResident = ResidentSerializer(residentData, data=newResidentData, partial=True)
+            newEventPost = EventPostSerializer(eventPostData, data=newEventPostData, partial=True)
+            # Check if data is valid
+            if newResident.is_valid() and newEventPost.is_valid():
+                newResident.save()
+                newEventPost.save()
+                return JsonResponse({'data': {'message': EVENT_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            return JsonResponse({'data': {'message': EVENT_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
+    except EventPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': EVENT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
+# Dislike event post
+@api_view(['POST'])
+def dislikeEventPost(request):
+    try:
+        # Get resident ID
+        residentID = decodeJWTToken(request.data['token'])['id']
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Get event post ID
+        eventPostID = request.data['eventPostID']
+        eventPostData = EventPostModel.objects.get(pk=eventPostID)
+        # Check whether the resident is within the same neighborhood as the event post owner
+        if eventPostData.organizerID.groupID.id == residentData.groupID.id:
+            # Get user data and event post dislike count
+            residentUserData = json.loads(residentData.userData)
+            eventPostLikeCount = eventPostData.likes
+            eventPostDislikeCount = eventPostData.dislikes
+            if eventPostID not in residentUserData['eventPostDislikes']:
+                residentUserData['eventPostDislikes'].append(eventPostID)
+                eventPostDislikeCount = eventPostData.dislikes + 1
+            if eventPostID in residentUserData['eventPostLikes']:
+                residentUserData['eventPostLikes'].remove(eventPostID)
+                eventPostLikeCount = eventPostData.likes - 1
+            newResidentData = {
+                'userData': json.dumps(residentUserData)
+            }
+            newEventPostData = {
+                'likes': eventPostLikeCount,
+                'dislikes': eventPostDislikeCount
+            }
+            newResident = ResidentSerializer(residentData, data=newResidentData, partial=True)
+            newEventPost = EventPostSerializer(eventPostData, data=newEventPostData, partial=True)
+            # Check if data is valid
+            if newResident.is_valid() and newEventPost.is_valid():
+                newResident.save()
+                newEventPost.save()
+                return JsonResponse({'data': {'message': EVENT_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            return JsonResponse({'data': {'message': EVENT_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
     except EventPostModel.DoesNotExist:
         return JsonResponse({'data': {'message': EVENT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
     except ResidentModel.DoesNotExist:
@@ -648,6 +925,98 @@ def createGeneralPost(request):
             return JsonResponse({'data': {'message': GENERAL_POST_CREATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
         else:
             return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+    except GeneralPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
+# Like general post
+@api_view(['POST'])
+def likeGeneralPost(request):
+    try:
+        # Get resident ID
+        residentID = decodeJWTToken(request.data['token'])['id']
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Get general post ID
+        generalPostID = request.data['generalPostID']
+        generalPostData = GeneralPostModel.objects.get(pk=generalPostID)
+        # Check whether the resident is within the same neighborhood as the general post owner
+        if generalPostData.authorID.groupID.id == residentData.groupID.id:
+            # Get user data and general post like count
+            residentUserData = json.loads(residentData.userData)
+            generalPostLikeCount = generalPostData.likes
+            generalPostDislikeCount = generalPostData.dislikes
+            if generalPostID not in residentUserData['generalPostLikes']:
+                residentUserData['generalPostLikes'].append(generalPostID)
+                generalPostLikeCount = generalPostData.likes + 1
+            if generalPostID in residentUserData['generalPostDislikes']:
+                residentUserData['generalPostDislikes'].remove(generalPostID)
+                generalPostDislikeCount = generalPostData.dislikes - 1
+            newResidentData = {
+                'userData': json.dumps(residentUserData)
+            }
+            newGeneralPostData = {
+                'likes': generalPostLikeCount,
+                'dislikes': generalPostDislikeCount
+            }
+            newResident = ResidentSerializer(residentData, data=newResidentData, partial=True)
+            newGeneralPost = GeneralPostSerializer(generalPostData, data=newGeneralPostData, partial=True)
+            # Check if data is valid
+            if newResident.is_valid() and newGeneralPost.is_valid():
+                newResident.save()
+                newGeneralPost.save()
+                return JsonResponse({'data': {'message': GENERAL_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            return JsonResponse({'data': {'message': GENERAL_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
+    except GeneralPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
+# Dislike general post
+@api_view(['POST'])
+def dislikeGeneralPost(request):
+    try:
+        # Get resident ID
+        residentID = decodeJWTToken(request.data['token'])['id']
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Get general post ID
+        generalPostID = request.data['generalPostID']
+        generalPostData = GeneralPostModel.objects.get(pk=generalPostID)
+        # Check whether the resident is within the same neighborhood as the general post owner
+        if generalPostData.authorID.groupID.id == residentData.groupID.id:
+            # Get user data and general post dislike count
+            residentUserData = json.loads(residentData.userData)
+            generalPostLikeCount = generalPostData.likes
+            generalPostDislikeCount = generalPostData.dislikes
+            if generalPostID not in residentUserData['generalPostDislikes']:
+                residentUserData['generalPostDislikes'].append(generalPostID)
+                generalPostDislikeCount = generalPostData.dislikes + 1
+            if generalPostID in residentUserData['generalPostLikes']:
+                residentUserData['generalPostLikes'].remove(generalPostID)
+                generalPostLikeCount = generalPostData.likes - 1
+            newResidentData = {
+                'userData': json.dumps(residentUserData)
+            }
+            newGeneralPostData = {
+                'likes': generalPostLikeCount,
+                'dislikes': generalPostDislikeCount
+            }
+            newResident = ResidentSerializer(residentData, data=newResidentData, partial=True)
+            newGeneralPost = GeneralPostSerializer(generalPostData, data=newGeneralPostData, partial=True)
+            # Check if data is valid
+            if newResident.is_valid() and newGeneralPost.is_valid():
+                newResident.save()
+                newGeneralPost.save()
+                return JsonResponse({'data': {'message': GENERAL_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            return JsonResponse({'data': {'message': GENERAL_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
     except GeneralPostModel.DoesNotExist:
         return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
     except ResidentModel.DoesNotExist:
@@ -1136,6 +1505,7 @@ def updateNeighborhoodFacilities(request):
         return JsonResponse({"data": {'message': FACILITIES_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
 
 
 

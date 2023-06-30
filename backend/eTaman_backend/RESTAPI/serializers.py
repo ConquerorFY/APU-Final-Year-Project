@@ -19,7 +19,7 @@ class NeighborhoodGroupSerializer(serializers.ModelSerializer):
 class ResidentSerializer(serializers.ModelSerializer):
     class Meta:
         model = ResidentModel
-        fields = ('id', 'name', 'email', 'contact', 'state', 'city', 'street', 'postcode', 'username', 'password', 'isLeader', 'groupID')
+        fields = ('id', 'name', 'email', 'contact', 'state', 'city', 'street', 'postcode', 'username', 'password', 'isLeader', 'groupID', 'userData')
 
 # Join Request Serializer
 class JoinRequestSerializer(serializers.ModelSerializer):
@@ -31,7 +31,7 @@ class JoinRequestSerializer(serializers.ModelSerializer):
 class CrimePostSerializer(serializers.ModelSerializer):
     class Meta:
         model = CrimePostModel
-        fields = ('id', 'datetime', 'image', 'title', 'description', 'actions', 'reporterID')
+        fields = ('id', 'datetime', 'image', 'title', 'description', 'actions', 'likes', 'dislikes', 'reporterID')
 
 # Crime Post Comment Serializer
 class CrimePostCommentSerializer(serializers.ModelSerializer):
@@ -43,7 +43,7 @@ class CrimePostCommentSerializer(serializers.ModelSerializer):
 class ComplaintPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = ComplaintPostModel
-        fields = ('id', 'datetime', 'title', 'description', 'target', 'isAnonymous', 'reporterID')
+        fields = ('id', 'datetime', 'title', 'description', 'target', 'likes', 'dislikes', 'isAnonymous', 'reporterID')
 
 # Complaint Post Comment Serializer
 class ComplaintPostCommentSerializer(serializers.ModelSerializer):
@@ -55,7 +55,7 @@ class ComplaintPostCommentSerializer(serializers.ModelSerializer):
 class EventPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = EventPostModel
-        fields = ('id', 'datetime', 'venue', 'title', 'description', 'participants', 'organizerID')
+        fields = ('id', 'datetime', 'venue', 'title', 'description', 'likes', 'dislikes', 'participants', 'organizerID')
 
 # EVent Post Comment Serializer
 class EventPostCommentSerializer(serializers.ModelSerializer):
@@ -67,7 +67,7 @@ class EventPostCommentSerializer(serializers.ModelSerializer):
 class GeneralPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = GeneralPostModel
-        fields = ('id', 'datetime', 'title', 'description', 'authorID')
+        fields = ('id', 'datetime', 'title', 'description', 'likes', 'dislikes', 'authorID')
 
 # General Post Comment Serializer
 class GeneralPostCommentSerializer(serializers.ModelSerializer):

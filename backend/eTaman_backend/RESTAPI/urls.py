@@ -39,6 +39,8 @@ urlpatterns = [
     path('getAllCrimePostComment/', views.getAllCommentsForCrimePost),
     path('updateCrimePostComment/', views.updateCrimePostComment),
     path('deleteCrimePostComment/', views.deleteCrimePostComment),
+    path('likeCrimePost/', views.likeCrimePost),
+    path('dislikeCrimePost/', views.dislikeCrimePost),
 
     # Complaint Post API
     path('createComplaintPost/', views.createComplaintPost),
@@ -48,6 +50,8 @@ urlpatterns = [
     path('getAllComplaintPostComment/', views.getAllCommentsForComplaintPost),
     path('updateComplaintPostComment/', views.updateComplaintPostComment),
     path('deleteComplaintPostComment/', views.deleteComplaintPostComment),
+    path('likeComplaintPost/', views.likeComplaintPost),
+    path('dislikeComplaintPost/', views.dislikeComplaintPost),
 
     # Event Post API
     path('createEventPost/', views.createEventPost),
@@ -59,6 +63,8 @@ urlpatterns = [
     path('getAllEventPostComment/', views.getAllCommentsForEventPost),
     path('updateEventPostComment/', views.updateEventPostComment),
     path('deleteEventPostComment/', views.deleteEventPostComment),
+    path('likeEventPost/', views.likeEventPost),
+    path('dislikeEventPost/', views.dislikeEventPost),
 
     # General Post API
     path('createGeneralPost/', views.createGeneralPost),
@@ -68,6 +74,8 @@ urlpatterns = [
     path('getAllGeneralPostComment/', views.getAllCommentsForGeneralPost),
     path('updateGeneralPostComment/', views.updateGeneralPostComment),
     path('deleteGeneralPostComment/', views.deleteGeneralPostComment),
+    path('likeGeneralPost/', views.likeGeneralPost),
+    path('dislikeGeneralPost/', views.dislikeGeneralPost),
 
     # Facilities API
     path('registerFacilities/', views.registerNeighborhoodFacilities),

@@ -31,6 +31,7 @@ class ResidentModel(models.Model):
     city = models.CharField(max_length=100, blank=False)
     street = models.CharField(max_length=100, blank=False)
     postcode = models.IntegerField(blank=False)
+    userData = models.CharField(max_length=1000, default='{"crimePostLikes": [],"crimePostDislikes": [],"complaintPostLikes": [],"complaintPostDislikes": [],"eventPostLikes": [],"eventPostDislikes": [],"generalPostLikes": [],"generalPostDislikes": []}')
     username = models.CharField(max_length=100, blank=False, unique=True)
     password = models.CharField(max_length=150, blank=False)
     isLeader = models.BooleanField(default=False)
@@ -51,6 +52,8 @@ class CrimePostModel(models.Model):
     title = models.CharField(max_length=500, blank=False)
     description = models.CharField(max_length=2000, blank=False)
     actions = models.CharField(max_length=2000, blank=False)
+    likes = models.IntegerField(default=0)
+    dislikes = models.IntegerField(default=0)
     reporterID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
 
 # Crime Post Comment Model
@@ -67,6 +70,8 @@ class ComplaintPostModel(models.Model):
     description = models.CharField(max_length=2000, blank=False)
     target = models.CharField(max_length=100, blank=False)
     isAnonymous = models.BooleanField(default=False)
+    likes = models.IntegerField(default=0)
+    dislikes = models.IntegerField(default=0)
     reporterID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
 
 # Complaint Post Comment Model
@@ -83,6 +88,8 @@ class EventPostModel(models.Model):
     title = models.CharField(max_length=500, blank=False)
     description = models.CharField(max_length=2000, blank=False)
     participants = models.CharField(max_length=1000, default='')
+    likes = models.IntegerField(default=0)
+    dislikes = models.IntegerField(default=0)
     organizerID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
 
 # Event Post Comment Model
@@ -97,6 +104,8 @@ class GeneralPostModel(models.Model):
     datetime = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=500, blank=False)
     description = models.CharField(max_length=2000, blank=False)
+    likes = models.IntegerField(default=0)
+    dislikes = models.IntegerField(default=0)
     authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
 
 # General Post Comment Model
