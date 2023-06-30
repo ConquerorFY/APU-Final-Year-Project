@@ -70,4 +70,8 @@ urlpatterns = [
     # Facilities API
     path('registerFacilities/', views.registerNeighborhoodFacilities),
     path('getAllFacilities/', views.getAllFacilitiesForNeighborhoodGroup),
+    path('bookFacilities/', views.bookNeighborhoodFacilities),
+    path('returnFacilities/', views.returnNeighborhoodFacilities),
+    path('updateFacilities/', views.updateNeighborhoodFacilities),
+    path('deleteFacilities/', views.deleteNeighborhoodFacilities),
 ]

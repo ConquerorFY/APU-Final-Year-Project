@@ -82,7 +82,10 @@ GENERAL_POST_COMMENT_DELETED_SUCCESSFUL = 'The General Post Comment Has Been Del
 
 FACILITIES_DATABASE_NOT_EXIST = "The Neighborhood Facilities Does Not Exist!"
 FACILITIES_NOT_RESIDENT_LEADER = "You are not the resident leader of the neighborhood group"
+FACILITIES_NOT_PART_OF_NEIGHBORHOOD_GROUP = "You are not part of the neighborhood group!"
 FACILITIES_CREATED_SUCCESSFUL = "The Neighborhood Facilities Has Been Created Successfully!"
+FACILITIES_UPDATED_SUCCESSFUL = "The Neighborhood Facilities Has Been Updated Successfully!"
+FACILITIES_DELETED_SUCCESSFUL = "The Neighborhood Facilities Has Been Deleted Successfully!"
 ALL_FACILITIES_FOUND = "All Neighborhood Facilities Have Been Successfully Discovered!"
 
 DATABASE_WRITE_ERROR = "An Error Has Occured! Please Try Again!"

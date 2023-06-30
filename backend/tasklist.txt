@@ -77,8 +77,8 @@ Residents
     - Login [X]
     - Logout [X]
     - View Facilities [X]
-    - Book Facilities
-    - Return Facilities
+    - Book Facilities [X]
+    - Return Facilities [X]
 
 Resident Leader
     - Attributes: [X]
@@ -163,10 +163,10 @@ Resident Leader
     - Logout [X]
     - Register Facilities [X]
     - View Facilities [X]
-    - Book Facilities
-    - Return Facilities
-    - Update Facilities
-    - Delete Facilities
+    - Book Facilities [X]
+    - Return Facilities [X]
+    - Update Facilities [X]
+    - Delete Facilities [X]
 
 Government
     -
