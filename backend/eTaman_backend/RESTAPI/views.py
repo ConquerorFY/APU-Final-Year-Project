@@ -1,3 +1,4 @@
+import json
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
 from .models import *
@@ -565,6 +566,66 @@ def createEventPostComment(request):
         return JsonResponse({'data': {'message': EVENT_POST_COMMENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
     except EventPostModel.DoesNotExist:
         return JsonResponse({'data': {'message': EVENT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
+# Join event post
+@api_view(['POST'])
+def joinEventPost(request):
+    try:
+        # Get event post ID
+        eventPostID = request.data["eventPostID"]
+        eventPostData = EventPostModel.objects.get(pk=eventPostID)
+        # Get resident ID
+        residentID = decodeJWTToken(request.data["token"])["id"]
+        residentData = ResidentModel.objects.get(pk=residentID)
+        # Check whether the resident is within the same neighborhood group
+        if eventPostData.organizerID.groupID.id == residentData.groupID.id:
+            participantsList = json.loads(eventPostData.participants)
+            participantsList.append(residentID)
+            newEventPost = {
+                'participants': json.dumps(participantsList)
+            }
+            newEventPostData = EventPostSerializer(eventPostData, data=newEventPost, partial=True)
+            # Check whether data is valid
+            if newEventPostData.is_valid(raise_exception=True):
+                newEventPostData.save()
+                return JsonResponse({"data": {'message': EVENT_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            else:
+                # An error has occured
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+        else:
+            return JsonResponse({'data': {'message': EVENT_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
+    except EventPostCommentModel.DoesNotExist:
+        return JsonResponse({"data": {'message': EVENT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
+# Leave event post
+@api_view(['POST'])
+def leaveEventPost(request):
+    try:
+        # Get event post ID
+        eventPostID = request.data["eventPostID"]
+        eventPostData = EventPostModel.objects.get(pk=eventPostID)
+        # Get resident ID
+        residentID = decodeJWTToken(request.data["token"])["id"]
+        # Remove resident ID from the participants list
+        participantsList = json.loads(eventPostData.participants)
+        participantsList.remove(residentID)
+        newEventPost = {
+            'participants': json.dumps(participantsList)
+        }
+        newEventPostData = EventPostSerializer(eventPostData, data=newEventPost, partial=True)
+        # Check whether data is valid
+        if newEventPostData.is_valid(raise_exception=True):
+            newEventPostData.save()
+            return JsonResponse({"data": {'message': EVENT_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+        else:
+            # An error has occured
+            return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+    except EventPostCommentModel.DoesNotExist:
+        return JsonResponse({"data": {'message': EVENT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
 

@@ -71,6 +71,10 @@ Residents
     - View group rules [X]
     - Leave group [X]
     - Vote for resident leader (raise post)
+    - Join Events [X]
+    - Leave Events [X]
+    - Like Post
+    = Dislike Post
     - Register account [X]
     - View account information [X]
     - Update account information [X]
@@ -154,6 +158,10 @@ Resident Leader
     - Join neighborhood groups [X]
     - Get all pending approvals [X]
     - Approve / Deny resident join request [X]
+    - Join Events [X]
+    - Leave Events [X]
+    - Like Post
+    - Dislike Post
     - View & Modify group rules [X]
     - Leave group [X]
     - Register account [X]

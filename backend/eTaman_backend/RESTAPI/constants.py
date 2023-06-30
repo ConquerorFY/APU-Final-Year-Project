@@ -68,6 +68,7 @@ EVENT_POST_COMMENT_NOT_SAME_GROUP = "You are not the same group as the author of
 EVENT_POST_COMMENT_CREATED_SUCCESSFUL = "The Event Post Comment Has Been Created Successfully!"
 EVENT_POST_COMMENT_UPDATED_SUCCESSFUL = "The Event Post Comment Has Been Updated Successfully!"
 EVENT_POST_COMMENT_DELETED_SUCCESSFUL = 'The Event Post Comment Has Been Deleted Successfully!'
+EVENT_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP = "You are not part of the neighborhood group!"
 
 GENERAL_POST_DATABASE_NOT_EXIST = "The General Post Does Not Exist!"
 GENERAL_POST_CREATED_SUCCESSFUL = "The General Post Has Been Created Successfully!"

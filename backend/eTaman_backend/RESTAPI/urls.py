@@ -53,6 +53,8 @@ urlpatterns = [
     path('createEventPost/', views.createEventPost),
     path('updateEventPost/', views.updateEventPost),
     path('deleteEventPost/', views.deleteEventPost),
+    path('joinEventPost/', views.joinEventPost),
+    path('leaveEventPost/', views.leaveEventPost),
     path('createEventPostComment/', views.createEventPostComment),
     path('getAllEventPostComment/', views.getAllCommentsForEventPost),
     path('updateEventPostComment/', views.updateEventPostComment),
