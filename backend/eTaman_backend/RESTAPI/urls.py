@@ -11,10 +11,12 @@ urlpatterns = [
     # Resident API
     path('getResident/', views.getResidentData),
     path('getResidentAll/', views.getAllResidentData),
+    path('getAllNeighborhoodGroupResidentData/', views.getAllNeighborhoodGroupResidentData),
     path('registerResident/', views.registerResidentAccount),
     path('updateResident/', views.updateResidentAccount),
     path('loginResident/', views.loginResidentAccount),
     path('logoutResident/', views.logoutResidentAccount),
+    path('changeResidentLeader/', views.changeResidentLeader),
 
     # Neigborhood Group API
     path('getAllJoinRequests/', views.getAllNeighborhoodGroupJoinRequest),
@@ -30,6 +32,7 @@ urlpatterns = [
 
     # Post API
     path('getPostAll/', views.getAllPost),
+    path('getAllNeighborhoodGroupPost/', views.getAllNeighborhoodGroupPost),
 
     # Crime Post API
     path('createCrimePost/', views.createCrimePost),

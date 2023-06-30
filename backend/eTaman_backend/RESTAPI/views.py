@@ -44,6 +44,17 @@ def getAllResidentData(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': {"message": RESIDENT_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
 
+# Get all resident data within the same neighborhood group
+@api_view(['GET'])
+def getAllNeighborhoodGroupResidentData(request):
+    try:
+        # Get Neighborhood Group ID
+        groupID = request.data["groupID"]
+        groupData = ResidentSerializer(ResidentModel.objects.filter(groupID=groupID), many=True).data
+        return JsonResponse({'data': {'message': ALL_RESIDENT_DATA_FOUND, 'list': groupData, 'status': SUCCESS_CODE}}, status=201)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
 # Get particular resident information
 @api_view(['GET'])
 def getResidentData(request):
@@ -121,6 +132,36 @@ def getAllPost(request):
         complaintPostData = ComplaintPostSerializer(ComplaintPostModel.objects.all(), many=True).data
         eventPostData = EventPostSerializer(EventPostModel.objects.all(), many=True).data
         generalPostData = GeneralPostSerializer(GeneralPostModel.objects.all(), many=True).data
+        return JsonResponse({
+            'data': {
+                'message': ALL_POSTS_FOUND,
+                'crime': crimePostData,
+                'complaint': complaintPostData,
+                'event': eventPostData,
+                'general': generalPostData
+            },
+            'status': SUCCESS_CODE
+        }, status = 201)
+    except CrimePostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': CRIME_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except ComplaintPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except EventPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': EVENT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+    except GeneralPostModel.DoesNotExist:
+        return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+
+# Get all posts within the same neighborhood group
+@api_view(['GET'])
+def getAllNeighborhoodGroupPost(request):
+    try:
+        # Get neighborhood group ID
+        groupID = request.data["groupID"]
+        # Get all posts data
+        crimePostData = CrimePostSerializer(CrimePostModel.objects.filter(reporterID__groupID=groupID), many=True).data     # reporterID__groupID -> the groupID field that is located in the table that is referenced by reporterID (foreign key)
+        complaintPostData = ComplaintPostSerializer(ComplaintPostModel.objects.filter(reporterID__groupID=groupID), many=True).data
+        eventPostData = EventPostSerializer(EventPostModel.objects.filter(organizerID__groupID=groupID), many=True).data
+        generalPostData = GeneralPostSerializer(GeneralPostModel.objects.filter(authorID__groupID=groupID), many=True).data
         return JsonResponse({
             'data': {
                 'message': ALL_POSTS_FOUND,
@@ -1147,7 +1188,28 @@ def returnNeighborhoodFacilities(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
 
-
+# Change resident leader
+@api_view(['POST'])
+def changeResidentLeader(request):
+    try:
+        # Get sender resident ID
+        senderID = decodeJWTToken(request.data["token"])['id']
+        senderData = ResidentModel.objects.get(pk=senderID)
+        # Get target resident ID
+        targetID = request.data["targetID"]
+        targetData = ResidentModel.objects.get(pk=targetID)
+        newSenderData = ResidentSerializer(senderData, data={'isLeader': False}, partial=True)
+        newTargetData = ResidentSerializer(targetData, data={'isLeader': True}, partial=True)
+        # Check whether data is valid
+        if newSenderData.is_valid() and newTargetData.is_valid():
+            newSenderData.save()
+            newTargetData.save()
+            return JsonResponse({'data': {'message': RESIDENT_ACCOUNT_UPDATED, 'status': SUCCESS_CODE}}, status=201)
+        else:
+            # An error has occured
+            return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
 
 
 

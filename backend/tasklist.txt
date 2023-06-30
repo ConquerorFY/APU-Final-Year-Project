@@ -79,7 +79,7 @@ Residents
     - Join neighborhood groups (need verification) [X]
     - View group rules [X]
     - Leave group [X]
-    - Vote for resident leader (raise post) (resident leader give position)
+    - Vote for resident leader (raise post) (resident leader give position) [X]
     - Join Events [X]
     - Leave Events [X]
     - Like Post [X]
@@ -92,6 +92,7 @@ Residents
     - View Facilities [X]
     - Book Facilities [X]
     - Return Facilities [X]
+    - Get All Posts (Within Group) [X]
 
 Resident Leader
     - Attributes: [X]
@@ -193,6 +194,8 @@ Resident Leader
     - Return Facilities [X]
     - Update Facilities [X]
     - Delete Facilities [X]
+    - Get All Residents (Within Group) [X]
+    - Get All Posts (Within Group) [X]
 
 Government
     -
