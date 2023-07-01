@@ -1,0 +1,60 @@
+1. Create new Flutter project: flutter create <my_project>
+2. Run and Test Flutter App: flutter run
+3. 
+To start developing a Flutter application, you primarily need to edit the following files:
+
+    - lib/main.dart: 
+        ~ This file serves as the entry point for your Flutter application. It contains the main() function, which is the starting point of your app's execution. In this file, you can define your app's structure, such as the app's root widget and any initial configuration.
+    - lib/: 
+        ~ This directory contains the Dart files that define the structure and behavior of your app. You'll create and edit various Dart files here to build your app's UI and functionality. Some common files you may work with include:
+    - lib/screens/: 
+        ~ This directory can contain Dart files for different screens or pages of your app. Each screen typically has its own Dart file, defining the UI and behavior specific to that screen.
+    - lib/widgets/: 
+        ~ This directory can contain reusable widgets that you create to build your app's UI components. You can define custom buttons, input fields, cards, and other UI elements as widgets in separate Dart files.
+    - lib/models/: 
+        ~ If your app requires data models or classes to represent data structures, you can define them in this directory. For example, you may create a User model to represent user data.
+    - lib/services/: 
+        ~ If your app interacts with APIs or performs asynchronous operations, you can create services in this directory to handle those tasks. Services can encapsulate the logic for fetching data, making network requests, or handling local storage.
+    - lib/utils/: 
+        ~ This directory can contain utility functions or helper classes that provide common functionality across your app. You can define functions for data manipulation, formatting, or other reusable operations.
+    - pubspec.yaml: 
+        ~ This file is used to define your app's dependencies and configuration. You can specify the packages you need for your app, including Flutter packages and any third-party dependencies. You'll also define other configurations like app name, version, and assets (such as images and fonts) in this file.
+
+    These are the primary files and directories you'll work with when developing a Flutter application. You'll write Dart code in the various Dart files within the lib/ directory, while the pubspec.yaml file allows you to manage your app's dependencies and configurations. The lib/main.dart file acts as the entry point for your app and allows you to define the initial structure and behavior of your application.
+
+4. 
+To add external dependencies to a Flutter project, you need to modify the pubspec.yaml file and run the flutter pub get command. Here's a step-by-step guide:
+    - Open the pubspec.yaml file: 
+        - Locate the pubspec.yaml file in the root directory of your Flutter project and open it in a text editor or your preferred Integrated Development Environment (IDE).
+    - Specify the dependency: 
+        - In the dependencies section of the pubspec.yaml file, add a new line with the desired package name and version. For example:
+
+        dependencies:
+        flutter:
+            sdk: flutter
+        http: ^0.13.3
+        
+    - In this example, the http package with version 0.13.3 is being added as a dependency.
+    - Note: 
+        - The ^ symbol before the version number signifies that the package should be compatible with the specified version and any future compatible versions.
+    - Save the pubspec.yaml file: 
+        - Save the changes you made to the pubspec.yaml file.
+    - Run flutter pub get: 
+        - Open a terminal or command prompt in the root directory of your Flutter project and run the following command:
+
+        flutter pub get
+
+    - This command downloads the specified dependencies and makes them available for use in your project. 
+    - It fetches the packages listed in the pubspec.yaml file and stores them in the flutter directory of your project.
+    - Import and use the dependency: 
+        - Once the flutter pub get command has completed successfully, you can import and use the added dependency in your Dart code. For example, if you added the http package, you can import it like this:
+
+        import 'package:http/http.dart' as http;
+
+    - You can then use the imported package in your code to make HTTP requests or perform other relevant tasks.
+    - Remember to re-run flutter pub get whenever you make changes to the pubspec.yaml file to ensure your dependencies are up to date.
+    - By following these steps, you can add external dependencies to your Flutter project and leverage the functionality provided by those packages in your application.
+
+5. Build APK for the flutter code: flutter build apk 
+6. Build App Bundle (.aab) for the flutter code: flutter build appbundle
+7. Clean all flutter builds: flutter clean
