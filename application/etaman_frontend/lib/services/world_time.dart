@@ -1,6 +1,7 @@
 import 'package:http/http.dart';
 import 'dart:convert';
 import 'package:intl/intl.dart';
+import 'package:etaman_frontend/services/logging.dart';
 
 class WorldTime {
   String location = ''; // location name for UI
@@ -8,6 +9,8 @@ class WorldTime {
   String flag = ''; // url to an asset flag icon
   String url = ''; // location url for api endpoint
   bool isDaytime = false; // true or false if daytime or not
+
+  EtamanLogger logger = EtamanLogger(); // logger
 
   WorldTime({required this.location, required this.flag, required this.url});
 
@@ -30,8 +33,7 @@ class WorldTime {
       isDaytime = now.hour > 6 && now.hour < 20 ? true : false;
       time = DateFormat.jm().format(now);
     } catch (e) {
-      print(e);
-      time = 'could not get time';
+      logger.error("$e, could not get time!");
       // These 2 function calls is to call this function repeatedly every second until a response is given
       // To fix the "flutter: Connection closed before full header was received" error
       await Future.delayed(const Duration(seconds: 1));
