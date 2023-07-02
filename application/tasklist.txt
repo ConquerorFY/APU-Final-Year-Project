@@ -1,0 +1,12 @@
+Guests:
+    - Welcome Screen [X]
+
+Residents:
+    - Welcome Screen [X]
+
+Resident Leader:
+    - Welcome Screen [X]
+
+Government:
+
+Admin:
