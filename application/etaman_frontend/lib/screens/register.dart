@@ -1,3 +1,4 @@
+import 'package:etaman_frontend/services/validator.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -39,6 +40,8 @@ class RegisterState extends State<Register> {
   String _usernameVal = '';
   String _passwordVal = '';
 
+  Validator validator = Validator(); // text form field validator
+
   @override
   void initState() {
     super.initState();
@@ -75,14 +78,7 @@ class RegisterState extends State<Register> {
                     TextFormField(
                       key: _nameKey,
                       validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter a name!';
-                        }
-                        final regExp = RegExp(r'^[a-zA-Z0-9]+$');
-                        if (!regExp.hasMatch(value)) {
-                          return 'Please enter a valid name!';
-                        }
-                        return null;
+                        return validator.validateName(value);
                       },
                       onChanged: (value) {
                         if (_nameKey.currentState!.validate()) {
@@ -111,15 +107,7 @@ class RegisterState extends State<Register> {
                     TextFormField(
                       key: _emailKey,
                       validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter an email!';
-                        }
-                        final regExp = RegExp(
-                            r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
-                        if (!regExp.hasMatch(value)) {
-                          return 'Please enter a valid email!';
-                        }
-                        return null;
+                        return validator.validateEmail(value);
                       },
                       onChanged: (value) {
                         if (_emailKey.currentState!.validate()) {
@@ -146,6 +134,17 @@ class RegisterState extends State<Register> {
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
+                      key: _stateKey,
+                      validator: (value) {
+                        return validator.validateState(value);
+                      },
+                      onChanged: (value) {
+                        if (_stateKey.currentState!.validate()) {
+                          setState(() {
+                            _stateVal = value;
+                          });
+                        }
+                      },
                       style: const TextStyle(
                           color: Colors.green,
                           fontSize: 16,
@@ -164,6 +163,17 @@ class RegisterState extends State<Register> {
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
+                      key: _cityKey,
+                      validator: (value) {
+                        return validator.validateCity(value);
+                      },
+                      onChanged: (value) {
+                        if (_cityKey.currentState!.validate()) {
+                          setState(() {
+                            _cityVal = value;
+                          });
+                        }
+                      },
                       style: const TextStyle(
                           color: Colors.green,
                           fontSize: 16,
@@ -182,6 +192,17 @@ class RegisterState extends State<Register> {
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
+                      key: _postcodeKey,
+                      validator: (value) {
+                        return validator.validatePostcode(value);
+                      },
+                      onChanged: (value) {
+                        if (_postcodeKey.currentState!.validate()) {
+                          setState(() {
+                            _postcodeVal = value;
+                          });
+                        }
+                      },
                       style: const TextStyle(
                           color: Colors.green,
                           fontSize: 16,
@@ -200,6 +221,17 @@ class RegisterState extends State<Register> {
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
+                      key: _streetKey,
+                      validator: (value) {
+                        return validator.validateStreet(value);
+                      },
+                      onChanged: (value) {
+                        if (_streetKey.currentState!.validate()) {
+                          setState(() {
+                            _streetVal = value;
+                          });
+                        }
+                      },
                       style: const TextStyle(
                           color: Colors.green,
                           fontSize: 16,
@@ -218,6 +250,17 @@ class RegisterState extends State<Register> {
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
+                      key: _contactKey,
+                      validator: (value) {
+                        return validator.validateContact(value);
+                      },
+                      onChanged: (value) {
+                        if (_contactKey.currentState!.validate()) {
+                          setState(() {
+                            _contactVal = value;
+                          });
+                        }
+                      },
                       style: const TextStyle(
                           color: Colors.green,
                           fontSize: 16,
@@ -236,6 +279,17 @@ class RegisterState extends State<Register> {
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
+                      key: _usernameKey,
+                      validator: (value) {
+                        return validator.validateUsername(value);
+                      },
+                      onChanged: (value) {
+                        if (_usernameKey.currentState!.validate()) {
+                          setState(() {
+                            _usernameVal = value;
+                          });
+                        }
+                      },
                       style: const TextStyle(
                           color: Colors.green,
                           fontSize: 16,
@@ -254,6 +308,18 @@ class RegisterState extends State<Register> {
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
+                      key: _passwordKey,
+                      validator: (value) {
+                        return validator.validatePassword(value);
+                      },
+                      onChanged: (value) {
+                        if (_postcodeKey.currentState!.validate()) {
+                          setState(() {
+                            _passwordVal = value;
+                          });
+                        }
+                      },
+                      obscureText: true,
                       style: const TextStyle(
                           color: Colors.green,
                           fontSize: 16,
@@ -262,24 +328,6 @@ class RegisterState extends State<Register> {
                       decoration: const InputDecoration(
                         labelStyle: TextStyle(color: Colors.green),
                         labelText: 'Password',
-                        enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 1.0)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 2.0)),
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
-                    TextFormField(
-                      style: const TextStyle(
-                          color: Colors.green,
-                          fontSize: 16,
-                          fontFamily: 'OpenSans'),
-                      cursorColor: Colors.green,
-                      decoration: const InputDecoration(
-                        labelStyle: TextStyle(color: Colors.green),
-                        labelText: 'Retype Password',
                         enabledBorder: OutlineInputBorder(
                             borderSide:
                                 BorderSide(color: Colors.green, width: 1.0)),
