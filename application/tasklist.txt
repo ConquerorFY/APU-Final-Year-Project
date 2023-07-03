@@ -1,11 +1,17 @@
 Guests:
     - Welcome Screen [X]
+    - Login Screen
+    - Register Screen
 
 Residents:
     - Welcome Screen [X]
+    - Login Screen
+    - Register Screen
 
 Resident Leader:
     - Welcome Screen [X]
+    - Login Screen
+    - Register Screen
 
 Government:
 
