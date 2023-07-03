@@ -1,4 +1,3 @@
-import 'package:etaman_frontend/screens/register.dart';
 import 'package:flutter/material.dart';
 
 class Welcome extends StatefulWidget {
