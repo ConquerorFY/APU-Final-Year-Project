@@ -1,13 +1,14 @@
+import 'package:etaman_frontend/screens/register.dart';
 import 'package:flutter/material.dart';
 
 class Welcome extends StatefulWidget {
   const Welcome({super.key});
 
   @override
-  _WelcomeState createState() => _WelcomeState();
+  WelcomeState createState() => WelcomeState();
 }
 
-class _WelcomeState extends State<Welcome> {
+class WelcomeState extends State<Welcome> {
   @override
   void initState() {
     super.initState();
@@ -87,6 +88,7 @@ class _WelcomeState extends State<Welcome> {
                 ElevatedButton(
                   onPressed: () {
                     // Navigate to Register Screen
+                    Navigator.pushNamed(context, '/register');
                   },
                   style: ButtonStyle(
                       backgroundColor:
