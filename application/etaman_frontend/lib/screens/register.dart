@@ -30,15 +30,15 @@ class RegisterState extends State<Register> {
   final GlobalKey<FormFieldState<String>> _passwordKey =
       GlobalKey<FormFieldState<String>>();
 
-  String _nameVal = '';
-  String _emailVal = '';
-  String _stateVal = '';
-  String _cityVal = '';
-  String _postcodeVal = '';
-  String _streetVal = '';
-  String _contactVal = '';
-  String _usernameVal = '';
-  String _passwordVal = '';
+  String nameVal = '';
+  String emailVal = '';
+  String stateVal = '';
+  String cityVal = '';
+  String postcodeVal = '';
+  String streetVal = '';
+  String contactVal = '';
+  String usernameVal = '';
+  String passwordVal = '';
 
   Validator validator = Validator(); // text form field validator
 
@@ -83,7 +83,7 @@ class RegisterState extends State<Register> {
                       onChanged: (value) {
                         if (_nameKey.currentState!.validate()) {
                           setState(() {
-                            _nameVal = value;
+                            nameVal = value;
                           });
                         }
                       },
@@ -112,7 +112,7 @@ class RegisterState extends State<Register> {
                       onChanged: (value) {
                         if (_emailKey.currentState!.validate()) {
                           setState(() {
-                            _emailVal = value;
+                            emailVal = value;
                           });
                         }
                       },
@@ -141,7 +141,7 @@ class RegisterState extends State<Register> {
                       onChanged: (value) {
                         if (_stateKey.currentState!.validate()) {
                           setState(() {
-                            _stateVal = value;
+                            stateVal = value;
                           });
                         }
                       },
@@ -170,7 +170,7 @@ class RegisterState extends State<Register> {
                       onChanged: (value) {
                         if (_cityKey.currentState!.validate()) {
                           setState(() {
-                            _cityVal = value;
+                            cityVal = value;
                           });
                         }
                       },
@@ -199,7 +199,7 @@ class RegisterState extends State<Register> {
                       onChanged: (value) {
                         if (_postcodeKey.currentState!.validate()) {
                           setState(() {
-                            _postcodeVal = value;
+                            postcodeVal = value;
                           });
                         }
                       },
@@ -228,7 +228,7 @@ class RegisterState extends State<Register> {
                       onChanged: (value) {
                         if (_streetKey.currentState!.validate()) {
                           setState(() {
-                            _streetVal = value;
+                            streetVal = value;
                           });
                         }
                       },
@@ -257,7 +257,7 @@ class RegisterState extends State<Register> {
                       onChanged: (value) {
                         if (_contactKey.currentState!.validate()) {
                           setState(() {
-                            _contactVal = value;
+                            contactVal = value;
                           });
                         }
                       },
@@ -286,7 +286,7 @@ class RegisterState extends State<Register> {
                       onChanged: (value) {
                         if (_usernameKey.currentState!.validate()) {
                           setState(() {
-                            _usernameVal = value;
+                            usernameVal = value;
                           });
                         }
                       },
@@ -315,7 +315,7 @@ class RegisterState extends State<Register> {
                       onChanged: (value) {
                         if (_postcodeKey.currentState!.validate()) {
                           setState(() {
-                            _passwordVal = value;
+                            passwordVal = value;
                           });
                         }
                       },
