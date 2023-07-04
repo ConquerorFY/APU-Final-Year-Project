@@ -152,7 +152,7 @@ class LoginState extends State<Login> {
                                 fontStyle: FontStyle.italic,
                                 decoration: TextDecoration.underline,
                                 fontFamily: "OpenSans",
-                                color: Colors.white)),
+                                color: Colors.lightGreen)),
                       ),
                     ],
                   ))))

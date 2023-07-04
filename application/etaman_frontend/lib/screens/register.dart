@@ -347,18 +347,34 @@ class RegisterState extends State<Register> {
                       "username": usernameVal,
                       "password": passwordVal
                     };
-                    final response = await apiService.registerAccount(userData);
-                    if (response != null) {
-                      final status = response["status"];
-                      final message = response["data"]["message"];
-                      if (status > 0) {
-                        // Success message
-                        // ignore: use_build_context_synchronously
-                        popupService.showSuccessPopup(context, message);
-                      } else {
-                        // Error message
-                        // ignore: use_build_context_synchronously
-                        popupService.showErrorPopup(context, message);
+                    if (!(_nameKey.currentState!.validate() &&
+                        _emailKey.currentState!.validate() &&
+                        _stateKey.currentState!.validate() &&
+                        _cityKey.currentState!.validate() &&
+                        _postcodeKey.currentState!.validate() &&
+                        _streetKey.currentState!.validate() &&
+                        _contactKey.currentState!.validate() &&
+                        _usernameKey.currentState!.validate() &&
+                        _passwordKey.currentState!.validate())) {
+                      popupService.showErrorPopup(context, "Validation Message",
+                          "Please ensure all fields are valid before submitting!");
+                    } else {
+                      final response =
+                          await apiService.registerAccount(userData);
+                      if (response != null) {
+                        final status = response["status"];
+                        final message = response["data"]["message"];
+                        if (status > 0) {
+                          // Success message
+                          // ignore: use_build_context_synchronously
+                          popupService.showSuccessPopup(
+                              context, "Registration Message", message);
+                        } else {
+                          // Error message
+                          // ignore: use_build_context_synchronously
+                          popupService.showErrorPopup(
+                              context, "Registration Message", message);
+                        }
                       }
                     }
                   },
