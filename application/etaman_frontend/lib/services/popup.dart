@@ -69,11 +69,11 @@ class MessagePopup extends StatelessWidget {
   }
 }
 
-class Popup {
+class PopupService {
   // Create Singleton instance
-  Popup._();
-  static final Popup _instance = Popup._();
-  factory Popup() => _instance;
+  PopupService._();
+  static final PopupService _instance = PopupService._();
+  factory PopupService() => _instance;
 
   void showSuccessPopup(BuildContext context, String title, String message) {
     showDialog(

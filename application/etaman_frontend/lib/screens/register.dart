@@ -42,9 +42,9 @@ class RegisterState extends State<Register> {
   String usernameVal = '';
   String passwordVal = '';
 
-  Validator validator = Validator(); // text form field validator
+  Validator validator = Validator(); // Text Form Field Validator
   ApiService apiService = ApiService(); // API Service
-  Popup popupService = Popup(); // Popup Service
+  PopupService popupService = PopupService(); // Popup Service
 
   @override
   Widget build(BuildContext context) {
@@ -334,62 +334,69 @@ class RegisterState extends State<Register> {
                   ]),
                 ),
                 ElevatedButton(
-                  onPressed: () async {
-                    // Handle registration process
-                    Map<String, dynamic> userData = {
-                      "name": nameVal,
-                      "email": emailVal,
-                      "contact": contactVal,
-                      "state": stateVal,
-                      "city": cityVal,
-                      "street": streetVal,
-                      "postcode": postcodeVal,
-                      "username": usernameVal,
-                      "password": passwordVal
-                    };
-                    if (!(_nameKey.currentState!.validate() &&
-                        _emailKey.currentState!.validate() &&
-                        _stateKey.currentState!.validate() &&
-                        _cityKey.currentState!.validate() &&
-                        _postcodeKey.currentState!.validate() &&
-                        _streetKey.currentState!.validate() &&
-                        _contactKey.currentState!.validate() &&
-                        _usernameKey.currentState!.validate() &&
-                        _passwordKey.currentState!.validate())) {
-                      popupService.showErrorPopup(context, "Validation Message",
-                          "Please ensure all fields are valid before submitting!");
-                    } else {
-                      final response =
-                          await apiService.registerAccount(userData);
-                      if (response != null) {
-                        final status = response["status"];
-                        final message = response["data"]["message"];
-                        if (status > 0) {
-                          // Success message
-                          // ignore: use_build_context_synchronously
-                          popupService.showSuccessPopup(
-                              context, "Registration Message", message);
-                        } else {
-                          // Error message
-                          // ignore: use_build_context_synchronously
-                          popupService.showErrorPopup(
-                              context, "Registration Message", message);
+                    onPressed: () async {
+                      // Handle registration process
+                      Map<String, dynamic> userData = {
+                        "name": nameVal,
+                        "email": emailVal,
+                        "contact": contactVal,
+                        "state": stateVal,
+                        "city": cityVal,
+                        "street": streetVal,
+                        "postcode": postcodeVal,
+                        "username": usernameVal,
+                        "password": passwordVal
+                      };
+                      if (!(_nameKey.currentState!.validate() &&
+                          _emailKey.currentState!.validate() &&
+                          _stateKey.currentState!.validate() &&
+                          _cityKey.currentState!.validate() &&
+                          _postcodeKey.currentState!.validate() &&
+                          _streetKey.currentState!.validate() &&
+                          _contactKey.currentState!.validate() &&
+                          _usernameKey.currentState!.validate() &&
+                          _passwordKey.currentState!.validate())) {
+                        popupService.showErrorPopup(
+                            context,
+                            "Validation Message",
+                            "Please ensure all fields are valid before submitting!");
+                      } else {
+                        final response =
+                            await apiService.registerAccount(userData);
+                        if (response != null) {
+                          final status = response["status"];
+                          final message = response["data"]["message"];
+                          if (status > 0) {
+                            // Success message
+                            // ignore: use_build_context_synchronously
+                            popupService.showSuccessPopup(
+                                context, "Registration Message", message);
+                          } else {
+                            // Error message
+                            // ignore: use_build_context_synchronously
+                            popupService.showErrorPopup(
+                                context, "Registration Message", message);
+                          }
                         }
                       }
-                    }
-                  },
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.green),
-                      padding: MaterialStateProperty.all<EdgeInsets>(
-                          const EdgeInsets.fromLTRB(50, 20, 50, 20))),
-                  child: const Text('Register',
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w800,
-                          fontFamily: "OpenSans",
-                          color: Colors.white)),
-                ),
+                    },
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.green),
+                        padding: MaterialStateProperty.all<EdgeInsets>(
+                            const EdgeInsets.fromLTRB(50, 20, 50, 20))),
+                    child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.app_registration, color: Colors.white),
+                          SizedBox(width: 8),
+                          Text('Register',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w800,
+                                  fontFamily: "OpenSans",
+                                  color: Colors.white)),
+                        ])),
               ],
             ),
           ),

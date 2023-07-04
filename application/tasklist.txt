@@ -1,16 +1,13 @@
 Guests:
-    - Welcome Screen [X]
-    - Login Screen
+    - Login Screen [X]
     - Register Screen [X]
 
 Residents:
-    - Welcome Screen [X]
-    - Login Screen
+    - Login Screen [X]
     - Register Screen
 
 Resident Leader:
-    - Welcome Screen [X]
-    - Login Screen
+    - Login Screen [X]
     - Register Screen [X]
 
 Government:
