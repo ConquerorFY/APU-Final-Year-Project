@@ -1,5 +1,7 @@
+import 'package:etaman_frontend/services/popup.dart';
 import 'package:etaman_frontend/services/validator.dart';
 import 'package:flutter/material.dart';
+import 'package:etaman_frontend/services/api.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -41,13 +43,15 @@ class RegisterState extends State<Register> {
   String passwordVal = '';
 
   Validator validator = Validator(); // text form field validator
+  ApiService apiService = ApiService(); // API Service
+  Popup popupService = Popup(); // Popup Service
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.green,
-          title: const Text('Register Page',
+          title: const Text('Register Account',
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w800,
@@ -330,8 +334,33 @@ class RegisterState extends State<Register> {
                   ]),
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     // Handle registration process
+                    Map<String, dynamic> userData = {
+                      "name": nameVal,
+                      "email": emailVal,
+                      "contact": contactVal,
+                      "state": stateVal,
+                      "city": cityVal,
+                      "street": streetVal,
+                      "postcode": postcodeVal,
+                      "username": usernameVal,
+                      "password": passwordVal
+                    };
+                    final response = await apiService.registerAccount(userData);
+                    if (response != null) {
+                      final status = response["status"];
+                      final message = response["data"]["message"];
+                      if (status > 0) {
+                        // Success message
+                        // ignore: use_build_context_synchronously
+                        popupService.showSuccessPopup(context, message);
+                      } else {
+                        // Error message
+                        // ignore: use_build_context_synchronously
+                        popupService.showErrorPopup(context, message);
+                      }
+                    }
                   },
                   style: ButtonStyle(
                       backgroundColor:

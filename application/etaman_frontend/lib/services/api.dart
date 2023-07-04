@@ -14,14 +14,15 @@ class ApiService {
   // Register Resident Account API
   dynamic registerAccount(body) async {
     try {
-      final url = Uri.parse("http://localhost:8000/registerResident/");
+      final url = Uri.parse("http://localhost:8000/api/registerResident/");
       final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
 
-      final response = await post(url, headers: headers, body: body);
-      final responseData = jsonDecode(response.body)["data"];
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
 
       logger.info("Register Account - $responseData");
-      return responseData["message"];
+      return responseData;
     } catch (e) {
       logger.error("Register Account - $e");
       return null;
