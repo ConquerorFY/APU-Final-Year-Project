@@ -43,16 +43,6 @@ class RegisterState extends State<Register> {
   Validator validator = Validator(); // text form field validator
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
