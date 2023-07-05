@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class MessagePopup extends StatelessWidget {
   final String title;
   final String message;
+  final IconData icon;
   final Color backgroundColor;
   final Color textColor;
 
@@ -10,6 +11,7 @@ class MessagePopup extends StatelessWidget {
     super.key,
     required this.title,
     required this.message,
+    required this.icon,
     this.backgroundColor = Colors.green,
     this.textColor = Colors.white,
   });
@@ -18,24 +20,16 @@ class MessagePopup extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: backgroundColor,
-      title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.white, width: 1.8)),
-        ),
-        const SizedBox(height: 5.0),
+      title: Row(children: [
+        Icon(icon, color: textColor),
+        const SizedBox(width: 8.0),
         Text(
           title,
           style: TextStyle(
               color: textColor,
-              fontSize: 12.0,
-              fontWeight: FontWeight.bold,
+              fontSize: 18.0,
+              fontWeight: FontWeight.w800,
               fontFamily: "OpenSans"),
-        ),
-        const SizedBox(height: 5.0),
-        Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.white, width: 2.0)),
         )
       ]),
       titlePadding: const EdgeInsets.fromLTRB(24, 16, 24, 20),
@@ -43,8 +37,8 @@ class MessagePopup extends StatelessWidget {
         message,
         style: TextStyle(
             color: textColor,
-            fontSize: 16.0,
-            fontWeight: FontWeight.bold,
+            fontSize: 14.0,
+            fontWeight: FontWeight.w500,
             fontFamily: "OpenSans"),
       ),
       contentPadding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
@@ -55,10 +49,9 @@ class MessagePopup extends StatelessWidget {
             // Close the popup when this button is pressed
             Navigator.of(context).pop();
           },
-          child: Text(
-            "Close",
+          child: const Text(
+            "OK",
             style: TextStyle(
-                color: textColor,
                 fontSize: 16.0,
                 fontWeight: FontWeight.bold,
                 fontFamily: "OpenSans"),
@@ -82,8 +75,9 @@ class PopupService {
         return MessagePopup(
           title: title,
           message: message,
-          backgroundColor: Colors.green,
-          textColor: Colors.white,
+          icon: Icons.info_outline_rounded,
+          backgroundColor: Colors.white,
+          textColor: Colors.green,
         );
       },
     );
@@ -96,8 +90,9 @@ class PopupService {
         return MessagePopup(
           title: title,
           message: message,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
+          icon: Icons.warning_amber_rounded,
+          backgroundColor: Colors.white,
+          textColor: Colors.red,
         );
       },
     );

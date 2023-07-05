@@ -158,7 +158,7 @@ class LoginState extends State<Login> {
                                   // Success message
                                   // ignore: use_build_context_synchronously
                                   popupService.showSuccessPopup(
-                                      context, "Login Message", message);
+                                      context, "Login Success", message);
                                   // Set auth token
                                   final authToken = response["data"]["token"];
                                   authService.setAuthToken(authToken);
@@ -166,7 +166,7 @@ class LoginState extends State<Login> {
                                   // Error message
                                   // ignore: use_build_context_synchronously
                                   popupService.showErrorPopup(
-                                      context, "Login Message", message);
+                                      context, "Login Error", message);
                                 }
                               }
                             },

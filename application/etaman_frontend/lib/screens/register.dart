@@ -370,12 +370,12 @@ class RegisterState extends State<Register> {
                             // Success message
                             // ignore: use_build_context_synchronously
                             popupService.showSuccessPopup(
-                                context, "Registration Message", message);
+                                context, "Registration Success", message);
                           } else {
                             // Error message
                             // ignore: use_build_context_synchronously
                             popupService.showErrorPopup(
-                                context, "Registration Message", message);
+                                context, "Registration Error", message);
                           }
                         }
                       }
