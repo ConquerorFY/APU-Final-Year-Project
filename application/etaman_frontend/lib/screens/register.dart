@@ -1,4 +1,5 @@
 import 'package:etaman_frontend/services/popup.dart';
+import 'package:etaman_frontend/services/settings.dart';
 import 'package:etaman_frontend/services/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:etaman_frontend/services/api.dart';
@@ -45,6 +46,7 @@ class RegisterState extends State<Register> {
   Validator validator = Validator(); // Text Form Field Validator
   ApiService apiService = ApiService(); // API Service
   PopupService popupService = PopupService(); // Popup Service
+  Settings settings = Settings(); // Settings Service
 
   @override
   Widget build(BuildContext context) {
@@ -81,20 +83,24 @@ class RegisterState extends State<Register> {
                           });
                         }
                       },
-                      style: const TextStyle(
-                          color: Colors.green,
+                      style: TextStyle(
+                          color: settings.registerTextFieldTextColor,
                           fontSize: 16,
                           fontFamily: 'OpenSans'),
-                      cursorColor: Colors.green,
-                      decoration: const InputDecoration(
-                        labelStyle: TextStyle(color: Colors.green),
+                      cursorColor: settings.registerTextFieldCursorColor,
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                            color: settings.registerTextFieldTextColor),
                         labelText: 'Name',
                         enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 1.0)),
+                            borderSide: BorderSide(
+                                color: settings.registerTextFieldBorderColor,
+                                width: settings.registerTextFieldBorderWidth)),
                         focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 2.0)),
+                            borderSide: BorderSide(
+                                color: settings.registerTextFieldBorderColor,
+                                width: settings.registerTextFieldBorderWidth +
+                                    1.0)),
                       ),
                     ),
                     const SizedBox(height: 16.0),
@@ -110,20 +116,24 @@ class RegisterState extends State<Register> {
                           });
                         }
                       },
-                      style: const TextStyle(
-                          color: Colors.green,
+                      style: TextStyle(
+                          color: settings.registerTextFieldTextColor,
                           fontSize: 16,
                           fontFamily: 'OpenSans'),
-                      cursorColor: Colors.green,
-                      decoration: const InputDecoration(
-                        labelStyle: TextStyle(color: Colors.green),
+                      cursorColor: settings.registerTextFieldCursorColor,
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                            color: settings.registerTextFieldTextColor),
                         labelText: 'Email',
                         enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 1.0)),
+                            borderSide: BorderSide(
+                                color: settings.registerTextFieldBorderColor,
+                                width: settings.registerTextFieldBorderWidth)),
                         focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 2.0)),
+                            borderSide: BorderSide(
+                                color: settings.registerTextFieldBorderColor,
+                                width: settings.registerTextFieldBorderWidth +
+                                    1.0)),
                       ),
                     ),
                     const SizedBox(height: 16.0),
@@ -139,20 +149,24 @@ class RegisterState extends State<Register> {
                           });
                         }
                       },
-                      style: const TextStyle(
-                          color: Colors.green,
+                      style: TextStyle(
+                          color: settings.registerTextFieldTextColor,
                           fontSize: 16,
                           fontFamily: 'OpenSans'),
-                      cursorColor: Colors.green,
-                      decoration: const InputDecoration(
-                        labelStyle: TextStyle(color: Colors.green),
+                      cursorColor: settings.registerTextFieldCursorColor,
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                            color: settings.registerTextFieldTextColor),
                         labelText: 'State',
                         enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 1.0)),
+                            borderSide: BorderSide(
+                                color: settings.registerTextFieldBorderColor,
+                                width: settings.registerTextFieldBorderWidth)),
                         focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 2.0)),
+                            borderSide: BorderSide(
+                                color: settings.registerTextFieldBorderColor,
+                                width: settings.registerTextFieldBorderWidth +
+                                    1.0)),
                       ),
                     ),
                     const SizedBox(height: 16.0),
@@ -168,20 +182,24 @@ class RegisterState extends State<Register> {
                           });
                         }
                       },
-                      style: const TextStyle(
-                          color: Colors.green,
+                      style: TextStyle(
+                          color: settings.registerTextFieldTextColor,
                           fontSize: 16,
                           fontFamily: 'OpenSans'),
-                      cursorColor: Colors.green,
-                      decoration: const InputDecoration(
-                        labelStyle: TextStyle(color: Colors.green),
+                      cursorColor: settings.registerTextFieldCursorColor,
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                            color: settings.registerTextFieldTextColor),
                         labelText: 'City',
                         enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 1.0)),
+                            borderSide: BorderSide(
+                                color: settings.registerTextFieldBorderColor,
+                                width: settings.registerTextFieldBorderWidth)),
                         focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 2.0)),
+                            borderSide: BorderSide(
+                                color: settings.registerTextFieldBorderColor,
+                                width: settings.registerTextFieldBorderWidth +
+                                    1.0)),
                       ),
                     ),
                     const SizedBox(height: 16.0),
@@ -197,20 +215,24 @@ class RegisterState extends State<Register> {
                           });
                         }
                       },
-                      style: const TextStyle(
-                          color: Colors.green,
+                      style: TextStyle(
+                          color: settings.registerTextFieldTextColor,
                           fontSize: 16,
                           fontFamily: 'OpenSans'),
-                      cursorColor: Colors.green,
-                      decoration: const InputDecoration(
-                        labelStyle: TextStyle(color: Colors.green),
+                      cursorColor: settings.registerTextFieldCursorColor,
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                            color: settings.registerTextFieldTextColor),
                         labelText: 'Postcode',
                         enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 1.0)),
+                            borderSide: BorderSide(
+                                color: settings.registerTextFieldBorderColor,
+                                width: settings.registerTextFieldBorderWidth)),
                         focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 2.0)),
+                            borderSide: BorderSide(
+                                color: settings.registerTextFieldBorderColor,
+                                width: settings.registerTextFieldBorderWidth +
+                                    1.0)),
                       ),
                     ),
                     const SizedBox(height: 16.0),
@@ -226,20 +248,24 @@ class RegisterState extends State<Register> {
                           });
                         }
                       },
-                      style: const TextStyle(
-                          color: Colors.green,
+                      style: TextStyle(
+                          color: settings.registerTextFieldTextColor,
                           fontSize: 16,
                           fontFamily: 'OpenSans'),
-                      cursorColor: Colors.green,
-                      decoration: const InputDecoration(
-                        labelStyle: TextStyle(color: Colors.green),
+                      cursorColor: settings.registerTextFieldCursorColor,
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                            color: settings.registerTextFieldTextColor),
                         labelText: 'Street',
                         enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 1.0)),
+                            borderSide: BorderSide(
+                                color: settings.registerTextFieldBorderColor,
+                                width: settings.registerTextFieldBorderWidth)),
                         focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 2.0)),
+                            borderSide: BorderSide(
+                                color: settings.registerTextFieldBorderColor,
+                                width: settings.registerTextFieldBorderWidth +
+                                    1.0)),
                       ),
                     ),
                     const SizedBox(height: 16.0),
@@ -255,20 +281,24 @@ class RegisterState extends State<Register> {
                           });
                         }
                       },
-                      style: const TextStyle(
-                          color: Colors.green,
+                      style: TextStyle(
+                          color: settings.registerTextFieldTextColor,
                           fontSize: 16,
                           fontFamily: 'OpenSans'),
-                      cursorColor: Colors.green,
-                      decoration: const InputDecoration(
-                        labelStyle: TextStyle(color: Colors.green),
+                      cursorColor: settings.registerTextFieldCursorColor,
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                            color: settings.registerTextFieldTextColor),
                         labelText: 'Contact Number',
                         enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 1.0)),
+                            borderSide: BorderSide(
+                                color: settings.registerTextFieldBorderColor,
+                                width: settings.registerTextFieldBorderWidth)),
                         focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 2.0)),
+                            borderSide: BorderSide(
+                                color: settings.registerTextFieldBorderColor,
+                                width: settings.registerTextFieldBorderWidth +
+                                    1.0)),
                       ),
                     ),
                     const SizedBox(height: 16.0),
@@ -284,20 +314,24 @@ class RegisterState extends State<Register> {
                           });
                         }
                       },
-                      style: const TextStyle(
-                          color: Colors.green,
+                      style: TextStyle(
+                          color: settings.registerTextFieldTextColor,
                           fontSize: 16,
                           fontFamily: 'OpenSans'),
-                      cursorColor: Colors.green,
-                      decoration: const InputDecoration(
-                        labelStyle: TextStyle(color: Colors.green),
+                      cursorColor: settings.registerTextFieldCursorColor,
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                            color: settings.registerTextFieldTextColor),
                         labelText: 'Username',
                         enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 1.0)),
+                            borderSide: BorderSide(
+                                color: settings.registerTextFieldBorderColor,
+                                width: settings.registerTextFieldBorderWidth)),
                         focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 2.0)),
+                            borderSide: BorderSide(
+                                color: settings.registerTextFieldBorderColor,
+                                width: settings.registerTextFieldBorderWidth +
+                                    1.0)),
                       ),
                     ),
                     const SizedBox(height: 16.0),
@@ -314,20 +348,24 @@ class RegisterState extends State<Register> {
                         }
                       },
                       obscureText: true,
-                      style: const TextStyle(
-                          color: Colors.green,
+                      style: TextStyle(
+                          color: settings.registerTextFieldTextColor,
                           fontSize: 16,
                           fontFamily: 'OpenSans'),
-                      cursorColor: Colors.green,
-                      decoration: const InputDecoration(
-                        labelStyle: TextStyle(color: Colors.green),
+                      cursorColor: settings.registerTextFieldCursorColor,
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                            color: settings.registerTextFieldTextColor),
                         labelText: 'Password',
                         enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 1.0)),
+                            borderSide: BorderSide(
+                                color: settings.registerTextFieldBorderColor,
+                                width: settings.registerTextFieldBorderWidth)),
                         focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 2.0)),
+                            borderSide: BorderSide(
+                                color: settings.registerTextFieldBorderColor,
+                                width: settings.registerTextFieldBorderWidth +
+                                    1.0)),
                       ),
                     ),
                     const SizedBox(height: 16.0),
@@ -359,7 +397,8 @@ class RegisterState extends State<Register> {
                         popupService.showErrorPopup(
                             context,
                             "Validation Message",
-                            "Please ensure all fields are valid before submitting!");
+                            "Please ensure all fields are valid before submitting!",
+                            () {});
                       } else {
                         final response =
                             await apiService.registerAccount(userData);
@@ -369,33 +408,34 @@ class RegisterState extends State<Register> {
                           if (status > 0) {
                             // Success message
                             // ignore: use_build_context_synchronously
-                            popupService.showSuccessPopup(
-                                context, "Registration Success", message);
+                            popupService.showSuccessPopup(context,
+                                "Registration Success", message, () {});
                           } else {
                             // Error message
                             // ignore: use_build_context_synchronously
                             popupService.showErrorPopup(
-                                context, "Registration Error", message);
+                                context, "Registration Error", message, () {});
                           }
                         }
                       }
                     },
                     style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.green),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            settings.registerTextFieldTextColor),
                         padding: MaterialStateProperty.all<EdgeInsets>(
                             const EdgeInsets.fromLTRB(50, 20, 50, 20))),
-                    child: const Row(
+                    child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.app_registration, color: Colors.white),
-                          SizedBox(width: 8),
+                          Icon(Icons.app_registration,
+                              color: settings.registerTextFieldIconColor),
+                          const SizedBox(width: 8),
                           Text('Register',
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w800,
                                   fontFamily: "OpenSans",
-                                  color: Colors.white)),
+                                  color: settings.registerTextFieldText2Color)),
                         ])),
               ],
             ),

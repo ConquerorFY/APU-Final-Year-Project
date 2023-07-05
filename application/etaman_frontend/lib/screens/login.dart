@@ -1,5 +1,6 @@
 import 'package:etaman_frontend/services/auth.dart';
 import 'package:etaman_frontend/services/popup.dart';
+import 'package:etaman_frontend/services/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:etaman_frontend/services/api.dart';
 
@@ -21,6 +22,7 @@ class LoginState extends State<Login> {
   ApiService apiService = ApiService(); // API Service
   PopupService popupService = PopupService(); // Popup Service
   AuthService authService = AuthService(); // Auth Service
+  Settings settings = Settings(); // Settings Service
 
   String usernameVal = '';
   String passwordVal = '';
@@ -31,7 +33,7 @@ class LoginState extends State<Login> {
         body: Stack(children: [
       ColorFiltered(
         colorFilter: ColorFilter.mode(
-          Colors.green.withOpacity(0.6),
+          settings.loginTextFieldBgColor,
           BlendMode.srcATop,
         ),
         child: Container(
@@ -64,14 +66,14 @@ class LoginState extends State<Login> {
                           ),
                         ),
                         const SizedBox(height: 5),
-                        const Text('eTaman',
+                        Text('eTaman',
                             style: TextStyle(
                                 fontSize: 35,
                                 fontWeight: FontWeight.w800,
                                 fontFamily: "OpenSans",
-                                color: Colors.white)),
+                                color: settings.loginTextFieldTextColor)),
                         const SizedBox(height: 10),
-                        const FractionallySizedBox(
+                        FractionallySizedBox(
                             widthFactor: 1.0,
                             child: Center(
                                 child: Text(
@@ -80,7 +82,8 @@ class LoginState extends State<Login> {
                                         fontSize: 13,
                                         fontWeight: FontWeight.w600,
                                         fontFamily: "OpenSans",
-                                        color: Colors.white)))),
+                                        color: settings
+                                            .loginTextFieldTextColor)))),
                         const SizedBox(height: 50),
                         Form(
                             key: _formKey,
@@ -89,24 +92,30 @@ class LoginState extends State<Login> {
                                 child: Column(children: [
                                   TextFormField(
                                     key: _usernameKey,
-                                    style: const TextStyle(
-                                        color: Colors.white,
+                                    style: TextStyle(
+                                        color: settings.loginTextFieldTextColor,
                                         fontSize: 16,
                                         fontFamily: 'OpenSans'),
                                     cursorColor: Colors.white,
-                                    decoration: const InputDecoration(
+                                    decoration: InputDecoration(
                                         focusColor: Colors.white,
-                                        labelStyle:
-                                            TextStyle(color: Colors.white),
+                                        labelStyle: TextStyle(
+                                            color: settings
+                                                .loginTextFieldTextColor),
                                         labelText: 'Username',
                                         enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
-                                                color: Colors.white,
-                                                width: 1.0)),
+                                                color: settings
+                                                    .loginTextFieldBorderColor,
+                                                width: settings
+                                                    .loginTextFieldBorderWidth)),
                                         focusedBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
-                                                color: Colors.white,
-                                                width: 2.0))),
+                                                color: settings
+                                                    .loginTextFieldBorderColor,
+                                                width: settings
+                                                        .loginTextFieldBorderWidth +
+                                                    1.0))),
                                     onChanged: (value) {
                                       setState(() {
                                         usernameVal = value;
@@ -117,23 +126,29 @@ class LoginState extends State<Login> {
                                   TextFormField(
                                     key: _passwordKey,
                                     obscureText: true,
-                                    style: const TextStyle(
-                                        color: Colors.white,
+                                    style: TextStyle(
+                                        color: settings.loginTextFieldTextColor,
                                         fontSize: 16,
                                         fontFamily: 'OpenSans'),
                                     cursorColor: Colors.white,
-                                    decoration: const InputDecoration(
-                                        labelStyle:
-                                            TextStyle(color: Colors.white),
+                                    decoration: InputDecoration(
+                                        labelStyle: TextStyle(
+                                            color: settings
+                                                .loginTextFieldTextColor),
                                         labelText: 'Password',
                                         enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
-                                                color: Colors.white,
-                                                width: 1.0)),
+                                                color: settings
+                                                    .loginTextFieldBorderColor,
+                                                width: settings
+                                                    .loginTextFieldBorderWidth)),
                                         focusedBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
-                                                color: Colors.white,
-                                                width: 2.0))),
+                                                color: settings
+                                                    .loginTextFieldBorderColor,
+                                                width: settings
+                                                        .loginTextFieldBorderWidth +
+                                                    1.0))),
                                     onChanged: (value) {
                                       setState(() {
                                         passwordVal = value;
@@ -155,40 +170,47 @@ class LoginState extends State<Login> {
                                 final status = response["status"];
                                 final message = response["data"]["message"];
                                 if (status > 0) {
-                                  // Success message
-                                  // ignore: use_build_context_synchronously
-                                  popupService.showSuccessPopup(
-                                      context, "Login Success", message);
                                   // Set auth token
                                   final authToken = response["data"]["token"];
                                   authService.setAuthToken(authToken);
+                                  // Success message
+                                  // ignore: use_build_context_synchronously
+                                  popupService.showSuccessPopup(
+                                      context, "Login Success", message, () {
+                                    // Navigate to home screen
+                                    // ignore: use_build_context_synchronously
+                                    Navigator.pushNamed(context, '/home');
+                                  });
                                 } else {
                                   // Error message
                                   // ignore: use_build_context_synchronously
                                   popupService.showErrorPopup(
-                                      context, "Login Error", message);
+                                      context, "Login Error", message, () {});
                                 }
                               }
                             },
                             style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
-                                        Colors.green.shade400),
+                                        settings.loginTextFieldButtonColor),
                                 padding: MaterialStateProperty.all<EdgeInsets>(
                                     const EdgeInsets.all(20))),
-                            child: const FractionallySizedBox(
+                            child: FractionallySizedBox(
                                 widthFactor: 0.77,
                                 child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.login, color: Colors.white),
-                                      SizedBox(width: 8.0),
+                                      Icon(Icons.login,
+                                          color:
+                                              settings.loginTextFieldIconColor),
+                                      const SizedBox(width: 8.0),
                                       Text('Login As User',
                                           style: TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
                                               fontFamily: "OpenSans",
-                                              color: Colors.white)),
+                                              color: settings
+                                                  .loginTextFieldTextColor)),
                                     ]))),
                         const SizedBox(height: 80),
                       ],
@@ -200,14 +222,14 @@ class LoginState extends State<Login> {
                         // Navigate to Register Screen
                         Navigator.pushNamed(context, '/register');
                       },
-                      child: const Text('Register Here',
+                      child: Text('Register Here',
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               fontStyle: FontStyle.italic,
                               decoration: TextDecoration.underline,
                               fontFamily: "OpenSans",
-                              color: Colors.lightGreen)),
+                              color: settings.loginTextFieldText2Color)),
                     )),
               ])))
     ]));

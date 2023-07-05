@@ -4,11 +4,21 @@ Guests:
 
 Residents:
     - Login Screen [X]
-    - Register Screen
+    - Register Screen [X]
+    - Home Screen
+    - Join Group Screen
+    - Profile Screen
+    - Crime Map Screen
+    - Facilities Booking Screen
 
 Resident Leader:
     - Login Screen [X]
     - Register Screen [X]
+    - Home Screen
+    = Join Group Screen
+    - Profile Screen
+    - Crime Map Screen
+    - Facilities Booking Screen
 
 Government:
 

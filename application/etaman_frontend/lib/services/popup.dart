@@ -1,3 +1,4 @@
+import 'package:etaman_frontend/services/settings.dart';
 import 'package:flutter/material.dart';
 
 class MessagePopup extends StatelessWidget {
@@ -6,12 +7,14 @@ class MessagePopup extends StatelessWidget {
   final IconData icon;
   final Color backgroundColor;
   final Color textColor;
+  final Function onPress;
 
   const MessagePopup({
     super.key,
     required this.title,
     required this.message,
     required this.icon,
+    required this.onPress,
     this.backgroundColor = Colors.green,
     this.textColor = Colors.white,
   });
@@ -48,6 +51,7 @@ class MessagePopup extends StatelessWidget {
           onPressed: () {
             // Close the popup when this button is pressed
             Navigator.of(context).pop();
+            onPress();
           },
           child: const Text(
             "OK",
@@ -68,7 +72,10 @@ class PopupService {
   static final PopupService _instance = PopupService._();
   factory PopupService() => _instance;
 
-  void showSuccessPopup(BuildContext context, String title, String message) {
+  final Settings settings = Settings(); // Settings Service
+
+  showSuccessPopup(
+      BuildContext context, String title, String message, Function onPress) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -76,14 +83,16 @@ class PopupService {
           title: title,
           message: message,
           icon: Icons.info_outline_rounded,
-          backgroundColor: Colors.white,
-          textColor: Colors.green,
+          backgroundColor: settings.popupBgColor,
+          textColor: settings.successPopupTextColor,
+          onPress: onPress,
         );
       },
     );
   }
 
-  void showErrorPopup(BuildContext context, String title, String message) {
+  void showErrorPopup(
+      BuildContext context, String title, String message, Function onPress) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -91,8 +100,9 @@ class PopupService {
           title: title,
           message: message,
           icon: Icons.warning_amber_rounded,
-          backgroundColor: Colors.white,
-          textColor: Colors.red,
+          backgroundColor: settings.popupBgColor,
+          textColor: settings.errorPopupTextColor,
+          onPress: onPress,
         );
       },
     );

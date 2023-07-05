@@ -1,92 +1,37 @@
 import 'package:flutter/material.dart';
+import '../services/api.dart';
+import '../services/auth.dart';
+import '../services/popup.dart';
+import '../services/components.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
 
   @override
-  _HomeState createState() => _HomeState();
+  HomeState createState() => HomeState();
 }
 
-class _HomeState extends State<Home> {
-  Map<dynamic, dynamic> data = {};
-
-//  @override
-//  void initState() {
-//    super.initState();
-//  }
+class HomeState extends State<Home> {
+  ApiService apiService = ApiService(); // API Service
+  PopupService popupService = PopupService(); // Popup Service
+  AuthService authService = AuthService(); // Auth Service
 
   @override
   Widget build(BuildContext context) {
-    data = data.isNotEmpty
-        ? data
-        : (ModalRoute.of(context)?.settings.arguments) as Map<dynamic, dynamic>;
-
-    // set background image
-    String bgImage = data['isDaytime'] ? 'day.png' : 'night.png';
-    Color? bgColor = data['isDaytime'] ? Colors.blue : Colors.indigo[700];
-
     return Scaffold(
-      backgroundColor: bgColor,
-      body: SafeArea(
-        child: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-            image: AssetImage('assets/$bgImage'),
-            fit: BoxFit.cover,
-          )),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 120.0, 0, 0),
-            child: Column(
-              children: <Widget>[
-                ElevatedButton.icon(
-                  onPressed: () async {
-                    dynamic result =
-                        await Navigator.pushNamed(context, '/location');
-                    if (result != null) {
-                      setState(() {
-                        data = {
-                          'time': result['time'],
-                          'location': result['location'],
-                          'isDaytime': result['isDaytime'],
-                          'flag': result['flag']
-                        };
-                      });
-                    }
-                  },
-                  icon: Icon(
-                    Icons.edit_location,
-                    color: Colors.grey[300],
-                  ),
-                  label: Text(
-                    'Edit Location',
-                    style: TextStyle(
-                      color: Colors.grey[300],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      data['location'],
-                      style: const TextStyle(
-                        fontSize: 28.0,
-                        letterSpacing: 2.0,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20.0),
-                Text(data['time'],
-                    style:
-                        const TextStyle(fontSize: 66.0, color: Colors.white)),
-              ],
-            ),
-          ),
+        appBar: AppBar(
+          title: const Text('Facebook'),
         ),
-      ),
-    );
+        body: ListView(
+          children: const <Widget>[
+            StatusUpdateSection(),
+            Divider(height: 0),
+            StoriesSection(),
+            Divider(height: 0),
+            PostList(),
+          ],
+        ),
+        drawer: const LeftDrawer(),
+        bottomNavigationBar: const BottomNavBar());
   }
 }
