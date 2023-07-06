@@ -178,7 +178,6 @@ class LoginState extends State<Login> {
                                   popupService.showSuccessPopup(
                                       context, "Login Success", message, () {
                                     // Navigate to home screen
-                                    // ignore: use_build_context_synchronously
                                     Navigator.pushNamed(context, '/home');
                                   });
                                 } else {

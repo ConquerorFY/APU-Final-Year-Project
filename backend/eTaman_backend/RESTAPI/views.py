@@ -55,20 +55,6 @@ def getAllNeighborhoodGroupResidentData(request):
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
 
-# Get particular resident information
-@api_view(['GET'])
-def getResidentData(request):
-    try:
-        # Get resident ID from JWT
-        id = decodeJWTToken(request.data["token"])["id"]
-        resident = ResidentSerializer(ResidentModel.objects.get(pk=id))
-        residentData = resident.data
-        # Filter out password in data entry
-        filteredResidentData = dict(filter(lambda item: item[0] != "password", residentData.items()))
-        return JsonResponse({"data": {"message": RESIDENT_DATA_FOUND, "list": filteredResidentData}, "status": SUCCESS_CODE}, status=201)
-    except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {"message": RESIDENT_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
-
 # Get all neighborhood groups
 @api_view(['GET'])
 def getAllNeighborhoodGroup(request):
@@ -281,6 +267,20 @@ def testPostAPI(request):
         return JsonResponse({'message': 'An error has occured! Please try again!'}, status=400)
     except TestModel.DoesNotExist:
         return JsonResponse({'message': 'The Data is Not Found!'}, status=404) 
+
+# Get particular resident information
+@api_view(['POSt'])
+def getResidentData(request):
+    try:
+        # Get resident ID from JWT
+        id = decodeJWTToken(request.data["token"])["id"]
+        resident = ResidentSerializer(ResidentModel.objects.get(pk=id))
+        residentData = resident.data
+        # Filter out password in data entry
+        filteredResidentData = dict(filter(lambda item: item[0] != "password", residentData.items()))
+        return JsonResponse({"data": {"message": RESIDENT_DATA_FOUND, "list": filteredResidentData}, "status": SUCCESS_CODE}, status=201)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {"message": RESIDENT_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
 
 # Register resident account
 @api_view(['POST'])

@@ -13,4 +13,8 @@ class AuthService {
   String getAuthToken() {
     return _authToken;
   }
+
+  void clearAuthToken() {
+    _authToken = "";
+  }
 }

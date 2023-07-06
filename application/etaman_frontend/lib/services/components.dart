@@ -1,3 +1,6 @@
+import 'package:etaman_frontend/services/api.dart';
+import 'package:etaman_frontend/services/auth.dart';
+import 'package:etaman_frontend/services/popup.dart';
 import 'package:etaman_frontend/services/settings.dart';
 import 'package:flutter/material.dart';
 
@@ -99,47 +102,169 @@ class PostList extends StatelessWidget {
 }
 
 // Left Drawer Widget
-class LeftDrawer extends StatelessWidget {
+// ignore: must_be_immutable
+class LeftDrawer extends StatefulWidget {
   const LeftDrawer({super.key});
+
+  @override
+  LeftDrawerState createState() => LeftDrawerState();
+}
+
+class LeftDrawerState extends State<LeftDrawer> {
+  ApiService apiService = ApiService();
+  AuthService authService = AuthService();
+  PopupService popupService = PopupService();
+  Settings settings = Settings();
+
+  String name = '';
+  String email = '';
+  dynamic textColor = Colors.white;
+  dynamic bgColor = Colors.white;
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  void getData() async {
+    // Set Text and Background Color
+    setState(() {
+      textColor = settings.leftDrawerTextColor;
+    });
+    setState(() {
+      bgColor = settings.leftDrawerBgColor;
+    });
+    // Get Resident Account Data
+    Map<String, dynamic> tokenData = {"token": authService.getAuthToken()};
+    final response = await apiService.getResidentDataAPI(tokenData);
+    if (response != null) {
+      final status = response["status"];
+      if (status > 0) {
+        // Success
+        final data = response["data"]["list"];
+        setState(() {
+          name = data["name"];
+        });
+        setState(() {
+          email = data["email"];
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         children: <Widget>[
-          const UserAccountsDrawerHeader(
-            accountName: Text('John Doe'),
-            accountEmail: Text('johndoe@example.com'),
-            currentAccountPicture: CircleAvatar(
+          UserAccountsDrawerHeader(
+            accountName: Text(
+              "Welcome, $name",
+              style: TextStyle(
+                  fontFamily: "OpenSans",
+                  color: textColor,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 18),
+            ),
+            accountEmail: Text(
+              email,
+              style: TextStyle(
+                  fontFamily: "OpenSans",
+                  color: textColor,
+                  fontWeight: FontWeight.w500,
+                  fontStyle: FontStyle.italic,
+                  fontSize: 15),
+            ),
+            currentAccountPicture: const CircleAvatar(
               backgroundImage: AssetImage('assets/germany.png'),
             ),
+            decoration: BoxDecoration(color: bgColor),
           ),
           ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text('Home'),
+            leading: const Icon(Icons.home, color: Colors.black),
+            title: const Text('Home',
+                style: TextStyle(
+                    fontFamily: "OpenSans",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18)),
             onTap: () {
               // Handle home screen navigation
             },
           ),
           ListTile(
-            leading: const Icon(Icons.person),
-            title: const Text('Profile'),
+            leading: const Icon(Icons.person, color: Colors.black),
+            title: const Text('Profile',
+                style: TextStyle(
+                    fontFamily: "OpenSans",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18)),
             onTap: () {
               // Handle profile screen navigation
             },
           ),
           ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
+            leading: const Icon(Icons.group, color: Colors.black),
+            title: const Text('Groups',
+                style: TextStyle(
+                    fontFamily: "OpenSans",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18)),
+            onTap: () {
+              // Handle neighborhood group screen navigation
+            },
+          ),
+          ListTile(
+            leading:
+                const Icon(Icons.miscellaneous_services, color: Colors.black),
+            title: const Text('Facilities',
+                style: TextStyle(
+                    fontFamily: "OpenSans",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18)),
+            onTap: () {
+              // Handle facilities screen navigation
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.settings, color: Colors.black),
+            title: const Text('Settings',
+                style: TextStyle(
+                    fontFamily: "OpenSans",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18)),
             onTap: () {
               // Handle settings screen navigation
             },
           ),
           ListTile(
-            leading: const Icon(Icons.logout),
-            title: const Text('Logout'),
-            onTap: () {
-              // Handle logout action
+            leading: const Icon(Icons.logout, color: Colors.black),
+            title: const Text('Logout',
+                style: TextStyle(
+                    fontFamily: "OpenSans",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18)),
+            onTap: () async {
+              // Handle logout action & navigate to login screen
+              final response = await apiService.logoutAccount();
+              if (response != null) {
+                final status = response["status"];
+                final message = response["data"]["message"];
+                if (status > 0) {
+                  // Success
+                  authService.clearAuthToken();
+                  // ignore: use_build_context_synchronously
+                  popupService
+                      .showSuccessPopup(context, "Logout Success", message, () {
+                    Navigator.pushNamed(context, '/');
+                  });
+                } else {
+                  // Failed
+                  // ignore: use_build_context_synchronously
+                  popupService.showErrorPopup(
+                      context, "Logout Failed", message, () {});
+                }
+              }
             },
           ),
         ],
@@ -182,7 +307,11 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
                 height: 50,
               )),
           const SizedBox(width: 10.0),
-          Text(text, style: TextStyle(fontFamily: "OpenSans", color: textColor))
+          Text(text,
+              style: TextStyle(
+                  fontFamily: "OpenSans",
+                  color: textColor,
+                  fontWeight: FontWeight.w800))
         ],
       ),
     );

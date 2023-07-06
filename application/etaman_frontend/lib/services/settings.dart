@@ -29,4 +29,7 @@ class Settings {
 
   Color topNavBarBgColor = Colors.green;
   Color topNavBarTextColor = Colors.white;
+
+  Color leftDrawerBgColor = Colors.green;
+  Color leftDrawerTextColor = Colors.white;
 }

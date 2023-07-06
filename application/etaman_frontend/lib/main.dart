@@ -6,5 +6,5 @@ import 'package:etaman_frontend/screens/home.dart';
 void main() => runApp(MaterialApp(initialRoute: '/', routes: {
       '/': (context) => const Login(),
       '/register': (context) => const Register(),
-      '/home': (context) => Home(),
+      '/home': (context) => const Home(),
     }));
