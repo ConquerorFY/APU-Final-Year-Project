@@ -40,6 +40,6 @@ class HomeState extends State<Home> {
               ));
         }),
         drawer: const LeftDrawer(),
-        bottomNavigationBar: const BottomNavBar());
+        bottomNavigationBar: BottomNavBar(selectedIndex: 0));
   }
 }

@@ -190,6 +190,7 @@ class LeftDrawerState extends State<LeftDrawer> {
                     fontSize: 18)),
             onTap: () {
               // Handle home screen navigation
+              Navigator.pushNamed(context, "/home");
             },
           ),
           ListTile(
@@ -201,6 +202,17 @@ class LeftDrawerState extends State<LeftDrawer> {
                     fontSize: 18)),
             onTap: () {
               // Handle profile screen navigation
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.map, color: Colors.black),
+            title: const Text('Map',
+                style: TextStyle(
+                    fontFamily: "OpenSans",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18)),
+            onTap: () {
+              // Handle neighborhood group screen navigation
             },
           ),
           ListTile(
@@ -319,31 +331,60 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 // Bottom Navigation Bar Widget
+// ignore: must_be_immutable
 class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({super.key});
+  Settings settings = Settings();
+
+  dynamic backgroundColor;
+  dynamic textColor;
+  int selectedIndex;
+
+  BottomNavBar({super.key, required this.selectedIndex}) {
+    backgroundColor = settings.bottomNavBarBgColor;
+    textColor = settings.bottomNavBarTextColor;
+  }
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: 0,
-      items: const [
+      currentIndex: selectedIndex,
+      items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
+          backgroundColor: backgroundColor,
+          icon: Icon(Icons.home, color: textColor),
+          label: "", // Home
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.people),
-          label: 'Friends',
+          backgroundColor: backgroundColor,
+          icon: Icon(Icons.map, color: textColor),
+          label: "", // Map
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.notifications),
-          label: 'Notifications',
-        ),
+            backgroundColor: backgroundColor,
+            icon: Icon(Icons.people, color: textColor),
+            label: ""), // Groups
         BottomNavigationBarItem(
-          icon: Icon(Icons.menu),
-          label: 'Menu',
-        ),
+            backgroundColor: backgroundColor,
+            icon: Icon(Icons.miscellaneous_services, color: textColor),
+            label: ""), // Facilities
       ],
+      onTap: (int index) {
+        switch (index) {
+          case 0:
+            // Navigate to Home Screen
+            Navigator.pushNamed(context, "/home");
+            break;
+          case 1:
+            // Navigate to Map Screen
+            break;
+          case 2:
+            // Navigate to Group Screen
+            break;
+          case 3:
+            // Navigate to Facilities Screen
+            break;
+        }
+      },
     );
   }
 }
