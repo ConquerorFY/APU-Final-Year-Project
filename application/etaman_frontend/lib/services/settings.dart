@@ -26,4 +26,7 @@ class Settings {
   Color loginTextFieldCursorColor = Colors.white;
   Color loginTextFieldBorderColor = Colors.white;
   double loginTextFieldBorderWidth = 1.0;
+
+  Color topNavBarBgColor = Colors.green;
+  Color topNavBarTextColor = Colors.white;
 }

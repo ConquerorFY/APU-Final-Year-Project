@@ -1,3 +1,4 @@
+import 'package:etaman_frontend/services/settings.dart';
 import 'package:flutter/material.dart';
 
 class StatusUpdateSection extends StatelessWidget {
@@ -110,7 +111,7 @@ class LeftDrawer extends StatelessWidget {
             accountName: Text('John Doe'),
             accountEmail: Text('johndoe@example.com'),
             currentAccountPicture: CircleAvatar(
-              backgroundImage: AssetImage('assets/germany.jpg'),
+              backgroundImage: AssetImage('assets/germany.png'),
             ),
           ),
           ListTile(
@@ -148,8 +149,19 @@ class LeftDrawer extends StatelessWidget {
 }
 
 // Top App Bar Widget
+// ignore: must_be_immutable
 class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const TopAppBar({super.key});
+  Settings settings = Settings();
+
+  dynamic backgroundColor;
+  dynamic textColor;
+  final icon = const AssetImage("assets/logo.png");
+  final text = "eTaman";
+
+  TopAppBar({super.key}) {
+    backgroundColor = settings.topNavBarBgColor;
+    textColor = settings.topNavBarTextColor;
+  }
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -157,7 +169,22 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('Facebook'),
+      automaticallyImplyLeading: false,
+      backgroundColor: backgroundColor,
+      title: Row(
+        children: [
+          Padding(
+              padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+              child: Image(
+                image: icon,
+                fit: BoxFit.contain,
+                width: 90,
+                height: 50,
+              )),
+          const SizedBox(width: 10.0),
+          Text(text, style: TextStyle(fontFamily: "OpenSans", color: textColor))
+        ],
+      ),
     );
   }
 }
