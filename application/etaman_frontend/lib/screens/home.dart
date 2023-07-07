@@ -31,9 +31,8 @@ class HomeState extends State<Home> {
               },
               child: ListView(
                 children: const <Widget>[
-                  StatusUpdateSection(),
-                  Divider(height: 0),
-                  StoriesSection(),
+                  SizedBox(height: 10),
+                  PostTypeFilterSection(),
                   Divider(height: 0),
                   PostList(),
                 ],

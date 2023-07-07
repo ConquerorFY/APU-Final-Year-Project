@@ -4,59 +4,206 @@ import 'package:etaman_frontend/services/popup.dart';
 import 'package:etaman_frontend/services/settings.dart';
 import 'package:flutter/material.dart';
 
-class StatusUpdateSection extends StatelessWidget {
-  const StatusUpdateSection({super.key});
+// Post Type Filter Section
+class PostTypeFilterSection extends StatefulWidget {
+  const PostTypeFilterSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        children: <Widget>[
-          const CircleAvatar(
-            backgroundImage: AssetImage('assets/indonesia.png'),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: TextFormField(
-              decoration: const InputDecoration(
-                hintText: "What's on your mind?",
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  PostTypeFilterSectionState createState() => PostTypeFilterSectionState();
 }
 
-class StoriesSection extends StatelessWidget {
-  const StoriesSection({super.key});
+class PostTypeFilterSectionState extends State<PostTypeFilterSection> {
+  ApiService apiService = ApiService();
+  AuthService authService = AuthService();
+  PopupService popupService = PopupService();
+  Settings settings = Settings();
+
+  dynamic textColor;
+  dynamic iconColor;
+  dynamic selectedTextColor;
+  dynamic selectedIconColor;
+
+  dynamic crimeIconColor;
+  dynamic crimeTextColor;
+  dynamic complaintIconColor;
+  dynamic complaintTextColor;
+  dynamic eventIconColor;
+  dynamic eventTextColor;
+  dynamic generalIconColor;
+  dynamic generalTextColor;
+
+  final postTypes = [
+    "Crime Posts",
+    "Complaint Posts",
+    "Event Posts",
+    "General Posts"
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    setColor();
+  }
+
+  void setColor() {
+    // Set Text & Icon Color
+    setState(() {
+      textColor = settings.postTypeFilterSectionTextColor;
+    });
+    setState(() {
+      iconColor = settings.postTypeFilterSectionIconColor;
+    });
+    setState(() {
+      selectedTextColor = settings.postTypeFilterSectionTextSelectedColor;
+    });
+    setState(() {
+      selectedIconColor = settings.postTypeFilterSectionIconSelectedColor;
+    });
+    resetAllColor();
+  }
+
+  void resetAllColor() {
+    // Set Post Filter Color (Icon and Text)
+    setState(() {
+      crimeIconColor = iconColor;
+    });
+    setState(() {
+      crimeTextColor = textColor;
+    });
+    setState(() {
+      complaintIconColor = iconColor;
+    });
+    setState(() {
+      complaintTextColor = textColor;
+    });
+    setState(() {
+      eventIconColor = iconColor;
+    });
+    setState(() {
+      eventTextColor = textColor;
+    });
+    setState(() {
+      generalIconColor = iconColor;
+    });
+    setState(() {
+      generalTextColor = textColor;
+    });
+  }
+
+  void setFilterColor(postType) {
+    switch (postType) {
+      case 0:
+        // Crime Posts
+        setState(() {
+          crimeIconColor = selectedIconColor;
+        });
+        setState(() {
+          crimeTextColor = selectedTextColor;
+        });
+        break;
+      case 1:
+        // Complaint Posts
+        setState(() {
+          complaintIconColor = selectedIconColor;
+        });
+        setState(() {
+          complaintTextColor = selectedTextColor;
+        });
+        break;
+      case 2:
+        // Event Posts
+        setState(() {
+          eventIconColor = selectedIconColor;
+        });
+        setState(() {
+          eventTextColor = selectedTextColor;
+        });
+        break;
+      case 3:
+        // General Posts
+        setState(() {
+          generalIconColor = selectedIconColor;
+        });
+        setState(() {
+          generalTextColor = selectedTextColor;
+        });
+        break;
+      default:
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 120,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return Container(
-            margin: const EdgeInsets.all(8),
-            child: Column(
-              children: <Widget>[
-                const CircleAvatar(
-                  backgroundImage: AssetImage('assets/germany.png'),
-                  radius: 32,
+      height: 100,
+      child: Padding(
+          padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: postTypes.length,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: const EdgeInsets.all(8),
+                child: Column(
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () {
+                        // Handle onTap event here
+                        resetAllColor();
+                        setFilterColor(index);
+                        switch (index) {
+                          case 0:
+                            // When Crime Posts Filter is Clicked
+                            break;
+                          case 1:
+                            // When Complaint Posts Filter is Clicked
+                            break;
+                          case 2:
+                            // When Event Posts Filter is Clicked
+                            break;
+                          case 3:
+                            // When General Posts Filter is Clicked
+                            break;
+                          default:
+                            break;
+                        }
+                      },
+                      child: index == 0
+                          ? Icon(Icons.local_police_outlined,
+                              color: crimeIconColor, size: 40.0)
+                          : index == 1
+                              ? Icon(Icons.sentiment_very_dissatisfied,
+                                  color: complaintIconColor, size: 40.0)
+                              : index == 2
+                                  ? Icon(Icons.event,
+                                      color: eventIconColor, size: 40.0)
+                                  : index == 3
+                                      ? Icon(Icons.mail,
+                                          color: generalIconColor, size: 40.0)
+                                      : null,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(postTypes[index],
+                        style: TextStyle(
+                          color: index == 0
+                              ? crimeTextColor
+                              : index == 1
+                                  ? complaintTextColor
+                                  : index == 2
+                                      ? eventTextColor
+                                      : index == 3
+                                          ? generalTextColor
+                                          : null,
+                          fontFamily: "OpenSans",
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        )),
+                  ],
                 ),
-                const SizedBox(height: 8),
-                Text('User $index'),
-              ],
-            ),
-          );
-        },
-      ),
+              );
+            },
+          )),
     );
   }
 }

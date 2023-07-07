@@ -35,4 +35,9 @@ class Settings {
 
   Color bottomNavBarBgColor = Colors.green;
   Color bottomNavBarTextColor = Colors.white;
+
+  Color postTypeFilterSectionTextColor = Colors.green.shade500;
+  Color postTypeFilterSectionIconColor = Colors.green.shade600;
+  Color postTypeFilterSectionIconSelectedColor = Colors.red.shade600;
+  Color postTypeFilterSectionTextSelectedColor = Colors.red.shade500;
 }
