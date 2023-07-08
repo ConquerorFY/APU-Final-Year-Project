@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:etaman_frontend/services/api.dart';
 import 'package:etaman_frontend/services/auth.dart';
 import 'package:etaman_frontend/services/popup.dart';
 import 'package:etaman_frontend/services/settings.dart';
+import 'package:etaman_frontend/services/utils.dart';
 import 'package:flutter/material.dart';
 
 // Post Type Filter Section Widget
@@ -233,11 +236,16 @@ class PostListState extends State<PostList> {
   ApiService apiService = ApiService();
   AuthService authService = AuthService();
   PopupService popupService = PopupService();
+  Utils utils = Utils();
   Settings settings = Settings();
 
   dynamic textColor;
   dynamic iconColor;
+  dynamic iconSelectedColor;
+  dynamic buttonColor;
+  dynamic buttonCancelColor;
   dynamic postData;
+  dynamic userData;
   dynamic commentSectionExpandedState;
 
   @override
@@ -247,12 +255,21 @@ class PostListState extends State<PostList> {
   }
 
   void getData() async {
-    // Set Text and Background Color
+    // Set Text, Background, Button and Cancel Button Color
     setState(() {
       textColor = settings.postListTextColor;
     });
     setState(() {
       iconColor = settings.postListIconColor;
+    });
+    setState(() {
+      iconSelectedColor = settings.postListIconColor2;
+    });
+    setState(() {
+      buttonColor = settings.postListButtonTextColor;
+    });
+    setState(() {
+      buttonCancelColor = settings.postListButtonCancelColor;
     });
     // Get Resident Account Data
     Map<String, dynamic> tokenData = {"token": authService.getAuthToken()};
@@ -261,9 +278,15 @@ class PostListState extends State<PostList> {
       final status = residentResponse["status"];
       if (status > 0) {
         // Success
+        setState(() {
+          userData = jsonDecode(residentResponse["data"]["list"]["userData"]);
+        });
         // Get Neighborhood Group ID
         final groupID = residentResponse["data"]["list"]["groupID"];
-        Map<String, dynamic> groupData = {"groupID": groupID};
+        Map<String, dynamic> groupData = {
+          "token": authService.getAuthToken(),
+          "groupID": groupID
+        };
         final groupResponse =
             await apiService.getAllNeighborhoodPostsAPI(groupData);
         if (groupResponse != null) {
@@ -293,6 +316,185 @@ class PostListState extends State<PostList> {
     }
   }
 
+  bool isLikePostStatus(postType, postID) {
+    if (postType == 'crime') {
+      final crimePostLikes = userData["crimePostLikes"];
+      final crimePostDislikes = userData["crimePostDislikes"];
+      if (crimePostLikes.contains(postID)) {
+        return true;
+      } else if (crimePostDislikes.contains(postID)) {
+        return false;
+      }
+    } else if (postType == 'complaint') {
+      final complaintPostLikes = userData["complaintPostLikes"];
+      final complaintPostDislikes = userData["complaintPostDislikes"];
+      if (complaintPostLikes.contains(postID)) {
+        return true;
+      } else if (complaintPostDislikes.contains(postID)) {
+        return false;
+      }
+    } else if (postType == 'event') {
+      final eventPostLikes = userData["eventPostLikes"];
+      final eventPostDislikes = userData["eventPostDislikes"];
+      if (eventPostLikes.contains(postID)) {
+        return true;
+      } else if (eventPostDislikes.contains(postID)) {
+        return false;
+      }
+    } else if (postType == 'general') {
+      final generalPostLikes = userData["generalPostLikes"];
+      final generalPostDislikes = userData["generalPostDislikes"];
+      if (generalPostLikes.contains(postID)) {
+        return true;
+      } else if (generalPostDislikes.contains(postID)) {
+        return false;
+      }
+    }
+
+    return false;
+  }
+
+  void handleLikeDislikePost(postType, postID, operation) async {
+    if (postType == 'crime') {
+      if (operation == 'like') {
+        final crimePostLikes = userData["crimePostLikes"];
+        if (!crimePostLikes.contains(postID)) {
+          Map<String, dynamic> postData = {
+            "token": authService.getAuthToken(),
+            "crimePostID": postID
+          };
+          final postResponse = await apiService.likeCrimePostAPI(postData);
+          if (postResponse != null) {
+            final status = postResponse["status"];
+            if (status > 0) {
+              // Success
+              getData();
+            }
+          }
+        }
+      } else if (operation == 'dislike') {
+        final crimePostDislikes = userData["crimePostDislikes"];
+        if (!crimePostDislikes.contains(postID)) {
+          Map<String, dynamic> postData = {
+            "token": authService.getAuthToken(),
+            "crimePostID": postID
+          };
+          final postResponse = await apiService.dislikeCrimePostAPI(postData);
+          if (postResponse != null) {
+            final status = postResponse["status"];
+            if (status > 0) {
+              // Success
+              getData();
+            }
+          }
+        }
+      }
+    } else if (postType == 'complaint') {
+      if (operation == 'like') {
+        final complaintPostLikes = userData["complaintPostLikes"];
+        if (!complaintPostLikes.contains(postID)) {
+          Map<String, dynamic> postData = {
+            "token": authService.getAuthToken(),
+            "complaintPostID": postID
+          };
+          final postResponse = await apiService.likeComplaintPostAPI(postData);
+          if (postResponse != null) {
+            final status = postResponse["status"];
+            if (status > 0) {
+              // Success
+              getData();
+            }
+          }
+        }
+      } else if (operation == 'dislike') {
+        final complaintPostDislikes = userData["complaintPostDislikes"];
+        if (!complaintPostDislikes.contains(postID)) {
+          Map<String, dynamic> postData = {
+            "token": authService.getAuthToken(),
+            "complaintPostID": postID
+          };
+          final postResponse =
+              await apiService.dislikeComplaintPostAPI(postData);
+          if (postResponse != null) {
+            final status = postResponse["status"];
+            if (status > 0) {
+              // Success
+              getData();
+            }
+          }
+        }
+      }
+    } else if (postType == 'event') {
+      if (operation == 'like') {
+        final eventPostLikes = userData["eventPostLikes"];
+        if (!eventPostLikes.contains(postID)) {
+          Map<String, dynamic> postData = {
+            "token": authService.getAuthToken(),
+            "eventPostID": postID
+          };
+          final postResponse = await apiService.likeEventPostAPI(postData);
+          if (postResponse != null) {
+            final status = postResponse["status"];
+            if (status > 0) {
+              // Success
+              getData();
+            }
+          }
+        }
+      } else if (operation == 'dislike') {
+        final eventPostDislikes = userData["eventPostDislikes"];
+        if (!eventPostDislikes.contains(postID)) {
+          Map<String, dynamic> postData = {
+            "token": authService.getAuthToken(),
+            "eventPostID": postID
+          };
+          final postResponse = await apiService.dislikeEventPostAPI(postData);
+          if (postResponse != null) {
+            final status = postResponse["status"];
+            if (status > 0) {
+              // Success
+              getData();
+            }
+          }
+        }
+      }
+    } else if (postType == 'general') {
+      if (operation == 'like') {
+        final generalPostLikes = userData["generalPostLikes"];
+        if (!generalPostLikes.contains(postID)) {
+          Map<String, dynamic> postData = {
+            "token": authService.getAuthToken(),
+            "generalPostID": postID
+          };
+          final postResponse = await apiService.likeGeneralPostAPI(postData);
+          if (postResponse != null) {
+            final status = postResponse["status"];
+            if (status > 0) {
+              // Success
+              getData();
+            }
+          }
+        }
+      } else if (operation == 'dislike') {
+        final generalPostDislikes = userData["generalPostDislikes"];
+        if (!generalPostDislikes.contains(postID)) {
+          Map<String, dynamic> postData = {
+            "token": authService.getAuthToken(),
+            "generalPostID": postID
+          };
+          final postResponse = await apiService.dislikeGeneralPostAPI(postData);
+          if (postResponse != null) {
+            final status = postResponse["status"];
+            if (status > 0) {
+              // Success
+              getData();
+            }
+          }
+        }
+      }
+    }
+  }
+
   Widget displayCrimePosts(context) {
     return ListView.builder(
       shrinkWrap: true,
@@ -312,7 +514,7 @@ class PostListState extends State<PostList> {
                         fontSize: 16,
                         fontWeight: FontWeight.w900,
                         color: textColor)),
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
                 Text(postData["crime"][index]["description"],
                     style: TextStyle(
                         fontFamily: "OpenSans",
@@ -334,7 +536,19 @@ class PostListState extends State<PostList> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Row(children: [
-                        Icon(Icons.thumb_up, size: 20, color: iconColor),
+                        GestureDetector(
+                          onTap: () {
+                            // Handle Like Crime Post Operation
+                            handleLikeDislikePost("crime",
+                                postData["crime"][index]["id"], "like");
+                          },
+                          child: Icon(Icons.thumb_up,
+                              size: 20,
+                              color: isLikePostStatus(
+                                      "crime", postData['crime'][index]['id'])
+                                  ? iconSelectedColor
+                                  : iconColor),
+                        ),
                         const SizedBox(width: 4),
                         Text(postData["crime"][index]["likes"].toString(),
                             style: TextStyle(
@@ -344,7 +558,19 @@ class PostListState extends State<PostList> {
                                 color: textColor))
                       ]),
                       Row(children: [
-                        Icon(Icons.thumb_down, size: 20, color: iconColor),
+                        GestureDetector(
+                          onTap: () {
+                            // Handle Dislike Crime Post Operation
+                            handleLikeDislikePost("crime",
+                                postData["crime"][index]["id"], "dislike");
+                          },
+                          child: Icon(Icons.thumb_down,
+                              size: 20,
+                              color: isLikePostStatus(
+                                      "crime", postData['crime'][index]['id'])
+                                  ? iconColor
+                                  : iconSelectedColor),
+                        ),
                         const SizedBox(width: 4),
                         Text(postData["crime"][index]["dislikes"].toString(),
                             style: TextStyle(
@@ -393,17 +619,502 @@ class PostListState extends State<PostList> {
     );
   }
 
+  Widget displayComplaintPosts(context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: postData["complaint"].length,
+      itemBuilder: (context, index) {
+        return Container(
+          padding: const EdgeInsets.fromLTRB(30, 16, 30, 16),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Icon(Icons.sentiment_very_dissatisfied,
+                    color: iconColor, size: 15),
+                const SizedBox(height: 5),
+                Text(postData["complaint"][index]["title"],
+                    style: TextStyle(
+                        fontFamily: "OpenSans",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w900,
+                        color: textColor)),
+                const SizedBox(height: 15),
+                Text("To: ${postData['complaint'][index]['target']}",
+                    style: TextStyle(
+                        fontFamily: "OpenSans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: textColor)),
+                const SizedBox(height: 5),
+                Text(postData["complaint"][index]["description"],
+                    style: TextStyle(
+                        fontFamily: "OpenSans",
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: textColor)),
+                const SizedBox(height: 10),
+                Image.asset('assets/usa.png', width: double.infinity),
+                const SizedBox(height: 15),
+                Text(
+                    "Posted By: ${postData['complaint'][index]['isAnonymous'] ? postData['complaint'][index]['username'] : '-'}",
+                    style: TextStyle(
+                        fontFamily: "OpenSans",
+                        fontSize: 10,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w600,
+                        color: textColor)),
+                const SizedBox(height: 20),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Row(children: [
+                        GestureDetector(
+                          onTap: () {
+                            // Handle Like Complaint Post Operation
+                            handleLikeDislikePost("complaint",
+                                postData["complaint"][index]["id"], "like");
+                          },
+                          child: Icon(Icons.thumb_up,
+                              size: 20,
+                              color: isLikePostStatus("complaint",
+                                      postData['complaint'][index]['id'])
+                                  ? iconSelectedColor
+                                  : iconColor),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(postData["complaint"][index]["likes"].toString(),
+                            style: TextStyle(
+                                fontFamily: "OpenSans",
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: textColor))
+                      ]),
+                      Row(children: [
+                        GestureDetector(
+                          onTap: () {
+                            // Handle Dislike Complaint Post Operation
+                            handleLikeDislikePost("complaint",
+                                postData["complaint"][index]["id"], "dislike");
+                          },
+                          child: Icon(Icons.thumb_down,
+                              size: 20,
+                              color: isLikePostStatus("complaint",
+                                      postData['complaint'][index]['id'])
+                                  ? iconColor
+                                  : iconSelectedColor),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                            postData["complaint"][index]["dislikes"].toString(),
+                            style: TextStyle(
+                                fontFamily: "OpenSans",
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: textColor)),
+                      ]),
+                    ]),
+                const SizedBox(height: 20),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      commentSectionExpandedState["complaint"][index] =
+                          !commentSectionExpandedState["complaint"][index];
+                    });
+                  },
+                  child: Row(
+                    children: [
+                      Text('Comments',
+                          style: TextStyle(
+                              fontFamily: "OpenSans",
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: textColor)),
+                      Icon(
+                          commentSectionExpandedState["complaint"][index]
+                              ? Icons.expand_less
+                              : Icons.expand_more,
+                          color: iconColor,
+                          size: 20),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: commentSectionExpandedState["complaint"][index],
+                  child: PostComments(
+                      postType: widget.postListType,
+                      postID: postData["complaint"][index]["id"]),
+                ),
+                const SizedBox(height: 16),
+                const Divider(height: 0),
+              ]),
+        );
+      },
+    );
+  }
+
+  ElevatedButton createJoinLeaveEventButton(context, index) {
+    return !postData["event"][index]["hasJoined"]
+        ? ElevatedButton(
+            onPressed: () async {
+              // Join the event
+              Map<String, dynamic> joinEventData = {
+                "eventPostID": postData["event"][index]["id"],
+                "token": authService.getAuthToken()
+              };
+              final joinEventResponse =
+                  await apiService.joinEventPostAPI(joinEventData);
+              if (joinEventResponse != null) {
+                final status = joinEventResponse["status"];
+                if (status > 0) {
+                  // Success
+                  final message = joinEventResponse['data']['message'];
+                  // ignore: use_build_context_synchronously
+                  popupService.showSuccessPopup(
+                      context, "Join Event Success", message, () {
+                    getData();
+                  });
+                } else {
+                  // Error
+                  final message = joinEventResponse['data']['message'];
+                  // ignore: use_build_context_synchronously
+                  popupService.showErrorPopup(
+                      context, "Join Event Failed", message, () {});
+                }
+              }
+            },
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(textColor)),
+            child: Text("Join Event",
+                style: TextStyle(
+                    fontFamily: "OpenSans",
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: buttonColor)),
+          )
+        : ElevatedButton(
+            onPressed: () async {
+              // Join the event
+              Map<String, dynamic> leaveEventData = {
+                "eventPostID": postData["event"][index]["id"],
+                "token": authService.getAuthToken()
+              };
+              final leaveEventResponse =
+                  await apiService.leaveEventPostAPI(leaveEventData);
+              if (leaveEventResponse != null) {
+                final status = leaveEventResponse["status"];
+                if (status > 0) {
+                  // Success
+                  final message = leaveEventResponse['data']['message'];
+                  // ignore: use_build_context_synchronously
+                  popupService.showSuccessPopup(
+                      context, "Leave Event Success", message, () {
+                    getData();
+                  });
+                } else {
+                  // Error
+                  final message = leaveEventResponse['data']['message'];
+                  // ignore: use_build_context_synchronously
+                  popupService.showErrorPopup(
+                      context, "Leave Event Failed", message, () {});
+                }
+              }
+            },
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(buttonCancelColor)),
+            child: Text("Leave Event",
+                style: TextStyle(
+                    fontFamily: "OpenSans",
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: buttonColor)),
+          );
+  }
+
+  Widget displayEventPosts(context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: postData["event"].length,
+      itemBuilder: (context, index) {
+        return Container(
+          padding: const EdgeInsets.fromLTRB(30, 16, 30, 16),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Icon(Icons.event, color: iconColor, size: 15),
+                const SizedBox(height: 5),
+                Text(postData["event"][index]["title"],
+                    style: TextStyle(
+                        fontFamily: "OpenSans",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w900,
+                        color: textColor)),
+                const SizedBox(height: 15),
+                Text(
+                    "Time: ${utils.formatDateTime(postData['event'][index]['datetime'])}",
+                    style: TextStyle(
+                        fontFamily: "OpenSans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: textColor)),
+                const SizedBox(height: 5),
+                Text("Venue: ${postData['event'][index]['venue']}",
+                    style: TextStyle(
+                        fontFamily: "OpenSans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: textColor)),
+                const SizedBox(height: 5),
+                Text(
+                    "Total Participants: ${jsonDecode(postData['event'][index]['participants']).length}",
+                    style: TextStyle(
+                        fontFamily: "OpenSans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: textColor)),
+                const SizedBox(height: 10),
+                Text(postData["event"][index]["description"],
+                    style: TextStyle(
+                        fontFamily: "OpenSans",
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: textColor)),
+                const SizedBox(height: 10),
+                Image.asset('assets/usa.png', width: double.infinity),
+                const SizedBox(height: 15),
+                Text("Posted By: ${postData['event'][index]['username']}",
+                    style: TextStyle(
+                        fontFamily: "OpenSans",
+                        fontSize: 10,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w600,
+                        color: textColor)),
+                const SizedBox(height: 20),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Row(children: [
+                        GestureDetector(
+                          onTap: () {
+                            // Handle Like Event Post Operation
+                            handleLikeDislikePost("event",
+                                postData["event"][index]["id"], "like");
+                          },
+                          child: Icon(Icons.thumb_up,
+                              size: 20,
+                              color: isLikePostStatus(
+                                      "event", postData['event'][index]['id'])
+                                  ? iconSelectedColor
+                                  : iconColor),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(postData["event"][index]["likes"].toString(),
+                            style: TextStyle(
+                                fontFamily: "OpenSans",
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: textColor))
+                      ]),
+                      createJoinLeaveEventButton(context, index),
+                      Row(children: [
+                        GestureDetector(
+                          onTap: () {
+                            // Handle Dislike Event Post Operation
+                            handleLikeDislikePost("event",
+                                postData["event"][index]["id"], "dislike");
+                          },
+                          child: Icon(Icons.thumb_down,
+                              size: 20,
+                              color: isLikePostStatus(
+                                      "event", postData['event'][index]['id'])
+                                  ? iconColor
+                                  : iconSelectedColor),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(postData["event"][index]["dislikes"].toString(),
+                            style: TextStyle(
+                                fontFamily: "OpenSans",
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: textColor)),
+                      ]),
+                    ]),
+                const SizedBox(height: 20),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      commentSectionExpandedState["event"][index] =
+                          !commentSectionExpandedState["event"][index];
+                    });
+                  },
+                  child: Row(
+                    children: [
+                      Text('Comments',
+                          style: TextStyle(
+                              fontFamily: "OpenSans",
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: textColor)),
+                      Icon(
+                          commentSectionExpandedState["event"][index]
+                              ? Icons.expand_less
+                              : Icons.expand_more,
+                          color: iconColor,
+                          size: 20),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: commentSectionExpandedState["event"][index],
+                  child: PostComments(
+                      postType: widget.postListType,
+                      postID: postData["event"][index]["id"]),
+                ),
+                const SizedBox(height: 16),
+                const Divider(height: 0),
+              ]),
+        );
+      },
+    );
+  }
+
+  Widget displayGeneralPosts(context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: postData["general"].length,
+      itemBuilder: (context, index) {
+        return Container(
+          padding: const EdgeInsets.fromLTRB(30, 16, 30, 16),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Icon(Icons.mail, color: iconColor, size: 15),
+                const SizedBox(height: 5),
+                Text(postData["general"][index]["title"],
+                    style: TextStyle(
+                        fontFamily: "OpenSans",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w900,
+                        color: textColor)),
+                const SizedBox(height: 15),
+                Text(postData["general"][index]["description"],
+                    style: TextStyle(
+                        fontFamily: "OpenSans",
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: textColor)),
+                const SizedBox(height: 10),
+                Image.asset('assets/usa.png', width: double.infinity),
+                const SizedBox(height: 15),
+                Text("Posted By: ${postData['general'][index]['username']}",
+                    style: TextStyle(
+                        fontFamily: "OpenSans",
+                        fontSize: 10,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w600,
+                        color: textColor)),
+                const SizedBox(height: 20),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Row(children: [
+                        GestureDetector(
+                          onTap: () {
+                            // Handle Like General Post Operation
+                            handleLikeDislikePost("general",
+                                postData["general"][index]["id"], "like");
+                          },
+                          child: Icon(Icons.thumb_up,
+                              size: 20,
+                              color: isLikePostStatus("general",
+                                      postData['general'][index]['id'])
+                                  ? iconSelectedColor
+                                  : iconColor),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(postData["general"][index]["likes"].toString(),
+                            style: TextStyle(
+                                fontFamily: "OpenSans",
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: textColor))
+                      ]),
+                      Row(children: [
+                        GestureDetector(
+                          onTap: () {
+                            // Handle Dislike General Post Operation
+                            handleLikeDislikePost("general",
+                                postData["general"][index]["id"], "dislike");
+                          },
+                          child: Icon(Icons.thumb_down,
+                              size: 20,
+                              color: isLikePostStatus("general",
+                                      postData['general'][index]['id'])
+                                  ? iconColor
+                                  : iconSelectedColor),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(postData["general"][index]["dislikes"].toString(),
+                            style: TextStyle(
+                                fontFamily: "OpenSans",
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: textColor)),
+                      ]),
+                    ]),
+                const SizedBox(height: 20),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      commentSectionExpandedState["general"][index] =
+                          !commentSectionExpandedState["general"][index];
+                    });
+                  },
+                  child: Row(
+                    children: [
+                      Text('Comments',
+                          style: TextStyle(
+                              fontFamily: "OpenSans",
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: textColor)),
+                      Icon(
+                          commentSectionExpandedState["general"][index]
+                              ? Icons.expand_less
+                              : Icons.expand_more,
+                          color: iconColor,
+                          size: 20),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: commentSectionExpandedState["general"][index],
+                  child: PostComments(
+                      postType: widget.postListType,
+                      postID: postData["general"][index]["id"]),
+                ),
+                const SizedBox(height: 16),
+                const Divider(height: 0),
+              ]),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     switch (widget.postListType) {
       case "crime":
         return displayCrimePosts(context);
       case "complaint":
-        break;
+        return displayComplaintPosts(context);
       case "event":
-        break;
+        return displayEventPosts(context);
       case "general":
-        break;
+        return displayGeneralPosts(context);
       default:
         break;
     }
@@ -523,6 +1234,7 @@ class PostCommentsState extends State<PostComments> {
     String token = authService.getAuthToken();
 
     if (widget.postType == 'crime') {
+      // Submit crime post comments
       Map<String, dynamic> commentData = {
         "content": newComment,
         "crimePostID": postID,
@@ -530,6 +1242,63 @@ class PostCommentsState extends State<PostComments> {
       };
       final commentResponse =
           await apiService.submitCrimePostCommentAPI(commentData);
+      if (commentResponse != null) {
+        final status = commentResponse["status"];
+        if (status > 0) {
+          // Success
+          setState(() {
+            commentController.clear();
+          });
+          getComments();
+        }
+      }
+    } else if (widget.postType == 'complaint') {
+      // Submit complaint post comments
+      Map<String, dynamic> commentData = {
+        "content": newComment,
+        "complaintPostID": postID,
+        "token": token
+      };
+      final commentResponse =
+          await apiService.submitComplaintPostCommentAPI(commentData);
+      if (commentResponse != null) {
+        final status = commentResponse["status"];
+        if (status > 0) {
+          // Success
+          setState(() {
+            commentController.clear();
+          });
+          getComments();
+        }
+      }
+    } else if (widget.postType == 'event') {
+      // Submit event post comments
+      Map<String, dynamic> commentData = {
+        "content": newComment,
+        "eventPostID": postID,
+        "token": token
+      };
+      final commentResponse =
+          await apiService.submitEventPostCommentAPI(commentData);
+      if (commentResponse != null) {
+        final status = commentResponse["status"];
+        if (status > 0) {
+          // Success
+          setState(() {
+            commentController.clear();
+          });
+          getComments();
+        }
+      }
+    } else if (widget.postType == 'general') {
+      // Submit general post comments
+      Map<String, dynamic> commentData = {
+        "content": newComment,
+        "generalPostID": postID,
+        "token": token
+      };
+      final commentResponse =
+          await apiService.submitGeneralPostCommentAPI(commentData);
       if (commentResponse != null) {
         final status = commentResponse["status"];
         if (status > 0) {

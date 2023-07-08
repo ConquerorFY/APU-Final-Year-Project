@@ -136,6 +136,42 @@ class ApiService {
     }
   }
 
+  // Like Crime Post API
+  dynamic likeCrimePostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/likeCrimePost/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Like Crime Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Like Crime Post - $e");
+      return null;
+    }
+  }
+
+  // Dislike Crime Post API
+  dynamic dislikeCrimePostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/dislikeCrimePost/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Dislike Crime Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Dislike Crime Post - $e");
+      return null;
+    }
+  }
+
   // Get All Complaint Post Comments API
   dynamic getAllComplaintPostCommentsAPI(body) async {
     try {
@@ -150,6 +186,60 @@ class ApiService {
       return responseData;
     } catch (e) {
       logger.error("Get All Complaint Post Comments - $e");
+      return null;
+    }
+  }
+
+  // Submit Complaint Post Comment API
+  dynamic submitComplaintPostCommentAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/createComplaintPostComment/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Submit Complaint Post Comment - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Submit Complaint Post Comment - $e");
+      return null;
+    }
+  }
+
+  // Like Complaint Post API
+  dynamic likeComplaintPostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/likeComplaintPost/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Like Complaint Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Like Complaint Post - $e");
+      return null;
+    }
+  }
+
+  // Dislike Complaint Post API
+  dynamic dislikeComplaintPostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/dislikeComplaintPost/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Dislike Complaint Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Dislike Complaint Post - $e");
       return null;
     }
   }
@@ -172,6 +262,96 @@ class ApiService {
     }
   }
 
+  // Submit Event Post Comment API
+  dynamic submitEventPostCommentAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/createEventPostComment/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Submit Event Post Comment - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Submit Event Post Comment - $e");
+      return null;
+    }
+  }
+
+  // Like Event Post API
+  dynamic likeEventPostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/likeEventPost/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Like Event Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Like Event Post - $e");
+      return null;
+    }
+  }
+
+  // Dislike Event Post API
+  dynamic dislikeEventPostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/dislikeEventPost/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Dislike Event Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Dislike Event Post - $e");
+      return null;
+    }
+  }
+
+  // Join Event Post API
+  dynamic joinEventPostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/joinEventPost/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Join Event Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Join Event Post - $e");
+      return null;
+    }
+  }
+
+  // Leave Event Post API
+  dynamic leaveEventPostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/leaveEventPost/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Leave Event Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Leave Event Post - $e");
+      return null;
+    }
+  }
+
   // Get All General Post Comments API
   dynamic getAllGeneralPostCommentsAPI(body) async {
     try {
@@ -186,6 +366,60 @@ class ApiService {
       return responseData;
     } catch (e) {
       logger.error("Get All General Post Comments - $e");
+      return null;
+    }
+  }
+
+  // Submit General Post Comment API
+  dynamic submitGeneralPostCommentAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/createGeneralPostComment/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Submit General Post Comment - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Submit General Post Comment - $e");
+      return null;
+    }
+  }
+
+  // Like General Post API
+  dynamic likeGeneralPostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/likeGeneralPost/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Like General Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Like General Post - $e");
+      return null;
+    }
+  }
+
+  // Dislike General Post API
+  dynamic dislikeGeneralPostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/dislikeGeneralPost/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Dislike General Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Dislike General Post - $e");
       return null;
     }
   }

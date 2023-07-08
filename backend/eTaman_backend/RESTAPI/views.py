@@ -329,6 +329,8 @@ def leaveNeighborhoodGroup(request):
 @api_view(['POST'])
 def getAllNeighborhoodGroupPost(request):
     try:
+        # Get resident ID
+        residentId = decodeJWTToken(request.data["token"])["id"]
         # Get neighborhood group ID
         groupID = request.data["groupID"]
         # Get all posts data
@@ -352,10 +354,19 @@ def getAllNeighborhoodGroupPost(request):
         eventPostData = []
         for post in eventPost:
             username = post.organizerID.username
-            eventPostData.append({
-                'username': username,
-                **EventPostSerializer(post).data
-            })
+            participantsList = json.loads(post.participants)
+            if residentId in participantsList:
+                eventPostData.append({
+                    'username': username,
+                    'hasJoined': True,
+                    **EventPostSerializer(post).data
+                })
+            else:
+                eventPostData.append({
+                    'username': username,
+                    'hasJoined': False,
+                    **EventPostSerializer(post).data
+                })
         generalPost = GeneralPostModel.objects.filter(authorID__groupID=groupID)
         generalPostData = []
         for post in generalPost:
@@ -453,16 +464,16 @@ def likeCrimePost(request):
             if newResident.is_valid() and newCrimePost.is_valid():
                 newResident.save()
                 newCrimePost.save()
-                return JsonResponse({'data': {'message': CRIME_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+                return JsonResponse({'data': {'message': CRIME_POST_UPDATED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
             else:
                 # An error has occured
-                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
         else:
-            return JsonResponse({'data': {'message': CRIME_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': CRIME_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP}, 'status': ERROR_CODE}, status=400)
     except CrimePostModel.DoesNotExist:
-        return JsonResponse({'data': {'message': CRIME_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': CRIME_POST_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
 # Dislike crime post
 @api_view(['POST'])
@@ -499,16 +510,16 @@ def dislikeCrimePost(request):
             if newResident.is_valid() and newCrimePost.is_valid():
                 newResident.save()
                 newCrimePost.save()
-                return JsonResponse({'data': {'message': CRIME_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+                return JsonResponse({'data': {'message': CRIME_POST_UPDATED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
             else:
                 # An error has occured
-                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
         else:
-            return JsonResponse({'data': {'message': CRIME_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': CRIME_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP}, 'status': ERROR_CODE}, status=400)
     except CrimePostModel.DoesNotExist:
-        return JsonResponse({'data': {'message': CRIME_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': CRIME_POST_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
 # Create crime post comment
 @api_view(['POST'])
@@ -606,16 +617,16 @@ def likeComplaintPost(request):
             if newResident.is_valid() and newComplaintPost.is_valid():
                 newResident.save()
                 newComplaintPost.save()
-                return JsonResponse({'data': {'message': COMPLAINT_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+                return JsonResponse({'data': {'message': COMPLAINT_POST_UPDATED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
             else:
                 # An error has occured
-                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
         else:
-            return JsonResponse({'data': {'message': COMPLAINT_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': COMPLAINT_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP}, 'status': ERROR_CODE}, status=400)
     except ComplaintPostModel.DoesNotExist:
-        return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
 # Dislike complaint post
 @api_view(['POST'])
@@ -652,16 +663,16 @@ def dislikeComplaintPost(request):
             if newResident.is_valid() and newComplaintPost.is_valid():
                 newResident.save()
                 newComplaintPost.save()
-                return JsonResponse({'data': {'message': COMPLAINT_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+                return JsonResponse({'data': {'message': COMPLAINT_POST_UPDATED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
             else:
                 # An error has occured
-                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
         else:
-            return JsonResponse({'data': {'message': COMPLAINT_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': COMPLAINT_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP}, 'status': ERROR_CODE}, status=400)
     except ComplaintPostModel.DoesNotExist:
-        return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
 # Create complaint post comment
 @api_view(['POST'])
@@ -764,16 +775,16 @@ def likeEventPost(request):
             if newResident.is_valid() and newEventPost.is_valid():
                 newResident.save()
                 newEventPost.save()
-                return JsonResponse({'data': {'message': EVENT_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+                return JsonResponse({'data': {'message': EVENT_POST_UPDATED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
             else:
                 # An error has occured
-                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
         else:
-            return JsonResponse({'data': {'message': EVENT_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': EVENT_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP}, 'status': ERROR_CODE}, status=400)
     except EventPostModel.DoesNotExist:
-        return JsonResponse({'data': {'message': EVENT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': EVENT_POST_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
 # Dislike event post
 @api_view(['POST'])
@@ -810,16 +821,16 @@ def dislikeEventPost(request):
             if newResident.is_valid() and newEventPost.is_valid():
                 newResident.save()
                 newEventPost.save()
-                return JsonResponse({'data': {'message': EVENT_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+                return JsonResponse({'data': {'message': EVENT_POST_UPDATED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
             else:
                 # An error has occured
-                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
         else:
-            return JsonResponse({'data': {'message': EVENT_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': EVENT_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP}, 'status': ERROR_CODE}, status=400)
     except EventPostModel.DoesNotExist:
-        return JsonResponse({'data': {'message': EVENT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': EVENT_POST_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
 # Create event post comment
 @api_view(['POST'])
@@ -876,16 +887,16 @@ def joinEventPost(request):
             # Check whether data is valid
             if newEventPostData.is_valid(raise_exception=True):
                 newEventPostData.save()
-                return JsonResponse({"data": {'message': EVENT_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+                return JsonResponse({"data": {'message': EVENT_POST_UPDATED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
             else:
                 # An error has occured
-                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
         else:
-            return JsonResponse({'data': {'message': EVENT_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': EVENT_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP}, 'status': ERROR_CODE}, status=400)
     except EventPostCommentModel.DoesNotExist:
-        return JsonResponse({"data": {'message': EVENT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({"data": {'message': EVENT_POST_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
 # Leave event post
 @api_view(['POST'])
@@ -906,14 +917,14 @@ def leaveEventPost(request):
         # Check whether data is valid
         if newEventPostData.is_valid(raise_exception=True):
             newEventPostData.save()
-            return JsonResponse({"data": {'message': EVENT_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            return JsonResponse({"data": {'message': EVENT_POST_UPDATED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
         else:
             # An error has occured
-            return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
     except EventPostCommentModel.DoesNotExist:
-        return JsonResponse({"data": {'message': EVENT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({"data": {'message': EVENT_POST_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
 # Create general post
 @api_view(['POST'])
@@ -974,16 +985,16 @@ def likeGeneralPost(request):
             if newResident.is_valid() and newGeneralPost.is_valid():
                 newResident.save()
                 newGeneralPost.save()
-                return JsonResponse({'data': {'message': GENERAL_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+                return JsonResponse({'data': {'message': GENERAL_POST_UPDATED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
             else:
                 # An error has occured
-                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
         else:
-            return JsonResponse({'data': {'message': GENERAL_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': GENERAL_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP}, 'status': ERROR_CODE}, status=400)
     except GeneralPostModel.DoesNotExist:
-        return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
 # Dislike general post
 @api_view(['POST'])
@@ -1020,16 +1031,16 @@ def dislikeGeneralPost(request):
             if newResident.is_valid() and newGeneralPost.is_valid():
                 newResident.save()
                 newGeneralPost.save()
-                return JsonResponse({'data': {'message': GENERAL_POST_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+                return JsonResponse({'data': {'message': GENERAL_POST_UPDATED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
             else:
                 # An error has occured
-                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
         else:
-            return JsonResponse({'data': {'message': GENERAL_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': GENERAL_POST_NOT_PART_OF_NEIGHBORHOOD_GROUP}, 'status': ERROR_CODE}, status=400)
     except GeneralPostModel.DoesNotExist:
-        return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
 # Create general post comment
 @api_view(['POST'])

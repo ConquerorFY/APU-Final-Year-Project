@@ -42,5 +42,8 @@ class Settings {
   Color postTypeFilterSectionTextSelectedColor = Colors.red.shade500;
 
   Color postListTextColor = Colors.green.shade500;
+  Color postListButtonCancelColor = Colors.red.shade500;
   Color postListIconColor = Colors.green.shade600;
+  Color postListIconColor2 = Colors.red.shade600;
+  Color postListButtonTextColor = Colors.white;
 }
