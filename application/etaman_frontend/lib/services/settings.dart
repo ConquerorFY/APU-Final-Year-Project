@@ -40,4 +40,7 @@ class Settings {
   Color postTypeFilterSectionIconColor = Colors.green.shade600;
   Color postTypeFilterSectionIconSelectedColor = Colors.red.shade600;
   Color postTypeFilterSectionTextSelectedColor = Colors.red.shade500;
+
+  Color postListTextColor = Colors.green.shade500;
+  Color postListIconColor = Colors.green.shade600;
 }

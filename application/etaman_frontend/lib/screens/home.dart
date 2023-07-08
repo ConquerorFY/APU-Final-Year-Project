@@ -18,6 +18,14 @@ class HomeState extends State<Home> {
   AuthService authService = AuthService(); // Auth Service
   Settings settings = Settings();
 
+  String filteredPostListType = 'crime';
+
+  void changeFilteredPostListType(String type) {
+    setState(() {
+      filteredPostListType = type;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,11 +38,13 @@ class HomeState extends State<Home> {
                 }
               },
               child: ListView(
-                children: const <Widget>[
-                  SizedBox(height: 10),
-                  PostTypeFilterSection(),
-                  Divider(height: 0),
-                  PostList(),
+                children: <Widget>[
+                  const SizedBox(height: 12),
+                  PostTypeFilterSection(
+                      updatePostListType: changeFilteredPostListType),
+                  const Divider(height: 0),
+                  const SizedBox(height: 10),
+                  PostList(postListType: filteredPostListType),
                 ],
               ));
         }),

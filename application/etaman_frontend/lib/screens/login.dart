@@ -165,7 +165,7 @@ class LoginState extends State<Login> {
                                 "password": passwordVal,
                               };
                               final response =
-                                  await apiService.loginAccount(loginData);
+                                  await apiService.loginAccountAPI(loginData);
                               if (response != null) {
                                 final status = response["status"];
                                 final message = response["data"]["message"];

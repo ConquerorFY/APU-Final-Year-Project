@@ -401,7 +401,7 @@ class RegisterState extends State<Register> {
                             () {});
                       } else {
                         final response =
-                            await apiService.registerAccount(userData);
+                            await apiService.registerAccountAPI(userData);
                         if (response != null) {
                           final status = response["status"];
                           final message = response["data"]["message"];
