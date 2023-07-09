@@ -30,24 +30,37 @@ class HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: TopAppBar(),
-        body: Builder(builder: (BuildContext innerContext) {
-          return GestureDetector(
-              onHorizontalDragEnd: (details) {
-                if (details.primaryVelocity! < 0) {
-                  Scaffold.of(innerContext).openDrawer();
-                }
+        body: Stack(children: [
+          Builder(builder: (BuildContext innerContext) {
+            return GestureDetector(
+                onHorizontalDragEnd: (details) {
+                  if (details.primaryVelocity! < 0) {
+                    Scaffold.of(innerContext).openDrawer();
+                  }
+                },
+                child: ListView(
+                  children: <Widget>[
+                    const SizedBox(height: 12),
+                    PostTypeFilterSection(
+                        updatePostListType: changeFilteredPostListType),
+                    const Divider(height: 0),
+                    const SizedBox(height: 10),
+                    PostList(postListType: filteredPostListType),
+                  ],
+                ));
+          }),
+          Positioned(
+            bottom: 16.0,
+            right: 16.0,
+            child: FloatingActionButton(
+              backgroundColor: settings.bottomNavBarBgColor,
+              onPressed: () {
+                // Navigate to create posts screen
               },
-              child: ListView(
-                children: <Widget>[
-                  const SizedBox(height: 12),
-                  PostTypeFilterSection(
-                      updatePostListType: changeFilteredPostListType),
-                  const Divider(height: 0),
-                  const SizedBox(height: 10),
-                  PostList(postListType: filteredPostListType),
-                ],
-              ));
-        }),
+              child: Icon(Icons.add, color: settings.bottomNavBarTextColor),
+            ),
+          )
+        ]),
         drawer: const LeftDrawer(),
         bottomNavigationBar: BottomNavBar(selectedIndex: 0));
   }

@@ -5,7 +5,7 @@ Guests:
 Residents:
     - Login Screen [X]
     - Register Screen [X]
-    - Home Screen
+    - Home Screen [X]
     - Join Group Screen
     - Profile Screen
     - Crime Map Screen
@@ -14,7 +14,7 @@ Residents:
 Resident Leader:
     - Login Screen [X]
     - Register Screen [X]
-    - Home Screen
+    - Home Screen [X]
     = Join Group Screen
     - Profile Screen
     - Crime Map Screen
