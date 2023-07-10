@@ -184,8 +184,11 @@ def getResidentData(request):
     try:
         # Get resident ID from JWT
         id = decodeJWTToken(request.data["token"])["id"]
-        resident = ResidentSerializer(ResidentModel.objects.get(pk=id))
-        residentData = resident.data
+        resident = ResidentModel.objects.get(pk=id)
+        residentData = {
+            'groupName': resident.groupID.name if resident.groupID != None else '',
+            **ResidentSerializer(resident).data
+        }
         # Filter out password in data entry
         filteredResidentData = dict(filter(lambda item: item[0] != "password", residentData.items()))
         return JsonResponse({"data": {"message": RESIDENT_DATA_FOUND, "list": filteredResidentData}, "status": SUCCESS_CODE}, status=201)

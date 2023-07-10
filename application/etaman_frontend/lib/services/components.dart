@@ -1468,6 +1468,7 @@ class LeftDrawerState extends State<LeftDrawer> {
                     fontSize: 18)),
             onTap: () {
               // Handle profile screen navigation
+              Navigator.pushNamed(context, '/profile');
             },
           ),
           ListTile(

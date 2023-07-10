@@ -7,7 +7,8 @@ Residents:
     - Register Screen [X]
     - Home Screen [X]
     - Join Group Screen
-    - Profile Screen
+    - Profile Screen [X]
+    - Edit Profile Screen
     - Crime Map Screen
     - Facilities Booking Screen
 
@@ -15,8 +16,9 @@ Resident Leader:
     - Login Screen [X]
     - Register Screen [X]
     - Home Screen [X]
-    = Join Group Screen
-    - Profile Screen
+    - Join Group Screen
+    - Profile Screen [X]
+    - Edit Profile Screen
     - Crime Map Screen
     - Facilities Booking Screen
 

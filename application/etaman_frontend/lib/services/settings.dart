@@ -46,4 +46,9 @@ class Settings {
   Color postListIconColor = Colors.green.shade600;
   Color postListIconColor2 = Colors.red.shade600;
   Color postListButtonTextColor = Colors.white;
+
+  Color profileTopNavBarBgColor = Colors.green;
+  Color profileTopNavBarTextColor = Colors.white;
+  Color profileTextColor = Colors.green.shade500;
+  Color profileIconColor = Colors.green.shade600;
 }
