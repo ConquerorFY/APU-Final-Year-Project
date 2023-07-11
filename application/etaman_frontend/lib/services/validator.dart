@@ -4,10 +4,10 @@ class Validator {
   final stateRegExp = RegExp(r'^[A-Z]{1}[a-zA-Z ]+$');
   final cityRegExp = RegExp(r'^[A-Z]{1}[a-zA-Z ]+$');
   final postcodeRegExp = RegExp(r'^[0-9]+$');
-  final streetRegExp = RegExp(r'^[a-zA-Z0-9 ]+$');
-  final contactRegExp = RegExp(r'^[0-9]+$');
+  final streetRegExp = RegExp(r'^[a-zA-Z0-9\/ ]+$');
+  final contactRegExp = RegExp(r'^[0-9-]+$');
   final usernameRegExp = RegExp(r'^[a-zA-Z0-9_]{3,16}$');
-  final passwordRegExp = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
+  final passwordRegExp = RegExp(r'^[a-zA-Z0-9()_\/]{8,}$');
 
   // Private constructor to prevent external instantiation
   Validator._();

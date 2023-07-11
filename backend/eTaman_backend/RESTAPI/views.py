@@ -1307,6 +1307,8 @@ def testPutAPI(request, id):
 @api_view(['PATCH'])
 def updateResidentAccount(request):
     try:
+        if 'password' in request.data:
+            request.data['password'] = encryptPassword(request.data['password'])
         # Get resident ID
         id = decodeJWTToken(request.data["token"])["id"]
         residentData = ResidentSerializer(ResidentModel.objects.get(pk=id), data=request.data, partial=True)

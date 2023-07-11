@@ -423,4 +423,22 @@ class ApiService {
       return null;
     }
   }
+
+  // Edit Resident Account API
+  dynamic editAccountAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/updateResident/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await patch(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Edit Resident Account - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Edit Resident Account - $e");
+      return null;
+    }
+  }
 }

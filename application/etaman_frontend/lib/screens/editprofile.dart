@@ -1,17 +1,18 @@
+import 'package:etaman_frontend/services/auth.dart';
 import 'package:etaman_frontend/services/popup.dart';
 import 'package:etaman_frontend/services/settings.dart';
 import 'package:etaman_frontend/services/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:etaman_frontend/services/api.dart';
 
-class Register extends StatefulWidget {
-  const Register({super.key});
+class EditProfile extends StatefulWidget {
+  const EditProfile({super.key});
 
   @override
-  RegisterState createState() => RegisterState();
+  EditProfileState createState() => EditProfileState();
 }
 
-class RegisterState extends State<Register> {
+class EditProfileState extends State<EditProfile> {
   final _formKey = GlobalKey<FormState>();
 
   final GlobalKey<FormFieldState<String>> _nameKey =
@@ -33,27 +34,50 @@ class RegisterState extends State<Register> {
   final GlobalKey<FormFieldState<String>> _passwordKey =
       GlobalKey<FormFieldState<String>>();
 
-  String nameVal = '';
-  String emailVal = '';
-  String stateVal = '';
-  String cityVal = '';
-  String postcodeVal = '';
-  String streetVal = '';
-  String contactVal = '';
-  String usernameVal = '';
-  String passwordVal = '';
+  dynamic profileData;
 
-  Validator validator = Validator(); // Text Form Field Validator
-  ApiService apiService = ApiService(); // API Service
-  PopupService popupService = PopupService(); // Popup Service
-  Settings settings = Settings(); // Settings Service
+  Validator validator = Validator();
+  ApiService apiService = ApiService();
+  PopupService popupService = PopupService();
+  AuthService authService = AuthService();
+  Settings settings = Settings();
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  void getData() async {
+    Map<String, dynamic> tokenData = {"token": authService.getAuthToken()};
+    final responseData = await apiService.getResidentDataAPI(tokenData);
+    if (responseData != null) {
+      final status = responseData['status'];
+      if (status > 0) {
+        // Success
+        setState(() {
+          profileData = {
+            'name': responseData['data']['list']['name'],
+            'email': responseData['data']['list']['email'],
+            'state': responseData['data']['list']['state'],
+            'city': responseData['data']['list']['city'],
+            'postcode': responseData['data']['list']['postcode'].toString(),
+            'street': responseData['data']['list']['street'],
+            'contact': responseData['data']['list']['contact'],
+            'username': responseData['data']['list']['username'],
+            'password': '12345678'
+          };
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.green,
-          title: const Text('Register Account',
+          title: const Text('Edit Profile',
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w800,
@@ -73,299 +97,290 @@ class RegisterState extends State<Register> {
                   child: Column(children: [
                     TextFormField(
                       key: _nameKey,
+                      initialValue: profileData['name'],
                       validator: (value) {
                         return validator.validateName(value);
                       },
                       onChanged: (value) {
-                        if (_nameKey.currentState!.validate()) {
-                          setState(() {
-                            nameVal = value;
-                          });
-                        }
+                        _nameKey.currentState!.validate();
                       },
                       style: TextStyle(
-                          color: settings.registerTextFieldTextColor,
+                          color: settings.editProfileTextFieldTextColor,
                           fontSize: 16,
                           fontFamily: 'OpenSans'),
-                      cursorColor: settings.registerTextFieldCursorColor,
+                      cursorColor: settings.editProfileTextFieldCursorColor,
                       decoration: InputDecoration(
                         labelStyle: TextStyle(
-                            color: settings.registerTextFieldTextColor),
+                            color: settings.editProfileTextFieldTextColor),
                         labelText: 'Name',
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: settings.registerTextFieldBorderColor,
-                                width: settings.registerTextFieldBorderWidth)),
+                                color: settings.editProfileTextFieldBorderColor,
+                                width:
+                                    settings.editProfileTextFieldBorderWidth)),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: settings.registerTextFieldBorderColor,
-                                width: settings.registerTextFieldBorderWidth +
-                                    1.0)),
+                                color: settings.editProfileTextFieldBorderColor,
+                                width:
+                                    settings.editProfileTextFieldBorderWidth +
+                                        1.0)),
                       ),
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
                       key: _emailKey,
+                      initialValue: profileData['email'],
                       validator: (value) {
                         return validator.validateEmail(value);
                       },
                       onChanged: (value) {
-                        if (_emailKey.currentState!.validate()) {
-                          setState(() {
-                            emailVal = value;
-                          });
-                        }
+                        _emailKey.currentState!.validate();
                       },
                       style: TextStyle(
-                          color: settings.registerTextFieldTextColor,
+                          color: settings.editProfileTextFieldTextColor,
                           fontSize: 16,
                           fontFamily: 'OpenSans'),
-                      cursorColor: settings.registerTextFieldCursorColor,
+                      cursorColor: settings.editProfileTextFieldCursorColor,
                       decoration: InputDecoration(
                         labelStyle: TextStyle(
-                            color: settings.registerTextFieldTextColor),
+                            color: settings.editProfileTextFieldTextColor),
                         labelText: 'Email',
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: settings.registerTextFieldBorderColor,
-                                width: settings.registerTextFieldBorderWidth)),
+                                color: settings.editProfileTextFieldBorderColor,
+                                width:
+                                    settings.editProfileTextFieldBorderWidth)),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: settings.registerTextFieldBorderColor,
-                                width: settings.registerTextFieldBorderWidth +
-                                    1.0)),
+                                color: settings.editProfileTextFieldBorderColor,
+                                width:
+                                    settings.editProfileTextFieldBorderWidth +
+                                        1.0)),
                       ),
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
                       key: _stateKey,
+                      initialValue: profileData['state'],
                       validator: (value) {
                         return validator.validateState(value);
                       },
                       onChanged: (value) {
-                        if (_stateKey.currentState!.validate()) {
-                          setState(() {
-                            stateVal = value;
-                          });
-                        }
+                        _stateKey.currentState!.validate();
                       },
                       style: TextStyle(
-                          color: settings.registerTextFieldTextColor,
+                          color: settings.editProfileTextFieldTextColor,
                           fontSize: 16,
                           fontFamily: 'OpenSans'),
-                      cursorColor: settings.registerTextFieldCursorColor,
+                      cursorColor: settings.editProfileTextFieldCursorColor,
                       decoration: InputDecoration(
                         labelStyle: TextStyle(
-                            color: settings.registerTextFieldTextColor),
+                            color: settings.editProfileTextFieldTextColor),
                         labelText: 'State',
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: settings.registerTextFieldBorderColor,
-                                width: settings.registerTextFieldBorderWidth)),
+                                color: settings.editProfileTextFieldBorderColor,
+                                width:
+                                    settings.editProfileTextFieldBorderWidth)),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: settings.registerTextFieldBorderColor,
-                                width: settings.registerTextFieldBorderWidth +
-                                    1.0)),
+                                color: settings.editProfileTextFieldBorderColor,
+                                width:
+                                    settings.editProfileTextFieldBorderWidth +
+                                        1.0)),
                       ),
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
                       key: _cityKey,
+                      initialValue: profileData['city'],
                       validator: (value) {
                         return validator.validateCity(value);
                       },
                       onChanged: (value) {
-                        if (_cityKey.currentState!.validate()) {
-                          setState(() {
-                            cityVal = value;
-                          });
-                        }
+                        _cityKey.currentState!.validate();
                       },
                       style: TextStyle(
-                          color: settings.registerTextFieldTextColor,
+                          color: settings.editProfileTextFieldTextColor,
                           fontSize: 16,
                           fontFamily: 'OpenSans'),
-                      cursorColor: settings.registerTextFieldCursorColor,
+                      cursorColor: settings.editProfileTextFieldCursorColor,
                       decoration: InputDecoration(
                         labelStyle: TextStyle(
-                            color: settings.registerTextFieldTextColor),
+                            color: settings.editProfileTextFieldTextColor),
                         labelText: 'City',
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: settings.registerTextFieldBorderColor,
-                                width: settings.registerTextFieldBorderWidth)),
+                                color: settings.editProfileTextFieldBorderColor,
+                                width:
+                                    settings.editProfileTextFieldBorderWidth)),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: settings.registerTextFieldBorderColor,
-                                width: settings.registerTextFieldBorderWidth +
-                                    1.0)),
+                                color: settings.editProfileTextFieldBorderColor,
+                                width:
+                                    settings.editProfileTextFieldBorderWidth +
+                                        1.0)),
                       ),
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
                       key: _postcodeKey,
+                      initialValue: profileData['postcode'],
                       validator: (value) {
                         return validator.validatePostcode(value);
                       },
                       onChanged: (value) {
-                        if (_postcodeKey.currentState!.validate()) {
-                          setState(() {
-                            postcodeVal = value;
-                          });
-                        }
+                        _postcodeKey.currentState!.validate();
                       },
                       style: TextStyle(
-                          color: settings.registerTextFieldTextColor,
+                          color: settings.editProfileTextFieldTextColor,
                           fontSize: 16,
                           fontFamily: 'OpenSans'),
-                      cursorColor: settings.registerTextFieldCursorColor,
+                      cursorColor: settings.editProfileTextFieldCursorColor,
                       decoration: InputDecoration(
                         labelStyle: TextStyle(
-                            color: settings.registerTextFieldTextColor),
+                            color: settings.editProfileTextFieldTextColor),
                         labelText: 'Postcode',
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: settings.registerTextFieldBorderColor,
-                                width: settings.registerTextFieldBorderWidth)),
+                                color: settings.editProfileTextFieldBorderColor,
+                                width:
+                                    settings.editProfileTextFieldBorderWidth)),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: settings.registerTextFieldBorderColor,
-                                width: settings.registerTextFieldBorderWidth +
-                                    1.0)),
+                                color: settings.editProfileTextFieldBorderColor,
+                                width:
+                                    settings.editProfileTextFieldBorderWidth +
+                                        1.0)),
                       ),
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
                       key: _streetKey,
+                      initialValue: profileData['street'],
                       validator: (value) {
                         return validator.validateStreet(value);
                       },
                       onChanged: (value) {
-                        if (_streetKey.currentState!.validate()) {
-                          setState(() {
-                            streetVal = value;
-                          });
-                        }
+                        _streetKey.currentState!.validate();
                       },
                       style: TextStyle(
-                          color: settings.registerTextFieldTextColor,
+                          color: settings.editProfileTextFieldTextColor,
                           fontSize: 16,
                           fontFamily: 'OpenSans'),
-                      cursorColor: settings.registerTextFieldCursorColor,
+                      cursorColor: settings.editProfileTextFieldCursorColor,
                       decoration: InputDecoration(
                         labelStyle: TextStyle(
-                            color: settings.registerTextFieldTextColor),
+                            color: settings.editProfileTextFieldTextColor),
                         labelText: 'Street',
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: settings.registerTextFieldBorderColor,
-                                width: settings.registerTextFieldBorderWidth)),
+                                color: settings.editProfileTextFieldBorderColor,
+                                width:
+                                    settings.editProfileTextFieldBorderWidth)),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: settings.registerTextFieldBorderColor,
-                                width: settings.registerTextFieldBorderWidth +
-                                    1.0)),
+                                color: settings.editProfileTextFieldBorderColor,
+                                width:
+                                    settings.editProfileTextFieldBorderWidth +
+                                        1.0)),
                       ),
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
                       key: _contactKey,
+                      initialValue: profileData['contact'],
                       validator: (value) {
                         return validator.validateContact(value);
                       },
                       onChanged: (value) {
-                        if (_contactKey.currentState!.validate()) {
-                          setState(() {
-                            contactVal = value;
-                          });
-                        }
+                        _contactKey.currentState!.validate();
                       },
                       style: TextStyle(
-                          color: settings.registerTextFieldTextColor,
+                          color: settings.editProfileTextFieldTextColor,
                           fontSize: 16,
                           fontFamily: 'OpenSans'),
-                      cursorColor: settings.registerTextFieldCursorColor,
+                      cursorColor: settings.editProfileTextFieldCursorColor,
                       decoration: InputDecoration(
                         labelStyle: TextStyle(
-                            color: settings.registerTextFieldTextColor),
+                            color: settings.editProfileTextFieldTextColor),
                         labelText: 'Contact Number',
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: settings.registerTextFieldBorderColor,
-                                width: settings.registerTextFieldBorderWidth)),
+                                color: settings.editProfileTextFieldBorderColor,
+                                width:
+                                    settings.editProfileTextFieldBorderWidth)),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: settings.registerTextFieldBorderColor,
-                                width: settings.registerTextFieldBorderWidth +
-                                    1.0)),
+                                color: settings.editProfileTextFieldBorderColor,
+                                width:
+                                    settings.editProfileTextFieldBorderWidth +
+                                        1.0)),
                       ),
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
                       key: _usernameKey,
+                      initialValue: profileData['username'],
                       validator: (value) {
                         return validator.validateUsername(value);
                       },
                       onChanged: (value) {
-                        if (_usernameKey.currentState!.validate()) {
-                          setState(() {
-                            usernameVal = value;
-                          });
-                        }
+                        _usernameKey.currentState!.validate();
                       },
                       style: TextStyle(
-                          color: settings.registerTextFieldTextColor,
+                          color: settings.editProfileTextFieldTextColor,
                           fontSize: 16,
                           fontFamily: 'OpenSans'),
-                      cursorColor: settings.registerTextFieldCursorColor,
+                      cursorColor: settings.editProfileTextFieldCursorColor,
                       decoration: InputDecoration(
                         labelStyle: TextStyle(
-                            color: settings.registerTextFieldTextColor),
+                            color: settings.editProfileTextFieldTextColor),
                         labelText: 'Username',
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: settings.registerTextFieldBorderColor,
-                                width: settings.registerTextFieldBorderWidth)),
+                                color: settings.editProfileTextFieldBorderColor,
+                                width:
+                                    settings.editProfileTextFieldBorderWidth)),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: settings.registerTextFieldBorderColor,
-                                width: settings.registerTextFieldBorderWidth +
-                                    1.0)),
+                                color: settings.editProfileTextFieldBorderColor,
+                                width:
+                                    settings.editProfileTextFieldBorderWidth +
+                                        1.0)),
                       ),
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
                       key: _passwordKey,
+                      initialValue: profileData['password'],
                       validator: (value) {
                         return validator.validatePassword(value);
                       },
                       onChanged: (value) {
-                        if (_passwordKey.currentState!.validate()) {
-                          setState(() {
-                            passwordVal = value;
-                          });
-                        }
+                        _passwordKey.currentState!.validate();
                       },
                       obscureText: true,
                       style: TextStyle(
-                          color: settings.registerTextFieldTextColor,
+                          color: settings.editProfileTextFieldTextColor,
                           fontSize: 16,
                           fontFamily: 'OpenSans'),
-                      cursorColor: settings.registerTextFieldCursorColor,
+                      cursorColor: settings.editProfileTextFieldCursorColor,
                       decoration: InputDecoration(
                         labelStyle: TextStyle(
-                            color: settings.registerTextFieldTextColor),
+                            color: settings.editProfileTextFieldTextColor),
                         labelText: 'Password',
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: settings.registerTextFieldBorderColor,
-                                width: settings.registerTextFieldBorderWidth)),
+                                color: settings.editProfileTextFieldBorderColor,
+                                width:
+                                    settings.editProfileTextFieldBorderWidth)),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: settings.registerTextFieldBorderColor,
-                                width: settings.registerTextFieldBorderWidth +
-                                    1.0)),
+                                color: settings.editProfileTextFieldBorderColor,
+                                width:
+                                    settings.editProfileTextFieldBorderWidth +
+                                        1.0)),
                       ),
                     ),
                     const SizedBox(height: 16.0),
@@ -373,17 +388,17 @@ class RegisterState extends State<Register> {
                 ),
                 ElevatedButton(
                     onPressed: () async {
-                      // Handle registration process
+                      // Handle edit profile process
                       Map<String, dynamic> userData = {
-                        "name": nameVal,
-                        "email": emailVal,
-                        "contact": contactVal,
-                        "state": stateVal,
-                        "city": cityVal,
-                        "street": streetVal,
-                        "postcode": postcodeVal,
-                        "username": usernameVal,
-                        "password": passwordVal
+                        "name": _nameKey.currentState?.value,
+                        "email": _emailKey.currentState?.value,
+                        "contact": _contactKey.currentState?.value,
+                        "state": _stateKey.currentState?.value,
+                        "city": _cityKey.currentState?.value,
+                        "street": _streetKey.currentState?.value,
+                        "postcode": _postcodeKey.currentState?.value,
+                        "username": _usernameKey.currentState?.value,
+                        "password": _passwordKey.currentState?.value
                       };
                       if (!(_nameKey.currentState!.validate() &&
                           _emailKey.currentState!.validate() &&
@@ -400,42 +415,50 @@ class RegisterState extends State<Register> {
                             "Please ensure all fields are valid before submitting!",
                             () {});
                       } else {
+                        // Filter out attributes that are not changed / updated by user
+                        userData.removeWhere(
+                            (key, value) => profileData[key] == value);
+                        // Add token into userData
+                        userData['token'] = authService.getAuthToken();
                         final response =
-                            await apiService.registerAccountAPI(userData);
+                            await apiService.editAccountAPI(userData);
                         if (response != null) {
                           final status = response["status"];
                           final message = response["data"]["message"];
                           if (status > 0) {
                             // Success message
                             // ignore: use_build_context_synchronously
-                            popupService.showSuccessPopup(context,
-                                "Registration Success", message, () {});
+                            popupService.showSuccessPopup(
+                                context, "Edit Profile Success", message, () {
+                              getData();
+                            });
                           } else {
                             // Error message
                             // ignore: use_build_context_synchronously
                             popupService.showErrorPopup(
-                                context, "Registration Error", message, () {});
+                                context, "Edit Profile Error", message, () {});
                           }
                         }
                       }
                     },
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
-                            settings.registerTextFieldTextColor),
+                            settings.editProfileTextFieldTextColor),
                         padding: MaterialStateProperty.all<EdgeInsets>(
                             const EdgeInsets.fromLTRB(50, 20, 50, 20))),
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.app_registration,
-                              color: settings.registerTextFieldIconColor),
+                          Icon(Icons.edit,
+                              color: settings.editProfileTextFieldIconColor),
                           const SizedBox(width: 8),
-                          Text('Register',
+                          Text('Edit',
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w800,
                                   fontFamily: "OpenSans",
-                                  color: settings.registerTextFieldText2Color)),
+                                  color:
+                                      settings.editProfileTextFieldText2Color)),
                         ])),
               ],
             ),

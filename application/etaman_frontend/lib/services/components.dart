@@ -1456,7 +1456,9 @@ class LeftDrawerState extends State<LeftDrawer> {
                     fontSize: 18)),
             onTap: () {
               // Handle home screen navigation
-              Navigator.pushNamed(context, "/home");
+              Navigator.pushNamed(context, "/home").then((_) {
+                getData();
+              });
             },
           ),
           ListTile(
@@ -1468,7 +1470,9 @@ class LeftDrawerState extends State<LeftDrawer> {
                     fontSize: 18)),
             onTap: () {
               // Handle profile screen navigation
-              Navigator.pushNamed(context, '/profile');
+              Navigator.pushNamed(context, '/profile').then((_) {
+                getData();
+              });
             },
           ),
           ListTile(
@@ -1535,7 +1539,9 @@ class LeftDrawerState extends State<LeftDrawer> {
                   // ignore: use_build_context_synchronously
                   popupService
                       .showSuccessPopup(context, "Logout Success", message, () {
-                    Navigator.pushNamed(context, '/');
+                    Navigator.pushNamed(context, '/').then((_) {
+                      getData();
+                    });
                   });
                 } else {
                   // Failed

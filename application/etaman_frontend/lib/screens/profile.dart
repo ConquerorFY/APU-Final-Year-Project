@@ -238,6 +238,9 @@ class ProfileState extends State<Profile> {
               backgroundColor: settings.bottomNavBarBgColor,
               onPressed: () {
                 // Navigate to edit resident account screen
+                Navigator.pushNamed(context, '/editProfile').then((_) {
+                  getData();
+                });
               },
               child:
                   Icon(Icons.edit, color: settings.profileTopNavBarTextColor),

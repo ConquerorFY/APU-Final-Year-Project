@@ -51,4 +51,11 @@ class Settings {
   Color profileTopNavBarTextColor = Colors.white;
   Color profileTextColor = Colors.green.shade500;
   Color profileIconColor = Colors.green.shade600;
+
+  Color editProfileTextFieldTextColor = Colors.green;
+  Color editProfileTextFieldText2Color = Colors.white;
+  Color editProfileTextFieldIconColor = Colors.white;
+  Color editProfileTextFieldCursorColor = Colors.green;
+  Color editProfileTextFieldBorderColor = Colors.green;
+  double editProfileTextFieldBorderWidth = 1.0;
 }
