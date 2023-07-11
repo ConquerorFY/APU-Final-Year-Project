@@ -33,16 +33,6 @@ class RegisterState extends State<Register> {
   final GlobalKey<FormFieldState<String>> _passwordKey =
       GlobalKey<FormFieldState<String>>();
 
-  String nameVal = '';
-  String emailVal = '';
-  String stateVal = '';
-  String cityVal = '';
-  String postcodeVal = '';
-  String streetVal = '';
-  String contactVal = '';
-  String usernameVal = '';
-  String passwordVal = '';
-
   Validator validator = Validator(); // Text Form Field Validator
   ApiService apiService = ApiService(); // API Service
   PopupService popupService = PopupService(); // Popup Service
@@ -77,11 +67,7 @@ class RegisterState extends State<Register> {
                         return validator.validateName(value);
                       },
                       onChanged: (value) {
-                        if (_nameKey.currentState!.validate()) {
-                          setState(() {
-                            nameVal = value;
-                          });
-                        }
+                        _nameKey.currentState!.validate();
                       },
                       style: TextStyle(
                           color: settings.registerTextFieldTextColor,
@@ -110,11 +96,7 @@ class RegisterState extends State<Register> {
                         return validator.validateEmail(value);
                       },
                       onChanged: (value) {
-                        if (_emailKey.currentState!.validate()) {
-                          setState(() {
-                            emailVal = value;
-                          });
-                        }
+                        _emailKey.currentState!.validate();
                       },
                       style: TextStyle(
                           color: settings.registerTextFieldTextColor,
@@ -143,11 +125,7 @@ class RegisterState extends State<Register> {
                         return validator.validateState(value);
                       },
                       onChanged: (value) {
-                        if (_stateKey.currentState!.validate()) {
-                          setState(() {
-                            stateVal = value;
-                          });
-                        }
+                        _stateKey.currentState!.validate();
                       },
                       style: TextStyle(
                           color: settings.registerTextFieldTextColor,
@@ -176,11 +154,7 @@ class RegisterState extends State<Register> {
                         return validator.validateCity(value);
                       },
                       onChanged: (value) {
-                        if (_cityKey.currentState!.validate()) {
-                          setState(() {
-                            cityVal = value;
-                          });
-                        }
+                        _cityKey.currentState!.validate();
                       },
                       style: TextStyle(
                           color: settings.registerTextFieldTextColor,
@@ -209,11 +183,7 @@ class RegisterState extends State<Register> {
                         return validator.validatePostcode(value);
                       },
                       onChanged: (value) {
-                        if (_postcodeKey.currentState!.validate()) {
-                          setState(() {
-                            postcodeVal = value;
-                          });
-                        }
+                        _postcodeKey.currentState!.validate();
                       },
                       style: TextStyle(
                           color: settings.registerTextFieldTextColor,
@@ -242,11 +212,7 @@ class RegisterState extends State<Register> {
                         return validator.validateStreet(value);
                       },
                       onChanged: (value) {
-                        if (_streetKey.currentState!.validate()) {
-                          setState(() {
-                            streetVal = value;
-                          });
-                        }
+                        _streetKey.currentState!.validate();
                       },
                       style: TextStyle(
                           color: settings.registerTextFieldTextColor,
@@ -275,11 +241,7 @@ class RegisterState extends State<Register> {
                         return validator.validateContact(value);
                       },
                       onChanged: (value) {
-                        if (_contactKey.currentState!.validate()) {
-                          setState(() {
-                            contactVal = value;
-                          });
-                        }
+                        _contactKey.currentState!.validate();
                       },
                       style: TextStyle(
                           color: settings.registerTextFieldTextColor,
@@ -308,11 +270,7 @@ class RegisterState extends State<Register> {
                         return validator.validateUsername(value);
                       },
                       onChanged: (value) {
-                        if (_usernameKey.currentState!.validate()) {
-                          setState(() {
-                            usernameVal = value;
-                          });
-                        }
+                        _usernameKey.currentState!.validate();
                       },
                       style: TextStyle(
                           color: settings.registerTextFieldTextColor,
@@ -341,11 +299,7 @@ class RegisterState extends State<Register> {
                         return validator.validatePassword(value);
                       },
                       onChanged: (value) {
-                        if (_passwordKey.currentState!.validate()) {
-                          setState(() {
-                            passwordVal = value;
-                          });
-                        }
+                        _passwordKey.currentState!.validate();
                       },
                       obscureText: true,
                       style: TextStyle(
@@ -375,15 +329,15 @@ class RegisterState extends State<Register> {
                     onPressed: () async {
                       // Handle registration process
                       Map<String, dynamic> userData = {
-                        "name": nameVal,
-                        "email": emailVal,
-                        "contact": contactVal,
-                        "state": stateVal,
-                        "city": cityVal,
-                        "street": streetVal,
-                        "postcode": postcodeVal,
-                        "username": usernameVal,
-                        "password": passwordVal
+                        "name": _nameKey.currentState?.value,
+                        "email": _emailKey.currentState?.value,
+                        "contact": _contactKey.currentState?.value,
+                        "state": _stateKey.currentState?.value,
+                        "city": _cityKey.currentState?.value,
+                        "street": _streetKey.currentState?.value,
+                        "postcode": _postcodeKey.currentState?.value,
+                        "username": _usernameKey.currentState?.value,
+                        "password": _passwordKey.currentState?.value
                       };
                       if (!(_nameKey.currentState!.validate() &&
                           _emailKey.currentState!.validate() &&
