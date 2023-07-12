@@ -11,7 +11,9 @@ class Settings {
   Color successPopupTextColor = Colors.green;
   Color errorPopupTextColor = Colors.red;
 
+  Color registerBgColor = Colors.green;
   Color registerTextFieldTextColor = Colors.green;
+  Color registerTextFieldShadowColor = Colors.green.shade900;
   Color registerTextFieldText2Color = Colors.white;
   Color registerTextFieldIconColor = Colors.white;
   Color registerTextFieldCursorColor = Colors.green;
@@ -52,10 +54,21 @@ class Settings {
   Color profileTextColor = Colors.green.shade500;
   Color profileIconColor = Colors.green.shade600;
 
+  Color editProfileBgColor = Colors.green;
   Color editProfileTextFieldTextColor = Colors.green;
+  Color editProfileTextFieldShadowColor = Colors.green.shade900;
   Color editProfileTextFieldText2Color = Colors.white;
   Color editProfileTextFieldIconColor = Colors.white;
   Color editProfileTextFieldCursorColor = Colors.green;
   Color editProfileTextFieldBorderColor = Colors.green;
   double editProfileTextFieldBorderWidth = 1.0;
+
+  Color createPostBgColor = Colors.green;
+  Color createPostTextFieldTextColor = Colors.green;
+  Color createPostTextFieldShadowColor = Colors.green.shade900;
+  Color createPostTextFieldText2Color = Colors.white;
+  Color createPostTextFieldIconColor = Colors.white;
+  Color createPostTextFieldCursorColor = Colors.green;
+  Color createPostTextFieldBorderColor = Colors.green;
+  double createPostTextFieldBorderWidth = 1.0;
 }

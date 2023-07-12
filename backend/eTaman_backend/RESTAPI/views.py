@@ -423,14 +423,14 @@ def createCrimePost(request):
         # Check whether all data is valid
         if crimePostData.is_valid():
             crimePostData.save()
-            return JsonResponse({'data': {'message': CRIME_POST_CREATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            return JsonResponse({'data': {'message': CRIME_POST_CREATED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
         else:
             # An error has occured
-            return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
     except CrimePostModel.DoesNotExist:
-        return JsonResponse({'data': {'message': CRIME_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': CRIME_POST_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
 # Like crime post
 @api_view(['POST'])
@@ -564,9 +564,12 @@ def createComplaintPost(request):
     try:
         # Get resident ID
         residentId = decodeJWTToken(request.data["token"])["id"]
+        # Get image field attributes and values
+        image = request.FILES['image'] if 'image' in request.FILES else None
         # Create new complaint post serializer
         complaintData = {
             "target": request.data['target'],
+            "image": image,
             "title": request.data['title'],
             'description': request.data['description'],
             'reporterID': residentId,
@@ -576,14 +579,14 @@ def createComplaintPost(request):
         # Check whether all data is valid
         if complaintPostData.is_valid():
             complaintPostData.save()
-            return JsonResponse({'data': {'message': COMPLAINT_POST_CREATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            return JsonResponse({'data': {'message': COMPLAINT_POST_CREATED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
         else:
             # An error has occured
-            return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
     except ComplaintPostModel.DoesNotExist:
-        return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': COMPLAINT_POST_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
 # Like complaint post
 @api_view(['POST'])
@@ -718,6 +721,8 @@ def createEventPost(request):
     try:
         # Get resident ID
         residentId = decodeJWTToken(request.data["token"])["id"]
+        # Get image field attributes and values
+        image = request.FILES['image'] if 'image' in request.FILES else None
         # Get datetime field attributes and values
         date = datetime.strptime(request.data['date'], "%Y-%m-%d").date()
         time = datetime.strptime(request.data['time'], "%H:%M:%S").time()
@@ -725,6 +730,7 @@ def createEventPost(request):
         # Create new event post serializer
         eventData = {
             'datetime': dt,
+            'image': image,
             'venue': request.data['venue'],
             'title': request.data['title'],
             'description': request.data['description'],
@@ -735,13 +741,13 @@ def createEventPost(request):
         # Check whether all data is valid
         if eventPostData.is_valid():
             eventPostData.save()
-            return JsonResponse({'data': {'message': EVENT_POST_CREATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            return JsonResponse({'data': {'message': EVENT_POST_CREATED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
         else:
-            return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
     except EventPostModel.DoesNotExist:
-        return JsonResponse({'data': {'message': EVENT_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': EVENT_POST_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
 # Like event post
 @api_view(['POST'])
@@ -935,9 +941,12 @@ def createGeneralPost(request):
     try:
         # Get resident ID
         residentId = decodeJWTToken(request.data["token"])["id"]
+        # Get image field attributes and values
+        image = request.FILES['image'] if 'image' in request.FILES else None
         # Create  new general post serializer
         generalData = {
             'title': request.data['title'],
+            'image': image,
             'description': request.data['description'],
             'authorID': residentId
         }
@@ -945,13 +954,13 @@ def createGeneralPost(request):
         # Check whether all data is valid
         if generalPostData.is_valid():
             generalPostData.save()
-            return JsonResponse({'data': {'message': GENERAL_POST_CREATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            return JsonResponse({'data': {'message': GENERAL_POST_CREATED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
         else:
-            return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
     except GeneralPostModel.DoesNotExist:
-        return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
 # Like general post
 @api_view(['POST'])

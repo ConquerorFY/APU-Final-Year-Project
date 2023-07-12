@@ -56,6 +56,9 @@ class HomeState extends State<Home> {
               backgroundColor: settings.bottomNavBarBgColor,
               onPressed: () {
                 // Navigate to create posts screen
+                Navigator.pushNamed(context, '/createPost').then((_) {
+                  changeFilteredPostListType(filteredPostListType);
+                });
               },
               child: Icon(Icons.add, color: settings.bottomNavBarTextColor),
             ),

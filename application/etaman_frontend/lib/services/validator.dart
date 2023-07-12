@@ -1,4 +1,5 @@
 class Validator {
+  // Profile
   final nameRegExp = RegExp(r'^[a-zA-Z ]+$');
   final emailRegExp = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
   final stateRegExp = RegExp(r'^[A-Z]{1}[a-zA-Z ]+$');
@@ -8,6 +9,12 @@ class Validator {
   final contactRegExp = RegExp(r'^[0-9-]+$');
   final usernameRegExp = RegExp(r'^[a-zA-Z0-9_]{3,16}$');
   final passwordRegExp = RegExp(r'^[a-zA-Z0-9()_\/]{8,}$');
+  // Post
+  final dateRegExp = RegExp(r'^[0-9]{4}-[0-1][0-9]-[0-3][0-9]$');
+  final timeRegExp = RegExp(r'^[0-2][0-9]:[0-5][0-9]:[0-5][0-9]$');
+  final titleRegExp = RegExp(r'^[a-zA-Z0-9 ]+$');
+  final descriptionRegExp = RegExp(r'^[a-zA-Z0-9 ]+$');
+  final actionRegExp = RegExp(r'^[a-zA-Z0-9 ]+$');
 
   // Private constructor to prevent external instantiation
   Validator._();
@@ -102,6 +109,56 @@ class Validator {
     }
     if (!passwordRegExp.hasMatch(password)) {
       return 'Please enter a valid password!';
+    }
+    return null;
+  }
+
+  validateDate(date) {
+    if (date!.isEmpty) {
+      return 'Please enter a date!';
+    }
+    if (!dateRegExp.hasMatch(date)) {
+      return 'Please enter a valid date!';
+    }
+    return null;
+  }
+
+  validateTime(time) {
+    if (time!.isEmpty) {
+      return 'Please enter a time!';
+    }
+    if (!timeRegExp.hasMatch(time)) {
+      return 'Please enter a valid time!';
+    }
+    return null;
+  }
+
+  validateTitle(title) {
+    if (title!.isEmpty) {
+      return 'Please enter a title!';
+    }
+    if (!titleRegExp.hasMatch(title)) {
+      return 'Please enter a valid title!';
+    }
+    return null;
+  }
+
+  validateDescription(description) {
+    if (description!.isEmpty) {
+      return 'Please enter a description!';
+    }
+    if (!descriptionRegExp.hasMatch(description)) {
+      return 'Please enter a valid description!';
+    }
+    return null;
+  }
+
+  validateAction(action) {
+    if (action!.isEmpty) {
+      return 'Please enter a action!';
+    }
+    if (!actionRegExp.hasMatch(action)) {
+      return 'Please enter a valid action!';
     }
     return null;
   }

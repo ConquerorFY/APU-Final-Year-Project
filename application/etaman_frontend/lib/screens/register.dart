@@ -42,14 +42,14 @@ class RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.green,
-          title: const Text('Register Account',
+          backgroundColor: settings.registerBgColor,
+          title: Text('Register Account',
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w800,
                   fontFamily: "OpenSans",
-                  color: Colors.white)),
-          shadowColor: Colors.green.shade900,
+                  color: settings.registerTextFieldText2Color)),
+          shadowColor: settings.registerTextFieldShadowColor,
           elevation: 5.0,
         ),
         body: SingleChildScrollView(

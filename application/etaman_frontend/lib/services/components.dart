@@ -320,33 +320,41 @@ class PostListState extends State<PostList> {
     if (postType == 'crime') {
       final crimePostLikes = userData["crimePostLikes"];
       final crimePostDislikes = userData["crimePostDislikes"];
-      if (crimePostLikes.contains(postID)) {
+      if (crimePostLikes.contains(postID) &&
+          !(crimePostDislikes.contains(postID))) {
         return true;
-      } else if (crimePostDislikes.contains(postID)) {
+      } else if (crimePostDislikes.contains(postID) &&
+          !(crimePostLikes.contains(postID))) {
         return false;
       }
     } else if (postType == 'complaint') {
       final complaintPostLikes = userData["complaintPostLikes"];
       final complaintPostDislikes = userData["complaintPostDislikes"];
-      if (complaintPostLikes.contains(postID)) {
+      if (complaintPostLikes.contains(postID) &&
+          !(complaintPostDislikes.contains(postID))) {
         return true;
-      } else if (complaintPostDislikes.contains(postID)) {
+      } else if (complaintPostDislikes.contains(postID) &&
+          !(complaintPostLikes.contains(postID))) {
         return false;
       }
     } else if (postType == 'event') {
       final eventPostLikes = userData["eventPostLikes"];
       final eventPostDislikes = userData["eventPostDislikes"];
-      if (eventPostLikes.contains(postID)) {
+      if (eventPostLikes.contains(postID) &&
+          !(eventPostDislikes.contains(postID))) {
         return true;
-      } else if (eventPostDislikes.contains(postID)) {
+      } else if (eventPostDislikes.contains(postID) &&
+          !(eventPostLikes.contains(postID))) {
         return false;
       }
     } else if (postType == 'general') {
       final generalPostLikes = userData["generalPostLikes"];
       final generalPostDislikes = userData["generalPostDislikes"];
-      if (generalPostLikes.contains(postID)) {
+      if (generalPostLikes.contains(postID) &&
+          !(generalPostDislikes.contains(postID))) {
         return true;
-      } else if (generalPostDislikes.contains(postID)) {
+      } else if (generalPostDislikes.contains(postID) &&
+          !(generalPostLikes.contains(postID))) {
         return false;
       }
     }

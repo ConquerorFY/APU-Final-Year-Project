@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart';
 import 'logging.dart';
 
@@ -96,6 +97,37 @@ class ApiService {
       return responseData;
     } catch (e) {
       logger.error("Get All Neighborhood Posts - $e");
+      return null;
+    }
+  }
+
+  // Submit Crime Post
+  dynamic submitCrimePostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/createCrimePost/");
+      final request = MultipartRequest('POST', url);
+
+      body.forEach((key, value) {
+        if (key != 'image') {
+          request.fields[key] = value;
+        }
+      });
+
+      File image = body['image'] as File;
+      var stream = ByteStream(image.openRead());
+      var length = await image.length();
+      var multipartFile = MultipartFile('image', stream, length,
+          filename: '${request.fields['title']}.jpg');
+      request.files.add(multipartFile);
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final responseData = jsonDecode(responseBody);
+
+      logger.info("Submit Crime Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Submit Crime Post - $e");
       return null;
     }
   }

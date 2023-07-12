@@ -48,7 +48,7 @@ class JoinRequestModel(models.Model):
 # Crime Post Model
 class CrimePostModel(models.Model):
     datetime = models.DateTimeField()
-    image = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to='images/crime', null=True)
     title = models.CharField(max_length=500, blank=False)
     description = models.CharField(max_length=2000, blank=False)
     actions = models.CharField(max_length=2000, blank=False)
@@ -66,6 +66,7 @@ class CrimePostCommentModel(models.Model):
 # Complaint Post Model
 class ComplaintPostModel(models.Model):
     datetime = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='images/complaint', null=True)
     title = models.CharField(max_length=500, blank=False)
     description = models.CharField(max_length=2000, blank=False)
     target = models.CharField(max_length=100, blank=False)
@@ -84,6 +85,7 @@ class ComplaintPostCommentModel(models.Model):
 # Event Post Model
 class EventPostModel(models.Model):
     datetime = models.DateTimeField()
+    image = models.ImageField(upload_to='images/event', null=True)
     venue = models.CharField(max_length=500, blank=False)
     title = models.CharField(max_length=500, blank=False)
     description = models.CharField(max_length=2000, blank=False)
@@ -102,6 +104,7 @@ class EventPostCommentModel(models.Model):
 # General Post Model
 class GeneralPostModel(models.Model):
     datetime = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='images/general', null=True)
     title = models.CharField(max_length=500, blank=False)
     description = models.CharField(max_length=2000, blank=False)
     likes = models.IntegerField(default=0)
