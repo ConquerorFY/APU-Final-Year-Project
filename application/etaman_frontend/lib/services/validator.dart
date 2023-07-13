@@ -15,6 +15,7 @@ class Validator {
   final titleRegExp = RegExp(r'^[a-zA-Z0-9 ]+$');
   final descriptionRegExp = RegExp(r'^[a-zA-Z0-9 ]+$');
   final actionRegExp = RegExp(r'^[a-zA-Z0-9 ]+$');
+  final targetRegExp = RegExp(r'^[a-zA-Z0-9 ]+$');
 
   // Private constructor to prevent external instantiation
   Validator._();
@@ -159,6 +160,16 @@ class Validator {
     }
     if (!actionRegExp.hasMatch(action)) {
       return 'Please enter a valid action!';
+    }
+    return null;
+  }
+
+  validateTarget(target) {
+    if (target!.isEmpty) {
+      return 'Please enter a target!';
+    }
+    if (!targetRegExp.hasMatch(target)) {
+      return 'Please enter a valid target!';
     }
     return null;
   }

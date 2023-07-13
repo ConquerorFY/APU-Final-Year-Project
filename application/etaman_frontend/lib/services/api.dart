@@ -204,6 +204,37 @@ class ApiService {
     }
   }
 
+  // Submit Complaint Post
+  dynamic submitComplaintPostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/createComplaintPost/");
+      final request = MultipartRequest('POST', url);
+
+      body.forEach((key, value) {
+        if (key != 'image') {
+          request.fields[key] = value;
+        }
+      });
+
+      File image = body['image'] as File;
+      var stream = ByteStream(image.openRead());
+      var length = await image.length();
+      var multipartFile = MultipartFile('image', stream, length,
+          filename: '${request.fields['title']}.jpg');
+      request.files.add(multipartFile);
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final responseData = jsonDecode(responseBody);
+
+      logger.info("Submit Complaint Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Submit Complaint Post - $e");
+      return null;
+    }
+  }
+
   // Get All Complaint Post Comments API
   dynamic getAllComplaintPostCommentsAPI(body) async {
     try {
@@ -272,6 +303,37 @@ class ApiService {
       return responseData;
     } catch (e) {
       logger.error("Dislike Complaint Post - $e");
+      return null;
+    }
+  }
+
+  // Submit Event Post
+  dynamic submitEventPostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/createEventPost/");
+      final request = MultipartRequest('POST', url);
+
+      body.forEach((key, value) {
+        if (key != 'image') {
+          request.fields[key] = value;
+        }
+      });
+
+      File image = body['image'] as File;
+      var stream = ByteStream(image.openRead());
+      var length = await image.length();
+      var multipartFile = MultipartFile('image', stream, length,
+          filename: '${request.fields['title']}.jpg');
+      request.files.add(multipartFile);
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final responseData = jsonDecode(responseBody);
+
+      logger.info("Submit Event Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Submit Event Post - $e");
       return null;
     }
   }
@@ -380,6 +442,37 @@ class ApiService {
       return responseData;
     } catch (e) {
       logger.error("Leave Event Post - $e");
+      return null;
+    }
+  }
+
+  // Submit General Post
+  dynamic submitGeneralPostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/createGeneralPost/");
+      final request = MultipartRequest('POST', url);
+
+      body.forEach((key, value) {
+        if (key != 'image') {
+          request.fields[key] = value;
+        }
+      });
+
+      File image = body['image'] as File;
+      var stream = ByteStream(image.openRead());
+      var length = await image.length();
+      var multipartFile = MultipartFile('image', stream, length,
+          filename: '${request.fields['title']}.jpg');
+      request.files.add(multipartFile);
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final responseData = jsonDecode(responseBody);
+
+      logger.info("Submit General Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Submit General Post - $e");
       return null;
     }
   }

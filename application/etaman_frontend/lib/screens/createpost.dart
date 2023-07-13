@@ -39,6 +39,15 @@ class CreatePostState extends State<CreatePost> {
   final GlobalKey<FormFieldState<String>> _crimeActionsKey =
       GlobalKey<FormFieldState<String>>();
 
+  // Complaint Post Controllers
+  final GlobalKey<FormFieldState<String>> _complaintTargetKey =
+      GlobalKey<FormFieldState<String>>();
+  final GlobalKey<FormFieldState<String>> _complaintTitleKey =
+      GlobalKey<FormFieldState<String>>();
+  final GlobalKey<FormFieldState<String>> _complaintDescriptionKey =
+      GlobalKey<FormFieldState<String>>();
+  String? complaintIsAnonymous;
+
   Validator validator = Validator();
   ApiService apiService = ApiService();
   PopupService popupService = PopupService();
@@ -65,6 +74,566 @@ class CreatePostState extends State<CreatePost> {
         selectedImage = File(pickedImage.path);
       });
     }
+  }
+
+  Form createCrimePostForm() {
+    return Form(
+      key: _formKey,
+      child:
+          Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        TextFormField(
+          key: _crimeDateKey,
+          initialValue: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+          readOnly: true,
+          validator: (value) {
+            return validator.validateDate(value);
+          },
+          onChanged: (value) {
+            _crimeDateKey.currentState!.validate();
+          },
+          style: TextStyle(
+              color: settings.createPostTextFieldTextColor,
+              fontSize: 16,
+              fontFamily: 'OpenSans'),
+          cursorColor: settings.createPostTextFieldCursorColor,
+          decoration: InputDecoration(
+            labelStyle: TextStyle(color: settings.createPostTextFieldTextColor),
+            labelText: 'Date',
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: settings.createPostTextFieldBorderColor,
+                    width: settings.createPostTextFieldBorderWidth)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: settings.createPostTextFieldBorderColor,
+                    width: settings.createPostTextFieldBorderWidth + 1.0)),
+          ),
+        ),
+        const SizedBox(height: 16.0),
+        TextFormField(
+            key: _crimeTimeKey,
+            initialValue: DateFormat('HH:mm:ss').format(DateTime.now()),
+            readOnly: true,
+            validator: (value) {
+              return validator.validateTime(value);
+            },
+            onChanged: (value) {
+              _crimeTimeKey.currentState!.validate();
+            },
+            style: TextStyle(
+                color: settings.createPostTextFieldTextColor,
+                fontSize: 16,
+                fontFamily: 'OpenSans'),
+            cursorColor: settings.createPostTextFieldCursorColor,
+            decoration: InputDecoration(
+              labelStyle:
+                  TextStyle(color: settings.createPostTextFieldTextColor),
+              labelText: 'Time',
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth + 1.0)),
+            )),
+        const SizedBox(height: 16.0),
+        TextFormField(
+            key: _crimeTitleKey,
+            validator: (value) {
+              return validator.validateTitle(value);
+            },
+            onChanged: (value) {
+              _crimeTitleKey.currentState!.validate();
+            },
+            style: TextStyle(
+                color: settings.createPostTextFieldTextColor,
+                fontSize: 16,
+                fontFamily: 'OpenSans'),
+            cursorColor: settings.createPostTextFieldCursorColor,
+            decoration: InputDecoration(
+              labelStyle:
+                  TextStyle(color: settings.createPostTextFieldTextColor),
+              labelText: 'Title',
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth + 1.0)),
+            )),
+        const SizedBox(height: 16.0),
+        TextFormField(
+            key: _crimeDescriptionKey,
+            validator: (value) {
+              return validator.validateDescription(value);
+            },
+            onChanged: (value) {
+              _crimeDescriptionKey.currentState!.validate();
+            },
+            style: TextStyle(
+                color: settings.createPostTextFieldTextColor,
+                fontSize: 16,
+                fontFamily: 'OpenSans'),
+            cursorColor: settings.createPostTextFieldCursorColor,
+            decoration: InputDecoration(
+              labelStyle:
+                  TextStyle(color: settings.createPostTextFieldTextColor),
+              labelText: 'Description',
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth + 1.0)),
+            )),
+        const SizedBox(height: 16.0),
+        TextFormField(
+            key: _crimeActionsKey,
+            validator: (value) {
+              return validator.validateAction(value);
+            },
+            onChanged: (value) {
+              _crimeActionsKey.currentState!.validate();
+            },
+            style: TextStyle(
+                color: settings.createPostTextFieldTextColor,
+                fontSize: 16,
+                fontFamily: 'OpenSans'),
+            cursorColor: settings.createPostTextFieldCursorColor,
+            decoration: InputDecoration(
+              labelStyle:
+                  TextStyle(color: settings.createPostTextFieldTextColor),
+              labelText: 'Actions',
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth + 1.0)),
+            )),
+      ]),
+    );
+  }
+
+  Form createComplaintPostForm() {
+    return Form(
+      key: _formKey,
+      child:
+          Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        TextFormField(
+            key: _complaintTargetKey,
+            validator: (value) {
+              return validator.validateTarget(value);
+            },
+            onChanged: (value) {
+              _complaintTargetKey.currentState!.validate();
+            },
+            style: TextStyle(
+                color: settings.createPostTextFieldTextColor,
+                fontSize: 16,
+                fontFamily: 'OpenSans'),
+            cursorColor: settings.createPostTextFieldCursorColor,
+            decoration: InputDecoration(
+              labelStyle:
+                  TextStyle(color: settings.createPostTextFieldTextColor),
+              labelText: 'Target',
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth + 1.0)),
+            )),
+        const SizedBox(height: 16.0),
+        TextFormField(
+            key: _complaintTitleKey,
+            validator: (value) {
+              return validator.validateTitle(value);
+            },
+            onChanged: (value) {
+              _complaintTitleKey.currentState!.validate();
+            },
+            style: TextStyle(
+                color: settings.createPostTextFieldTextColor,
+                fontSize: 16,
+                fontFamily: 'OpenSans'),
+            cursorColor: settings.createPostTextFieldCursorColor,
+            decoration: InputDecoration(
+              labelStyle:
+                  TextStyle(color: settings.createPostTextFieldTextColor),
+              labelText: 'Title',
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth + 1.0)),
+            )),
+        const SizedBox(height: 16.0),
+        TextFormField(
+            key: _complaintDescriptionKey,
+            validator: (value) {
+              return validator.validateDescription(value);
+            },
+            onChanged: (value) {
+              _complaintDescriptionKey.currentState!.validate();
+            },
+            style: TextStyle(
+                color: settings.createPostTextFieldTextColor,
+                fontSize: 16,
+                fontFamily: 'OpenSans'),
+            cursorColor: settings.createPostTextFieldCursorColor,
+            decoration: InputDecoration(
+              labelStyle:
+                  TextStyle(color: settings.createPostTextFieldTextColor),
+              labelText: 'Description',
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth + 1.0)),
+            )),
+        const SizedBox(height: 16.0),
+        RadioListTile<String>(
+          title: Text('Show Username in Post',
+              style: TextStyle(
+                  color: settings.createPostTextFieldTextColor,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  fontFamily: 'OpenSans')),
+          value: "false",
+          groupValue: complaintIsAnonymous,
+          onChanged: (value) {
+            setState(() {
+              complaintIsAnonymous = value;
+            });
+          },
+        ),
+        RadioListTile<String>(
+            title: Text('Hide Username in Post',
+                style: TextStyle(
+                    color: settings.createPostTextFieldTextColor,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    fontFamily: 'OpenSans')),
+            value: "true",
+            groupValue: complaintIsAnonymous,
+            onChanged: (value) {
+              setState(() {
+                complaintIsAnonymous = value;
+              });
+            }),
+      ]),
+    );
+  }
+
+  Form createEventPostForm() {
+    return Form(
+      key: _formKey,
+      child:
+          Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        TextFormField(
+          key: _crimeDateKey,
+          initialValue: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+          readOnly: true,
+          validator: (value) {
+            return validator.validateDate(value);
+          },
+          onChanged: (value) {
+            _crimeDateKey.currentState!.validate();
+          },
+          style: TextStyle(
+              color: settings.createPostTextFieldTextColor,
+              fontSize: 16,
+              fontFamily: 'OpenSans'),
+          cursorColor: settings.createPostTextFieldCursorColor,
+          decoration: InputDecoration(
+            labelStyle: TextStyle(color: settings.createPostTextFieldTextColor),
+            labelText: 'Date',
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: settings.createPostTextFieldBorderColor,
+                    width: settings.createPostTextFieldBorderWidth)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: settings.createPostTextFieldBorderColor,
+                    width: settings.createPostTextFieldBorderWidth + 1.0)),
+          ),
+        ),
+        const SizedBox(height: 16.0),
+        TextFormField(
+            key: _crimeTimeKey,
+            initialValue: DateFormat('HH:mm:ss').format(DateTime.now()),
+            readOnly: true,
+            validator: (value) {
+              return validator.validateTime(value);
+            },
+            onChanged: (value) {
+              _crimeTimeKey.currentState!.validate();
+            },
+            style: TextStyle(
+                color: settings.createPostTextFieldTextColor,
+                fontSize: 16,
+                fontFamily: 'OpenSans'),
+            cursorColor: settings.createPostTextFieldCursorColor,
+            decoration: InputDecoration(
+              labelStyle:
+                  TextStyle(color: settings.createPostTextFieldTextColor),
+              labelText: 'Time',
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth + 1.0)),
+            )),
+        const SizedBox(height: 16.0),
+        TextFormField(
+            key: _crimeTitleKey,
+            validator: (value) {
+              return validator.validateTitle(value);
+            },
+            onChanged: (value) {
+              _crimeTitleKey.currentState!.validate();
+            },
+            style: TextStyle(
+                color: settings.createPostTextFieldTextColor,
+                fontSize: 16,
+                fontFamily: 'OpenSans'),
+            cursorColor: settings.createPostTextFieldCursorColor,
+            decoration: InputDecoration(
+              labelStyle:
+                  TextStyle(color: settings.createPostTextFieldTextColor),
+              labelText: 'Title',
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth + 1.0)),
+            )),
+        const SizedBox(height: 16.0),
+        TextFormField(
+            key: _crimeDescriptionKey,
+            validator: (value) {
+              return validator.validateDescription(value);
+            },
+            onChanged: (value) {
+              _crimeDescriptionKey.currentState!.validate();
+            },
+            style: TextStyle(
+                color: settings.createPostTextFieldTextColor,
+                fontSize: 16,
+                fontFamily: 'OpenSans'),
+            cursorColor: settings.createPostTextFieldCursorColor,
+            decoration: InputDecoration(
+              labelStyle:
+                  TextStyle(color: settings.createPostTextFieldTextColor),
+              labelText: 'Description',
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth + 1.0)),
+            )),
+        const SizedBox(height: 16.0),
+        TextFormField(
+            key: _crimeActionsKey,
+            validator: (value) {
+              return validator.validateAction(value);
+            },
+            onChanged: (value) {
+              _crimeActionsKey.currentState!.validate();
+            },
+            style: TextStyle(
+                color: settings.createPostTextFieldTextColor,
+                fontSize: 16,
+                fontFamily: 'OpenSans'),
+            cursorColor: settings.createPostTextFieldCursorColor,
+            decoration: InputDecoration(
+              labelStyle:
+                  TextStyle(color: settings.createPostTextFieldTextColor),
+              labelText: 'Actions',
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth + 1.0)),
+            )),
+      ]),
+    );
+  }
+
+  Form createGeneralPostForm() {
+    return Form(
+      key: _formKey,
+      child:
+          Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        TextFormField(
+          key: _crimeDateKey,
+          initialValue: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+          readOnly: true,
+          validator: (value) {
+            return validator.validateDate(value);
+          },
+          onChanged: (value) {
+            _crimeDateKey.currentState!.validate();
+          },
+          style: TextStyle(
+              color: settings.createPostTextFieldTextColor,
+              fontSize: 16,
+              fontFamily: 'OpenSans'),
+          cursorColor: settings.createPostTextFieldCursorColor,
+          decoration: InputDecoration(
+            labelStyle: TextStyle(color: settings.createPostTextFieldTextColor),
+            labelText: 'Date',
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: settings.createPostTextFieldBorderColor,
+                    width: settings.createPostTextFieldBorderWidth)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: settings.createPostTextFieldBorderColor,
+                    width: settings.createPostTextFieldBorderWidth + 1.0)),
+          ),
+        ),
+        const SizedBox(height: 16.0),
+        TextFormField(
+            key: _crimeTimeKey,
+            initialValue: DateFormat('HH:mm:ss').format(DateTime.now()),
+            readOnly: true,
+            validator: (value) {
+              return validator.validateTime(value);
+            },
+            onChanged: (value) {
+              _crimeTimeKey.currentState!.validate();
+            },
+            style: TextStyle(
+                color: settings.createPostTextFieldTextColor,
+                fontSize: 16,
+                fontFamily: 'OpenSans'),
+            cursorColor: settings.createPostTextFieldCursorColor,
+            decoration: InputDecoration(
+              labelStyle:
+                  TextStyle(color: settings.createPostTextFieldTextColor),
+              labelText: 'Time',
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth + 1.0)),
+            )),
+        const SizedBox(height: 16.0),
+        TextFormField(
+            key: _crimeTitleKey,
+            validator: (value) {
+              return validator.validateTitle(value);
+            },
+            onChanged: (value) {
+              _crimeTitleKey.currentState!.validate();
+            },
+            style: TextStyle(
+                color: settings.createPostTextFieldTextColor,
+                fontSize: 16,
+                fontFamily: 'OpenSans'),
+            cursorColor: settings.createPostTextFieldCursorColor,
+            decoration: InputDecoration(
+              labelStyle:
+                  TextStyle(color: settings.createPostTextFieldTextColor),
+              labelText: 'Title',
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth + 1.0)),
+            )),
+        const SizedBox(height: 16.0),
+        TextFormField(
+            key: _crimeDescriptionKey,
+            validator: (value) {
+              return validator.validateDescription(value);
+            },
+            onChanged: (value) {
+              _crimeDescriptionKey.currentState!.validate();
+            },
+            style: TextStyle(
+                color: settings.createPostTextFieldTextColor,
+                fontSize: 16,
+                fontFamily: 'OpenSans'),
+            cursorColor: settings.createPostTextFieldCursorColor,
+            decoration: InputDecoration(
+              labelStyle:
+                  TextStyle(color: settings.createPostTextFieldTextColor),
+              labelText: 'Description',
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth + 1.0)),
+            )),
+        const SizedBox(height: 16.0),
+        TextFormField(
+            key: _crimeActionsKey,
+            validator: (value) {
+              return validator.validateAction(value);
+            },
+            onChanged: (value) {
+              _crimeActionsKey.currentState!.validate();
+            },
+            style: TextStyle(
+                color: settings.createPostTextFieldTextColor,
+                fontSize: 16,
+                fontFamily: 'OpenSans'),
+            cursorColor: settings.createPostTextFieldCursorColor,
+            decoration: InputDecoration(
+              labelStyle:
+                  TextStyle(color: settings.createPostTextFieldTextColor),
+              labelText: 'Actions',
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth + 1.0)),
+            )),
+      ]),
+    );
   }
 
   @override
@@ -117,176 +686,15 @@ class CreatePostState extends State<CreatePost> {
               ),
             ]),
             const SizedBox(height: 30.0),
-            Form(
-              key: _formKey,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextFormField(
-                      key: _crimeDateKey,
-                      initialValue:
-                          DateFormat('yyyy-MM-dd').format(DateTime.now()),
-                      readOnly: true,
-                      validator: (value) {
-                        return validator.validateDate(value);
-                      },
-                      onChanged: (value) {
-                        _crimeDateKey.currentState!.validate();
-                      },
-                      style: TextStyle(
-                          color: settings.createPostTextFieldTextColor,
-                          fontSize: 16,
-                          fontFamily: 'OpenSans'),
-                      cursorColor: settings.createPostTextFieldCursorColor,
-                      decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                            color: settings.createPostTextFieldTextColor),
-                        labelText: 'Date',
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.createPostTextFieldBorderColor,
-                                width:
-                                    settings.createPostTextFieldBorderWidth)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.createPostTextFieldBorderColor,
-                                width: settings.createPostTextFieldBorderWidth +
-                                    1.0)),
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
-                    TextFormField(
-                        key: _crimeTimeKey,
-                        initialValue:
-                            DateFormat('HH:mm:ss').format(DateTime.now()),
-                        readOnly: true,
-                        validator: (value) {
-                          return validator.validateTime(value);
-                        },
-                        onChanged: (value) {
-                          _crimeTimeKey.currentState!.validate();
-                        },
-                        style: TextStyle(
-                            color: settings.createPostTextFieldTextColor,
-                            fontSize: 16,
-                            fontFamily: 'OpenSans'),
-                        cursorColor: settings.createPostTextFieldCursorColor,
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(
-                              color: settings.createPostTextFieldTextColor),
-                          labelText: 'Time',
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color:
-                                      settings.createPostTextFieldBorderColor,
-                                  width:
-                                      settings.createPostTextFieldBorderWidth)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color:
-                                      settings.createPostTextFieldBorderColor,
-                                  width:
-                                      settings.createPostTextFieldBorderWidth +
-                                          1.0)),
-                        )),
-                    const SizedBox(height: 16.0),
-                    TextFormField(
-                        key: _crimeTitleKey,
-                        validator: (value) {
-                          return validator.validateTitle(value);
-                        },
-                        onChanged: (value) {
-                          _crimeTitleKey.currentState!.validate();
-                        },
-                        style: TextStyle(
-                            color: settings.createPostTextFieldTextColor,
-                            fontSize: 16,
-                            fontFamily: 'OpenSans'),
-                        cursorColor: settings.createPostTextFieldCursorColor,
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(
-                              color: settings.createPostTextFieldTextColor),
-                          labelText: 'Title',
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color:
-                                      settings.createPostTextFieldBorderColor,
-                                  width:
-                                      settings.createPostTextFieldBorderWidth)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color:
-                                      settings.createPostTextFieldBorderColor,
-                                  width:
-                                      settings.createPostTextFieldBorderWidth +
-                                          1.0)),
-                        )),
-                    const SizedBox(height: 16.0),
-                    TextFormField(
-                        key: _crimeDescriptionKey,
-                        validator: (value) {
-                          return validator.validateDescription(value);
-                        },
-                        onChanged: (value) {
-                          _crimeDescriptionKey.currentState!.validate();
-                        },
-                        style: TextStyle(
-                            color: settings.createPostTextFieldTextColor,
-                            fontSize: 16,
-                            fontFamily: 'OpenSans'),
-                        cursorColor: settings.createPostTextFieldCursorColor,
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(
-                              color: settings.createPostTextFieldTextColor),
-                          labelText: 'Description',
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color:
-                                      settings.createPostTextFieldBorderColor,
-                                  width:
-                                      settings.createPostTextFieldBorderWidth)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color:
-                                      settings.createPostTextFieldBorderColor,
-                                  width:
-                                      settings.createPostTextFieldBorderWidth +
-                                          1.0)),
-                        )),
-                    const SizedBox(height: 16.0),
-                    TextFormField(
-                        key: _crimeActionsKey,
-                        validator: (value) {
-                          return validator.validateAction(value);
-                        },
-                        onChanged: (value) {
-                          _crimeActionsKey.currentState!.validate();
-                        },
-                        style: TextStyle(
-                            color: settings.createPostTextFieldTextColor,
-                            fontSize: 16,
-                            fontFamily: 'OpenSans'),
-                        cursorColor: settings.createPostTextFieldCursorColor,
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(
-                              color: settings.createPostTextFieldTextColor),
-                          labelText: 'Actions',
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color:
-                                      settings.createPostTextFieldBorderColor,
-                                  width:
-                                      settings.createPostTextFieldBorderWidth)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color:
-                                      settings.createPostTextFieldBorderColor,
-                                  width:
-                                      settings.createPostTextFieldBorderWidth +
-                                          1.0)),
-                        )),
-                  ]),
-            ),
+            selectedPostType == 'Crime Post'
+                ? createCrimePostForm()
+                : selectedPostType == 'Complaint Post'
+                    ? createComplaintPostForm()
+                    : selectedPostType == 'Event Post'
+                        ? createEventPostForm()
+                        : selectedPostType == 'General Post'
+                            ? createGeneralPostForm()
+                            : createComplaintPostForm(),
             const SizedBox(height: 40.0),
             ElevatedButton(
               style: ButtonStyle(
@@ -380,7 +788,8 @@ class CreatePostState extends State<CreatePost> {
                       _crimeTimeKey.currentState!.validate() &&
                       _crimeTitleKey.currentState!.validate() &&
                       _crimeDescriptionKey.currentState!.validate() &&
-                      _crimeActionsKey.currentState!.validate())) {
+                      _crimeActionsKey.currentState!.validate() &&
+                      selectedImage != null)) {
                     popupService.showErrorPopup(
                         context,
                         "Validation Message",
@@ -409,6 +818,45 @@ class CreatePostState extends State<CreatePost> {
                   }
                 } else if (selectedPostType == "Complaint Post") {
                   // Handle Complaint Post Submit
+                  Map<String, dynamic> complaintPostData = {
+                    "target": _complaintTargetKey.currentState?.value,
+                    "title": _complaintTitleKey.currentState?.value,
+                    "description": _complaintDescriptionKey.currentState?.value,
+                    "isAnonymous": complaintIsAnonymous,
+                    "token": authService.getAuthToken(),
+                    "image": selectedImage
+                  };
+                  if (!(_complaintTargetKey.currentState!.validate() &&
+                      _complaintTitleKey.currentState!.validate() &&
+                      _complaintDescriptionKey.currentState!.validate() &&
+                      complaintIsAnonymous != null)) {
+                    popupService.showErrorPopup(
+                        context,
+                        "Validation Message",
+                        "Please ensure all fields are valid before submitting!",
+                        () {});
+                  } else {
+                    final response = await apiService
+                        .submitComplaintPostAPI(complaintPostData);
+                    if (response != null) {
+                      final status = response["status"];
+                      final message = response["data"]["message"];
+                      if (status > 0) {
+                        // Success message
+                        // ignore: use_build_context_synchronously
+                        popupService.showSuccessPopup(
+                            context, "Create Complaint Post Success", message,
+                            () {
+                          resetData();
+                        });
+                      } else {
+                        // Error message
+                        // ignore: use_build_context_synchronously
+                        popupService.showErrorPopup(context,
+                            "Create Complaint Post Error", message, () {});
+                      }
+                    }
+                  }
                 } else if (selectedPostType == "Event Post") {
                   // Handle Event Post Submit
                 } else if (selectedPostType == "General Post") {
