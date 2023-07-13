@@ -16,6 +16,7 @@ class Validator {
   final descriptionRegExp = RegExp(r'^[a-zA-Z0-9 ]+$');
   final actionRegExp = RegExp(r'^[a-zA-Z0-9 ]+$');
   final targetRegExp = RegExp(r'^[a-zA-Z0-9 ]+$');
+  final venueRegExp = RegExp(r'^[a-zA-Z0-9 ]+$');
 
   // Private constructor to prevent external instantiation
   Validator._();
@@ -170,6 +171,16 @@ class Validator {
     }
     if (!targetRegExp.hasMatch(target)) {
       return 'Please enter a valid target!';
+    }
+    return null;
+  }
+
+  validateVenue(venue) {
+    if (venue!.isEmpty) {
+      return 'Please enter a venue!';
+    }
+    if (!venueRegExp.hasMatch(venue)) {
+      return 'Please enter a valid venue!';
     }
     return null;
   }

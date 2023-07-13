@@ -48,6 +48,24 @@ class CreatePostState extends State<CreatePost> {
       GlobalKey<FormFieldState<String>>();
   String? complaintIsAnonymous;
 
+  // Event Post Controllers
+  final GlobalKey<FormFieldState<String>> _eventDateKey =
+      GlobalKey<FormFieldState<String>>();
+  final GlobalKey<FormFieldState<String>> _eventTimeKey =
+      GlobalKey<FormFieldState<String>>();
+  final GlobalKey<FormFieldState<String>> _eventVenueKey =
+      GlobalKey<FormFieldState<String>>();
+  final GlobalKey<FormFieldState<String>> _eventTitleKey =
+      GlobalKey<FormFieldState<String>>();
+  final GlobalKey<FormFieldState<String>> _eventDescriptionKey =
+      GlobalKey<FormFieldState<String>>();
+
+  // General Post Controllers
+  final GlobalKey<FormFieldState<String>> _generalTitleKey =
+      GlobalKey<FormFieldState<String>>();
+  final GlobalKey<FormFieldState<String>> _generalDescriptionKey =
+      GlobalKey<FormFieldState<String>>();
+
   Validator validator = Validator();
   ApiService apiService = ApiService();
   PopupService popupService = PopupService();
@@ -62,6 +80,7 @@ class CreatePostState extends State<CreatePost> {
 
   void resetData() {
     _formKey.currentState?.reset();
+    complaintIsAnonymous = null;
   }
 
   Future<void> _pickImage(ImageSource source) async {
@@ -348,14 +367,14 @@ class CreatePostState extends State<CreatePost> {
       child:
           Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         TextFormField(
-          key: _crimeDateKey,
+          key: _eventDateKey,
           initialValue: DateFormat('yyyy-MM-dd').format(DateTime.now()),
           readOnly: true,
           validator: (value) {
             return validator.validateDate(value);
           },
           onChanged: (value) {
-            _crimeDateKey.currentState!.validate();
+            _eventDateKey.currentState!.validate();
           },
           style: TextStyle(
               color: settings.createPostTextFieldTextColor,
@@ -377,14 +396,14 @@ class CreatePostState extends State<CreatePost> {
         ),
         const SizedBox(height: 16.0),
         TextFormField(
-            key: _crimeTimeKey,
+            key: _eventTimeKey,
             initialValue: DateFormat('HH:mm:ss').format(DateTime.now()),
             readOnly: true,
             validator: (value) {
               return validator.validateTime(value);
             },
             onChanged: (value) {
-              _crimeTimeKey.currentState!.validate();
+              _eventTimeKey.currentState!.validate();
             },
             style: TextStyle(
                 color: settings.createPostTextFieldTextColor,
@@ -406,12 +425,39 @@ class CreatePostState extends State<CreatePost> {
             )),
         const SizedBox(height: 16.0),
         TextFormField(
-            key: _crimeTitleKey,
+            key: _eventVenueKey,
+            validator: (value) {
+              return validator.validateVenue(value);
+            },
+            onChanged: (value) {
+              _eventVenueKey.currentState!.validate();
+            },
+            style: TextStyle(
+                color: settings.createPostTextFieldTextColor,
+                fontSize: 16,
+                fontFamily: 'OpenSans'),
+            cursorColor: settings.createPostTextFieldCursorColor,
+            decoration: InputDecoration(
+              labelStyle:
+                  TextStyle(color: settings.createPostTextFieldTextColor),
+              labelText: 'Venue',
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: settings.createPostTextFieldBorderColor,
+                      width: settings.createPostTextFieldBorderWidth + 1.0)),
+            )),
+        const SizedBox(height: 16.0),
+        TextFormField(
+            key: _eventTitleKey,
             validator: (value) {
               return validator.validateTitle(value);
             },
             onChanged: (value) {
-              _crimeTitleKey.currentState!.validate();
+              _eventTitleKey.currentState!.validate();
             },
             style: TextStyle(
                 color: settings.createPostTextFieldTextColor,
@@ -433,12 +479,12 @@ class CreatePostState extends State<CreatePost> {
             )),
         const SizedBox(height: 16.0),
         TextFormField(
-            key: _crimeDescriptionKey,
+            key: _eventDescriptionKey,
             validator: (value) {
               return validator.validateDescription(value);
             },
             onChanged: (value) {
-              _crimeDescriptionKey.currentState!.validate();
+              _eventDescriptionKey.currentState!.validate();
             },
             style: TextStyle(
                 color: settings.createPostTextFieldTextColor,
@@ -459,32 +505,6 @@ class CreatePostState extends State<CreatePost> {
                       width: settings.createPostTextFieldBorderWidth + 1.0)),
             )),
         const SizedBox(height: 16.0),
-        TextFormField(
-            key: _crimeActionsKey,
-            validator: (value) {
-              return validator.validateAction(value);
-            },
-            onChanged: (value) {
-              _crimeActionsKey.currentState!.validate();
-            },
-            style: TextStyle(
-                color: settings.createPostTextFieldTextColor,
-                fontSize: 16,
-                fontFamily: 'OpenSans'),
-            cursorColor: settings.createPostTextFieldCursorColor,
-            decoration: InputDecoration(
-              labelStyle:
-                  TextStyle(color: settings.createPostTextFieldTextColor),
-              labelText: 'Actions',
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                      color: settings.createPostTextFieldBorderColor,
-                      width: settings.createPostTextFieldBorderWidth)),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                      color: settings.createPostTextFieldBorderColor,
-                      width: settings.createPostTextFieldBorderWidth + 1.0)),
-            )),
       ]),
     );
   }
@@ -495,70 +515,12 @@ class CreatePostState extends State<CreatePost> {
       child:
           Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         TextFormField(
-          key: _crimeDateKey,
-          initialValue: DateFormat('yyyy-MM-dd').format(DateTime.now()),
-          readOnly: true,
-          validator: (value) {
-            return validator.validateDate(value);
-          },
-          onChanged: (value) {
-            _crimeDateKey.currentState!.validate();
-          },
-          style: TextStyle(
-              color: settings.createPostTextFieldTextColor,
-              fontSize: 16,
-              fontFamily: 'OpenSans'),
-          cursorColor: settings.createPostTextFieldCursorColor,
-          decoration: InputDecoration(
-            labelStyle: TextStyle(color: settings.createPostTextFieldTextColor),
-            labelText: 'Date',
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: settings.createPostTextFieldBorderColor,
-                    width: settings.createPostTextFieldBorderWidth)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: settings.createPostTextFieldBorderColor,
-                    width: settings.createPostTextFieldBorderWidth + 1.0)),
-          ),
-        ),
-        const SizedBox(height: 16.0),
-        TextFormField(
-            key: _crimeTimeKey,
-            initialValue: DateFormat('HH:mm:ss').format(DateTime.now()),
-            readOnly: true,
-            validator: (value) {
-              return validator.validateTime(value);
-            },
-            onChanged: (value) {
-              _crimeTimeKey.currentState!.validate();
-            },
-            style: TextStyle(
-                color: settings.createPostTextFieldTextColor,
-                fontSize: 16,
-                fontFamily: 'OpenSans'),
-            cursorColor: settings.createPostTextFieldCursorColor,
-            decoration: InputDecoration(
-              labelStyle:
-                  TextStyle(color: settings.createPostTextFieldTextColor),
-              labelText: 'Time',
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                      color: settings.createPostTextFieldBorderColor,
-                      width: settings.createPostTextFieldBorderWidth)),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                      color: settings.createPostTextFieldBorderColor,
-                      width: settings.createPostTextFieldBorderWidth + 1.0)),
-            )),
-        const SizedBox(height: 16.0),
-        TextFormField(
-            key: _crimeTitleKey,
+            key: _generalTitleKey,
             validator: (value) {
               return validator.validateTitle(value);
             },
             onChanged: (value) {
-              _crimeTitleKey.currentState!.validate();
+              _generalTitleKey.currentState!.validate();
             },
             style: TextStyle(
                 color: settings.createPostTextFieldTextColor,
@@ -580,12 +542,12 @@ class CreatePostState extends State<CreatePost> {
             )),
         const SizedBox(height: 16.0),
         TextFormField(
-            key: _crimeDescriptionKey,
+            key: _generalDescriptionKey,
             validator: (value) {
               return validator.validateDescription(value);
             },
             onChanged: (value) {
-              _crimeDescriptionKey.currentState!.validate();
+              _generalDescriptionKey.currentState!.validate();
             },
             style: TextStyle(
                 color: settings.createPostTextFieldTextColor,
@@ -606,32 +568,6 @@ class CreatePostState extends State<CreatePost> {
                       width: settings.createPostTextFieldBorderWidth + 1.0)),
             )),
         const SizedBox(height: 16.0),
-        TextFormField(
-            key: _crimeActionsKey,
-            validator: (value) {
-              return validator.validateAction(value);
-            },
-            onChanged: (value) {
-              _crimeActionsKey.currentState!.validate();
-            },
-            style: TextStyle(
-                color: settings.createPostTextFieldTextColor,
-                fontSize: 16,
-                fontFamily: 'OpenSans'),
-            cursorColor: settings.createPostTextFieldCursorColor,
-            decoration: InputDecoration(
-              labelStyle:
-                  TextStyle(color: settings.createPostTextFieldTextColor),
-              labelText: 'Actions',
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                      color: settings.createPostTextFieldBorderColor,
-                      width: settings.createPostTextFieldBorderWidth)),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                      color: settings.createPostTextFieldBorderColor,
-                      width: settings.createPostTextFieldBorderWidth + 1.0)),
-            )),
       ]),
     );
   }
@@ -859,8 +795,84 @@ class CreatePostState extends State<CreatePost> {
                   }
                 } else if (selectedPostType == "Event Post") {
                   // Handle Event Post Submit
+                  Map<String, dynamic> eventPostData = {
+                    "date": _eventDateKey.currentState?.value,
+                    "time": _eventTimeKey.currentState?.value,
+                    "venue": _eventVenueKey.currentState?.value,
+                    "title": _eventTitleKey.currentState?.value,
+                    "description": _eventDescriptionKey.currentState?.value,
+                    "participants": "",
+                    "token": authService.getAuthToken(),
+                    "image": selectedImage
+                  };
+                  if (!(_eventDateKey.currentState!.validate() &&
+                      _eventTimeKey.currentState!.validate() &&
+                      _eventVenueKey.currentState!.validate() &&
+                      _eventTitleKey.currentState!.validate() &&
+                      _eventDescriptionKey.currentState!.validate())) {
+                    popupService.showErrorPopup(
+                        context,
+                        "Validation Message",
+                        "Please ensure all fields are valid before submitting!",
+                        () {});
+                  } else {
+                    final response =
+                        await apiService.submitEventPostAPI(eventPostData);
+                    if (response != null) {
+                      final status = response["status"];
+                      final message = response["data"]["message"];
+                      if (status > 0) {
+                        // Success message
+                        // ignore: use_build_context_synchronously
+                        popupService.showSuccessPopup(
+                            context, "Create Event Post Success", message, () {
+                          resetData();
+                        });
+                      } else {
+                        // Error message
+                        // ignore: use_build_context_synchronously
+                        popupService.showErrorPopup(
+                            context, "Create Event Post Error", message, () {});
+                      }
+                    }
+                  }
                 } else if (selectedPostType == "General Post") {
                   // Handle General Post Submit
+                  Map<String, dynamic> generalPostData = {
+                    "title": _generalTitleKey.currentState?.value,
+                    "description": _generalDescriptionKey.currentState?.value,
+                    "token": authService.getAuthToken(),
+                    "image": selectedImage
+                  };
+                  if (!(_generalTitleKey.currentState!.validate() &&
+                      _generalDescriptionKey.currentState!.validate())) {
+                    popupService.showErrorPopup(
+                        context,
+                        "Validation Message",
+                        "Please ensure all fields are valid before submitting!",
+                        () {});
+                  } else {
+                    final response =
+                        await apiService.submitGeneralPostAPI(generalPostData);
+                    if (response != null) {
+                      final status = response["status"];
+                      final message = response["data"]["message"];
+                      if (status > 0) {
+                        // Success message
+                        // ignore: use_build_context_synchronously
+                        popupService.showSuccessPopup(
+                            context, "Create General Post Success", message,
+                            () {
+                          resetData();
+                        });
+                      } else {
+                        // Error message
+                        // ignore: use_build_context_synchronously
+                        popupService.showErrorPopup(context,
+                            "Create General Post Error", message, () {});
+                      }
+                    }
+                  }
                 }
               },
             ),
