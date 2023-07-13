@@ -57,7 +57,8 @@ class HomeState extends State<Home> {
               onPressed: () {
                 // Navigate to create posts screen
                 Navigator.pushNamed(context, '/createPost').then((_) {
-                  changeFilteredPostListType(filteredPostListType);
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/home');
                 });
               },
               child: Icon(Icons.add, color: settings.bottomNavBarTextColor),

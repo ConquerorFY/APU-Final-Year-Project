@@ -316,50 +316,53 @@ class PostListState extends State<PostList> {
     }
   }
 
-  bool isLikePostStatus(postType, postID) {
+  int isLikePostStatus(postType, postID) {
+    // 0 -> No Action
+    // 1 -> Like
+    // -1 -> Dislike
     if (postType == 'crime') {
       final crimePostLikes = userData["crimePostLikes"];
       final crimePostDislikes = userData["crimePostDislikes"];
       if (crimePostLikes.contains(postID) &&
           !(crimePostDislikes.contains(postID))) {
-        return true;
+        return 1;
       } else if (crimePostDislikes.contains(postID) &&
           !(crimePostLikes.contains(postID))) {
-        return false;
+        return -1;
       }
     } else if (postType == 'complaint') {
       final complaintPostLikes = userData["complaintPostLikes"];
       final complaintPostDislikes = userData["complaintPostDislikes"];
       if (complaintPostLikes.contains(postID) &&
           !(complaintPostDislikes.contains(postID))) {
-        return true;
+        return 1;
       } else if (complaintPostDislikes.contains(postID) &&
           !(complaintPostLikes.contains(postID))) {
-        return false;
+        return -1;
       }
     } else if (postType == 'event') {
       final eventPostLikes = userData["eventPostLikes"];
       final eventPostDislikes = userData["eventPostDislikes"];
       if (eventPostLikes.contains(postID) &&
           !(eventPostDislikes.contains(postID))) {
-        return true;
+        return 1;
       } else if (eventPostDislikes.contains(postID) &&
           !(eventPostLikes.contains(postID))) {
-        return false;
+        return -1;
       }
     } else if (postType == 'general') {
       final generalPostLikes = userData["generalPostLikes"];
       final generalPostDislikes = userData["generalPostDislikes"];
       if (generalPostLikes.contains(postID) &&
           !(generalPostDislikes.contains(postID))) {
-        return true;
+        return 1;
       } else if (generalPostDislikes.contains(postID) &&
           !(generalPostLikes.contains(postID))) {
-        return false;
+        return -1;
       }
     }
 
-    return false;
+    return 0;
   }
 
   void handleLikeDislikePost(postType, postID, operation) async {
@@ -552,8 +555,9 @@ class PostListState extends State<PostList> {
                           },
                           child: Icon(Icons.thumb_up,
                               size: 20,
-                              color: isLikePostStatus(
-                                      "crime", postData['crime'][index]['id'])
+                              color: isLikePostStatus("crime",
+                                          postData['crime'][index]['id']) ==
+                                      1
                                   ? iconSelectedColor
                                   : iconColor),
                         ),
@@ -574,10 +578,11 @@ class PostListState extends State<PostList> {
                           },
                           child: Icon(Icons.thumb_down,
                               size: 20,
-                              color: isLikePostStatus(
-                                      "crime", postData['crime'][index]['id'])
-                                  ? iconColor
-                                  : iconSelectedColor),
+                              color: isLikePostStatus("crime",
+                                          postData['crime'][index]['id']) ==
+                                      -1
+                                  ? iconSelectedColor
+                                  : iconColor),
                         ),
                         const SizedBox(width: 4),
                         Text(postData["crime"][index]["dislikes"].toString(),
@@ -665,7 +670,7 @@ class PostListState extends State<PostList> {
                 Image.asset('assets/usa.png', width: double.infinity),
                 const SizedBox(height: 15),
                 Text(
-                    "Posted By: ${postData['complaint'][index]['isAnonymous'] ? postData['complaint'][index]['username'] : '-'}",
+                    "Posted By: ${!postData['complaint'][index]['isAnonymous'] ? postData['complaint'][index]['username'] : '-'}",
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 10,
@@ -686,7 +691,8 @@ class PostListState extends State<PostList> {
                           child: Icon(Icons.thumb_up,
                               size: 20,
                               color: isLikePostStatus("complaint",
-                                      postData['complaint'][index]['id'])
+                                          postData['complaint'][index]['id']) ==
+                                      1
                                   ? iconSelectedColor
                                   : iconColor),
                         ),
@@ -708,9 +714,10 @@ class PostListState extends State<PostList> {
                           child: Icon(Icons.thumb_down,
                               size: 20,
                               color: isLikePostStatus("complaint",
-                                      postData['complaint'][index]['id'])
-                                  ? iconColor
-                                  : iconSelectedColor),
+                                          postData['complaint'][index]['id']) ==
+                                      -1
+                                  ? iconSelectedColor
+                                  : iconColor),
                         ),
                         const SizedBox(width: 4),
                         Text(
@@ -912,8 +919,9 @@ class PostListState extends State<PostList> {
                           },
                           child: Icon(Icons.thumb_up,
                               size: 20,
-                              color: isLikePostStatus(
-                                      "event", postData['event'][index]['id'])
+                              color: isLikePostStatus("event",
+                                          postData['event'][index]['id']) ==
+                                      1
                                   ? iconSelectedColor
                                   : iconColor),
                         ),
@@ -935,10 +943,11 @@ class PostListState extends State<PostList> {
                           },
                           child: Icon(Icons.thumb_down,
                               size: 20,
-                              color: isLikePostStatus(
-                                      "event", postData['event'][index]['id'])
-                                  ? iconColor
-                                  : iconSelectedColor),
+                              color: isLikePostStatus("event",
+                                          postData['event'][index]['id']) ==
+                                      -1
+                                  ? iconSelectedColor
+                                  : iconColor),
                         ),
                         const SizedBox(width: 4),
                         Text(postData["event"][index]["dislikes"].toString(),
@@ -1038,7 +1047,8 @@ class PostListState extends State<PostList> {
                           child: Icon(Icons.thumb_up,
                               size: 20,
                               color: isLikePostStatus("general",
-                                      postData['general'][index]['id'])
+                                          postData['general'][index]['id']) ==
+                                      1
                                   ? iconSelectedColor
                                   : iconColor),
                         ),
@@ -1060,9 +1070,10 @@ class PostListState extends State<PostList> {
                           child: Icon(Icons.thumb_down,
                               size: 20,
                               color: isLikePostStatus("general",
-                                      postData['general'][index]['id'])
-                                  ? iconColor
-                                  : iconSelectedColor),
+                                          postData['general'][index]['id']) ==
+                                      -1
+                                  ? iconSelectedColor
+                                  : iconColor),
                         ),
                         const SizedBox(width: 4),
                         Text(postData["general"][index]["dislikes"].toString(),

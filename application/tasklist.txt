@@ -9,7 +9,7 @@ Residents:
     - Join Group Screen
     - Profile Screen [X]
     - Edit Profile Screen [X]
-    - Create Posts Screen
+    - Create Posts Screen [X]
     - Crime Map Screen
     - Facilities Booking Screen
 
@@ -20,7 +20,7 @@ Resident Leader:
     - Join Group Screen
     - Profile Screen [X]
     - Edit Profile Screen [X]
-    - Create Posts Screen
+    - Create Posts Screen [X]
     - Crime Map Screen
     - Facilities Booking Screen
 
