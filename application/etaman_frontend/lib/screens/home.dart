@@ -29,7 +29,7 @@ class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: TopAppBar(),
+        appBar: TopAppBar(isImplyLeading: false),
         body: Stack(children: [
           Builder(builder: (BuildContext innerContext) {
             return GestureDetector(

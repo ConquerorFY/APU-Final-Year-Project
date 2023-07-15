@@ -83,6 +83,22 @@ class ApiService {
     }
   }
 
+  // Get All Neighborhood Groups
+  dynamic getAllNeighborhoodGroupsAPI() async {
+    try {
+      final url = Uri.parse("$baseUrl/getGroupAll/");
+
+      final response = await get(url);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Get All Neighborhood Groups - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Get All Neighborhood Groups - $e");
+      return null;
+    }
+  }
+
   // Get All Posts Within Same Neighborhood Group API
   dynamic getAllNeighborhoodPostsAPI(body) async {
     try {

@@ -71,4 +71,11 @@ class Settings {
   Color createPostTextFieldCursorColor = Colors.green;
   Color createPostTextFieldBorderColor = Colors.green;
   double createPostTextFieldBorderWidth = 1.0;
+
+  int mapWaitDuration = 1;
+  int mapShowDuration = 2;
+  Color mapTooltipBgColor = Colors.green.shade900;
+  Color mapTooltipTextColor = Colors.white;
+  Color mapPrimaryMarkerColor = Colors.red;
+  Color mapSecondaryMarkerColor = Colors.blue;
 }

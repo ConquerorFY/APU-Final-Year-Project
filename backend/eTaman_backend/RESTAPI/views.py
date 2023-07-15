@@ -61,9 +61,9 @@ def getAllNeighborhoodGroup(request):
     try:
         groups = NeighborhoodGroupSerializer(NeighborhoodGroupModel.objects.all(), many=True)
         groupsData = groups.data
-        return JsonResponse({"data": {"message": ALL_NEIGHBORHOOD_GROUP_FOUND, "list": groupsData, "status": SUCCESS_CODE}}, status=201)
+        return JsonResponse({"data": {"message": ALL_NEIGHBORHOOD_GROUP_FOUND, "list": groupsData}, "status": SUCCESS_CODE}, status=201)
     except NeighborhoodGroupModel.DoesNotExist:
-        return JsonResponse({"data": {"message": NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+        return JsonResponse({"data": {"message": NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
 
 # Find neighborhood group
 @api_view(['GET'])

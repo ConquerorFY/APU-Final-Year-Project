@@ -1584,10 +1584,11 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   dynamic backgroundColor;
   dynamic textColor;
+  dynamic isImplyLeading;
   final icon = const AssetImage("assets/logo.png");
   final text = "eTaman";
 
-  TopAppBar({super.key}) {
+  TopAppBar({super.key, this.isImplyLeading}) {
     backgroundColor = settings.topNavBarBgColor;
     textColor = settings.topNavBarTextColor;
   }
@@ -1598,7 +1599,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: false,
+      automaticallyImplyLeading: isImplyLeading,
       backgroundColor: backgroundColor,
       title: Row(
         children: [
@@ -1668,6 +1669,7 @@ class BottomNavBar extends StatelessWidget {
             break;
           case 1:
             // Navigate to Map Screen
+            Navigator.pushNamed(context, "/map");
             break;
           case 2:
             // Navigate to Group Screen

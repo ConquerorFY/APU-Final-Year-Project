@@ -6,22 +6,20 @@ Residents:
     - Login Screen [X]
     - Register Screen [X]
     - Home Screen [X]
-    - Join Group Screen
     - Profile Screen [X]
     - Edit Profile Screen [X]
     - Create Posts Screen [X]
-    - Crime Map Screen
+    - Map Screen (Together with Manage Neighborhood Group)
     - Facilities Booking Screen
 
 Resident Leader:
     - Login Screen [X]
     - Register Screen [X]
     - Home Screen [X]
-    - Join Group Screen
     - Profile Screen [X]
     - Edit Profile Screen [X]
     - Create Posts Screen [X]
-    - Crime Map Screen
+    - Map Screen (Together with Manage Neighborhood Group)
     - Facilities Booking Screen
 
 Government:
