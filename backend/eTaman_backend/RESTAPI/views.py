@@ -82,20 +82,18 @@ def getNeighborhoodGroup(request):
     except NeighborhoodGroupModel.DoesNotExist:
         return JsonResponse({'data': {"message": NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
 
-# Get all neighborhood group join requests (for particular group)
+# Get all neighborhood group join requests
 @api_view(['GET'])
 def getAllNeighborhoodGroupJoinRequest(request):
     try:
-        # Get neighborhood group ID
-        id = request.data["id"]
-        neighborhoodGroup = NeighborhoodGroupModel.objects.get(id=id)
+        neighborhoodGroup = JoinRequestModel.objects.all()
         # Get all neighborhood group join requests with the same group ID (use filter() instead of get() in this case)
-        requestData = JoinRequestSerializer(JoinRequestModel.objects.filter(groupID=neighborhoodGroup), many=True)
-        return JsonResponse({"data": {"message": ALL_JOIN_REQUEST_DATA_FOUND, "list": requestData.data, "status": SUCCESS_CODE}}, status=201)
+        requestData = JoinRequestSerializer(neighborhoodGroup, many=True)
+        return JsonResponse({"data": {"message": ALL_JOIN_REQUEST_DATA_FOUND, "list": requestData.data}, "status": SUCCESS_CODE}, status=201)
     except JoinRequestModel.DoesNotExist:
-        return JsonResponse({"data": {"message": JOIN_REQUEST_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+        return JsonResponse({"data": {"message": JOIN_REQUEST_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
     except NeighborhoodGroupModel.DoesNotExist:
-        return JsonResponse({"data": {"message": NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+        return JsonResponse({"data": {"message": NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
 
 # Get neighborhood rules (for particular group)
 @api_view(['GET'])
@@ -278,12 +276,12 @@ def createNeighborhoodGroupJoinRequest(request):
         # Check whether all data is valid
         if requestData.is_valid():
             requestData.save()
-            return JsonResponse({'data': {"message": JOIN_REQUEST_CREATED_SUCCESSFUL, "status": SUCCESS_CODE}}, status=201)
+            return JsonResponse({'data': {"message": JOIN_REQUEST_CREATED_SUCCESSFUL}, "status": SUCCESS_CODE}, status=201)
         else:
             # An existing request already exists
-            return JsonResponse({"data": {"message": JOIN_REQUEST_ALREADY_EXIST, "status": ERROR_CODE}}, status=400)
+            return JsonResponse({"data": {"message": JOIN_REQUEST_ALREADY_EXIST}, "status": ERROR_CODE}, status=400)
     except NeighborhoodGroupModel.DoesNotExist:
-        return JsonResponse({"data": {"message": NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+        return JsonResponse({"data": {"message": NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
 
 # Approve / Reject neighborhood group join request
 @api_view(['POST'])
@@ -317,16 +315,35 @@ def leaveNeighborhoodGroup(request):
     try:
         # Get resident ID
         residentId = decodeJWTToken(request.data["token"])["id"]
-        residentData = ResidentSerializer(ResidentModel.objects.get(pk=residentId), data={"groupID": None}, partial=True)
+        residentInfo = ResidentModel.objects.get(pk=residentId)
+        # Check if resident is resident leader
+        if residentInfo.isLeader:
+            return JsonResponse({'data': {'message': RESIDENT_LEAVE_NEIGHBORHOOD_RESIDENT_LEADER}, 'status': ERROR_CODE}, status=400)
+        residentData = ResidentSerializer(residentInfo, data={"groupID": None}, partial=True)
         # Check whether all data is valid
         if residentData.is_valid():
             residentData.save()
-            return JsonResponse({'data': {'message': RESIDENT_LEAVE_NEIGHBORHOOD_GROUP_SUCCESSUL, 'status': SUCCESS_CODE}}, status=201)
+            return JsonResponse({'data': {'message': RESIDENT_LEAVE_NEIGHBORHOOD_GROUP_SUCCESSUL}, 'status': SUCCESS_CODE}, status=201)
         else:
             # An error has occured
-            return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
+
+# Get particular neighborhood group join requests
+@api_view(['POST'])
+def getNeighborhoodGroupJoinRequest(request):
+    try:
+        # Get neighborhood group ID
+        id = request.data["id"]
+        neighborhoodGroup = NeighborhoodGroupModel.objects.get(id=id)
+        # Get all neighborhood group join requests with the same group ID (use filter() instead of get() in this case)
+        requestData = JoinRequestSerializer(JoinRequestModel.objects.filter(groupID=neighborhoodGroup), many=True)
+        return JsonResponse({"data": {"message": ALL_JOIN_REQUEST_DATA_FOUND, "list": requestData.data}, "status": SUCCESS_CODE}, status=201)
+    except JoinRequestModel.DoesNotExist:
+        return JsonResponse({"data": {"message": JOIN_REQUEST_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
+    except NeighborhoodGroupModel.DoesNotExist:
+        return JsonResponse({"data": {"message": NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
 
 # Get all posts within the same neighborhood group
 @api_view(['POST'])
@@ -1670,6 +1687,20 @@ def testDeleteAPI(request, id):
     except TestModel.DoesNotExist:
         return JsonResponse({'message': 'The Data is Not Found!'}, status=404)
 
+# Delete neighborhood group join request
+@api_view(['DELETE'])
+def deleteNeighborhoodGroupJoinRequest(request):
+    try:
+        # Get resident id
+        residentId = decodeJWTToken(request.data["token"])["id"]
+        joinRequestData = JoinRequestModel.objects.get(residentID = residentId)
+        joinRequestData.delete()
+        return JsonResponse({'data': {"message": JOIN_REQUEST_DELETED_SUCCESSFULLY}, "status": SUCCESS_CODE}, status=201)
+    except JoinRequestModel.DoesNotExist:
+        return JsonResponse({"data": {"message": JOIN_REQUEST_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
+
 # Delete crime post
 @api_view(['DELETE'])
 def deleteCrimePost(request):
@@ -1683,14 +1714,14 @@ def deleteCrimePost(request):
         # Check if either the resident is the owner or the resident is the resident leader
         if crimePostData.reporterID.id == residentData.id or (crimePostData.reporterID.groupID.id == residentData.groupID.id and residentData.isLeader):
             crimePostData.delete()
-            return JsonResponse({'data': {'message': CRIME_POST_DELETED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+            return JsonResponse({'data': {'message': CRIME_POST_DELETED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
         else:
             # The resident is either not the owner or not the resident leader of the neighborhood group
-            return JsonResponse({'data': {'message': CRIME_POST_NOT_OWNER_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': CRIME_POST_NOT_OWNER_RESIDENT_LEADER}, 'status': ERROR_CODE}, status=400)
     except CrimePostModel.DoesNotExist:
-        return JsonResponse({'data': {'message': CRIME_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': CRIME_POST_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+        return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
 
 # Delete crime post comment
 @api_view(['DELETE'])

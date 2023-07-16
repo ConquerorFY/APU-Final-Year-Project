@@ -78,4 +78,15 @@ class Settings {
   Color mapTooltipTextColor = Colors.white;
   Color mapPrimaryMarkerColor = Colors.red;
   Color mapSecondaryMarkerColor = Colors.blue;
+
+  Color joinGroupBgColor = Colors.green;
+  Color joinGroupBgColor2 = Colors.green.shade600;
+  Color joinGroupBgColor3 = Colors.red.shade600;
+  Color joinGroupBgColor4 = Colors.grey.shade600;
+  Color joinGroupTextFieldTextColor = Colors.white;
+  Color joinGroupTextFieldShadowColor = Colors.green.shade900;
+  Color joinGroupTextFieldIconColor = Colors.white;
+  Color joinGroupTextFieldCursorColor = Colors.green;
+  Color joinGroupTextFieldBorderColor = Colors.green;
+  double joinGroupTextFieldBorderWidth = 1.0;
 }

@@ -215,11 +215,7 @@ class MapViewState extends State<MapView> {
                 child: FloatingActionButton(
                   backgroundColor: settings.bottomNavBarBgColor,
                   onPressed: () {
-                    if (currentGroupID != null) {
-                      // Navigate to manage group screen
-                    } else {
-                      // Navigate to join group screen
-                    }
+                    Navigator.pushNamed(context, '/joingroup');
                   },
                   child:
                       Icon(Icons.groups, color: settings.bottomNavBarTextColor),

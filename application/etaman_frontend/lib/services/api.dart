@@ -83,7 +83,7 @@ class ApiService {
     }
   }
 
-  // Get All Neighborhood Groups
+  // Get All Neighborhood Groups API
   dynamic getAllNeighborhoodGroupsAPI() async {
     try {
       final url = Uri.parse("$baseUrl/getGroupAll/");
@@ -95,6 +95,76 @@ class ApiService {
       return responseData;
     } catch (e) {
       logger.error("Get All Neighborhood Groups - $e");
+      return null;
+    }
+  }
+
+  // Get All Neighborhood Groups Join Requests API
+  dynamic getAllNeighborhoodGroupsJoinRequestAPI() async {
+    try {
+      final url = Uri.parse("$baseUrl/getAllJoinRequests/");
+
+      final response = await get(url);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Get All Neighborhood Groups Join Requests - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Get All Neighborhood Groups Join Requests - $e");
+      return null;
+    }
+  }
+
+  // Submit Join Neighborhood Group Request API
+  dynamic submitJoinGroupRequestAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/joinGroup/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Submit Join Neighborhood Group Request - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Submit Join Neighborhood Group Request - $e");
+      return null;
+    }
+  }
+
+  // Delete Join Neighborhood Group Request API
+  dynamic deleteJoinGroupRequestAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/deleteJoinGroupRequest/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await delete(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Delete Join Neighborhood Group Request - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Delete Join Neighborhood Group Request - $e");
+      return null;
+    }
+  }
+
+  // Leave Neighborhood Group API
+  dynamic leaveGroupAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/leaveGroup/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Leave Neighborhood Group - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Leave Neighborhood Group - $e");
       return null;
     }
   }

@@ -19,11 +19,13 @@ urlpatterns = [
     path('changeResidentLeader/', views.changeResidentLeader),
 
     # Neigborhood Group API
+    path('getJoinRequests/', views.getNeighborhoodGroupJoinRequest),
     path('getAllJoinRequests/', views.getAllNeighborhoodGroupJoinRequest),
     path('getGroup/', views.getNeighborhoodGroup),
     path('getGroupAll/', views.getAllNeighborhoodGroup),
     path('createGroup/', views.createNeighborhoodGroup),
     path('joinGroup/', views.createNeighborhoodGroupJoinRequest),
+    path('deleteJoinGroupRequest/', views.deleteNeighborhoodGroupJoinRequest),
     path('handleJoinRequest/', views.approveRejectNeighborhoodGroupJoinRequest),
     path('viewGroupRule/', views.getNeighborhoodGroupRule),
     path('updateGroupRule/', views.updateNeighborhoodGroupRules),

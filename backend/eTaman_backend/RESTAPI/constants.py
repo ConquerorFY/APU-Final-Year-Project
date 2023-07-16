@@ -12,6 +12,7 @@ RESIDENT_PASSWORD_MISMATCH = "Invalid Password!"
 RESIDENT_LOGIN_SUCCESS = "Login Successful!"
 RESIDENT_LOGOUT_SUCCESS = "Logout Successful!"
 RESIDENT_LEAVE_NEIGHBORHOOD_GROUP_SUCCESSUL = "The Resident Has Successfully Leave the Neighborhood Group!"
+RESIDENT_LEAVE_NEIGHBORHOOD_RESIDENT_LEADER = "You are the resident leader and not permitted to leave!"
 
 DEFAULT_RESIDENT_LEADER_STATUS = False
 DEFAULT_NEW_RESIDENT_GROUP_ID = None
@@ -32,6 +33,7 @@ JOIN_REQUEST_ALREADY_EXIST = "An Existing Neighborhood Group Join Request Is Pre
 JOIN_REQUEST_DATABASE_NOT_EXIST = "The Neighborhood Group Join Request Does Not Exist!"
 JOIN_REQUEST_APPROVED_SUCCESSFULLY = "The Neighborhood Group Join Request Has Been Approved Successfully!"
 JOIN_REQUEST_REJECTED_SUCCESSFULLY = "The Neighborhood Group Join Request Has Been Rejected!"
+JOIN_REQUEST_DELETED_SUCCESSFULLY = "The Neighborhood Group Join Request Has Been Deleted!"
 
 ALL_POSTS_FOUND = "All Posts Has Been Successfully Discovered!"
 ALL_COMMENTS_FOUND = "All Comments Has Been Successfully Discovered!"
