@@ -93,7 +93,7 @@ class MapViewState extends State<MapView> {
             groupData.forEach((group) async {
               if (group["id"] == residentGroupID) {
                 String addr =
-                    "${group['street']}, ${group['postcode']} ${group['city']}, ${group['state']}, Malaysia}";
+                    "${group['street']}, ${group['postcode']} ${group['city']}, ${group['state']}, Malaysia";
                 List<LookupAddress> addresses =
                     await geoCoder.getAddressSuggestions(address: addr);
                 setState(() {
@@ -215,7 +215,12 @@ class MapViewState extends State<MapView> {
                 child: FloatingActionButton(
                   backgroundColor: settings.bottomNavBarBgColor,
                   onPressed: () {
-                    Navigator.pushNamed(context, '/joingroup');
+                    Navigator.pushNamed(context, '/joingroup').then(
+                      (_) {
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/map');
+                      },
+                    );
                   },
                   child:
                       Icon(Icons.groups, color: settings.bottomNavBarTextColor),

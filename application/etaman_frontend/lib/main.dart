@@ -1,3 +1,4 @@
+import 'package:etaman_frontend/screens/creategroup.dart';
 import 'package:etaman_frontend/screens/createpost.dart';
 import 'package:etaman_frontend/screens/joingroup.dart';
 import 'package:etaman_frontend/screens/map.dart';
@@ -17,4 +18,5 @@ void main() => runApp(MaterialApp(initialRoute: '/', routes: {
       '/createPost': (context) => const CreatePost(),
       '/map': (context) => const MapView(),
       '/joingroup': (context) => const JoinGroup(),
+      '/creategroup': (context) => const CreateGroup(),
     }));

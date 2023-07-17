@@ -89,4 +89,13 @@ class Settings {
   Color joinGroupTextFieldCursorColor = Colors.green;
   Color joinGroupTextFieldBorderColor = Colors.green;
   double joinGroupTextFieldBorderWidth = 1.0;
+
+  Color createGroupBgColor = Colors.green;
+  Color createGroupTextFieldTextColor = Colors.green;
+  Color createGroupTextFieldShadowColor = Colors.green.shade900;
+  Color createGroupTextFieldText2Color = Colors.white;
+  Color createGroupTextFieldIconColor = Colors.white;
+  Color createGroupTextFieldCursorColor = Colors.green;
+  Color createGroupTextFieldBorderColor = Colors.green;
+  double createGroupTextFieldBorderWidth = 1.0;
 }

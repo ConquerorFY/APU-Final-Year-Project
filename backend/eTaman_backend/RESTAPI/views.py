@@ -260,9 +260,9 @@ def createNeighborhoodGroup(request):
             # Neighborhood group name taken
             return JsonResponse({'data': {"message": NEIGHBORHOOD_GROUP_NAME_TAKEN}, "status": ERROR_CODE}, status=400)
     except NeighborhoodGroupModel.DoesNotExist:
-        return JsonResponse({'data': {'message': NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, "status": ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
 
 # Create neighborhood group join request
 @api_view(['POST'])

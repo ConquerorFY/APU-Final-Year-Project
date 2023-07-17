@@ -99,6 +99,24 @@ class ApiService {
     }
   }
 
+  // Create Neighborhood Group API
+  dynamic createNeighborhoodGroupAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/createGroup/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Create Neighborhood Group - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Create Neighborhood Group - $e");
+      return null;
+    }
+  }
+
   // Get All Neighborhood Groups Join Requests API
   dynamic getAllNeighborhoodGroupsJoinRequestAPI() async {
     try {
