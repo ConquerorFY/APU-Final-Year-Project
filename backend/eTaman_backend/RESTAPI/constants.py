@@ -13,6 +13,7 @@ RESIDENT_LOGIN_SUCCESS = "Login Successful!"
 RESIDENT_LOGOUT_SUCCESS = "Logout Successful!"
 RESIDENT_LEAVE_NEIGHBORHOOD_GROUP_SUCCESSUL = "The Resident Has Successfully Leave the Neighborhood Group!"
 RESIDENT_LEAVE_NEIGHBORHOOD_RESIDENT_LEADER = "You are the resident leader and not permitted to leave!"
+RESIDENT_KICK_SUCCESS = "The Resident Has Been Successfully Kicked Out of the Neighborhood Group!"
 
 DEFAULT_RESIDENT_LEADER_STATUS = False
 DEFAULT_NEW_RESIDENT_GROUP_ID = None
@@ -26,6 +27,8 @@ NEIGHBORHOOD_GROUP_RULE_UPDATED_SUCCESSFUL = "The Neighborhood Group Rules Has B
 NEIGHBORHOOD_GROUP_NAME_UPDATED_SUCCESSFUL = "The Neighborhood Group Name Has Been Successfully Updated!"
 NEIGHBORHOOD_GROUP_NOT_PART_OF_NOT_LEADER = "You are not part of the Neighborhood Group / You are not the resident leader of the Neighborhood Group!"
 NEIGHBORHOOD_GROUP_RULE_FOUND = "The Neighborhood Group Rule Have Been Successfully Retrieved!"
+NEIGHBORHOOD_GROUP_ALL_RESIDENTS_FOUND = "All Residents Within This Neighborhood Group Has Been Successfully Discovered!"
+NEIGHBORHOOD_GROUP_NOT_SAME_GROUP_NOT_LEADER = "You Are Not Within The Same Neighborhood Group With The Target Resident / You Are Not The Resident Leader Of The Neighborhood Group!"
 
 ALL_JOIN_REQUEST_DATA_FOUND = "All Neighborhood Group Join Request Has Been Successfully Discovered!"
 JOIN_REQUEST_CREATED_SUCCESSFUL = "The Neighborhood Group Join Request Has Been Created Successfully!"

@@ -217,8 +217,7 @@ class MapViewState extends State<MapView> {
                   onPressed: () {
                     Navigator.pushNamed(context, '/joingroup').then(
                       (_) {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, '/map');
+                        getAllGroupData();
                       },
                     );
                   },
@@ -229,6 +228,6 @@ class MapViewState extends State<MapView> {
             ]),
             drawer: const LeftDrawer(),
             bottomNavigationBar: BottomNavBar(selectedIndex: 1))
-        : const Scaffold();
+        : Container();
   }
 }

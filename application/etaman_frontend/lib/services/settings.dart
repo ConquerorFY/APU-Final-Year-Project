@@ -98,4 +98,24 @@ class Settings {
   Color createGroupTextFieldCursorColor = Colors.green;
   Color createGroupTextFieldBorderColor = Colors.green;
   double createGroupTextFieldBorderWidth = 1.0;
+
+  Color manageGroupBgColor = Colors.green;
+  Color manageGroupTextColor = Colors.green;
+  Color manageGroupShadowColor = Colors.green.shade900;
+  Color manageGroupText2Color = Colors.white;
+  Color manageGroupIconColor = Colors.white;
+  Color manageGroupCursorColor = Colors.green;
+  Color manageGroupBorderColor = Colors.green;
+  Color manageGroupButtonColor = Colors.green;
+  Color manageGroupButtonColor2 = Colors.red;
+  double manageGroupBorderWidth = 1.0;
+
+  Color editGroupBgColor = Colors.green;
+  Color editGroupTextFieldTextColor = Colors.green;
+  Color editGroupTextFieldShadowColor = Colors.green.shade900;
+  Color editGroupTextFieldText2Color = Colors.white;
+  Color editGroupTextFieldIconColor = Colors.white;
+  Color editGroupTextFieldCursorColor = Colors.green;
+  Color editGroupTextFieldBorderColor = Colors.green;
+  double editGroupTextFieldBorderWidth = 1.0;
 }

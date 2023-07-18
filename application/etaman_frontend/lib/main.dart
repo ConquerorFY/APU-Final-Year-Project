@@ -1,6 +1,8 @@
 import 'package:etaman_frontend/screens/creategroup.dart';
 import 'package:etaman_frontend/screens/createpost.dart';
+import 'package:etaman_frontend/screens/editgroup.dart';
 import 'package:etaman_frontend/screens/joingroup.dart';
+import 'package:etaman_frontend/screens/managegroup.dart';
 import 'package:etaman_frontend/screens/map.dart';
 import 'package:flutter/material.dart';
 import 'package:etaman_frontend/screens/register.dart';
@@ -19,4 +21,6 @@ void main() => runApp(MaterialApp(initialRoute: '/', routes: {
       '/map': (context) => const MapView(),
       '/joingroup': (context) => const JoinGroup(),
       '/creategroup': (context) => const CreateGroup(),
+      '/managegroup': (context) => const ManageGroup(),
+      '/editgroup': (context) => const EditGroup(),
     }));

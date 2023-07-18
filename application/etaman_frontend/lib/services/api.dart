@@ -187,6 +187,130 @@ class ApiService {
     }
   }
 
+  // Get All Residents Within Same Neighborhood Group API
+  dynamic getAllNeighborhoodResidentsAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/getAllNeighborhoodGroupResidents/");
+      final headers = {'Content-Type': "application/json"};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Get All Neighborhood Group Residents - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Get All Neighborhood Group Residents - $e");
+      return null;
+    }
+  }
+
+  // Update Neighborhood Group Rules API
+  dynamic updateNeighborhoodGroupRuleAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/updateGroupRule/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await patch(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Update Neighborhood Group Rules - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Update Neighborhood Group Rules - $e");
+      return null;
+    }
+  }
+
+  // Update Neighborhood Group Name API
+  dynamic updateNeighborhoodGroupNameAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/updateGroupName/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await patch(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Update Neighborhood Group Name - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Update Neighborhood Group Name - $e");
+      return null;
+    }
+  }
+
+  // Change Resident Leader API
+  dynamic changeResidentLeaderAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/changeResidentLeader/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Change Resident Leader - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Change Resident Leader - $e");
+      return null;
+    }
+  }
+
+  // Kick Resident API
+  dynamic kickResidentAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/kickResident/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Kick Resident - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Kick Resident - $e");
+      return null;
+    }
+  }
+
+  // Get All Neighborhood Group Join Requests
+  dynamic getAllNeighborhoodGroupJoinRequestsAPI() async {
+    try {
+      final url = Uri.parse("$baseUrl/getAllJoinRequests/");
+
+      final response = await get(url);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Get All Neighborhood Group Join Requests - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Get All Neighborhood Group Join Requests - $e");
+      return null;
+    }
+  }
+
+  // Handle Neighborhood Group Join Request
+  dynamic handleNeighborhoodGroupJoinRequestAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/handleJoinRequest/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Handle Neighborhood Group Join Request - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Handle Neighborhood Group Join Request - $e");
+      return null;
+    }
+  }
+
   // Get All Posts Within Same Neighborhood Group API
   dynamic getAllNeighborhoodPostsAPI(body) async {
     try {

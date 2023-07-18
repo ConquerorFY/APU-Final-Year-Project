@@ -1138,7 +1138,7 @@ class PostListState extends State<PostList> {
         break;
     }
 
-    return const Scaffold();
+    return Container();
   }
 }
 

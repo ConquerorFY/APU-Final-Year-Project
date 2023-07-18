@@ -17,6 +17,7 @@ urlpatterns = [
     path('loginResident/', views.loginResidentAccount),
     path('logoutResident/', views.logoutResidentAccount),
     path('changeResidentLeader/', views.changeResidentLeader),
+    path('kickResident/', views.kickResident),
 
     # Neigborhood Group API
     path('getJoinRequests/', views.getNeighborhoodGroupJoinRequest),
@@ -31,6 +32,7 @@ urlpatterns = [
     path('updateGroupRule/', views.updateNeighborhoodGroupRules),
     path('updateGroupName/', views.updateNeighborhoodGroupName),
     path('leaveGroup/', views.leaveNeighborhoodGroup),
+    path('getAllNeighborhoodGroupResidents/', views.getAllNeighborhoodGroupResidents),
 
     # Post API
     path('getPostAll/', views.getAllPost),

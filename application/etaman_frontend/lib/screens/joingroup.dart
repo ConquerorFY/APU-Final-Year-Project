@@ -466,22 +466,40 @@ class JoinGroupState extends State<JoinGroup> {
                                       color: settings.joinGroupBgColor,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600)))))),
-          Positioned(
-            bottom: 16.0,
-            right: 16.0,
-            child: FloatingActionButton(
-              backgroundColor: settings.bottomNavBarBgColor,
-              onPressed: () {
-                // Navigate to create neighborhood group screen
-                Navigator.pushNamed(context, '/creategroup').then((_) {
-                  Navigator.pop(context);
-                  Navigator.pushNamed(context, '/joingroup');
-                });
-              },
-              child:
-                  Icon(Icons.group_add, color: settings.bottomNavBarTextColor),
-            ),
-          )
+          isAvailableGroupList
+              ? Positioned(
+                  bottom: 16.0,
+                  right: 16.0,
+                  child: FloatingActionButton(
+                    backgroundColor: settings.bottomNavBarBgColor,
+                    onPressed: () {
+                      // Navigate to create neighborhood group screen
+                      Navigator.pushNamed(context, '/creategroup').then((_) {
+                        getData();
+                      });
+                    },
+                    child: Icon(Icons.group_add,
+                        color: settings.bottomNavBarTextColor),
+                  ),
+                )
+              : isJoinedGroup
+                  ? Positioned(
+                      bottom: 16.0,
+                      right: 16.0,
+                      child: FloatingActionButton(
+                        backgroundColor: settings.bottomNavBarBgColor,
+                        onPressed: () {
+                          // Navigate to manage neighborhood group screen
+                          Navigator.pushNamed(context, '/managegroup')
+                              .then((_) {
+                            getData();
+                          });
+                        },
+                        child: Icon(Icons.manage_accounts,
+                            color: settings.bottomNavBarTextColor),
+                      ),
+                    )
+                  : Container()
         ]));
   }
 }
