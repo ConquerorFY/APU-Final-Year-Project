@@ -9,7 +9,7 @@ Residents:
     - Profile Screen [X]
     - Edit Profile Screen [X]
     - Create Posts Screen [X]
-    - Map Screen (Together with Manage Neighborhood Group)
+    - Map Screen (Together with Manage Neighborhood Group) [X]
     - Facilities Booking Screen
 
 Resident Leader:
@@ -19,7 +19,7 @@ Resident Leader:
     - Profile Screen [X]
     - Edit Profile Screen [X]
     - Create Posts Screen [X]
-    - Map Screen (Together with Manage Neighborhood Group)
+    - Map Screen (Together with Manage Neighborhood Group) [X]
     - Facilities Booking Screen
 
 Government:

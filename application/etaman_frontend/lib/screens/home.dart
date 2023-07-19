@@ -42,7 +42,8 @@ class HomeState extends State<Home> {
                   children: <Widget>[
                     const SizedBox(height: 12),
                     PostTypeFilterSection(
-                        updatePostListType: changeFilteredPostListType),
+                        updatePostListType: changeFilteredPostListType,
+                        postListType: filteredPostListType),
                     const Divider(height: 0),
                     const SizedBox(height: 10),
                     PostList(postListType: filteredPostListType),

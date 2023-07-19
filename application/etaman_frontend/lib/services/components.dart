@@ -10,7 +10,11 @@ import 'package:flutter/material.dart';
 // Post Type Filter Section Widget
 class PostTypeFilterSection extends StatefulWidget {
   final Function(String) updatePostListType;
-  const PostTypeFilterSection({super.key, required this.updatePostListType});
+  final String postListType;
+  const PostTypeFilterSection(
+      {super.key,
+      required this.updatePostListType,
+      required this.postListType});
 
   @override
   PostTypeFilterSectionState createState() => PostTypeFilterSectionState();
@@ -47,6 +51,16 @@ class PostTypeFilterSectionState extends State<PostTypeFilterSection> {
   void initState() {
     super.initState();
     setColor();
+    // Default Selected Post Type When Init
+    if (widget.postListType == 'crime') {
+      setFilterColor(0);
+    } else if (widget.postListType == 'complaint') {
+      setFilterColor(1);
+    } else if (widget.postListType == 'event') {
+      setFilterColor(2);
+    } else if (widget.postListType == 'general') {
+      setFilterColor(3);
+    }
   }
 
   void setColor() {
@@ -64,13 +78,6 @@ class PostTypeFilterSectionState extends State<PostTypeFilterSection> {
       selectedIconColor = settings.postTypeFilterSectionIconSelectedColor;
     });
     resetAllColor();
-    // Initially Crime Posts Is Selected
-    setState(() {
-      crimeIconColor = selectedIconColor;
-    });
-    setState(() {
-      crimeTextColor = selectedTextColor;
-    });
   }
 
   void resetAllColor() {
@@ -248,6 +255,8 @@ class PostListState extends State<PostList> {
   dynamic userData;
   dynamic commentSectionExpandedState;
 
+  bool isJoinedGroup = true;
+
   @override
   void initState() {
     super.initState();
@@ -280,6 +289,7 @@ class PostListState extends State<PostList> {
         // Success
         setState(() {
           userData = jsonDecode(residentResponse["data"]["list"]["userData"]);
+          isJoinedGroup = residentResponse['data']['list']['groupID'] != null;
         });
         // Get Neighborhood Group ID
         final groupID = residentResponse["data"]["list"]["groupID"];
@@ -1125,17 +1135,19 @@ class PostListState extends State<PostList> {
 
   @override
   Widget build(BuildContext context) {
-    switch (widget.postListType) {
-      case "crime":
-        return displayCrimePosts(context);
-      case "complaint":
-        return displayComplaintPosts(context);
-      case "event":
-        return displayEventPosts(context);
-      case "general":
-        return displayGeneralPosts(context);
-      default:
-        break;
+    if (isJoinedGroup) {
+      switch (widget.postListType) {
+        case "crime":
+          return displayCrimePosts(context);
+        case "complaint":
+          return displayComplaintPosts(context);
+        case "event":
+          return displayEventPosts(context);
+        case "general":
+          return displayGeneralPosts(context);
+        default:
+          break;
+      }
     }
 
     return Container();
@@ -1496,18 +1508,7 @@ class LeftDrawerState extends State<LeftDrawer> {
           ),
           ListTile(
             leading: const Icon(Icons.map, color: Colors.black),
-            title: const Text('Map',
-                style: TextStyle(
-                    fontFamily: "OpenSans",
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18)),
-            onTap: () {
-              // Handle neighborhood group screen navigation
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.group, color: Colors.black),
-            title: const Text('Groups',
+            title: const Text('Map & Groups',
                 style: TextStyle(
                     fontFamily: "OpenSans",
                     fontWeight: FontWeight.w600,
@@ -1650,16 +1651,16 @@ class BottomNavBar extends StatelessWidget {
         BottomNavigationBarItem(
           backgroundColor: backgroundColor,
           icon: Icon(Icons.map, color: textColor),
-          label: "", // Map
+          label: "", // Map & Groups
         ),
-        BottomNavigationBarItem(
-            backgroundColor: backgroundColor,
-            icon: Icon(Icons.people, color: textColor),
-            label: ""), // Groups
         BottomNavigationBarItem(
             backgroundColor: backgroundColor,
             icon: Icon(Icons.miscellaneous_services, color: textColor),
             label: ""), // Facilities
+        BottomNavigationBarItem(
+            backgroundColor: backgroundColor,
+            icon: Icon(Icons.settings, color: textColor),
+            label: ""), // Settings
       ],
       onTap: (int index) {
         switch (index) {
@@ -1668,14 +1669,14 @@ class BottomNavBar extends StatelessWidget {
             Navigator.pushNamed(context, "/home");
             break;
           case 1:
-            // Navigate to Map Screen
+            // Navigate to Map & Groups Screen
             Navigator.pushNamed(context, "/map");
             break;
           case 2:
-            // Navigate to Group Screen
+            // Navigate to Facilities Screen
             break;
           case 3:
-            // Navigate to Facilities Screen
+            // Navigate to Settings Screen
             break;
         }
       },
