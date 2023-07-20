@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:etaman_frontend/services/auth.dart';
 import 'package:etaman_frontend/services/popup.dart';
 import 'package:etaman_frontend/services/settings.dart';
 import 'package:etaman_frontend/services/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:etaman_frontend/services/api.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -35,6 +38,7 @@ class EditProfileState extends State<EditProfile> {
       GlobalKey<FormFieldState<String>>();
 
   dynamic profileData;
+  File? selectedImage;
 
   Validator validator = Validator();
   ApiService apiService = ApiService();
@@ -69,6 +73,21 @@ class EditProfileState extends State<EditProfile> {
           };
         });
       }
+    }
+  }
+
+  Future<void> _pickImage(ImageSource source) async {
+    final pickedImage = await ImagePicker().pickImage(source: source);
+    if (pickedImage != null) {
+      // Only valid for window / applications
+      // If for website, pickedImage.path returns a Blob URL
+      // Need to convert from Blob URL -> http.File -> io.File
+      setState(() {
+        selectedImage = File(pickedImage.path);
+      });
+
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
     }
   }
 
@@ -386,6 +405,82 @@ class EditProfileState extends State<EditProfile> {
                     const SizedBox(height: 16.0),
                   ]),
                 ),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  selectedImage != null
+                      ? Icon(
+                          Icons.done,
+                          color: settings.editProfileBgColor,
+                          size: 40.0,
+                        )
+                      : Icon(Icons.cancel,
+                          color: settings.editProfileBgColor2, size: 40.0),
+                  const SizedBox(width: 20.0),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            settings.editProfileTextFieldTextColor),
+                        padding: MaterialStateProperty.all<EdgeInsets>(
+                            const EdgeInsets.fromLTRB(50, 20, 50, 20))),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.add_a_photo,
+                              color: settings.editProfileTextFieldIconColor),
+                          const SizedBox(width: 8),
+                          Text('Add Image',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w800,
+                                  fontFamily: "OpenSans",
+                                  color:
+                                      settings.editProfileTextFieldText2Color)),
+                        ]),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            titlePadding:
+                                const EdgeInsets.fromLTRB(20.0, 15.0, 0, 50.0),
+                            title: Text('Select Image Source',
+                                style: TextStyle(
+                                    color:
+                                        settings.editProfileTextFieldTextColor,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: 'OpenSans')),
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(0, 0, 10.0, 20.0),
+                            actions: [
+                              TextButton(
+                                onPressed: () =>
+                                    _pickImage(ImageSource.gallery),
+                                child: Text('Gallery',
+                                    style: TextStyle(
+                                        color: settings
+                                            .editProfileTextFieldTextColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: 'OpenSans')),
+                              ),
+                              TextButton(
+                                onPressed: () => _pickImage(ImageSource.camera),
+                                child: Text('Camera',
+                                    style: TextStyle(
+                                        color: settings
+                                            .editProfileTextFieldTextColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: 'OpenSans')),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ]),
+                const SizedBox(height: 20.0),
                 ElevatedButton(
                     onPressed: () async {
                       // Handle edit profile process
@@ -398,7 +493,8 @@ class EditProfileState extends State<EditProfile> {
                         "street": _streetKey.currentState?.value,
                         "postcode": _postcodeKey.currentState?.value,
                         "username": _usernameKey.currentState?.value,
-                        "password": _passwordKey.currentState?.value
+                        "password": _passwordKey.currentState?.value,
+                        "image": selectedImage
                       };
                       if (!(_nameKey.currentState!.validate() &&
                           _emailKey.currentState!.validate() &&
@@ -430,6 +526,9 @@ class EditProfileState extends State<EditProfile> {
                             // ignore: use_build_context_synchronously
                             popupService.showSuccessPopup(
                                 context, "Edit Profile Success", message, () {
+                              setState(() {
+                                selectedImage = null;
+                              });
                               getData();
                             });
                           } else {

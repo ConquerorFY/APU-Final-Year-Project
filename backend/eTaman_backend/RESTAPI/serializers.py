@@ -19,7 +19,7 @@ class NeighborhoodGroupSerializer(serializers.ModelSerializer):
 class ResidentSerializer(serializers.ModelSerializer):
     class Meta:
         model = ResidentModel
-        fields = ('id', 'name', 'email', 'contact', 'state', 'city', 'street', 'postcode', 'username', 'password', 'isLeader', 'groupID', 'userData')
+        fields = ('id', 'image', 'name', 'email', 'contact', 'state', 'city', 'street', 'postcode', 'username', 'password', 'isLeader', 'groupID', 'userData')
 
 # Join Request Serializer
 class JoinRequestSerializer(serializers.ModelSerializer):

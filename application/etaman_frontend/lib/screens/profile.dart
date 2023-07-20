@@ -35,6 +35,7 @@ class ProfileState extends State<Profile> {
         // Success
         setState(() {
           residentData = {
+            'image': residentResponse['data']['list']['image'],
             'name': residentResponse['data']['list']['name'],
             'email': residentResponse['data']['list']['email'],
             'contact': residentResponse['data']['list']['contact'],
@@ -75,9 +76,29 @@ class ProfileState extends State<Profile> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 16.0),
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 80.0,
-                  backgroundImage: AssetImage('assets/day.png'),
+                  backgroundImage: residentData['image'] != null
+                      ? Image.network(
+                          "${apiService.mediaUrl}${residentData['image']}",
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            } else {
+                              return const CircularProgressIndicator();
+                            }
+                          },
+                          errorBuilder: (context, error, stackTrace) {
+                            return Text('Error Loading Image',
+                                style: TextStyle(
+                                    fontFamily: "OpenSans",
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: settings.profileTextColor));
+                          },
+                        ).image
+                      : Image.asset('assets/avatar.png', width: double.infinity)
+                          .image,
                 ),
                 const SizedBox(height: 16.0),
                 Text(

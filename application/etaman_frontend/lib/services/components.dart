@@ -1495,6 +1495,7 @@ class LeftDrawerState extends State<LeftDrawer> {
 
   String name = '';
   String email = '';
+  dynamic imageUrl;
   dynamic textColor = Colors.white;
   dynamic bgColor = Colors.white;
 
@@ -1526,6 +1527,9 @@ class LeftDrawerState extends State<LeftDrawer> {
         setState(() {
           email = data["email"];
         });
+        setState(() {
+          imageUrl = data["image"];
+        });
       }
     }
   }
@@ -1553,8 +1557,28 @@ class LeftDrawerState extends State<LeftDrawer> {
                   fontStyle: FontStyle.italic,
                   fontSize: 15),
             ),
-            currentAccountPicture: const CircleAvatar(
-              backgroundImage: AssetImage('assets/germany.png'),
+            currentAccountPicture: CircleAvatar(
+              backgroundImage: imageUrl != null
+                  ? Image.network(
+                      "${apiService.mediaUrl}$imageUrl",
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        } else {
+                          return const CircularProgressIndicator();
+                        }
+                      },
+                      errorBuilder: (context, error, stackTrace) {
+                        return Text('Error Loading Image',
+                            style: TextStyle(
+                                fontFamily: "OpenSans",
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: textColor));
+                      },
+                    ).image
+                  : Image.asset('assets/avatar.png', width: double.infinity)
+                      .image,
             ),
             decoration: BoxDecoration(color: bgColor),
           ),
@@ -1595,6 +1619,9 @@ class LeftDrawerState extends State<LeftDrawer> {
                     fontSize: 18)),
             onTap: () {
               // Handle neighborhood group screen navigation
+              Navigator.pushNamed(context, '/map').then((_) {
+                getData();
+              });
             },
           ),
           ListTile(

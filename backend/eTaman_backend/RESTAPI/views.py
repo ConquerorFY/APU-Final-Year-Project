@@ -1394,6 +1394,12 @@ def updateResidentAccount(request):
             request.data['password'] = encryptPassword(request.data['password'])
         # Get resident ID
         id = decodeJWTToken(request.data["token"])["id"]
+        # Get image field attributes and values
+        image = request.FILES['image'] if 'image' in request.FILES else None
+        resident = {
+            'image': image,
+            **request.data
+        }
         residentData = ResidentSerializer(ResidentModel.objects.get(pk=id), data=request.data, partial=True)
         # Check whether data is valid
         if residentData.is_valid():

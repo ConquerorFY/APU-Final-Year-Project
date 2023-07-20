@@ -782,11 +782,24 @@ class ApiService {
   dynamic editAccountAPI(body) async {
     try {
       final url = Uri.parse("$baseUrl/updateResident/");
-      final headers = {'Content-Type': 'application/json'};
-      final jsonBody = jsonEncode(body);
+      final request = MultipartRequest('PATCH', url);
 
-      final response = await patch(url, headers: headers, body: jsonBody);
-      final responseData = jsonDecode(response.body);
+      body.forEach((key, value) {
+        if (key != 'image') {
+          request.fields[key] = value;
+        }
+      });
+
+      File image = body['image'] as File;
+      var stream = ByteStream(image.openRead());
+      var length = await image.length();
+      var multipartFile =
+          MultipartFile('image', stream, length, filename: 'Profile Image.jpg');
+      request.files.add(multipartFile);
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final responseData = jsonDecode(responseBody);
 
       logger.info("Edit Resident Account - $responseData");
       return responseData;

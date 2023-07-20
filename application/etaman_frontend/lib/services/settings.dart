@@ -55,6 +55,7 @@ class Settings {
   Color profileIconColor = Colors.green.shade600;
 
   Color editProfileBgColor = Colors.green;
+  Color editProfileBgColor2 = Colors.red;
   Color editProfileTextFieldTextColor = Colors.green;
   Color editProfileTextFieldShadowColor = Colors.green.shade900;
   Color editProfileTextFieldText2Color = Colors.white;

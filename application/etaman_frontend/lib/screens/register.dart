@@ -38,6 +38,20 @@ class RegisterState extends State<Register> {
   PopupService popupService = PopupService(); // Popup Service
   Settings settings = Settings(); // Settings Service
 
+  void resetData() {
+    setState(() {
+      _nameKey.currentState?.reset();
+      _emailKey.currentState?.reset();
+      _stateKey.currentState?.reset();
+      _cityKey.currentState?.reset();
+      _postcodeKey.currentState?.reset();
+      _streetKey.currentState?.reset();
+      _contactKey.currentState?.reset();
+      _usernameKey.currentState?.reset();
+      _passwordKey.currentState?.reset();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -362,8 +376,10 @@ class RegisterState extends State<Register> {
                           if (status > 0) {
                             // Success message
                             // ignore: use_build_context_synchronously
-                            popupService.showSuccessPopup(context,
-                                "Registration Success", message, () {});
+                            popupService.showSuccessPopup(
+                                context, "Registration Success", message, () {
+                              resetData();
+                            });
                           } else {
                             // Error message
                             // ignore: use_build_context_synchronously
