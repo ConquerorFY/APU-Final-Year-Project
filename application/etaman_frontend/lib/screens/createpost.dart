@@ -92,6 +92,9 @@ class CreatePostState extends State<CreatePost> {
       setState(() {
         selectedImage = File(pickedImage.path);
       });
+
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
     }
   }
 
@@ -632,64 +635,77 @@ class CreatePostState extends State<CreatePost> {
                             ? createGeneralPostForm()
                             : createComplaintPostForm(),
             const SizedBox(height: 40.0),
-            ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      settings.createPostTextFieldTextColor),
-                  padding: MaterialStateProperty.all<EdgeInsets>(
-                      const EdgeInsets.fromLTRB(50, 20, 50, 20))),
-              child:
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Icon(Icons.add_a_photo,
-                    color: settings.createPostTextFieldIconColor),
-                const SizedBox(width: 8),
-                Text('Add Image',
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
-                        fontFamily: "OpenSans",
-                        color: settings.createPostTextFieldText2Color)),
-              ]),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      titlePadding:
-                          const EdgeInsets.fromLTRB(20.0, 15.0, 0, 50.0),
-                      title: Text('Select Image Source',
-                          style: TextStyle(
-                              color: settings.createPostTextFieldTextColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'OpenSans')),
-                      contentPadding:
-                          const EdgeInsets.fromLTRB(0, 0, 10.0, 20.0),
-                      actions: [
-                        TextButton(
-                          onPressed: () => _pickImage(ImageSource.gallery),
-                          child: Text('Gallery',
-                              style: TextStyle(
-                                  color: settings.createPostTextFieldTextColor,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'OpenSans')),
-                        ),
-                        TextButton(
-                          onPressed: () => _pickImage(ImageSource.camera),
-                          child: Text('Camera',
-                              style: TextStyle(
-                                  color: settings.createPostTextFieldTextColor,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'OpenSans')),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-            ),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              selectedImage != null
+                  ? Icon(
+                      Icons.done,
+                      color: settings.createPostBgColor,
+                      size: 40.0,
+                    )
+                  : Icon(Icons.cancel,
+                      color: settings.createPostBgColor2, size: 40.0),
+              const SizedBox(width: 20.0),
+              ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        settings.createPostTextFieldTextColor),
+                    padding: MaterialStateProperty.all<EdgeInsets>(
+                        const EdgeInsets.fromLTRB(50, 20, 50, 20))),
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Icon(Icons.add_a_photo,
+                      color: settings.createPostTextFieldIconColor),
+                  const SizedBox(width: 8),
+                  Text('Add Image',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w800,
+                          fontFamily: "OpenSans",
+                          color: settings.createPostTextFieldText2Color)),
+                ]),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        titlePadding:
+                            const EdgeInsets.fromLTRB(20.0, 15.0, 0, 50.0),
+                        title: Text('Select Image Source',
+                            style: TextStyle(
+                                color: settings.createPostTextFieldTextColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: 'OpenSans')),
+                        contentPadding:
+                            const EdgeInsets.fromLTRB(0, 0, 10.0, 20.0),
+                        actions: [
+                          TextButton(
+                            onPressed: () => _pickImage(ImageSource.gallery),
+                            child: Text('Gallery',
+                                style: TextStyle(
+                                    color:
+                                        settings.createPostTextFieldTextColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'OpenSans')),
+                          ),
+                          TextButton(
+                            onPressed: () => _pickImage(ImageSource.camera),
+                            child: Text('Camera',
+                                style: TextStyle(
+                                    color:
+                                        settings.createPostTextFieldTextColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'OpenSans')),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
+            ]),
             const SizedBox(height: 20.0),
             ElevatedButton(
               style: ButtonStyle(

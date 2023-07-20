@@ -64,6 +64,7 @@ class Settings {
   double editProfileTextFieldBorderWidth = 1.0;
 
   Color createPostBgColor = Colors.green;
+  Color createPostBgColor2 = Colors.red;
   Color createPostTextFieldTextColor = Colors.green;
   Color createPostTextFieldShadowColor = Colors.green.shade900;
   Color createPostTextFieldText2Color = Colors.white;

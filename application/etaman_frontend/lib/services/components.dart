@@ -543,7 +543,27 @@ class PostListState extends State<PostList> {
                         fontWeight: FontWeight.w600,
                         color: textColor)),
                 const SizedBox(height: 10),
-                Image.asset('assets/usa.png', width: double.infinity),
+                postData["crime"][index]["image"] != null
+                    ? Image.network(
+                        "${apiService.mediaUrl}${postData["crime"][index]["image"]}",
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          } else {
+                            return const CircularProgressIndicator();
+                          }
+                        },
+                        errorBuilder: (context, error, stackTrace) {
+                          return Text('Error Loading Image',
+                              style: TextStyle(
+                                  fontFamily: "OpenSans",
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: textColor));
+                        },
+                      )
+                    : Image.asset('assets/stock_crime_image.png',
+                        width: double.infinity),
                 const SizedBox(height: 15),
                 Text("Posted By: ${postData['crime'][index]['username']}",
                     style: TextStyle(
@@ -677,7 +697,27 @@ class PostListState extends State<PostList> {
                         fontWeight: FontWeight.w600,
                         color: textColor)),
                 const SizedBox(height: 10),
-                Image.asset('assets/usa.png', width: double.infinity),
+                postData["complaint"][index]["image"] != null
+                    ? Image.network(
+                        "${apiService.mediaUrl}${postData["complaint"][index]["image"]}",
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          } else {
+                            return const CircularProgressIndicator();
+                          }
+                        },
+                        errorBuilder: (context, error, stackTrace) {
+                          return Text('Error Loading Image',
+                              style: TextStyle(
+                                  fontFamily: "OpenSans",
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: textColor));
+                        },
+                      )
+                    : Image.asset('assets/stock_complaint_image.png',
+                        width: double.infinity),
                 const SizedBox(height: 15),
                 Text(
                     "Posted By: ${!postData['complaint'][index]['isAnonymous'] ? postData['complaint'][index]['username'] : '-'}",
@@ -907,7 +947,27 @@ class PostListState extends State<PostList> {
                         fontWeight: FontWeight.w600,
                         color: textColor)),
                 const SizedBox(height: 10),
-                Image.asset('assets/usa.png', width: double.infinity),
+                postData["event"][index]["image"] != null
+                    ? Image.network(
+                        "${apiService.mediaUrl}${postData["event"][index]["image"]}",
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          } else {
+                            return const CircularProgressIndicator();
+                          }
+                        },
+                        errorBuilder: (context, error, stackTrace) {
+                          return Text('Error Loading Image',
+                              style: TextStyle(
+                                  fontFamily: "OpenSans",
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: textColor));
+                        },
+                      )
+                    : Image.asset('assets/stock_event_image.png',
+                        width: double.infinity),
                 const SizedBox(height: 15),
                 Text("Posted By: ${postData['event'][index]['username']}",
                     style: TextStyle(
@@ -1034,7 +1094,27 @@ class PostListState extends State<PostList> {
                         fontWeight: FontWeight.w600,
                         color: textColor)),
                 const SizedBox(height: 10),
-                Image.asset('assets/usa.png', width: double.infinity),
+                postData["general"][index]["image"] != null
+                    ? Image.network(
+                        "${apiService.mediaUrl}${postData["general"][index]["image"]}",
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          } else {
+                            return const CircularProgressIndicator();
+                          }
+                        },
+                        errorBuilder: (context, error, stackTrace) {
+                          return Text('Error Loading Image',
+                              style: TextStyle(
+                                  fontFamily: "OpenSans",
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: textColor));
+                        },
+                      )
+                    : Image.asset('assets/stock_general_image.png',
+                        width: double.infinity),
                 const SizedBox(height: 15),
                 Text("Posted By: ${postData['general'][index]['username']}",
                     style: TextStyle(

@@ -13,6 +13,7 @@ class ApiService {
   EtamanLogger logger = EtamanLogger(); // logger
 
   final baseUrl = "http://localhost:8000/api";
+  final mediaUrl = "http://localhost:8000";
 
   // Register Resident Account API
   dynamic registerAccountAPI(body) async {
