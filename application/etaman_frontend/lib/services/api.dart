@@ -808,4 +808,22 @@ class ApiService {
       return null;
     }
   }
+
+  // Get All Specific Neighborhood Group Facilities
+  dynamic getGroupFacilities(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/getAllFacilities/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Get Neighborhood Group Facilities - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Get Neighborhood Group Facilities - $e");
+      return null;
+    }
+  }
 }

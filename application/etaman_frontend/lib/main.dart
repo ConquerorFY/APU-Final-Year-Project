@@ -1,6 +1,7 @@
 import 'package:etaman_frontend/screens/creategroup.dart';
 import 'package:etaman_frontend/screens/createpost.dart';
 import 'package:etaman_frontend/screens/editgroup.dart';
+import 'package:etaman_frontend/screens/facilities.dart';
 import 'package:etaman_frontend/screens/joingroup.dart';
 import 'package:etaman_frontend/screens/managegroup.dart';
 import 'package:etaman_frontend/screens/map.dart';
@@ -23,4 +24,5 @@ void main() => runApp(MaterialApp(initialRoute: '/', routes: {
       '/creategroup': (context) => const CreateGroup(),
       '/managegroup': (context) => const ManageGroup(),
       '/editgroup': (context) => const EditGroup(),
+      '/facilities': (context) => const Facilities(),
     }));

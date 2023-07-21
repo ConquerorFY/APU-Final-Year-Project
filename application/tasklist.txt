@@ -11,6 +11,11 @@ Residents:
     - Create Posts Screen [X]
     - Map Screen (Together with Manage Neighborhood Group) [X]
     - Facilities Booking Screen
+    - Edit Posts Screen
+    - Edit Posts Comment Screen
+    - Settings Screen
+    - Private Chat Among Residents (?)
+    - Crime Heat Map Across Malaysia (?)
 
 Resident Leader:
     - Login Screen [X]
@@ -21,7 +26,10 @@ Resident Leader:
     - Create Posts Screen [X]
     - Map Screen (Together with Manage Neighborhood Group) [X]
     - Facilities Booking Screen
-
-Government:
+    - Edit Posts Screen
+    - Edit Posts Comment Screen
+    - Settings Screen
+    - Private Chat Among Residents (?)
+    - Crime Heat Map Across Malaysia (?)
 
 Admin:

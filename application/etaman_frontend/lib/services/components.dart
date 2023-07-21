@@ -1634,6 +1634,9 @@ class LeftDrawerState extends State<LeftDrawer> {
                     fontSize: 18)),
             onTap: () {
               // Handle facilities screen navigation
+              Navigator.pushNamed(context, '/facilities').then((_) {
+                getData();
+              });
             },
           ),
           ListTile(
@@ -1781,6 +1784,7 @@ class BottomNavBar extends StatelessWidget {
             break;
           case 2:
             // Navigate to Facilities Screen
+            Navigator.pushNamed(context, '/facilities');
             break;
           case 3:
             // Navigate to Settings Screen

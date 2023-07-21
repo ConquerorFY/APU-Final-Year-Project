@@ -144,20 +144,6 @@ def getAllPost(request):
     except GeneralPostModel.DoesNotExist:
         return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
 
-# Get all facilities for a specific neighborhood group
-@api_view(['GET'])
-def getAllFacilitiesForNeighborhoodGroup(request):
-    try:
-        # Get Neighborhood Group ID
-        groupID = request.data["groupID"]
-        facilities = FacilitiesModel.objects.filter(groupID=groupID)
-        facilitiesData = FacilitiesSerializer(facilities, many=True).data
-        return JsonResponse({'data': {'message': ALL_FACILITIES_FOUND, 'list': facilitiesData, 'status': SUCCESS_CODE}}, status=201)
-    except FacilitiesModel.DoesNotExist:
-        return JsonResponse({'data': {'message': FACILITIES_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
-    except NeighborhoodGroupModel.DoesNotExist:
-        return JsonResponse({'data': {'message': NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
-
 
 
 
@@ -1203,6 +1189,20 @@ def getAllCommentsForGeneralPost(request):
     except GeneralPostModel.DoesNotExist:
         return JsonResponse({'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
+# Get all facilities for a specific neighborhood group
+@api_view(['POST'])
+def getAllFacilitiesForNeighborhoodGroup(request):
+    try:
+        # Get Neighborhood Group ID
+        groupID = request.data["groupID"]
+        facilities = FacilitiesModel.objects.filter(groupID=groupID)
+        facilitiesData = FacilitiesSerializer(facilities, many=True).data
+        return JsonResponse({'data': {'message': ALL_FACILITIES_FOUND, 'list': facilitiesData}, 'status': SUCCESS_CODE}, status=201)
+    except FacilitiesModel.DoesNotExist:
+        return JsonResponse({'data': {'message': FACILITIES_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
+    except NeighborhoodGroupModel.DoesNotExist:
+        return JsonResponse({'data': {'message': NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
+
 # Register facilities into neighborhood groups
 @api_view(['POST'])
 def registerNeighborhoodFacilities(request):
@@ -1361,6 +1361,10 @@ def getAllNeighborhoodGroupResidents(request):
         return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except NeighborhoodGroupModel.DoesNotExist:
         return JsonResponse({'data': {'message': NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
+
+
+
+
 
 
 #############################################################

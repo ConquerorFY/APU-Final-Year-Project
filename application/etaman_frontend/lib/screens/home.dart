@@ -1,9 +1,9 @@
+import 'package:etaman_frontend/services/api.dart';
+import 'package:etaman_frontend/services/auth.dart';
+import 'package:etaman_frontend/services/components.dart';
+import 'package:etaman_frontend/services/popup.dart';
 import 'package:etaman_frontend/services/settings.dart';
 import 'package:flutter/material.dart';
-import '../services/api.dart';
-import '../services/auth.dart';
-import '../services/popup.dart';
-import '../services/components.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

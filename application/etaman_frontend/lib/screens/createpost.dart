@@ -1,13 +1,12 @@
 import 'dart:io';
+import 'package:etaman_frontend/services/api.dart';
+import 'package:etaman_frontend/services/auth.dart';
+import 'package:etaman_frontend/services/popup.dart';
+import 'package:etaman_frontend/services/settings.dart';
+import 'package:etaman_frontend/services/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-
-import '../services/api.dart';
-import '../services/auth.dart';
-import '../services/popup.dart';
-import '../services/settings.dart';
-import '../services/validator.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({super.key});

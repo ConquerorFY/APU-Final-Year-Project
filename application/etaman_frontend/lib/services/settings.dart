@@ -120,4 +120,19 @@ class Settings {
   Color editGroupTextFieldCursorColor = Colors.green;
   Color editGroupTextFieldBorderColor = Colors.green;
   double editGroupTextFieldBorderWidth = 1.0;
+
+  Color facilitiesBgColor = Colors.green;
+  Color facilitiesTooltipBgColor = const Color.fromARGB(228, 1, 89, 1);
+  Color facilitiesTextColor = Colors.green;
+  Color facilitiesShadowColor = Colors.green.shade900;
+  Color facilitiesText2Color = Colors.white;
+  Color facilitiesCursorColor = Colors.green;
+  Color facilitiesBorderColor = Colors.green;
+  Color facilitiesButtonColor = Colors.green;
+  Color facilitiesButtonColor2 = Colors.red;
+  Color facilitiesButtonColor3 = Colors.green.shade800;
+  Color facilitiesIconColor = Colors.green;
+  Color facilitiesIconColor2 = Colors.red;
+  Color facilitiesIconColor3 = Colors.white;
+  double facilitiesBorderWidth = 1.0;
 }
