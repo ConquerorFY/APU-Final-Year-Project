@@ -826,4 +826,22 @@ class ApiService {
       return null;
     }
   }
+
+  // Register Neighborhood Group Facilities
+  dynamic registerGroupFacilities(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/registerFacilities/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Register New Neighborhood Group Facilities - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Register New Neighborhood Group Facilities - $e");
+      return null;
+    }
+  }
 }

@@ -5,6 +5,7 @@ import 'package:etaman_frontend/screens/facilities.dart';
 import 'package:etaman_frontend/screens/joingroup.dart';
 import 'package:etaman_frontend/screens/managegroup.dart';
 import 'package:etaman_frontend/screens/map.dart';
+import 'package:etaman_frontend/screens/registerfacilities.dart';
 import 'package:flutter/material.dart';
 import 'package:etaman_frontend/screens/register.dart';
 import 'package:etaman_frontend/screens/login.dart';
@@ -25,4 +26,5 @@ void main() => runApp(MaterialApp(initialRoute: '/', routes: {
       '/managegroup': (context) => const ManageGroup(),
       '/editgroup': (context) => const EditGroup(),
       '/facilities': (context) => const Facilities(),
+      '/registerfacilities': (context) => const RegisterFacilities()
     }));

@@ -135,4 +135,13 @@ class Settings {
   Color facilitiesIconColor2 = Colors.red;
   Color facilitiesIconColor3 = Colors.white;
   double facilitiesBorderWidth = 1.0;
+
+  Color registerFacilitiesBgColor = Colors.green;
+  Color registerFacilitiesTextFieldTextColor = Colors.green;
+  Color registerFacilitiesTextFieldShadowColor = Colors.green.shade900;
+  Color registerFacilitiesTextFieldText2Color = Colors.white;
+  Color registerFacilitiesTextFieldIconColor = Colors.white;
+  Color registerFacilitiesTextFieldCursorColor = Colors.green;
+  Color registerFacilitiesTextFieldBorderColor = Colors.green;
+  double registerFacilitiesTextFieldBorderWidth = 1.0;
 }

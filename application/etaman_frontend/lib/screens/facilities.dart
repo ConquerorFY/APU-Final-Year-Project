@@ -127,6 +127,9 @@ class FacilitiesState extends State<Facilities> {
               backgroundColor: settings.bottomNavBarBgColor,
               onPressed: () {
                 // Navigate to register facilities screen
+                Navigator.pushNamed(context, '/registerfacilities').then((_) {
+                  getData();
+                });
               },
               child: Icon(Icons.add, color: settings.bottomNavBarTextColor),
             ),

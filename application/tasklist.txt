@@ -26,6 +26,8 @@ Resident Leader:
     - Create Posts Screen [X]
     - Map Screen (Together with Manage Neighborhood Group) [X]
     - Facilities Booking Screen
+    - Register Facilities Screen [x]
+    - Edit Facilities Screen 
     - Edit Posts Screen
     - Edit Posts Comment Screen
     - Settings Screen

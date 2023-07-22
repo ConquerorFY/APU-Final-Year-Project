@@ -1223,16 +1223,16 @@ def registerNeighborhoodFacilities(request):
             # Check whether all data is valid
             if newFacilitiesData.is_valid():
                 newFacilitiesData.save()
-                return JsonResponse({'data': {'message': FACILITIES_CREATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+                return JsonResponse({'data': {'message': FACILITIES_CREATED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
             else:
                 # An error has occured
-                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
         else:
-            return JsonResponse({'data': {'message': FACILITIES_NOT_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': FACILITIES_NOT_RESIDENT_LEADER}, 'status': ERROR_CODE}, status=400)
     except FacilitiesModel.DoesNotExist:
-        return JsonResponse({'data': {'message': FACILITIES_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': FACILITIES_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
 # Book facilities
 @api_view(['POST'])
