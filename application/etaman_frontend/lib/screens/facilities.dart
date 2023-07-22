@@ -116,6 +116,7 @@ class FacilitiesState extends State<Facilities> {
                       holder: facility['holderUsername'],
                       residentUsername: residentData['username'],
                       isLeader: residentData['isLeader'],
+                      updateParent: getData,
                     );
                   },
                 ));
@@ -154,6 +155,7 @@ class FacilityCard extends StatelessWidget {
   final String? holder;
   final String residentUsername;
   final bool isLeader;
+  final VoidCallback updateParent;
 
   FacilityCard(
       {super.key,
@@ -163,7 +165,8 @@ class FacilityCard extends StatelessWidget {
       required this.status,
       required this.holder,
       required this.residentUsername,
-      required this.isLeader});
+      required this.isLeader,
+      required this.updateParent});
 
   @override
   Widget build(BuildContext context) {
@@ -244,6 +247,14 @@ class FacilityCard extends StatelessWidget {
                   ? ElevatedButton(
                       onPressed: () {
                         // Implement functionality for editing facility
+                        Navigator.pushNamed(context, '/editfacilities',
+                            arguments: {
+                              'facilitiesID': id,
+                              'facilitiesName': name,
+                              'facilitiesDescription': description
+                            }).then((_) {
+                          updateParent();
+                        });
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(

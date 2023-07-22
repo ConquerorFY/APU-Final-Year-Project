@@ -1203,6 +1203,20 @@ def getAllFacilitiesForNeighborhoodGroup(request):
     except NeighborhoodGroupModel.DoesNotExist:
         return JsonResponse({'data': {'message': NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
+# Get specific facilities for a specific neighborhood group
+@api_view(['POST'])
+def getFacilitiesForNeighborhoodGroup(request):
+    try:
+        # Get Facilites ID
+        facilitiesID = request.data["facilitiesID"]
+        facilities = FacilitiesModel.objects.get(pk=facilitiesID)
+        facilitiesData = FacilitiesSerializer(facilities).data
+        return JsonResponse({'data': {'message': ALL_FACILITIES_FOUND, 'list': facilitiesData}, 'status': SUCCESS_CODE}, status=201)
+    except FacilitiesModel.DoesNotExist:
+        return JsonResponse({'data': {'message': FACILITIES_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
+    except NeighborhoodGroupModel.DoesNotExist:
+        return JsonResponse({'data': {'message': NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
+
 # Register facilities into neighborhood groups
 @api_view(['POST'])
 def registerNeighborhoodFacilities(request):
@@ -1718,16 +1732,16 @@ def updateNeighborhoodFacilities(request):
             newFacilitiesData = FacilitiesSerializer(facilitiesData, data=request.data, partial=True)
             if newFacilitiesData.is_valid():
                 newFacilitiesData.save()
-                return JsonResponse({"data": {'message': FACILITIES_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+                return JsonResponse({"data": {'message': FACILITIES_UPDATED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
             else:
                 # An error has occured
-                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
         else:
-            return JsonResponse({'data': {'message': FACILITIES_NOT_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': FACILITIES_NOT_RESIDENT_LEADER}, 'status': ERROR_CODE}, status=400)
     except FacilitiesModel.DoesNotExist:
-        return JsonResponse({"data": {'message': FACILITIES_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({"data": {'message': FACILITIES_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
 
 

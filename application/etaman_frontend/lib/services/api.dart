@@ -827,6 +827,24 @@ class ApiService {
     }
   }
 
+  // Get Specific Neighborhood Group Facilities
+  dynamic getSpecificGroupFacilities(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/getFacilities/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Get Specific Neighborhood Group Facilities - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Get Specific Neighborhood Group Facilities - $e");
+      return null;
+    }
+  }
+
   // Register Neighborhood Group Facilities
   dynamic registerGroupFacilities(body) async {
     try {
@@ -841,6 +859,24 @@ class ApiService {
       return responseData;
     } catch (e) {
       logger.error("Register New Neighborhood Group Facilities - $e");
+      return null;
+    }
+  }
+
+  // Edit Neighborhood Group Facilities
+  dynamic editGroupFacilitiesAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/updateFacilities/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await patch(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Edit Neighborhood Group Facilities - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Edit Neighborhood Group Facilities - $e");
       return null;
     }
   }
