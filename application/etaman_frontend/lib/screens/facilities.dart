@@ -211,8 +211,32 @@ class FacilityCard extends StatelessWidget {
             children: [
               status == 'Available'
                   ? ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         // Implement functionality for booking facility
+                        Map<String, dynamic> bookData = {
+                          "token": authService.getAuthToken(),
+                          "facilitiesID": id
+                        };
+                        final bookResponse =
+                            await apiService.bookGroupFacilitiesAPI(bookData);
+                        if (bookResponse != null) {
+                          final status = bookResponse['status'];
+                          if (status > 0) {
+                            // Success
+                            final message = bookResponse['data']['message'];
+                            // ignore: use_build_context_synchronously
+                            popupService.showSuccessPopup(
+                                context, "Book Success", message, () {
+                              updateParent();
+                            });
+                          } else {
+                            // Error
+                            final message = bookResponse['data']['message'];
+                            // ignore: use_build_context_synchronously
+                            popupService.showErrorPopup(
+                                context, "Book Failed", message, () {});
+                          }
+                        }
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
@@ -228,8 +252,32 @@ class FacilityCard extends StatelessWidget {
                   : Container(),
               status == 'Occupied' && holder == residentUsername
                   ? ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         // Implement functionality for returning facility
+                        Map<String, dynamic> returnData = {
+                          "token": authService.getAuthToken(),
+                          "facilitiesID": id
+                        };
+                        final returnResponse = await apiService
+                            .returnGroupFacilitiesAPI(returnData);
+                        if (returnResponse != null) {
+                          final status = returnResponse['status'];
+                          if (status > 0) {
+                            // Success
+                            final message = returnResponse['data']['message'];
+                            // ignore: use_build_context_synchronously
+                            popupService.showSuccessPopup(
+                                context, "Return Success", message, () {
+                              updateParent();
+                            });
+                          } else {
+                            // Error
+                            final message = returnResponse['data']['message'];
+                            // ignore: use_build_context_synchronously
+                            popupService.showErrorPopup(
+                                context, "Return Failed", message, () {});
+                          }
+                        }
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
@@ -270,8 +318,32 @@ class FacilityCard extends StatelessWidget {
                   : Container(),
               isLeader
                   ? ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         // Implement functionality for deleting facility
+                        Map<String, dynamic> deleteData = {
+                          "token": authService.getAuthToken(),
+                          "facilitiesID": id
+                        };
+                        final deleteResponse = await apiService
+                            .deleteGroupFacilitiesAPI(deleteData);
+                        if (deleteResponse != null) {
+                          final status = deleteResponse['status'];
+                          if (status > 0) {
+                            // Success
+                            final message = deleteResponse['data']['message'];
+                            // ignore: use_build_context_synchronously
+                            popupService.showSuccessPopup(
+                                context, "Delete Success", message, () {
+                              updateParent();
+                            });
+                          } else {
+                            // Error
+                            final message = deleteResponse['data']['message'];
+                            // ignore: use_build_context_synchronously
+                            popupService.showErrorPopup(
+                                context, "Delete Failed", message, () {});
+                          }
+                        }
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(

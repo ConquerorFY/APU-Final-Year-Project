@@ -880,4 +880,58 @@ class ApiService {
       return null;
     }
   }
+
+  // Book Neighborhood Group Facilities
+  dynamic bookGroupFacilitiesAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/bookFacilities/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Book Neighborhood Group Facilities - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Book Neighborhood Group Facilities - $e");
+      return null;
+    }
+  }
+
+  // Return Neighborhood Group Facilities
+  dynamic returnGroupFacilitiesAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/returnFacilities/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Return Neighborhood Group Facilities - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Return Neighborhood Group Facilities - $e");
+      return null;
+    }
+  }
+
+  // Delete Neighborhood Group Facilities
+  dynamic deleteGroupFacilitiesAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/deleteFacilities/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await delete(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Delete Neighborhood Group Facilities - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Delete Neighborhood Group Facilities - $e");
+      return null;
+    }
+  }
 }

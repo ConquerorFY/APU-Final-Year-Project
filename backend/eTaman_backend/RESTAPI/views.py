@@ -1267,16 +1267,16 @@ def bookNeighborhoodFacilities(request):
             bookFacilitiesData = FacilitiesSerializer(facilitiesData, data=bookedFacilities, partial=True)
             if bookFacilitiesData.is_valid():
                 bookFacilitiesData.save()
-                return JsonResponse({"data": {'message': FACILITIES_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+                return JsonResponse({"data": {'message': FACILITIES_UPDATED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
             else:
                 # An error has occured
-                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
         else:
-            return JsonResponse({'data': {'message': FACILITIES_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': FACILITIES_NOT_PART_OF_NEIGHBORHOOD_GROUP}, 'status': ERROR_CODE}, status=400)
     except FacilitiesModel.DoesNotExist:
-        return JsonResponse({"data": {'message': FACILITIES_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({"data": {'message': FACILITIES_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
 # Return facilities
 @api_view(['POST'])
@@ -1297,16 +1297,16 @@ def returnNeighborhoodFacilities(request):
             bookFacilitiesData = FacilitiesSerializer(facilitiesData, data=bookedFacilities, partial=True)
             if bookFacilitiesData.is_valid():
                 bookFacilitiesData.save()
-                return JsonResponse({"data": {'message': FACILITIES_UPDATED_SUCCESSFUL, 'status': SUCCESS_CODE}}, status=201)
+                return JsonResponse({"data": {'message': FACILITIES_UPDATED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
             else:
                 # An error has occured
-                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR, 'status': ERROR_CODE}}, status=400)
+                return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
         else:
-            return JsonResponse({'data': {'message': FACILITIES_NOT_PART_OF_NEIGHBORHOOD_GROUP, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': FACILITIES_NOT_PART_OF_NEIGHBORHOOD_GROUP}, 'status': ERROR_CODE}, status=400)
     except FacilitiesModel.DoesNotExist:
-        return JsonResponse({"data": {'message': FACILITIES_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({"data": {'message': FACILITIES_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
 # Change resident leader
 @api_view(['POST'])
@@ -1979,10 +1979,10 @@ def deleteNeighborhoodFacilities(request):
         # Check whether resident is part of the neighborhood group and is resident leader
         if residentData.groupID.id == facilitiesData.groupID.id and residentData.isLeader:
             facilitiesData.delete()
-            return JsonResponse({'data': {'message': FACILITIES_DELETED_SUCCESSFUL, 'status': ERROR_CODE}}, status=201)
+            return JsonResponse({'data': {'message': FACILITIES_DELETED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
         else:
-            return JsonResponse({'data': {'message': FACILITIES_NOT_RESIDENT_LEADER, 'status': ERROR_CODE}}, status=400)
+            return JsonResponse({'data': {'message': FACILITIES_NOT_RESIDENT_LEADER}, 'status': ERROR_CODE}, status=400)
     except FacilitiesModel.DoesNotExist:
-        return JsonResponse({"data": {'message': FACILITIES_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({"data": {'message': FACILITIES_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
     except ResidentModel.DoesNotExist:
-        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST, 'status': ERROR_CODE}}, status=404)
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
