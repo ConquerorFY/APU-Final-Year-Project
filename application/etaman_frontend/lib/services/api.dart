@@ -790,12 +790,14 @@ class ApiService {
         }
       });
 
-      File image = body['image'] as File;
-      var stream = ByteStream(image.openRead());
-      var length = await image.length();
-      var multipartFile =
-          MultipartFile('image', stream, length, filename: 'Profile Image.jpg');
-      request.files.add(multipartFile);
+      if (body['image'] != null) {
+        File image = body['image'] as File;
+        var stream = ByteStream(image.openRead());
+        var length = await image.length();
+        var multipartFile = MultipartFile('image', stream, length,
+            filename: 'Profile Image.jpg');
+        request.files.add(multipartFile);
+      }
 
       final response = await request.send();
       final responseBody = await response.stream.bytesToString();
@@ -931,6 +933,210 @@ class ApiService {
       return responseData;
     } catch (e) {
       logger.error("Delete Neighborhood Group Facilities - $e");
+      return null;
+    }
+  }
+
+  // Edit Crime Post API
+  dynamic editCrimePostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/updateCrimePost/");
+      final request = MultipartRequest('PATCH', url);
+
+      body.forEach((key, value) {
+        if (key != 'image') {
+          request.fields[key] = value;
+        }
+      });
+
+      if (body['image'] != null) {
+        File image = body['image'] as File;
+        var stream = ByteStream(image.openRead());
+        var length = await image.length();
+        var multipartFile = MultipartFile('image', stream, length,
+            filename: '${request.fields['title']}.jpg');
+        request.files.add(multipartFile);
+      }
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final responseData = jsonDecode(responseBody);
+
+      logger.info("Edit Crime Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Edit Crime Post - $e");
+      return null;
+    }
+  }
+
+  // Edit Complaint Post API
+  dynamic editComplaintPostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/updateComplaintPost/");
+      final request = MultipartRequest('PATCH', url);
+
+      body.forEach((key, value) {
+        if (key != 'image') {
+          request.fields[key] = value;
+        }
+      });
+
+      if (body['image'] != null) {
+        File image = body['image'] as File;
+        var stream = ByteStream(image.openRead());
+        var length = await image.length();
+        var multipartFile = MultipartFile('image', stream, length,
+            filename: '${request.fields['title']}.jpg');
+        request.files.add(multipartFile);
+      }
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final responseData = jsonDecode(responseBody);
+
+      logger.info("Edit Complaint Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Edit Complaint Post - $e");
+      return null;
+    }
+  }
+
+  // Edit Event Post API
+  dynamic editEventPostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/updateEventPost/");
+      final request = MultipartRequest('PATCH', url);
+
+      body.forEach((key, value) {
+        if (key != 'image') {
+          request.fields[key] = value;
+        }
+      });
+
+      if (body['image'] != null) {
+        File image = body['image'] as File;
+        var stream = ByteStream(image.openRead());
+        var length = await image.length();
+        var multipartFile = MultipartFile('image', stream, length,
+            filename: '${request.fields['title']}.jpg');
+        request.files.add(multipartFile);
+      }
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final responseData = jsonDecode(responseBody);
+
+      logger.info("Edit Event Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Edit Event Post - $e");
+      return null;
+    }
+  }
+
+  // Edit General Post API
+  dynamic editGeneralPostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/updateGeneralPost/");
+      final request = MultipartRequest('PATCH', url);
+
+      body.forEach((key, value) {
+        if (key != 'image') {
+          request.fields[key] = value;
+        }
+      });
+
+      if (body['image'] != null) {
+        File image = body['image'] as File;
+        var stream = ByteStream(image.openRead());
+        var length = await image.length();
+        var multipartFile = MultipartFile('image', stream, length,
+            filename: '${request.fields['title']}.jpg');
+        request.files.add(multipartFile);
+      }
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final responseData = jsonDecode(responseBody);
+
+      logger.info("Edit General Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Edit General Post - $e");
+      return null;
+    }
+  }
+
+  // Delete Crime Post API
+  dynamic deleteCrimePostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/deleteCrimePost/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await delete(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Delete Crime Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Delete Crime Post - $e");
+      return null;
+    }
+  }
+
+  // Delete Complaint Post API
+  dynamic deleteComplaintPostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/deleteComplaintPost/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await delete(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Delete Complaint Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Delete Complaint Post - $e");
+      return null;
+    }
+  }
+
+  // Delete Event Post API
+  dynamic deleteEventPostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/deleteEventPost/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await delete(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Delete Event Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Delete Event Post - $e");
+      return null;
+    }
+  }
+
+  // Delete General Post API
+  dynamic deleteGeneralPostAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/deleteGeneralPost/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await delete(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Delete General Post - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Delete General Post - $e");
       return null;
     }
   }

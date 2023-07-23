@@ -2,6 +2,7 @@ import 'package:etaman_frontend/screens/creategroup.dart';
 import 'package:etaman_frontend/screens/createpost.dart';
 import 'package:etaman_frontend/screens/editfacilities.dart';
 import 'package:etaman_frontend/screens/editgroup.dart';
+import 'package:etaman_frontend/screens/editpost.dart';
 import 'package:etaman_frontend/screens/facilities.dart';
 import 'package:etaman_frontend/screens/joingroup.dart';
 import 'package:etaman_frontend/screens/managegroup.dart';
@@ -21,6 +22,7 @@ void main() => runApp(MaterialApp(initialRoute: '/', routes: {
       '/profile': (context) => const Profile(),
       '/editProfile': (context) => const EditProfile(),
       '/createPost': (context) => const CreatePost(),
+      '/editPost': (context) => const EditPost(),
       '/map': (context) => const MapView(),
       '/joingroup': (context) => const JoinGroup(),
       '/creategroup': (context) => const CreateGroup(),
@@ -28,5 +30,5 @@ void main() => runApp(MaterialApp(initialRoute: '/', routes: {
       '/editgroup': (context) => const EditGroup(),
       '/facilities': (context) => FacilitiesContainer(),
       '/registerfacilities': (context) => const RegisterFacilities(),
-      '/editfacilities': (context) => const EditFacilities()
+      '/editfacilities': (context) => const EditFacilities(),
     }));

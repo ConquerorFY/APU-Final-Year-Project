@@ -61,8 +61,8 @@ class CrimePostModel(models.Model):
 class CrimePostCommentModel(models.Model):
     datetime = models.DateTimeField(auto_now_add=True)
     content = models.CharField(max_length=2000, blank=False)
-    postID = models.ForeignKey(CrimePostModel, null=True, on_delete=models.SET_NULL)
-    authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
+    postID = models.ForeignKey(CrimePostModel, null=True, on_delete=models.CASCADE)
+    authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.CASCADE)
 
 # Complaint Post Model
 class ComplaintPostModel(models.Model):
@@ -80,8 +80,8 @@ class ComplaintPostModel(models.Model):
 class ComplaintPostCommentModel(models.Model):
     datetime = models.DateTimeField(auto_now_add=True)
     content = models.CharField(max_length=2000, blank=False)
-    postID = models.ForeignKey(ComplaintPostModel, null=True, on_delete=models.SET_NULL)
-    authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
+    postID = models.ForeignKey(ComplaintPostModel, null=True, on_delete=models.CASCADE)
+    authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.CASCADE)
 
 # Event Post Model
 class EventPostModel(models.Model):
@@ -99,8 +99,8 @@ class EventPostModel(models.Model):
 class EventPostCommentModel(models.Model):
     datetime = models.DateTimeField(auto_now_add=True)
     content = models.CharField(max_length=2000, blank=False)
-    postID = models.ForeignKey(EventPostModel, null=True, on_delete=models.SET_NULL)
-    authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
+    postID = models.ForeignKey(EventPostModel, null=True, on_delete=models.CASCADE)
+    authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.CASCADE)
 
 # General Post Model
 class GeneralPostModel(models.Model):
@@ -116,8 +116,8 @@ class GeneralPostModel(models.Model):
 class GeneralPostCommentModel(models.Model):
     datetime = models.DateTimeField(auto_now_add=True)
     content = models.CharField(max_length=2000, blank=False)
-    postID = models.ForeignKey(GeneralPostModel, null=True, on_delete=models.SET_NULL)
-    authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
+    postID = models.ForeignKey(GeneralPostModel, null=True, on_delete=models.CASCADE)
+    authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.CASCADE)
 
 # Facilities Model
 class FacilitiesModel(models.Model):

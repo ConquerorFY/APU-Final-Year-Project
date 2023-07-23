@@ -253,6 +253,8 @@ class PostListState extends State<PostList> {
   dynamic buttonCancelColor;
   dynamic postData;
   dynamic userData;
+  dynamic residentID;
+  dynamic nGroupID;
   dynamic commentSectionExpandedState;
 
   bool isJoinedGroup = true;
@@ -288,6 +290,8 @@ class PostListState extends State<PostList> {
       if (status > 0) {
         // Success
         setState(() {
+          nGroupID = residentResponse["data"]["list"]["groupID"];
+          residentID = residentResponse['data']['list']['id'];
           userData = jsonDecode(residentResponse["data"]["list"]["userData"]);
           isJoinedGroup = residentResponse['data']['list']['groupID'] != null;
         });
@@ -527,7 +531,64 @@ class PostListState extends State<PostList> {
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Icon(Icons.local_police_outlined, color: iconColor, size: 15),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(Icons.local_police_outlined,
+                          color: iconColor, size: 15),
+                      postData["crime"][index]['reporterID'] == residentID
+                          ? Row(children: [
+                              GestureDetector(
+                                  onTap: () {
+                                    // Navigate to edit posts screen
+                                    Navigator.pushNamed(context, '/editPost',
+                                        arguments: {
+                                          "groupID": nGroupID,
+                                          "postData": postData["crime"][index],
+                                          "postType": "crime"
+                                        }).then((_) {
+                                      getData();
+                                    });
+                                  },
+                                  child: Icon(Icons.edit,
+                                      color: iconColor, size: 20)),
+                              const SizedBox(width: 10.0),
+                              GestureDetector(
+                                  onTap: () async {
+                                    // Handle delete crime post
+                                    final deleteResponse =
+                                        await apiService.deleteCrimePostAPI({
+                                      'token': authService.getAuthToken(),
+                                      'crimePostID': postData["crime"][index]
+                                          ['id']
+                                    });
+                                    if (deleteResponse != null) {
+                                      final status = deleteResponse['status'];
+                                      if (status > 0) {
+                                        // Success
+                                        final message =
+                                            deleteResponse['data']['message'];
+                                        // ignore: use_build_context_synchronously
+                                        popupService.showSuccessPopup(
+                                            context, "Delete Success", message,
+                                            () {
+                                          getData();
+                                        });
+                                      } else {
+                                        // Error
+                                        final message =
+                                            deleteResponse['data']['message'];
+                                        // ignore: use_build_context_synchronously
+                                        popupService.showErrorPopup(context,
+                                            "Delete Failed", message, () {});
+                                      }
+                                    }
+                                  },
+                                  child: Icon(Icons.delete,
+                                      color: iconSelectedColor, size: 20))
+                            ])
+                          : Container(),
+                    ]),
                 const SizedBox(height: 5),
                 Text(postData["crime"][index]["title"],
                     style: TextStyle(
@@ -673,8 +734,65 @@ class PostListState extends State<PostList> {
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Icon(Icons.sentiment_very_dissatisfied,
-                    color: iconColor, size: 15),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(Icons.sentiment_very_dissatisfied,
+                          color: iconColor, size: 15),
+                      postData["complaint"][index]['reporterID'] == residentID
+                          ? Row(children: [
+                              GestureDetector(
+                                  onTap: () {
+                                    // Navigate to edit posts screen
+                                    Navigator.pushNamed(context, '/editPost',
+                                        arguments: {
+                                          "groupID": nGroupID,
+                                          "postData": postData["complaint"]
+                                              [index],
+                                          "postType": "complaint"
+                                        }).then((_) {
+                                      getData();
+                                    });
+                                  },
+                                  child: Icon(Icons.edit,
+                                      color: iconColor, size: 20)),
+                              const SizedBox(width: 10.0),
+                              GestureDetector(
+                                  onTap: () async {
+                                    // Handle delete complaint post
+                                    final deleteResponse = await apiService
+                                        .deleteComplaintPostAPI({
+                                      'token': authService.getAuthToken(),
+                                      'complaintPostID': postData["complaint"]
+                                          [index]['id']
+                                    });
+                                    if (deleteResponse != null) {
+                                      final status = deleteResponse['status'];
+                                      if (status > 0) {
+                                        // Success
+                                        final message =
+                                            deleteResponse['data']['message'];
+                                        // ignore: use_build_context_synchronously
+                                        popupService.showSuccessPopup(
+                                            context, "Delete Success", message,
+                                            () {
+                                          getData();
+                                        });
+                                      } else {
+                                        // Error
+                                        final message =
+                                            deleteResponse['data']['message'];
+                                        // ignore: use_build_context_synchronously
+                                        popupService.showErrorPopup(context,
+                                            "Delete Failed", message, () {});
+                                      }
+                                    }
+                                  },
+                                  child: Icon(Icons.delete,
+                                      color: iconSelectedColor, size: 20))
+                            ])
+                          : Container(),
+                    ]),
                 const SizedBox(height: 5),
                 Text(postData["complaint"][index]["title"],
                     style: TextStyle(
@@ -908,7 +1026,63 @@ class PostListState extends State<PostList> {
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Icon(Icons.event, color: iconColor, size: 15),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(Icons.event, color: iconColor, size: 15),
+                      postData["event"][index]['organizerID'] == residentID
+                          ? Row(children: [
+                              GestureDetector(
+                                  onTap: () {
+                                    // Navigate to edit posts screen
+                                    Navigator.pushNamed(context, '/editPost',
+                                        arguments: {
+                                          "groupID": nGroupID,
+                                          "postData": postData["event"][index],
+                                          "postType": "event"
+                                        }).then((_) {
+                                      getData();
+                                    });
+                                  },
+                                  child: Icon(Icons.edit,
+                                      color: iconColor, size: 20)),
+                              const SizedBox(width: 10.0),
+                              GestureDetector(
+                                  onTap: () async {
+                                    // Handle event event post
+                                    final deleteResponse =
+                                        await apiService.deleteEventPostAPI({
+                                      'token': authService.getAuthToken(),
+                                      'eventPostID': postData["event"][index]
+                                          ['id']
+                                    });
+                                    if (deleteResponse != null) {
+                                      final status = deleteResponse['status'];
+                                      if (status > 0) {
+                                        // Success
+                                        final message =
+                                            deleteResponse['data']['message'];
+                                        // ignore: use_build_context_synchronously
+                                        popupService.showSuccessPopup(
+                                            context, "Delete Success", message,
+                                            () {
+                                          getData();
+                                        });
+                                      } else {
+                                        // Error
+                                        final message =
+                                            deleteResponse['data']['message'];
+                                        // ignore: use_build_context_synchronously
+                                        popupService.showErrorPopup(context,
+                                            "Delete Failed", message, () {});
+                                      }
+                                    }
+                                  },
+                                  child: Icon(Icons.delete,
+                                      color: iconSelectedColor, size: 20))
+                            ])
+                          : Container(),
+                    ]),
                 const SizedBox(height: 5),
                 Text(postData["event"][index]["title"],
                     style: TextStyle(
@@ -1078,7 +1252,64 @@ class PostListState extends State<PostList> {
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Icon(Icons.mail, color: iconColor, size: 15),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(Icons.mail, color: iconColor, size: 15),
+                      postData["general"][index]['authorID'] == residentID
+                          ? Row(children: [
+                              GestureDetector(
+                                  onTap: () {
+                                    // Navigate to edit posts screen
+                                    Navigator.pushNamed(context, '/editPost',
+                                        arguments: {
+                                          "groupID": nGroupID,
+                                          "postData": postData["general"]
+                                              [index],
+                                          "postType": "general"
+                                        }).then((_) {
+                                      getData();
+                                    });
+                                  },
+                                  child: Icon(Icons.edit,
+                                      color: iconColor, size: 20)),
+                              const SizedBox(width: 10.0),
+                              GestureDetector(
+                                  onTap: () async {
+                                    // Handle delete general post
+                                    final deleteResponse =
+                                        await apiService.deleteGeneralPostAPI({
+                                      'token': authService.getAuthToken(),
+                                      'generalPostID': postData["general"]
+                                          [index]['id']
+                                    });
+                                    if (deleteResponse != null) {
+                                      final status = deleteResponse['status'];
+                                      if (status > 0) {
+                                        // Success
+                                        final message =
+                                            deleteResponse['data']['message'];
+                                        // ignore: use_build_context_synchronously
+                                        popupService.showSuccessPopup(
+                                            context, "Delete Success", message,
+                                            () {
+                                          getData();
+                                        });
+                                      } else {
+                                        // Error
+                                        final message =
+                                            deleteResponse['data']['message'];
+                                        // ignore: use_build_context_synchronously
+                                        popupService.showErrorPopup(context,
+                                            "Delete Failed", message, () {});
+                                      }
+                                    }
+                                  },
+                                  child: Icon(Icons.delete,
+                                      color: iconSelectedColor, size: 20))
+                            ])
+                          : Container(),
+                    ]),
                 const SizedBox(height: 5),
                 Text(postData["general"][index]["title"],
                     style: TextStyle(

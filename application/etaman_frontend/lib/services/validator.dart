@@ -12,10 +12,10 @@ class Validator {
   // Post
   final dateRegExp = RegExp(r'^[0-9]{4}-[0-1][0-9]-[0-3][0-9]$');
   final timeRegExp = RegExp(r'^[0-2][0-9]:[0-5][0-9]:[0-5][0-9]$');
-  final titleRegExp = RegExp(r'^[a-zA-Z0-9 ]+$');
-  final descriptionRegExp = RegExp(r'^[a-zA-Z0-9 ]+$');
-  final actionRegExp = RegExp(r'^[a-zA-Z0-9 ]+$');
-  final targetRegExp = RegExp(r'^[a-zA-Z0-9 ]+$');
+  final titleRegExp = RegExp(r'^.+$');
+  final descriptionRegExp = RegExp(r'.+$');
+  final actionRegExp = RegExp(r'^.+$');
+  final targetRegExp = RegExp(r'^.+$');
   final venueRegExp = RegExp(r'^[a-zA-Z0-9 ]+$');
   final rulesRegExp = RegExp(r'.*');
 

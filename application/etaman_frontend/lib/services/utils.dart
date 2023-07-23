@@ -11,4 +11,11 @@ class Utils {
     String formattedDateTime = DateFormat("yyyy-MM-dd HH:mm").format(datetime);
     return formattedDateTime;
   }
+
+  String capitalizeFirstLetter(input) {
+    if (input == null || input.isEmpty) {
+      return input;
+    }
+    return input[0].toUpperCase() + input.substring(1);
+  }
 }

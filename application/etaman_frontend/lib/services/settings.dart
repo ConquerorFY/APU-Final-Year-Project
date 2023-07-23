@@ -144,4 +144,14 @@ class Settings {
   Color registerFacilitiesTextFieldCursorColor = Colors.green;
   Color registerFacilitiesTextFieldBorderColor = Colors.green;
   double registerFacilitiesTextFieldBorderWidth = 1.0;
+
+  Color editPostBgColor = Colors.green;
+  Color editPostBgColor2 = Colors.red;
+  Color editPostTextFieldTextColor = Colors.green;
+  Color editPostTextFieldShadowColor = Colors.green.shade900;
+  Color editPostTextFieldText2Color = Colors.white;
+  Color editPostTextFieldIconColor = Colors.white;
+  Color editPostTextFieldCursorColor = Colors.green;
+  Color editPostTextFieldBorderColor = Colors.green;
+  double editPostTextFieldBorderWidth = 1.0;
 }
