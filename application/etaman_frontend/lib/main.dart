@@ -26,7 +26,7 @@ void main() => runApp(MaterialApp(initialRoute: '/', routes: {
       '/creategroup': (context) => const CreateGroup(),
       '/managegroup': (context) => const ManageGroup(),
       '/editgroup': (context) => const EditGroup(),
-      '/facilities': (context) => const Facilities(),
+      '/facilities': (context) => FacilitiesContainer(),
       '/registerfacilities': (context) => const RegisterFacilities(),
       '/editfacilities': (context) => const EditFacilities()
     }));

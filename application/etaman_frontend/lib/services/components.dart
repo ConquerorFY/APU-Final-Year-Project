@@ -1734,6 +1734,59 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
+// Facilties Top App Bar Widget
+// ignore: must_be_immutable
+class FacilitiesTopAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
+  Settings settings = Settings();
+
+  dynamic backgroundColor;
+  dynamic textColor;
+  dynamic isImplyLeading;
+  final icon = const AssetImage("assets/logo.png");
+  final text = "eTaman";
+
+  FacilitiesTopAppBar({super.key, this.isImplyLeading}) {
+    backgroundColor = settings.topNavBarBgColor;
+    textColor = settings.topNavBarTextColor;
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight + 50);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      automaticallyImplyLeading: isImplyLeading,
+      backgroundColor: backgroundColor,
+      title: Row(
+        children: [
+          Padding(
+              padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+              child: Image(
+                image: icon,
+                fit: BoxFit.contain,
+                width: 90,
+                height: 50,
+              )),
+          const SizedBox(width: 10.0),
+          Text(text,
+              style: TextStyle(
+                  fontFamily: "OpenSans",
+                  color: textColor,
+                  fontWeight: FontWeight.w800))
+        ],
+      ),
+      bottom: const TabBar(
+        tabs: [
+          Tab(text: 'All Facilities'),
+          Tab(text: 'Booked Facilities'),
+        ],
+      ),
+    );
+  }
+}
+
 // Bottom Navigation Bar Widget
 // ignore: must_be_immutable
 class BottomNavBar extends StatelessWidget {
