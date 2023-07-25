@@ -3,6 +3,7 @@ import 'package:etaman_frontend/screens/createpost.dart';
 import 'package:etaman_frontend/screens/editfacilities.dart';
 import 'package:etaman_frontend/screens/editgroup.dart';
 import 'package:etaman_frontend/screens/editpost.dart';
+import 'package:etaman_frontend/screens/editpostcomment.dart';
 import 'package:etaman_frontend/screens/facilities.dart';
 import 'package:etaman_frontend/screens/joingroup.dart';
 import 'package:etaman_frontend/screens/managegroup.dart';
@@ -23,6 +24,7 @@ void main() => runApp(MaterialApp(initialRoute: '/', routes: {
       '/editProfile': (context) => const EditProfile(),
       '/createPost': (context) => const CreatePost(),
       '/editPost': (context) => const EditPost(),
+      '/editPostComment': (context) => const EditPostComment(),
       '/map': (context) => const MapView(),
       '/joingroup': (context) => const JoinGroup(),
       '/creategroup': (context) => const CreateGroup(),

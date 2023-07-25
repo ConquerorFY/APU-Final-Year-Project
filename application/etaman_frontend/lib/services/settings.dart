@@ -154,4 +154,14 @@ class Settings {
   Color editPostTextFieldCursorColor = Colors.green;
   Color editPostTextFieldBorderColor = Colors.green;
   double editPostTextFieldBorderWidth = 1.0;
+
+  Color editPostCommentBgColor = Colors.green;
+  Color editPostCommentBgColor2 = Colors.red;
+  Color editPostCommentTextFieldTextColor = Colors.green;
+  Color editPostCommentTextFieldShadowColor = Colors.green.shade900;
+  Color editPostCommentTextFieldText2Color = Colors.white;
+  Color editPostCommentTextFieldIconColor = Colors.white;
+  Color editPostCommentTextFieldCursorColor = Colors.green;
+  Color editPostCommentTextFieldBorderColor = Colors.green;
+  double editPostCommentTextFieldBorderWidth = 1.0;
 }

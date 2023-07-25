@@ -18,6 +18,7 @@ class Validator {
   final targetRegExp = RegExp(r'^.+$');
   final venueRegExp = RegExp(r'^[a-zA-Z0-9 ]+$');
   final rulesRegExp = RegExp(r'.*');
+  final contentRegExp = RegExp(r'.*');
 
   // Private constructor to prevent external instantiation
   Validator._();
@@ -192,6 +193,16 @@ class Validator {
     }
     if (!rulesRegExp.hasMatch(rules)) {
       return 'Please enter a valid rules!';
+    }
+    return null;
+  }
+
+  validateContent(content) {
+    if (content!.isEmpty) {
+      return 'Please enter a content!';
+    }
+    if (!contentRegExp.hasMatch(content)) {
+      return 'Please enter a valid content!';
     }
     return null;
   }

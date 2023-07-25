@@ -1483,7 +1483,9 @@ class PostCommentsState extends State<PostComments> {
 
   dynamic textColor;
   dynamic iconColor;
+  dynamic iconColor2;
 
+  dynamic residentID;
   dynamic comments;
   TextEditingController commentController = TextEditingController();
 
@@ -1491,7 +1493,7 @@ class PostCommentsState extends State<PostComments> {
   void initState() {
     super.initState();
     setTextIconColors();
-    getComments();
+    getData();
   }
 
   void setTextIconColors() {
@@ -1500,6 +1502,9 @@ class PostCommentsState extends State<PostComments> {
     });
     setState(() {
       iconColor = settings.postListIconColor;
+    });
+    setState(() {
+      iconColor2 = settings.postListIconColor2;
     });
   }
 
@@ -1566,6 +1571,21 @@ class PostCommentsState extends State<PostComments> {
             comments = generalResponse["data"]["comments"];
           });
         }
+      }
+    }
+  }
+
+  void getData() async {
+    final residentResponse = await apiService
+        .getResidentDataAPI({'token': authService.getAuthToken()});
+    if (residentResponse != null) {
+      final status = residentResponse['status'];
+      if (status > 0) {
+        // Success
+        setState(() {
+          residentID = residentResponse['data']['list']['id'];
+        });
+        getComments();
       }
     }
   }
@@ -1693,14 +1713,88 @@ class PostCommentsState extends State<PostComments> {
                 return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                          "${comments[index]['username']}: ${comments[index]['content']}",
-                          style: TextStyle(
-                              fontFamily: "OpenSans",
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: textColor)),
-                      const SizedBox(height: 10),
+                      Wrap(spacing: 10.0, runSpacing: 4.0, children: [
+                        Text(
+                            "${comments[index]['username']}: ${comments[index]['content']}",
+                            style: TextStyle(
+                                fontFamily: "OpenSans",
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: textColor)),
+                        residentID == comments[index]['authorID']
+                            ? Row(children: [
+                                GestureDetector(
+                                    onTap: () {
+                                      // Navigate to edit post comment screen
+                                      Navigator.pushNamed(
+                                          context, '/editPostComment',
+                                          arguments: {
+                                            "commentID": comments[index]['id'],
+                                            "commentData": comments[index],
+                                            "commentType": widget.postType
+                                          }).then((_) {
+                                        getData();
+                                      });
+                                    },
+                                    child: Icon(Icons.edit,
+                                        color: iconColor, size: 15)),
+                                const SizedBox(width: 10.0),
+                                GestureDetector(
+                                    onTap: () async {
+                                      // Handle delete post comment
+                                      dynamic apiFunction;
+                                      if (widget.postType == 'crime') {
+                                        apiFunction = apiService
+                                            .deleteCrimePostCommentAPI;
+                                      } else if (widget.postType ==
+                                          'complaint') {
+                                        apiFunction = apiService
+                                            .deleteComplaintPostCommentAPI;
+                                      } else if (widget.postType == 'event') {
+                                        apiFunction = apiService
+                                            .deleteEventPostCommentAPI;
+                                      } else if (widget.postType == 'general') {
+                                        apiFunction = apiService
+                                            .deleteGeneralPostCommentAPI;
+                                      }
+
+                                      final commentResponse =
+                                          await apiFunction({
+                                        'token': authService.getAuthToken(),
+                                        '${widget.postType}PostCommentID':
+                                            comments[index]['id']
+                                      });
+                                      if (commentResponse != null) {
+                                        final status =
+                                            commentResponse['status'];
+                                        final message =
+                                            commentResponse['data']['message'];
+                                        if (status > 0) {
+                                          // Success
+                                          // ignore: use_build_context_synchronously
+                                          popupService.showSuccessPopup(
+                                              context,
+                                              "Delete Comment Success",
+                                              message, () {
+                                            getData();
+                                          });
+                                        } else {
+                                          // Error
+                                          // ignore: use_build_context_synchronously
+                                          popupService.showErrorPopup(
+                                              context,
+                                              "Delete Comment Failed",
+                                              message,
+                                              () {});
+                                        }
+                                      }
+                                    },
+                                    child: Icon(Icons.delete,
+                                        color: iconColor2, size: 15))
+                              ])
+                            : Container(),
+                      ]),
+                      const SizedBox(height: 15),
                     ]);
               },
             )),

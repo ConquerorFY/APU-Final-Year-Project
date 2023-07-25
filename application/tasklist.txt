@@ -12,7 +12,7 @@ Residents:
     - Map Screen (Together with Manage Neighborhood Group) [X]
     - Facilities Booking Screen [X]
     - Edit Posts Screen [X]
-    - Edit Posts Comment Screen
+    - Edit Posts Comment Screen [X]
     - Settings Screen
     - Private Chat Among Residents (?)
     - Crime Heat Map Across Malaysia (?)
@@ -29,7 +29,7 @@ Resident Leader:
     - Register Facilities Screen [X]
     - Edit Facilities Screen [X]
     - Edit Posts Screen [X]
-    - Edit Posts Comment Screen
+    - Edit Posts Comment Screen [X]
     - Settings Screen
     - Private Chat Among Residents (?)
     - Crime Heat Map Across Malaysia (?)

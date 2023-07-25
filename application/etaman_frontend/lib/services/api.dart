@@ -1140,4 +1140,208 @@ class ApiService {
       return null;
     }
   }
+
+  // Edit Crime Post Comment API
+  dynamic editCrimePostCommentAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/updateCrimePostComment/");
+      final request = MultipartRequest('PATCH', url);
+
+      body.forEach((key, value) {
+        if (key != 'image') {
+          request.fields[key] = value;
+        }
+      });
+
+      if (body['image'] != null) {
+        File image = body['image'] as File;
+        var stream = ByteStream(image.openRead());
+        var length = await image.length();
+        var multipartFile = MultipartFile('image', stream, length,
+            filename: '${request.fields['title']}.jpg');
+        request.files.add(multipartFile);
+      }
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final responseData = jsonDecode(responseBody);
+
+      logger.info("Edit Crime Post Comment - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Edit Crime Post Comment - $e");
+      return null;
+    }
+  }
+
+  // Edit Complaint Post Comment API
+  dynamic editComplaintPostCommentAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/updateComplaintPostComment/");
+      final request = MultipartRequest('PATCH', url);
+
+      body.forEach((key, value) {
+        if (key != 'image') {
+          request.fields[key] = value;
+        }
+      });
+
+      if (body['image'] != null) {
+        File image = body['image'] as File;
+        var stream = ByteStream(image.openRead());
+        var length = await image.length();
+        var multipartFile = MultipartFile('image', stream, length,
+            filename: '${request.fields['title']}.jpg');
+        request.files.add(multipartFile);
+      }
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final responseData = jsonDecode(responseBody);
+
+      logger.info("Edit Complaint Post Comment - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Edit Complaint Post Comment - $e");
+      return null;
+    }
+  }
+
+  // Edit Event Post Comment API
+  dynamic editEventPostCommentAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/updateEventPostComment/");
+      final request = MultipartRequest('PATCH', url);
+
+      body.forEach((key, value) {
+        if (key != 'image') {
+          request.fields[key] = value;
+        }
+      });
+
+      if (body['image'] != null) {
+        File image = body['image'] as File;
+        var stream = ByteStream(image.openRead());
+        var length = await image.length();
+        var multipartFile = MultipartFile('image', stream, length,
+            filename: '${request.fields['title']}.jpg');
+        request.files.add(multipartFile);
+      }
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final responseData = jsonDecode(responseBody);
+
+      logger.info("Edit Event Post Comment - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Edit Event Post Comment - $e");
+      return null;
+    }
+  }
+
+  // Edit General Post Comment API
+  dynamic editGeneralPostCommentAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/updateGeneralPostComment/");
+      final request = MultipartRequest('PATCH', url);
+
+      body.forEach((key, value) {
+        if (key != 'image') {
+          request.fields[key] = value;
+        }
+      });
+
+      if (body['image'] != null) {
+        File image = body['image'] as File;
+        var stream = ByteStream(image.openRead());
+        var length = await image.length();
+        var multipartFile = MultipartFile('image', stream, length,
+            filename: '${request.fields['title']}.jpg');
+        request.files.add(multipartFile);
+      }
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final responseData = jsonDecode(responseBody);
+
+      logger.info("Edit General Post Comment - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Edit General Post Comment - $e");
+      return null;
+    }
+  }
+
+  // Delete Crime Post Comment API
+  dynamic deleteCrimePostCommentAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/deleteCrimePostComment/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await delete(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Delete Crime Post Comment - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Delete Crime Post Comment - $e");
+      return null;
+    }
+  }
+
+  // Delete Complaint Post Comment API
+  dynamic deleteComplaintPostCommentAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/deleteComplaintPostComment/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await delete(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Delete Complaint Post Comment - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Delete Complaint Post Comment - $e");
+      return null;
+    }
+  }
+
+  // Delete Event Post Comment API
+  dynamic deleteEventPostCommentAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/deleteEventPostComment/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await delete(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Delete Event Post Comment - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Delete Event Post Comment - $e");
+      return null;
+    }
+  }
+
+  // Delete General Post Comment API
+  dynamic deleteGeneralPostCommentAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/deleteGeneralPostComment/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await delete(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Delete General Post Comment - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Delete General Post Comment - $e");
+      return null;
+    }
+  }
 }
