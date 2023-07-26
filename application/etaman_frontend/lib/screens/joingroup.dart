@@ -136,6 +136,10 @@ class JoinGroupState extends State<JoinGroup> {
 
   @override
   Widget build(BuildContext context) {
+    // Calculate the crossAxisCount based on the phone width
+    final screenWidth = MediaQuery.of(context).size.width;
+    int crossAxisCount = screenWidth ~/ 160; // Adjust the divisor as needed
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: settings.editProfileBgColor,
@@ -182,9 +186,8 @@ class JoinGroupState extends State<JoinGroup> {
               padding: const EdgeInsets.all(20.0),
               child: filteredGroupData.isNotEmpty
                   ? GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: crossAxisCount,
                         mainAxisSpacing: 20.0,
                         crossAxisSpacing: 10.0,
                       ),
@@ -423,7 +426,8 @@ class JoinGroupState extends State<JoinGroup> {
                                                           : Icons
                                                               .not_interested,
                                               color: settings
-                                                  .joinGroupTextFieldIconColor),
+                                                  .joinGroupTextFieldIconColor,
+                                              size: 16.0),
                                           const SizedBox(width: 8),
                                           Text(
                                               isAvailableGroupList
@@ -441,7 +445,7 @@ class JoinGroupState extends State<JoinGroup> {
                                                           ? "Cancel"
                                                           : '',
                                               style: TextStyle(
-                                                  fontSize: 12,
+                                                  fontSize: 10,
                                                   fontWeight: FontWeight.w800,
                                                   fontFamily: "OpenSans",
                                                   color: settings
