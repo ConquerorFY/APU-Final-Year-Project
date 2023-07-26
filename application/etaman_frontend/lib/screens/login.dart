@@ -78,6 +78,7 @@ class LoginState extends State<Login> {
                             child: Center(
                                 child: Text(
                                     '~ Connect, Share, and Unite in Your Neighborhood! ~',
+                                    textAlign: TextAlign.center,
                                     style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w600,

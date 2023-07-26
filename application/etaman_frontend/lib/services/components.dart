@@ -1973,6 +1973,10 @@ class LeftDrawerState extends State<LeftDrawer> {
                     fontSize: 18)),
             onTap: () {
               // Handle settings screen navigation
+              Navigator.pushNamed(context, '/settings').then((_) {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/home');
+              });
             },
           ),
           ListTile(
@@ -2166,6 +2170,10 @@ class BottomNavBar extends StatelessWidget {
             break;
           case 3:
             // Navigate to Settings Screen
+            Navigator.pushNamed(context, '/settings').then((_) {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/home');
+            });
             break;
         }
       },

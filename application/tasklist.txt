@@ -13,7 +13,7 @@ Residents:
     - Facilities Booking Screen [X]
     - Edit Posts Screen [X]
     - Edit Posts Comment Screen [X]
-    - Settings Screen
+    - Settings Screen [X]
     - Private Chat Among Residents (?)
     - Crime Heat Map Across Malaysia (?)
 
@@ -30,7 +30,7 @@ Resident Leader:
     - Edit Facilities Screen [X]
     - Edit Posts Screen [X]
     - Edit Posts Comment Screen [X]
-    - Settings Screen
+    - Settings Screen [X]
     - Private Chat Among Residents (?)
     - Crime Heat Map Across Malaysia (?)
 

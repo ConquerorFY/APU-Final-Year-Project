@@ -43,6 +43,7 @@ dependencies:
   latlong2: "^0.8.0"
   url_launcher: "^6.1.12"
   geocoding_resolver: "^0.0.3+2"
+  shared_preferences: "^2.2.0"
 
 dev_dependencies:
   flutter_test:
