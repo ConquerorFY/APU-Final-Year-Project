@@ -176,7 +176,7 @@ class EditFacilitiesState extends State<EditFacilities> {
                               // Success message
                               // ignore: use_build_context_synchronously
                               popupService.showSuccessPopup(
-                                  context, "Edit Faciltiies Success", message,
+                                  context, "Edit Facilities Success", message,
                                   () {
                                 getFacilitiesData();
                               });
@@ -184,7 +184,7 @@ class EditFacilitiesState extends State<EditFacilities> {
                               // Error message
                               // ignore: use_build_context_synchronously
                               popupService.showErrorPopup(context,
-                                  "Edit Facilties Error", message, () {});
+                                  "Edit Facilities Error", message, () {});
                             }
                           }
                         }

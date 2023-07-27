@@ -23,19 +23,23 @@ class MessagePopup extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: backgroundColor,
-      title: Row(children: [
-        Icon(icon, color: textColor),
+      title: Wrap(children: [
+        Icon(
+          icon,
+          color: textColor,
+          size: 23.0,
+        ),
         const SizedBox(width: 8.0),
         Text(
           title,
           style: TextStyle(
               color: textColor,
-              fontSize: 18.0,
+              fontSize: 16.38,
               fontWeight: FontWeight.w800,
               fontFamily: "OpenSans"),
-        )
+        ),
       ]),
-      titlePadding: const EdgeInsets.fromLTRB(24, 16, 24, 20),
+      titlePadding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
       content: Text(
         message,
         style: TextStyle(
@@ -44,7 +48,7 @@ class MessagePopup extends StatelessWidget {
             fontWeight: FontWeight.w500,
             fontFamily: "OpenSans"),
       ),
-      contentPadding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+      contentPadding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
       buttonPadding: const EdgeInsets.fromLTRB(10, 10, 24, 10),
       actions: [
         ElevatedButton(
