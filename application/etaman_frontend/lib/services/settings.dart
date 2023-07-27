@@ -1256,6 +1256,7 @@ class Settings {
   Color mapTooltipBgColor = Colors.green.shade900;
   Color mapTooltipTextColor = Colors.white;
   Color mapPrimaryMarkerColor = Colors.red;
+  Color mapPrimaryUserMarkerColor = const Color.fromARGB(200, 0, 255, 255);
   Color mapSecondaryMarkerColor = Colors.blue;
 
   Color joinGroupBgColor = Colors.green;

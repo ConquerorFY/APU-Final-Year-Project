@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoding_resolver/geocoding_resolver.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:geolocator/geolocator.dart';
 
 class MapView extends StatefulWidget {
   const MapView({super.key});
@@ -29,6 +30,7 @@ class MapViewState extends State<MapView> {
   dynamic currentGroupName;
   dynamic currentGroupLatitude;
   dynamic currentGroupLongtitude;
+  dynamic currentUserLocation;
   List<double> otherGroupLatitudes = [];
   List<double> otherGroupLongtitudes = [];
   List<String> otherGroupNames = [];
@@ -73,6 +75,7 @@ class MapViewState extends State<MapView> {
             otherGroupNames.add(group['name']);
           });
         }
+        getCurrentUserLocation();
       });
     } catch (e) {
       logger.error(e);
@@ -129,9 +132,22 @@ class MapViewState extends State<MapView> {
     }
   }
 
+  dynamic getCurrentUserLocation() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      setState(() {
+        currentUserLocation = LatLng(position.latitude, position.longitude);
+      });
+    } catch (e) {
+      logger.error(e);
+    }
+  }
+
   MarkerLayer generateLocationMarkers() {
     List<Marker> markersList = [];
 
+    // Add current joined group location (if any)
     if (currentGroupName != null) {
       markersList.add(Marker(
         width: 40.0,
@@ -155,6 +171,7 @@ class MapViewState extends State<MapView> {
       ));
     }
 
+    // Add other group location
     for (int i = 0; i < otherGroupLatitudes.length; i++) {
       if (otherGroupLatitudes[i] != currentGroupLatitude &&
           otherGroupLongtitudes[i] != currentGroupLongtitude) {
@@ -183,6 +200,29 @@ class MapViewState extends State<MapView> {
       }
     }
 
+    // Add user current location
+    markersList.add(Marker(
+      width: 40.0,
+      height: 40.0,
+      point: currentUserLocation,
+      builder: (ctx) => Tooltip(
+          waitDuration: Duration(seconds: settings.mapWaitDuration),
+          showDuration: Duration(seconds: settings.mapShowDuration),
+          padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+          height: 35,
+          textStyle: TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 10,
+              color: settings.mapTooltipTextColor,
+              fontWeight: FontWeight.bold),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(3),
+              color: settings.mapTooltipBgColor),
+          message: "You",
+          child: Icon(Icons.my_location,
+              color: settings.mapPrimaryUserMarkerColor)),
+    ));
+
     return MarkerLayer(
       markers: markersList,
     );
@@ -190,14 +230,15 @@ class MapViewState extends State<MapView> {
 
   @override
   Widget build(BuildContext context) {
-    return currentGroupLatitude != null && currentGroupLongtitude != null
+    return currentGroupLatitude != null &&
+            currentGroupLongtitude != null &&
+            currentUserLocation != null
         ? Scaffold(
             appBar: TopAppBar(isImplyLeading: true),
             body: Stack(children: [
               FlutterMap(
                 options: MapOptions(
-                  center: LatLng(currentGroupLatitude,
-                      currentGroupLongtitude), // Center Coordinates
+                  center: currentUserLocation, // Center Coordinates
                   zoom: 8, // Initial Zoom Level
                 ),
                 children: [
