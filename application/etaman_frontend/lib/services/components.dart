@@ -2180,3 +2180,21 @@ class BottomNavBar extends StatelessWidget {
     );
   }
 }
+
+// Loading Widget
+// ignore: must_be_immutable
+class Loading extends StatelessWidget {
+  Loading({super.key});
+
+  Settings settings = Settings();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Center(
+            child: CircularProgressIndicator(
+                backgroundColor: settings.loadingColor,
+                color: settings.loadingBgColor,
+                strokeWidth: 4.0)));
+  }
+}

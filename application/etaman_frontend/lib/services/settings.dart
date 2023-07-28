@@ -195,6 +195,9 @@ class Settings {
         settingsTopNavBarTextColor = Colors.white;
         settingsTextColor = Colors.blue.shade500;
         settingsIconColor = Colors.blue.shade600;
+
+        loadingBgColor = Colors.blue.shade600;
+        loadingColor = Colors.blue.shade200;
         break;
       case "green":
         popupBgColor = Colors.white;
@@ -359,6 +362,9 @@ class Settings {
         settingsTopNavBarTextColor = Colors.white;
         settingsTextColor = Colors.green.shade500;
         settingsIconColor = Colors.green.shade600;
+
+        loadingBgColor = Colors.green.shade600;
+        loadingColor = Colors.green.shade200;
         break;
       case "orange":
         popupBgColor = Colors.white;
@@ -523,6 +529,9 @@ class Settings {
         settingsTopNavBarTextColor = Colors.white;
         settingsTextColor = Colors.orange.shade500;
         settingsIconColor = Colors.orange.shade600;
+
+        loadingBgColor = Colors.orange.shade600;
+        loadingColor = Colors.orange.shade200;
         break;
       case "black":
         popupBgColor = Colors.white;
@@ -687,6 +696,9 @@ class Settings {
         settingsTopNavBarTextColor = Colors.white;
         settingsTextColor = Colors.black;
         settingsIconColor = Colors.black;
+
+        loadingBgColor = Colors.black;
+        loadingColor = Colors.white;
         break;
       case "indigo":
         popupBgColor = Colors.white;
@@ -851,6 +863,9 @@ class Settings {
         settingsTopNavBarTextColor = Colors.white;
         settingsTextColor = Colors.indigo.shade500;
         settingsIconColor = Colors.indigo.shade600;
+
+        loadingBgColor = Colors.indigo.shade600;
+        loadingColor = Colors.indigo.shade200;
         break;
       case "purple":
         popupBgColor = Colors.white;
@@ -1015,6 +1030,9 @@ class Settings {
         settingsTopNavBarTextColor = Colors.white;
         settingsTextColor = Colors.purple.shade500;
         settingsIconColor = Colors.purple.shade600;
+
+        loadingBgColor = Colors.purple.shade600;
+        loadingColor = Colors.purple.shade200;
         break;
       case "pink":
         popupBgColor = Colors.white;
@@ -1179,6 +1197,9 @@ class Settings {
         settingsTopNavBarTextColor = Colors.white;
         settingsTextColor = Colors.pink.shade500;
         settingsIconColor = Colors.pink.shade600;
+
+        loadingBgColor = Colors.pink.shade600;
+        loadingColor = Colors.pink.shade200;
         break;
     }
   }
@@ -1347,4 +1368,7 @@ class Settings {
   Color settingsTopNavBarTextColor = Colors.white;
   Color settingsTextColor = Colors.green.shade500;
   Color settingsIconColor = Colors.green.shade600;
+
+  Color loadingBgColor = Colors.green.shade600;
+  Color loadingColor = Colors.green.shade200;
 }

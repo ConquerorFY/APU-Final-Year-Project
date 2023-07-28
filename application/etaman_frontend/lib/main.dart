@@ -10,6 +10,7 @@ import 'package:etaman_frontend/screens/managegroup.dart';
 import 'package:etaman_frontend/screens/map.dart';
 import 'package:etaman_frontend/screens/registerfacilities.dart';
 import 'package:etaman_frontend/screens/settingsview.dart';
+import 'package:etaman_frontend/services/components.dart';
 import 'package:flutter/material.dart';
 import 'package:etaman_frontend/screens/register.dart';
 import 'package:etaman_frontend/screens/login.dart';
@@ -35,4 +36,5 @@ void main() => runApp(MaterialApp(initialRoute: '/', routes: {
       '/registerfacilities': (context) => const RegisterFacilities(),
       '/editfacilities': (context) => const EditFacilities(),
       '/settings': (context) => const SettingsView(),
+      '/loading': (context) => Loading(),
     }));

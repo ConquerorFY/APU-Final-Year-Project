@@ -269,6 +269,6 @@ class MapViewState extends State<MapView> {
             ]),
             drawer: const LeftDrawer(),
             bottomNavigationBar: BottomNavBar(selectedIndex: 1))
-        : Container();
+        : Loading();
   }
 }

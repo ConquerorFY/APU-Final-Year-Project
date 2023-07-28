@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:etaman_frontend/services/auth.dart';
+import 'package:etaman_frontend/services/components.dart';
 import 'package:etaman_frontend/services/popup.dart';
 import 'package:etaman_frontend/services/settings.dart';
 import 'package:etaman_frontend/services/validator.dart';
@@ -93,475 +94,499 @@ class EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: settings.editProfileBgColor,
-          title: Text('Edit Profile',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w800,
-                  fontFamily: "OpenSans",
-                  color: settings.editProfileTextFieldText2Color)),
-          shadowColor: settings.editProfileTextFieldShadowColor,
-          elevation: 5.0,
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Form(
-                  key: _formKey,
-                  child: Column(children: [
-                    TextFormField(
-                      key: _nameKey,
-                      initialValue: profileData['name'],
-                      validator: (value) {
-                        return validator.validateName(value);
-                      },
-                      onChanged: (value) {
-                        _nameKey.currentState!.validate();
-                      },
-                      style: TextStyle(
-                          color: settings.editProfileTextFieldTextColor,
-                          fontSize: 16,
-                          fontFamily: 'OpenSans'),
-                      cursorColor: settings.editProfileTextFieldCursorColor,
-                      decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                            color: settings.editProfileTextFieldTextColor),
-                        labelText: 'Name',
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.editProfileTextFieldBorderColor,
-                                width:
-                                    settings.editProfileTextFieldBorderWidth)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.editProfileTextFieldBorderColor,
-                                width:
-                                    settings.editProfileTextFieldBorderWidth +
+    return profileData != null
+        ? Scaffold(
+            appBar: AppBar(
+              backgroundColor: settings.editProfileBgColor,
+              title: Text('Edit Profile',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      fontFamily: "OpenSans",
+                      color: settings.editProfileTextFieldText2Color)),
+              shadowColor: settings.editProfileTextFieldShadowColor,
+              elevation: 5.0,
+            ),
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  // crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Form(
+                      key: _formKey,
+                      child: Column(children: [
+                        TextFormField(
+                          key: _nameKey,
+                          initialValue: profileData['name'],
+                          validator: (value) {
+                            return validator.validateName(value);
+                          },
+                          onChanged: (value) {
+                            _nameKey.currentState!.validate();
+                          },
+                          style: TextStyle(
+                              color: settings.editProfileTextFieldTextColor,
+                              fontSize: 16,
+                              fontFamily: 'OpenSans'),
+                          cursorColor: settings.editProfileTextFieldCursorColor,
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(
+                                color: settings.editProfileTextFieldTextColor),
+                            labelText: 'Name',
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: settings
+                                        .editProfileTextFieldBorderColor,
+                                    width: settings
+                                        .editProfileTextFieldBorderWidth)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: settings
+                                        .editProfileTextFieldBorderColor,
+                                    width: settings
+                                            .editProfileTextFieldBorderWidth +
                                         1.0)),
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
-                    TextFormField(
-                      key: _emailKey,
-                      initialValue: profileData['email'],
-                      validator: (value) {
-                        return validator.validateEmail(value);
-                      },
-                      onChanged: (value) {
-                        _emailKey.currentState!.validate();
-                      },
-                      style: TextStyle(
-                          color: settings.editProfileTextFieldTextColor,
-                          fontSize: 16,
-                          fontFamily: 'OpenSans'),
-                      cursorColor: settings.editProfileTextFieldCursorColor,
-                      decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                            color: settings.editProfileTextFieldTextColor),
-                        labelText: 'Email',
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.editProfileTextFieldBorderColor,
-                                width:
-                                    settings.editProfileTextFieldBorderWidth)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.editProfileTextFieldBorderColor,
-                                width:
-                                    settings.editProfileTextFieldBorderWidth +
+                          ),
+                        ),
+                        const SizedBox(height: 16.0),
+                        TextFormField(
+                          key: _emailKey,
+                          initialValue: profileData['email'],
+                          validator: (value) {
+                            return validator.validateEmail(value);
+                          },
+                          onChanged: (value) {
+                            _emailKey.currentState!.validate();
+                          },
+                          style: TextStyle(
+                              color: settings.editProfileTextFieldTextColor,
+                              fontSize: 16,
+                              fontFamily: 'OpenSans'),
+                          cursorColor: settings.editProfileTextFieldCursorColor,
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(
+                                color: settings.editProfileTextFieldTextColor),
+                            labelText: 'Email',
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: settings
+                                        .editProfileTextFieldBorderColor,
+                                    width: settings
+                                        .editProfileTextFieldBorderWidth)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: settings
+                                        .editProfileTextFieldBorderColor,
+                                    width: settings
+                                            .editProfileTextFieldBorderWidth +
                                         1.0)),
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
-                    TextFormField(
-                      key: _stateKey,
-                      initialValue: profileData['state'],
-                      validator: (value) {
-                        return validator.validateState(value);
-                      },
-                      onChanged: (value) {
-                        _stateKey.currentState!.validate();
-                      },
-                      style: TextStyle(
-                          color: settings.editProfileTextFieldTextColor,
-                          fontSize: 16,
-                          fontFamily: 'OpenSans'),
-                      cursorColor: settings.editProfileTextFieldCursorColor,
-                      decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                            color: settings.editProfileTextFieldTextColor),
-                        labelText: 'State',
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.editProfileTextFieldBorderColor,
-                                width:
-                                    settings.editProfileTextFieldBorderWidth)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.editProfileTextFieldBorderColor,
-                                width:
-                                    settings.editProfileTextFieldBorderWidth +
+                          ),
+                        ),
+                        const SizedBox(height: 16.0),
+                        TextFormField(
+                          key: _stateKey,
+                          initialValue: profileData['state'],
+                          validator: (value) {
+                            return validator.validateState(value);
+                          },
+                          onChanged: (value) {
+                            _stateKey.currentState!.validate();
+                          },
+                          style: TextStyle(
+                              color: settings.editProfileTextFieldTextColor,
+                              fontSize: 16,
+                              fontFamily: 'OpenSans'),
+                          cursorColor: settings.editProfileTextFieldCursorColor,
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(
+                                color: settings.editProfileTextFieldTextColor),
+                            labelText: 'State',
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: settings
+                                        .editProfileTextFieldBorderColor,
+                                    width: settings
+                                        .editProfileTextFieldBorderWidth)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: settings
+                                        .editProfileTextFieldBorderColor,
+                                    width: settings
+                                            .editProfileTextFieldBorderWidth +
                                         1.0)),
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
-                    TextFormField(
-                      key: _cityKey,
-                      initialValue: profileData['city'],
-                      validator: (value) {
-                        return validator.validateCity(value);
-                      },
-                      onChanged: (value) {
-                        _cityKey.currentState!.validate();
-                      },
-                      style: TextStyle(
-                          color: settings.editProfileTextFieldTextColor,
-                          fontSize: 16,
-                          fontFamily: 'OpenSans'),
-                      cursorColor: settings.editProfileTextFieldCursorColor,
-                      decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                            color: settings.editProfileTextFieldTextColor),
-                        labelText: 'City',
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.editProfileTextFieldBorderColor,
-                                width:
-                                    settings.editProfileTextFieldBorderWidth)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.editProfileTextFieldBorderColor,
-                                width:
-                                    settings.editProfileTextFieldBorderWidth +
+                          ),
+                        ),
+                        const SizedBox(height: 16.0),
+                        TextFormField(
+                          key: _cityKey,
+                          initialValue: profileData['city'],
+                          validator: (value) {
+                            return validator.validateCity(value);
+                          },
+                          onChanged: (value) {
+                            _cityKey.currentState!.validate();
+                          },
+                          style: TextStyle(
+                              color: settings.editProfileTextFieldTextColor,
+                              fontSize: 16,
+                              fontFamily: 'OpenSans'),
+                          cursorColor: settings.editProfileTextFieldCursorColor,
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(
+                                color: settings.editProfileTextFieldTextColor),
+                            labelText: 'City',
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: settings
+                                        .editProfileTextFieldBorderColor,
+                                    width: settings
+                                        .editProfileTextFieldBorderWidth)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: settings
+                                        .editProfileTextFieldBorderColor,
+                                    width: settings
+                                            .editProfileTextFieldBorderWidth +
                                         1.0)),
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
-                    TextFormField(
-                      key: _postcodeKey,
-                      initialValue: profileData['postcode'],
-                      validator: (value) {
-                        return validator.validatePostcode(value);
-                      },
-                      onChanged: (value) {
-                        _postcodeKey.currentState!.validate();
-                      },
-                      style: TextStyle(
-                          color: settings.editProfileTextFieldTextColor,
-                          fontSize: 16,
-                          fontFamily: 'OpenSans'),
-                      cursorColor: settings.editProfileTextFieldCursorColor,
-                      decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                            color: settings.editProfileTextFieldTextColor),
-                        labelText: 'Postcode',
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.editProfileTextFieldBorderColor,
-                                width:
-                                    settings.editProfileTextFieldBorderWidth)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.editProfileTextFieldBorderColor,
-                                width:
-                                    settings.editProfileTextFieldBorderWidth +
+                          ),
+                        ),
+                        const SizedBox(height: 16.0),
+                        TextFormField(
+                          key: _postcodeKey,
+                          initialValue: profileData['postcode'],
+                          validator: (value) {
+                            return validator.validatePostcode(value);
+                          },
+                          onChanged: (value) {
+                            _postcodeKey.currentState!.validate();
+                          },
+                          style: TextStyle(
+                              color: settings.editProfileTextFieldTextColor,
+                              fontSize: 16,
+                              fontFamily: 'OpenSans'),
+                          cursorColor: settings.editProfileTextFieldCursorColor,
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(
+                                color: settings.editProfileTextFieldTextColor),
+                            labelText: 'Postcode',
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: settings
+                                        .editProfileTextFieldBorderColor,
+                                    width: settings
+                                        .editProfileTextFieldBorderWidth)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: settings
+                                        .editProfileTextFieldBorderColor,
+                                    width: settings
+                                            .editProfileTextFieldBorderWidth +
                                         1.0)),
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
-                    TextFormField(
-                      key: _streetKey,
-                      initialValue: profileData['street'],
-                      validator: (value) {
-                        return validator.validateStreet(value);
-                      },
-                      onChanged: (value) {
-                        _streetKey.currentState!.validate();
-                      },
-                      style: TextStyle(
-                          color: settings.editProfileTextFieldTextColor,
-                          fontSize: 16,
-                          fontFamily: 'OpenSans'),
-                      cursorColor: settings.editProfileTextFieldCursorColor,
-                      decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                            color: settings.editProfileTextFieldTextColor),
-                        labelText: 'Street',
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.editProfileTextFieldBorderColor,
-                                width:
-                                    settings.editProfileTextFieldBorderWidth)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.editProfileTextFieldBorderColor,
-                                width:
-                                    settings.editProfileTextFieldBorderWidth +
+                          ),
+                        ),
+                        const SizedBox(height: 16.0),
+                        TextFormField(
+                          key: _streetKey,
+                          initialValue: profileData['street'],
+                          validator: (value) {
+                            return validator.validateStreet(value);
+                          },
+                          onChanged: (value) {
+                            _streetKey.currentState!.validate();
+                          },
+                          style: TextStyle(
+                              color: settings.editProfileTextFieldTextColor,
+                              fontSize: 16,
+                              fontFamily: 'OpenSans'),
+                          cursorColor: settings.editProfileTextFieldCursorColor,
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(
+                                color: settings.editProfileTextFieldTextColor),
+                            labelText: 'Street',
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: settings
+                                        .editProfileTextFieldBorderColor,
+                                    width: settings
+                                        .editProfileTextFieldBorderWidth)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: settings
+                                        .editProfileTextFieldBorderColor,
+                                    width: settings
+                                            .editProfileTextFieldBorderWidth +
                                         1.0)),
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
-                    TextFormField(
-                      key: _contactKey,
-                      initialValue: profileData['contact'],
-                      validator: (value) {
-                        return validator.validateContact(value);
-                      },
-                      onChanged: (value) {
-                        _contactKey.currentState!.validate();
-                      },
-                      style: TextStyle(
-                          color: settings.editProfileTextFieldTextColor,
-                          fontSize: 16,
-                          fontFamily: 'OpenSans'),
-                      cursorColor: settings.editProfileTextFieldCursorColor,
-                      decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                            color: settings.editProfileTextFieldTextColor),
-                        labelText: 'Contact Number',
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.editProfileTextFieldBorderColor,
-                                width:
-                                    settings.editProfileTextFieldBorderWidth)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.editProfileTextFieldBorderColor,
-                                width:
-                                    settings.editProfileTextFieldBorderWidth +
+                          ),
+                        ),
+                        const SizedBox(height: 16.0),
+                        TextFormField(
+                          key: _contactKey,
+                          initialValue: profileData['contact'],
+                          validator: (value) {
+                            return validator.validateContact(value);
+                          },
+                          onChanged: (value) {
+                            _contactKey.currentState!.validate();
+                          },
+                          style: TextStyle(
+                              color: settings.editProfileTextFieldTextColor,
+                              fontSize: 16,
+                              fontFamily: 'OpenSans'),
+                          cursorColor: settings.editProfileTextFieldCursorColor,
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(
+                                color: settings.editProfileTextFieldTextColor),
+                            labelText: 'Contact Number',
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: settings
+                                        .editProfileTextFieldBorderColor,
+                                    width: settings
+                                        .editProfileTextFieldBorderWidth)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: settings
+                                        .editProfileTextFieldBorderColor,
+                                    width: settings
+                                            .editProfileTextFieldBorderWidth +
                                         1.0)),
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
-                    TextFormField(
-                      key: _usernameKey,
-                      initialValue: profileData['username'],
-                      validator: (value) {
-                        return validator.validateUsername(value);
-                      },
-                      onChanged: (value) {
-                        _usernameKey.currentState!.validate();
-                      },
-                      style: TextStyle(
-                          color: settings.editProfileTextFieldTextColor,
-                          fontSize: 16,
-                          fontFamily: 'OpenSans'),
-                      cursorColor: settings.editProfileTextFieldCursorColor,
-                      decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                            color: settings.editProfileTextFieldTextColor),
-                        labelText: 'Username',
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.editProfileTextFieldBorderColor,
-                                width:
-                                    settings.editProfileTextFieldBorderWidth)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.editProfileTextFieldBorderColor,
-                                width:
-                                    settings.editProfileTextFieldBorderWidth +
+                          ),
+                        ),
+                        const SizedBox(height: 16.0),
+                        TextFormField(
+                          key: _usernameKey,
+                          initialValue: profileData['username'],
+                          validator: (value) {
+                            return validator.validateUsername(value);
+                          },
+                          onChanged: (value) {
+                            _usernameKey.currentState!.validate();
+                          },
+                          style: TextStyle(
+                              color: settings.editProfileTextFieldTextColor,
+                              fontSize: 16,
+                              fontFamily: 'OpenSans'),
+                          cursorColor: settings.editProfileTextFieldCursorColor,
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(
+                                color: settings.editProfileTextFieldTextColor),
+                            labelText: 'Username',
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: settings
+                                        .editProfileTextFieldBorderColor,
+                                    width: settings
+                                        .editProfileTextFieldBorderWidth)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: settings
+                                        .editProfileTextFieldBorderColor,
+                                    width: settings
+                                            .editProfileTextFieldBorderWidth +
                                         1.0)),
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
-                    TextFormField(
-                      key: _passwordKey,
-                      initialValue: profileData['password'],
-                      validator: (value) {
-                        return validator.validatePassword(value);
-                      },
-                      onChanged: (value) {
-                        _passwordKey.currentState!.validate();
-                      },
-                      obscureText: true,
-                      style: TextStyle(
-                          color: settings.editProfileTextFieldTextColor,
-                          fontSize: 16,
-                          fontFamily: 'OpenSans'),
-                      cursorColor: settings.editProfileTextFieldCursorColor,
-                      decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                            color: settings.editProfileTextFieldTextColor),
-                        labelText: 'Password',
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.editProfileTextFieldBorderColor,
-                                width:
-                                    settings.editProfileTextFieldBorderWidth)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: settings.editProfileTextFieldBorderColor,
-                                width:
-                                    settings.editProfileTextFieldBorderWidth +
+                          ),
+                        ),
+                        const SizedBox(height: 16.0),
+                        TextFormField(
+                          key: _passwordKey,
+                          initialValue: profileData['password'],
+                          validator: (value) {
+                            return validator.validatePassword(value);
+                          },
+                          onChanged: (value) {
+                            _passwordKey.currentState!.validate();
+                          },
+                          obscureText: true,
+                          style: TextStyle(
+                              color: settings.editProfileTextFieldTextColor,
+                              fontSize: 16,
+                              fontFamily: 'OpenSans'),
+                          cursorColor: settings.editProfileTextFieldCursorColor,
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(
+                                color: settings.editProfileTextFieldTextColor),
+                            labelText: 'Password',
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: settings
+                                        .editProfileTextFieldBorderColor,
+                                    width: settings
+                                        .editProfileTextFieldBorderWidth)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: settings
+                                        .editProfileTextFieldBorderColor,
+                                    width: settings
+                                            .editProfileTextFieldBorderWidth +
                                         1.0)),
-                      ),
+                          ),
+                        ),
+                        const SizedBox(height: 16.0),
+                      ]),
                     ),
-                    const SizedBox(height: 16.0),
-                  ]),
-                ),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  selectedImage != null
-                      ? Icon(
-                          Icons.done,
-                          color: settings.editProfileBgColor,
-                          size: 40.0,
-                        )
-                      : Icon(Icons.cancel,
-                          color: settings.editProfileBgColor2, size: 40.0),
-                  const SizedBox(width: 20.0),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            settings.editProfileTextFieldTextColor),
-                        padding: MaterialStateProperty.all<EdgeInsets>(
-                            const EdgeInsets.fromLTRB(50, 20, 50, 20))),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.add_a_photo,
-                              color: settings.editProfileTextFieldIconColor),
-                          const SizedBox(width: 8),
-                          Text('Add Image',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily: "OpenSans",
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      selectedImage != null
+                          ? Icon(
+                              Icons.done,
+                              color: settings.editProfileBgColor,
+                              size: 40.0,
+                            )
+                          : Icon(Icons.cancel,
+                              color: settings.editProfileBgColor2, size: 40.0),
+                      const SizedBox(width: 20.0),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                settings.editProfileTextFieldTextColor),
+                            padding: MaterialStateProperty.all<EdgeInsets>(
+                                const EdgeInsets.fromLTRB(50, 20, 50, 20))),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.add_a_photo,
                                   color:
-                                      settings.editProfileTextFieldText2Color)),
-                        ]),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            titlePadding:
-                                const EdgeInsets.fromLTRB(20.0, 15.0, 0, 50.0),
-                            title: Text('Select Image Source',
-                                style: TextStyle(
-                                    color:
-                                        settings.editProfileTextFieldTextColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: 'OpenSans')),
-                            contentPadding:
-                                const EdgeInsets.fromLTRB(0, 0, 10.0, 20.0),
-                            actions: [
-                              TextButton(
-                                onPressed: () =>
-                                    _pickImage(ImageSource.gallery),
-                                child: Text('Gallery',
+                                      settings.editProfileTextFieldIconColor),
+                              const SizedBox(width: 8),
+                              Text('Add Image',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w800,
+                                      fontFamily: "OpenSans",
+                                      color: settings
+                                          .editProfileTextFieldText2Color)),
+                            ]),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                titlePadding: const EdgeInsets.fromLTRB(
+                                    20.0, 15.0, 0, 50.0),
+                                title: Text('Select Image Source',
                                     style: TextStyle(
                                         color: settings
                                             .editProfileTextFieldTextColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
                                         fontFamily: 'OpenSans')),
-                              ),
-                              TextButton(
-                                onPressed: () => _pickImage(ImageSource.camera),
-                                child: Text('Camera',
-                                    style: TextStyle(
-                                        color: settings
-                                            .editProfileTextFieldTextColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        fontFamily: 'OpenSans')),
-                              ),
-                            ],
+                                contentPadding:
+                                    const EdgeInsets.fromLTRB(0, 0, 10.0, 20.0),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        _pickImage(ImageSource.gallery),
+                                    child: Text('Gallery',
+                                        style: TextStyle(
+                                            color: settings
+                                                .editProfileTextFieldTextColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: 'OpenSans')),
+                                  ),
+                                  TextButton(
+                                    onPressed: () =>
+                                        _pickImage(ImageSource.camera),
+                                    child: Text('Camera',
+                                        style: TextStyle(
+                                            color: settings
+                                                .editProfileTextFieldTextColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: 'OpenSans')),
+                                  ),
+                                ],
+                              );
+                            },
                           );
                         },
-                      );
-                    },
-                  ),
-                ]),
-                const SizedBox(height: 20.0),
-                ElevatedButton(
-                    onPressed: () async {
-                      // Handle edit profile process
-                      Map<String, dynamic> userData = {
-                        "name": _nameKey.currentState?.value,
-                        "email": _emailKey.currentState?.value,
-                        "contact": _contactKey.currentState?.value,
-                        "state": _stateKey.currentState?.value,
-                        "city": _cityKey.currentState?.value,
-                        "street": _streetKey.currentState?.value,
-                        "postcode": _postcodeKey.currentState?.value,
-                        "username": _usernameKey.currentState?.value,
-                        "password": _passwordKey.currentState?.value,
-                        "image": selectedImage
-                      };
-                      if (!(_nameKey.currentState!.validate() &&
-                          _emailKey.currentState!.validate() &&
-                          _stateKey.currentState!.validate() &&
-                          _cityKey.currentState!.validate() &&
-                          _postcodeKey.currentState!.validate() &&
-                          _streetKey.currentState!.validate() &&
-                          _contactKey.currentState!.validate() &&
-                          _usernameKey.currentState!.validate() &&
-                          _passwordKey.currentState!.validate())) {
-                        popupService.showErrorPopup(
-                            context,
-                            "Validation Message",
-                            "Please ensure all fields are valid before submitting!",
-                            () {});
-                      } else {
-                        // Filter out attributes that are not changed / updated by user
-                        userData.removeWhere(
-                            (key, value) => profileData[key] == value);
-                        // Add token into userData
-                        userData['token'] = authService.getAuthToken();
-                        final response =
-                            await apiService.editAccountAPI(userData);
-                        if (response != null) {
-                          final status = response["status"];
-                          final message = response["data"]["message"];
-                          if (status > 0) {
-                            // Success message
-                            // ignore: use_build_context_synchronously
-                            popupService.showSuccessPopup(
-                                context, "Edit Profile Success", message, () {
-                              setState(() {
-                                selectedImage = null;
-                              });
-                              getData();
-                            });
-                          } else {
-                            // Error message
-                            // ignore: use_build_context_synchronously
+                      ),
+                    ]),
+                    const SizedBox(height: 20.0),
+                    ElevatedButton(
+                        onPressed: () async {
+                          // Handle edit profile process
+                          Map<String, dynamic> userData = {
+                            "name": _nameKey.currentState?.value,
+                            "email": _emailKey.currentState?.value,
+                            "contact": _contactKey.currentState?.value,
+                            "state": _stateKey.currentState?.value,
+                            "city": _cityKey.currentState?.value,
+                            "street": _streetKey.currentState?.value,
+                            "postcode": _postcodeKey.currentState?.value,
+                            "username": _usernameKey.currentState?.value,
+                            "password": _passwordKey.currentState?.value,
+                            "image": selectedImage
+                          };
+                          if (!(_nameKey.currentState!.validate() &&
+                              _emailKey.currentState!.validate() &&
+                              _stateKey.currentState!.validate() &&
+                              _cityKey.currentState!.validate() &&
+                              _postcodeKey.currentState!.validate() &&
+                              _streetKey.currentState!.validate() &&
+                              _contactKey.currentState!.validate() &&
+                              _usernameKey.currentState!.validate() &&
+                              _passwordKey.currentState!.validate())) {
                             popupService.showErrorPopup(
-                                context, "Edit Profile Error", message, () {});
+                                context,
+                                "Validation Message",
+                                "Please ensure all fields are valid before submitting!",
+                                () {});
+                          } else {
+                            // Filter out attributes that are not changed / updated by user
+                            userData.removeWhere(
+                                (key, value) => profileData[key] == value);
+                            // Add token into userData
+                            userData['token'] = authService.getAuthToken();
+                            final response =
+                                await apiService.editAccountAPI(userData);
+                            if (response != null) {
+                              final status = response["status"];
+                              final message = response["data"]["message"];
+                              if (status > 0) {
+                                // Success message
+                                // ignore: use_build_context_synchronously
+                                popupService.showSuccessPopup(
+                                    context, "Edit Profile Success", message,
+                                    () {
+                                  setState(() {
+                                    selectedImage = null;
+                                  });
+                                  getData();
+                                });
+                              } else {
+                                // Error message
+                                // ignore: use_build_context_synchronously
+                                popupService.showErrorPopup(context,
+                                    "Edit Profile Error", message, () {});
+                              }
+                            }
                           }
-                        }
-                      }
-                    },
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            settings.editProfileTextFieldTextColor),
-                        padding: MaterialStateProperty.all<EdgeInsets>(
-                            const EdgeInsets.fromLTRB(50, 20, 50, 20))),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.edit,
-                              color: settings.editProfileTextFieldIconColor),
-                          const SizedBox(width: 8),
-                          Text('Edit',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily: "OpenSans",
+                        },
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                settings.editProfileTextFieldTextColor),
+                            padding: MaterialStateProperty.all<EdgeInsets>(
+                                const EdgeInsets.fromLTRB(50, 20, 50, 20))),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.edit,
                                   color:
-                                      settings.editProfileTextFieldText2Color)),
-                        ])),
-              ],
-            ),
-          ),
-        ));
+                                      settings.editProfileTextFieldIconColor),
+                              const SizedBox(width: 8),
+                              Text('Edit',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w800,
+                                      fontFamily: "OpenSans",
+                                      color: settings
+                                          .editProfileTextFieldText2Color)),
+                            ])),
+                  ],
+                ),
+              ),
+            ))
+        : Loading();
   }
 }
