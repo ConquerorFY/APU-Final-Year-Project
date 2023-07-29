@@ -6,6 +6,7 @@ import 'package:etaman_frontend/services/popup.dart';
 import 'package:etaman_frontend/services/settings.dart';
 import 'package:etaman_frontend/services/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:web_socket_channel/io.dart';
 
 // Post Type Filter Section Widget
 class PostTypeFilterSection extends StatefulWidget {
@@ -1487,6 +1488,7 @@ class PostCommentsState extends State<PostComments> {
 
   dynamic residentID;
   dynamic comments;
+  dynamic commentChannel;
   TextEditingController commentController = TextEditingController();
 
   @override
@@ -1573,6 +1575,15 @@ class PostCommentsState extends State<PostComments> {
         }
       }
     }
+
+    commentChannel = IOWebSocketChannel.connect(
+        "${apiService.wsUrl}/comments/?postID=${widget.postID}&postType=${widget.postType}");
+    commentChannel.stream.asBroadcastStream().listen((message) {
+      setState(() {
+        comments.add(jsonDecode(message)['data']['comment']);
+        commentController.clear();
+      });
+    });
   }
 
   void getData() async {
@@ -1597,86 +1608,119 @@ class PostCommentsState extends State<PostComments> {
 
     if (widget.postType == 'crime') {
       // Submit crime post comments
+      // Map<String, dynamic> commentData = {
+      //   "content": newComment,
+      //   "crimePostID": postID,
+      //   "token": token
+      // };
+      // final commentResponse =
+      //     await apiService.submitCrimePostCommentAPI(commentData);
+      // if (commentResponse != null) {
+      //   final status = commentResponse["status"];
+      //   if (status > 0) {
+      //     // Success
+      //     setState(() {
+      //       commentController.clear();
+      //     });
+      //     getComments();
+      //   }
+      // }
+
+      // Web Socket (Real Time)
       Map<String, dynamic> commentData = {
         "content": newComment,
         "crimePostID": postID,
         "token": token
       };
-      final commentResponse =
-          await apiService.submitCrimePostCommentAPI(commentData);
-      if (commentResponse != null) {
-        final status = commentResponse["status"];
-        if (status > 0) {
-          // Success
-          setState(() {
-            commentController.clear();
-          });
-          getComments();
-        }
-      }
+      commentChannel.sink.add(jsonEncode(commentData));
     } else if (widget.postType == 'complaint') {
       // Submit complaint post comments
+      // Map<String, dynamic> commentData = {
+      //   "content": newComment,
+      //   "complaintPostID": postID,
+      //   "token": token
+      // };
+      // final commentResponse =
+      //     await apiService.submitComplaintPostCommentAPI(commentData);
+      // if (commentResponse != null) {
+      //   final status = commentResponse["status"];
+      //   if (status > 0) {
+      //     // Success
+      //     setState(() {
+      //       commentController.clear();
+      //     });
+      //     getComments();
+      //   }
+      // }
+
+      // Web Socket (Real Time)
       Map<String, dynamic> commentData = {
         "content": newComment,
         "complaintPostID": postID,
         "token": token
       };
-      final commentResponse =
-          await apiService.submitComplaintPostCommentAPI(commentData);
-      if (commentResponse != null) {
-        final status = commentResponse["status"];
-        if (status > 0) {
-          // Success
-          setState(() {
-            commentController.clear();
-          });
-          getComments();
-        }
-      }
+      commentChannel.sink.add(jsonEncode(commentData));
     } else if (widget.postType == 'event') {
       // Submit event post comments
+      // Map<String, dynamic> commentData = {
+      //   "content": newComment,
+      //   "eventPostID": postID,
+      //   "token": token
+      // };
+      // final commentResponse =
+      //     await apiService.submitEventPostCommentAPI(commentData);
+      // if (commentResponse != null) {
+      //   final status = commentResponse["status"];
+      //   if (status > 0) {
+      //     // Success
+      //     setState(() {
+      //       commentController.clear();
+      //     });
+      //     getComments();
+      //   }
+      // }
+
+      // Web Socket (Real Time)
       Map<String, dynamic> commentData = {
         "content": newComment,
         "eventPostID": postID,
         "token": token
       };
-      final commentResponse =
-          await apiService.submitEventPostCommentAPI(commentData);
-      if (commentResponse != null) {
-        final status = commentResponse["status"];
-        if (status > 0) {
-          // Success
-          setState(() {
-            commentController.clear();
-          });
-          getComments();
-        }
-      }
+      commentChannel.sink.add(jsonEncode(commentData));
     } else if (widget.postType == 'general') {
       // Submit general post comments
+      // Map<String, dynamic> commentData = {
+      //   "content": newComment,
+      //   "generalPostID": postID,
+      //   "token": token
+      // };
+      // final commentResponse =
+      //     await apiService.submitGeneralPostCommentAPI(commentData);
+      // if (commentResponse != null) {
+      //   final status = commentResponse["status"];
+      //   if (status > 0) {
+      //     // Success
+      //     setState(() {
+      //       commentController.clear();
+      //     });
+      //     getComments();
+      //   }
+      // }
+
+      // Web Socket (Real Time)
       Map<String, dynamic> commentData = {
         "content": newComment,
         "generalPostID": postID,
         "token": token
       };
-      final commentResponse =
-          await apiService.submitGeneralPostCommentAPI(commentData);
-      if (commentResponse != null) {
-        final status = commentResponse["status"];
-        if (status > 0) {
-          // Success
-          setState(() {
-            commentController.clear();
-          });
-          getComments();
-        }
-      }
+      commentChannel.sink.add(jsonEncode(commentData));
     }
   }
 
   @override
   void dispose() {
     commentController.dispose();
+    commentChannel.close();
     super.dispose();
   }
 

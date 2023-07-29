@@ -14,6 +14,7 @@ class ApiService {
 
   final baseUrl = "http://localhost:8000/api";
   final mediaUrl = "http://localhost:8000";
+  final wsUrl = "ws://localhost:8000/ws";
 
   // Register Resident Account API
   dynamic registerAccountAPI(body) async {

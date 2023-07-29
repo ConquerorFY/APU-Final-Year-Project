@@ -1,5 +1,6 @@
-from django.urls import path
+from django.urls import path, re_path
 from RESTAPI import views
+from . import consumers
 
 urlpatterns = [
     # Test API
@@ -92,4 +93,8 @@ urlpatterns = [
     path('returnFacilities/', views.returnNeighborhoodFacilities),
     path('updateFacilities/', views.updateNeighborhoodFacilities),
     path('deleteFacilities/', views.deleteNeighborhoodFacilities),
+]
+
+websocket_urlpatterns = [
+    re_path(r'ws/comments/', consumers.CommentConsumer.as_asgi())
 ]

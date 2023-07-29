@@ -45,6 +45,7 @@ dependencies:
   geocoding_resolver: "^0.0.3+2"
   geolocator: "^9.0.2"
   shared_preferences: "^2.2.0"
+  web_socket_channel: "^2.4.0"
 
 dev_dependencies:
   flutter_test:
