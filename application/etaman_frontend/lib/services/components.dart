@@ -232,9 +232,22 @@ class PostTypeFilterSectionState extends State<PostTypeFilterSection> {
 }
 
 // Post List Widget
+// ignore: must_be_immutable
 class PostList extends StatefulWidget {
   final String postListType;
-  const PostList({super.key, required this.postListType});
+  dynamic postData;
+  dynamic userData;
+  dynamic residentID;
+  dynamic nGroupID;
+  bool isJoinedGroup;
+  PostList(
+      {super.key,
+      required this.postListType,
+      required this.postData,
+      required this.userData,
+      required this.residentID,
+      required this.nGroupID,
+      required this.isJoinedGroup});
 
   @override
   PostListState createState() => PostListState();
@@ -252,21 +265,15 @@ class PostListState extends State<PostList> {
   dynamic iconSelectedColor;
   dynamic buttonColor;
   dynamic buttonCancelColor;
-  dynamic postData;
-  dynamic userData;
-  dynamic residentID;
-  dynamic nGroupID;
   dynamic commentSectionExpandedState;
-
-  bool isJoinedGroup = true;
 
   @override
   void initState() {
     super.initState();
-    getData();
+    initData();
   }
 
-  void getData() async {
+  void initData() async {
     // Set Text, Background, Button and Cancel Button Color
     setState(() {
       textColor = settings.postListTextColor;
@@ -283,6 +290,18 @@ class PostListState extends State<PostList> {
     setState(() {
       buttonCancelColor = settings.postListButtonCancelColor;
     });
+    // Init Comment Expanded State
+    setState(() {
+      commentSectionExpandedState = {
+        "crime": List.filled(widget.postData["crime"].length, false),
+        "complaint": List.filled(widget.postData["complaint"].length, false),
+        "event": List.filled(widget.postData["event"].length, false),
+        "general": List.filled(widget.postData["general"].length, false),
+      };
+    });
+  }
+
+  void getData() async {
     // Get Resident Account Data
     Map<String, dynamic> tokenData = {"token": authService.getAuthToken()};
     final residentResponse = await apiService.getResidentDataAPI(tokenData);
@@ -291,10 +310,12 @@ class PostListState extends State<PostList> {
       if (status > 0) {
         // Success
         setState(() {
-          nGroupID = residentResponse["data"]["list"]["groupID"];
-          residentID = residentResponse['data']['list']['id'];
-          userData = jsonDecode(residentResponse["data"]["list"]["userData"]);
-          isJoinedGroup = residentResponse['data']['list']['groupID'] != null;
+          widget.nGroupID = residentResponse["data"]["list"]["groupID"];
+          widget.residentID = residentResponse['data']['list']['id'];
+          widget.userData =
+              jsonDecode(residentResponse["data"]["list"]["userData"]);
+          widget.isJoinedGroup =
+              residentResponse['data']['list']['groupID'] != null;
         });
         // Get Neighborhood Group ID
         final groupID = residentResponse["data"]["list"]["groupID"];
@@ -315,15 +336,7 @@ class PostListState extends State<PostList> {
               "general": groupResponse["data"]["general"]
             };
             setState(() {
-              postData = data;
-            });
-            setState(() {
-              commentSectionExpandedState = {
-                "crime": List.filled(postData["crime"].length, false),
-                "complaint": List.filled(postData["complaint"].length, false),
-                "event": List.filled(postData["event"].length, false),
-                "general": List.filled(postData["general"].length, false),
-              };
+              widget.postData = data;
             });
           }
         }
@@ -336,8 +349,8 @@ class PostListState extends State<PostList> {
     // 1 -> Like
     // -1 -> Dislike
     if (postType == 'crime') {
-      final crimePostLikes = userData["crimePostLikes"];
-      final crimePostDislikes = userData["crimePostDislikes"];
+      final crimePostLikes = widget.userData["crimePostLikes"];
+      final crimePostDislikes = widget.userData["crimePostDislikes"];
       if (crimePostLikes.contains(postID) &&
           !(crimePostDislikes.contains(postID))) {
         return 1;
@@ -346,8 +359,8 @@ class PostListState extends State<PostList> {
         return -1;
       }
     } else if (postType == 'complaint') {
-      final complaintPostLikes = userData["complaintPostLikes"];
-      final complaintPostDislikes = userData["complaintPostDislikes"];
+      final complaintPostLikes = widget.userData["complaintPostLikes"];
+      final complaintPostDislikes = widget.userData["complaintPostDislikes"];
       if (complaintPostLikes.contains(postID) &&
           !(complaintPostDislikes.contains(postID))) {
         return 1;
@@ -356,8 +369,8 @@ class PostListState extends State<PostList> {
         return -1;
       }
     } else if (postType == 'event') {
-      final eventPostLikes = userData["eventPostLikes"];
-      final eventPostDislikes = userData["eventPostDislikes"];
+      final eventPostLikes = widget.userData["eventPostLikes"];
+      final eventPostDislikes = widget.userData["eventPostDislikes"];
       if (eventPostLikes.contains(postID) &&
           !(eventPostDislikes.contains(postID))) {
         return 1;
@@ -366,8 +379,8 @@ class PostListState extends State<PostList> {
         return -1;
       }
     } else if (postType == 'general') {
-      final generalPostLikes = userData["generalPostLikes"];
-      final generalPostDislikes = userData["generalPostDislikes"];
+      final generalPostLikes = widget.userData["generalPostLikes"];
+      final generalPostDislikes = widget.userData["generalPostDislikes"];
       if (generalPostLikes.contains(postID) &&
           !(generalPostDislikes.contains(postID))) {
         return 1;
@@ -383,7 +396,7 @@ class PostListState extends State<PostList> {
   void handleLikeDislikePost(postType, postID, operation) async {
     if (postType == 'crime') {
       if (operation == 'like') {
-        final crimePostLikes = userData["crimePostLikes"];
+        final crimePostLikes = widget.userData["crimePostLikes"];
         if (!crimePostLikes.contains(postID)) {
           Map<String, dynamic> postData = {
             "token": authService.getAuthToken(),
@@ -399,7 +412,7 @@ class PostListState extends State<PostList> {
           }
         }
       } else if (operation == 'dislike') {
-        final crimePostDislikes = userData["crimePostDislikes"];
+        final crimePostDislikes = widget.userData["crimePostDislikes"];
         if (!crimePostDislikes.contains(postID)) {
           Map<String, dynamic> postData = {
             "token": authService.getAuthToken(),
@@ -417,7 +430,7 @@ class PostListState extends State<PostList> {
       }
     } else if (postType == 'complaint') {
       if (operation == 'like') {
-        final complaintPostLikes = userData["complaintPostLikes"];
+        final complaintPostLikes = widget.userData["complaintPostLikes"];
         if (!complaintPostLikes.contains(postID)) {
           Map<String, dynamic> postData = {
             "token": authService.getAuthToken(),
@@ -433,7 +446,7 @@ class PostListState extends State<PostList> {
           }
         }
       } else if (operation == 'dislike') {
-        final complaintPostDislikes = userData["complaintPostDislikes"];
+        final complaintPostDislikes = widget.userData["complaintPostDislikes"];
         if (!complaintPostDislikes.contains(postID)) {
           Map<String, dynamic> postData = {
             "token": authService.getAuthToken(),
@@ -452,7 +465,7 @@ class PostListState extends State<PostList> {
       }
     } else if (postType == 'event') {
       if (operation == 'like') {
-        final eventPostLikes = userData["eventPostLikes"];
+        final eventPostLikes = widget.userData["eventPostLikes"];
         if (!eventPostLikes.contains(postID)) {
           Map<String, dynamic> postData = {
             "token": authService.getAuthToken(),
@@ -468,7 +481,7 @@ class PostListState extends State<PostList> {
           }
         }
       } else if (operation == 'dislike') {
-        final eventPostDislikes = userData["eventPostDislikes"];
+        final eventPostDislikes = widget.userData["eventPostDislikes"];
         if (!eventPostDislikes.contains(postID)) {
           Map<String, dynamic> postData = {
             "token": authService.getAuthToken(),
@@ -486,7 +499,7 @@ class PostListState extends State<PostList> {
       }
     } else if (postType == 'general') {
       if (operation == 'like') {
-        final generalPostLikes = userData["generalPostLikes"];
+        final generalPostLikes = widget.userData["generalPostLikes"];
         if (!generalPostLikes.contains(postID)) {
           Map<String, dynamic> postData = {
             "token": authService.getAuthToken(),
@@ -502,7 +515,7 @@ class PostListState extends State<PostList> {
           }
         }
       } else if (operation == 'dislike') {
-        final generalPostDislikes = userData["generalPostDislikes"];
+        final generalPostDislikes = widget.userData["generalPostDislikes"];
         if (!generalPostDislikes.contains(postID)) {
           Map<String, dynamic> postData = {
             "token": authService.getAuthToken(),
@@ -525,7 +538,7 @@ class PostListState extends State<PostList> {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: postData["crime"].length,
+      itemCount: widget.postData["crime"].length,
       itemBuilder: (context, index) {
         return Container(
           padding: const EdgeInsets.fromLTRB(30, 16, 30, 16),
@@ -537,15 +550,17 @@ class PostListState extends State<PostList> {
                     children: [
                       Icon(Icons.local_police_outlined,
                           color: iconColor, size: 15),
-                      postData["crime"][index]['reporterID'] == residentID
+                      widget.postData["crime"][index]['reporterID'] ==
+                              widget.residentID
                           ? Row(children: [
                               GestureDetector(
                                   onTap: () {
                                     // Navigate to edit posts screen
                                     Navigator.pushNamed(context, '/editPost',
                                         arguments: {
-                                          "groupID": nGroupID,
-                                          "postData": postData["crime"][index],
+                                          "groupID": widget.nGroupID,
+                                          "postData": widget.postData["crime"]
+                                              [index],
                                           "postType": "crime"
                                         }).then((_) {
                                       getData();
@@ -560,8 +575,8 @@ class PostListState extends State<PostList> {
                                     final deleteResponse =
                                         await apiService.deleteCrimePostAPI({
                                       'token': authService.getAuthToken(),
-                                      'crimePostID': postData["crime"][index]
-                                          ['id']
+                                      'crimePostID': widget.postData["crime"]
+                                          [index]['id']
                                     });
                                     if (deleteResponse != null) {
                                       final status = deleteResponse['status'];
@@ -591,23 +606,23 @@ class PostListState extends State<PostList> {
                           : Container(),
                     ]),
                 const SizedBox(height: 5),
-                Text(postData["crime"][index]["title"],
+                Text(widget.postData["crime"][index]["title"],
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 16,
                         fontWeight: FontWeight.w900,
                         color: textColor)),
                 const SizedBox(height: 15),
-                Text(postData["crime"][index]["description"],
+                Text(widget.postData["crime"][index]["description"],
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                         color: textColor)),
                 const SizedBox(height: 10),
-                postData["crime"][index]["image"] != null
+                widget.postData["crime"][index]["image"] != null
                     ? Image.network(
-                        "${apiService.mediaUrl}${postData["crime"][index]["image"]}",
+                        "${apiService.mediaUrl}${widget.postData["crime"][index]["image"]}",
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) {
                             return child;
@@ -627,7 +642,8 @@ class PostListState extends State<PostList> {
                     : Image.asset('assets/stock_crime_image.png',
                         width: double.infinity),
                 const SizedBox(height: 15),
-                Text("Posted By: ${postData['crime'][index]['username']}",
+                Text(
+                    "Posted By: ${widget.postData['crime'][index]['username']}",
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 10,
@@ -643,18 +659,21 @@ class PostListState extends State<PostList> {
                           onTap: () {
                             // Handle Like Crime Post Operation
                             handleLikeDislikePost("crime",
-                                postData["crime"][index]["id"], "like");
+                                widget.postData["crime"][index]["id"], "like");
                           },
                           child: Icon(Icons.thumb_up,
                               size: 20,
-                              color: isLikePostStatus("crime",
-                                          postData['crime'][index]['id']) ==
+                              color: isLikePostStatus(
+                                          "crime",
+                                          widget.postData['crime'][index]
+                                              ['id']) ==
                                       1
                                   ? iconSelectedColor
                                   : iconColor),
                         ),
                         const SizedBox(width: 4),
-                        Text(postData["crime"][index]["likes"].toString(),
+                        Text(
+                            widget.postData["crime"][index]["likes"].toString(),
                             style: TextStyle(
                                 fontFamily: "OpenSans",
                                 fontSize: 13,
@@ -665,19 +684,25 @@ class PostListState extends State<PostList> {
                         GestureDetector(
                           onTap: () {
                             // Handle Dislike Crime Post Operation
-                            handleLikeDislikePost("crime",
-                                postData["crime"][index]["id"], "dislike");
+                            handleLikeDislikePost(
+                                "crime",
+                                widget.postData["crime"][index]["id"],
+                                "dislike");
                           },
                           child: Icon(Icons.thumb_down,
                               size: 20,
-                              color: isLikePostStatus("crime",
-                                          postData['crime'][index]['id']) ==
+                              color: isLikePostStatus(
+                                          "crime",
+                                          widget.postData['crime'][index]
+                                              ['id']) ==
                                       -1
                                   ? iconSelectedColor
                                   : iconColor),
                         ),
                         const SizedBox(width: 4),
-                        Text(postData["crime"][index]["dislikes"].toString(),
+                        Text(
+                            widget.postData["crime"][index]["dislikes"]
+                                .toString(),
                             style: TextStyle(
                                 fontFamily: "OpenSans",
                                 fontSize: 13,
@@ -714,7 +739,7 @@ class PostListState extends State<PostList> {
                   visible: commentSectionExpandedState["crime"][index],
                   child: PostComments(
                       postType: widget.postListType,
-                      postID: postData["crime"][index]["id"]),
+                      postID: widget.postData["crime"][index]["id"]),
                 ),
                 const SizedBox(height: 16),
                 const Divider(height: 0),
@@ -728,7 +753,7 @@ class PostListState extends State<PostList> {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: postData["complaint"].length,
+      itemCount: widget.postData["complaint"].length,
       itemBuilder: (context, index) {
         return Container(
           padding: const EdgeInsets.fromLTRB(30, 16, 30, 16),
@@ -740,16 +765,17 @@ class PostListState extends State<PostList> {
                     children: [
                       Icon(Icons.sentiment_very_dissatisfied,
                           color: iconColor, size: 15),
-                      postData["complaint"][index]['reporterID'] == residentID
+                      widget.postData["complaint"][index]['reporterID'] ==
+                              widget.residentID
                           ? Row(children: [
                               GestureDetector(
                                   onTap: () {
                                     // Navigate to edit posts screen
                                     Navigator.pushNamed(context, '/editPost',
                                         arguments: {
-                                          "groupID": nGroupID,
-                                          "postData": postData["complaint"]
-                                              [index],
+                                          "groupID": widget.nGroupID,
+                                          "postData": widget
+                                              .postData["complaint"][index],
                                           "postType": "complaint"
                                         }).then((_) {
                                       getData();
@@ -764,8 +790,8 @@ class PostListState extends State<PostList> {
                                     final deleteResponse = await apiService
                                         .deleteComplaintPostAPI({
                                       'token': authService.getAuthToken(),
-                                      'complaintPostID': postData["complaint"]
-                                          [index]['id']
+                                      'complaintPostID': widget
+                                          .postData["complaint"][index]['id']
                                     });
                                     if (deleteResponse != null) {
                                       final status = deleteResponse['status'];
@@ -795,30 +821,30 @@ class PostListState extends State<PostList> {
                           : Container(),
                     ]),
                 const SizedBox(height: 5),
-                Text(postData["complaint"][index]["title"],
+                Text(widget.postData["complaint"][index]["title"],
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 16,
                         fontWeight: FontWeight.w900,
                         color: textColor)),
                 const SizedBox(height: 15),
-                Text("To: ${postData['complaint'][index]['target']}",
+                Text("To: ${widget.postData['complaint'][index]['target']}",
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                         color: textColor)),
                 const SizedBox(height: 5),
-                Text(postData["complaint"][index]["description"],
+                Text(widget.postData["complaint"][index]["description"],
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                         color: textColor)),
                 const SizedBox(height: 10),
-                postData["complaint"][index]["image"] != null
+                widget.postData["complaint"][index]["image"] != null
                     ? Image.network(
-                        "${apiService.mediaUrl}${postData["complaint"][index]["image"]}",
+                        "${apiService.mediaUrl}${widget.postData["complaint"][index]["image"]}",
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) {
                             return child;
@@ -839,7 +865,7 @@ class PostListState extends State<PostList> {
                         width: double.infinity),
                 const SizedBox(height: 15),
                 Text(
-                    "Posted By: ${!postData['complaint'][index]['isAnonymous'] ? postData['complaint'][index]['username'] : '-'}",
+                    "Posted By: ${!widget.postData['complaint'][index]['isAnonymous'] ? widget.postData['complaint'][index]['username'] : '-'}",
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 10,
@@ -854,19 +880,25 @@ class PostListState extends State<PostList> {
                         GestureDetector(
                           onTap: () {
                             // Handle Like Complaint Post Operation
-                            handleLikeDislikePost("complaint",
-                                postData["complaint"][index]["id"], "like");
+                            handleLikeDislikePost(
+                                "complaint",
+                                widget.postData["complaint"][index]["id"],
+                                "like");
                           },
                           child: Icon(Icons.thumb_up,
                               size: 20,
-                              color: isLikePostStatus("complaint",
-                                          postData['complaint'][index]['id']) ==
+                              color: isLikePostStatus(
+                                          "complaint",
+                                          widget.postData['complaint'][index]
+                                              ['id']) ==
                                       1
                                   ? iconSelectedColor
                                   : iconColor),
                         ),
                         const SizedBox(width: 4),
-                        Text(postData["complaint"][index]["likes"].toString(),
+                        Text(
+                            widget.postData["complaint"][index]["likes"]
+                                .toString(),
                             style: TextStyle(
                                 fontFamily: "OpenSans",
                                 fontSize: 13,
@@ -877,20 +909,25 @@ class PostListState extends State<PostList> {
                         GestureDetector(
                           onTap: () {
                             // Handle Dislike Complaint Post Operation
-                            handleLikeDislikePost("complaint",
-                                postData["complaint"][index]["id"], "dislike");
+                            handleLikeDislikePost(
+                                "complaint",
+                                widget.postData["complaint"][index]["id"],
+                                "dislike");
                           },
                           child: Icon(Icons.thumb_down,
                               size: 20,
-                              color: isLikePostStatus("complaint",
-                                          postData['complaint'][index]['id']) ==
+                              color: isLikePostStatus(
+                                          "complaint",
+                                          widget.postData['complaint'][index]
+                                              ['id']) ==
                                       -1
                                   ? iconSelectedColor
                                   : iconColor),
                         ),
                         const SizedBox(width: 4),
                         Text(
-                            postData["complaint"][index]["dislikes"].toString(),
+                            widget.postData["complaint"][index]["dislikes"]
+                                .toString(),
                             style: TextStyle(
                                 fontFamily: "OpenSans",
                                 fontSize: 13,
@@ -927,7 +964,7 @@ class PostListState extends State<PostList> {
                   visible: commentSectionExpandedState["complaint"][index],
                   child: PostComments(
                       postType: widget.postListType,
-                      postID: postData["complaint"][index]["id"]),
+                      postID: widget.postData["complaint"][index]["id"]),
                 ),
                 const SizedBox(height: 16),
                 const Divider(height: 0),
@@ -938,12 +975,12 @@ class PostListState extends State<PostList> {
   }
 
   ElevatedButton createJoinLeaveEventButton(context, index) {
-    return !postData["event"][index]["hasJoined"]
+    return !widget.postData["event"][index]["hasJoined"]
         ? ElevatedButton(
             onPressed: () async {
               // Join the event
               Map<String, dynamic> joinEventData = {
-                "eventPostID": postData["event"][index]["id"],
+                "eventPostID": widget.postData["event"][index]["id"],
                 "token": authService.getAuthToken()
               };
               final joinEventResponse =
@@ -980,7 +1017,7 @@ class PostListState extends State<PostList> {
             onPressed: () async {
               // Join the event
               Map<String, dynamic> leaveEventData = {
-                "eventPostID": postData["event"][index]["id"],
+                "eventPostID": widget.postData["event"][index]["id"],
                 "token": authService.getAuthToken()
               };
               final leaveEventResponse =
@@ -1020,7 +1057,7 @@ class PostListState extends State<PostList> {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: postData["event"].length,
+      itemCount: widget.postData["event"].length,
       itemBuilder: (context, index) {
         return Container(
           padding: const EdgeInsets.fromLTRB(30, 16, 30, 16),
@@ -1031,15 +1068,17 @@ class PostListState extends State<PostList> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Icon(Icons.event, color: iconColor, size: 15),
-                      postData["event"][index]['organizerID'] == residentID
+                      widget.postData["event"][index]['organizerID'] ==
+                              widget.residentID
                           ? Row(children: [
                               GestureDetector(
                                   onTap: () {
                                     // Navigate to edit posts screen
                                     Navigator.pushNamed(context, '/editPost',
                                         arguments: {
-                                          "groupID": nGroupID,
-                                          "postData": postData["event"][index],
+                                          "groupID": widget.nGroupID,
+                                          "postData": widget.postData["event"]
+                                              [index],
                                           "postType": "event"
                                         }).then((_) {
                                       getData();
@@ -1054,8 +1093,8 @@ class PostListState extends State<PostList> {
                                     final deleteResponse =
                                         await apiService.deleteEventPostAPI({
                                       'token': authService.getAuthToken(),
-                                      'eventPostID': postData["event"][index]
-                                          ['id']
+                                      'eventPostID': widget.postData["event"]
+                                          [index]['id']
                                     });
                                     if (deleteResponse != null) {
                                       final status = deleteResponse['status'];
@@ -1085,7 +1124,7 @@ class PostListState extends State<PostList> {
                           : Container(),
                     ]),
                 const SizedBox(height: 5),
-                Text(postData["event"][index]["title"],
+                Text(widget.postData["event"][index]["title"],
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 16,
@@ -1093,14 +1132,14 @@ class PostListState extends State<PostList> {
                         color: textColor)),
                 const SizedBox(height: 15),
                 Text(
-                    "Time: ${utils.formatDateTime(postData['event'][index]['datetime'])}",
+                    "Time: ${utils.formatDateTime(widget.postData['event'][index]['datetime'])}",
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                         color: textColor)),
                 const SizedBox(height: 5),
-                Text("Venue: ${postData['event'][index]['venue']}",
+                Text("Venue: ${widget.postData['event'][index]['venue']}",
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 14,
@@ -1108,23 +1147,23 @@ class PostListState extends State<PostList> {
                         color: textColor)),
                 const SizedBox(height: 5),
                 Text(
-                    "Total Participants: ${jsonDecode(postData['event'][index]['participants']).length}",
+                    "Total Participants: ${jsonDecode(widget.postData['event'][index]['participants']).length}",
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                         color: textColor)),
                 const SizedBox(height: 10),
-                Text(postData["event"][index]["description"],
+                Text(widget.postData["event"][index]["description"],
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                         color: textColor)),
                 const SizedBox(height: 10),
-                postData["event"][index]["image"] != null
+                widget.postData["event"][index]["image"] != null
                     ? Image.network(
-                        "${apiService.mediaUrl}${postData["event"][index]["image"]}",
+                        "${apiService.mediaUrl}${widget.postData["event"][index]["image"]}",
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) {
                             return child;
@@ -1144,7 +1183,8 @@ class PostListState extends State<PostList> {
                     : Image.asset('assets/stock_event_image.png',
                         width: double.infinity),
                 const SizedBox(height: 15),
-                Text("Posted By: ${postData['event'][index]['username']}",
+                Text(
+                    "Posted By: ${widget.postData['event'][index]['username']}",
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 10,
@@ -1160,18 +1200,21 @@ class PostListState extends State<PostList> {
                           onTap: () {
                             // Handle Like Event Post Operation
                             handleLikeDislikePost("event",
-                                postData["event"][index]["id"], "like");
+                                widget.postData["event"][index]["id"], "like");
                           },
                           child: Icon(Icons.thumb_up,
                               size: 20,
-                              color: isLikePostStatus("event",
-                                          postData['event'][index]['id']) ==
+                              color: isLikePostStatus(
+                                          "event",
+                                          widget.postData['event'][index]
+                                              ['id']) ==
                                       1
                                   ? iconSelectedColor
                                   : iconColor),
                         ),
                         const SizedBox(width: 4),
-                        Text(postData["event"][index]["likes"].toString(),
+                        Text(
+                            widget.postData["event"][index]["likes"].toString(),
                             style: TextStyle(
                                 fontFamily: "OpenSans",
                                 fontSize: 13,
@@ -1183,19 +1226,25 @@ class PostListState extends State<PostList> {
                         GestureDetector(
                           onTap: () {
                             // Handle Dislike Event Post Operation
-                            handleLikeDislikePost("event",
-                                postData["event"][index]["id"], "dislike");
+                            handleLikeDislikePost(
+                                "event",
+                                widget.postData["event"][index]["id"],
+                                "dislike");
                           },
                           child: Icon(Icons.thumb_down,
                               size: 20,
-                              color: isLikePostStatus("event",
-                                          postData['event'][index]['id']) ==
+                              color: isLikePostStatus(
+                                          "event",
+                                          widget.postData['event'][index]
+                                              ['id']) ==
                                       -1
                                   ? iconSelectedColor
                                   : iconColor),
                         ),
                         const SizedBox(width: 4),
-                        Text(postData["event"][index]["dislikes"].toString(),
+                        Text(
+                            widget.postData["event"][index]["dislikes"]
+                                .toString(),
                             style: TextStyle(
                                 fontFamily: "OpenSans",
                                 fontSize: 13,
@@ -1232,7 +1281,7 @@ class PostListState extends State<PostList> {
                   visible: commentSectionExpandedState["event"][index],
                   child: PostComments(
                       postType: widget.postListType,
-                      postID: postData["event"][index]["id"]),
+                      postID: widget.postData["event"][index]["id"]),
                 ),
                 const SizedBox(height: 16),
                 const Divider(height: 0),
@@ -1246,7 +1295,7 @@ class PostListState extends State<PostList> {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: postData["general"].length,
+      itemCount: widget.postData["general"].length,
       itemBuilder: (context, index) {
         return Container(
           padding: const EdgeInsets.fromLTRB(30, 16, 30, 16),
@@ -1257,15 +1306,16 @@ class PostListState extends State<PostList> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Icon(Icons.mail, color: iconColor, size: 15),
-                      postData["general"][index]['authorID'] == residentID
+                      widget.postData["general"][index]['authorID'] ==
+                              widget.residentID
                           ? Row(children: [
                               GestureDetector(
                                   onTap: () {
                                     // Navigate to edit posts screen
                                     Navigator.pushNamed(context, '/editPost',
                                         arguments: {
-                                          "groupID": nGroupID,
-                                          "postData": postData["general"]
+                                          "groupID": widget.nGroupID,
+                                          "postData": widget.postData["general"]
                                               [index],
                                           "postType": "general"
                                         }).then((_) {
@@ -1281,8 +1331,8 @@ class PostListState extends State<PostList> {
                                     final deleteResponse =
                                         await apiService.deleteGeneralPostAPI({
                                       'token': authService.getAuthToken(),
-                                      'generalPostID': postData["general"]
-                                          [index]['id']
+                                      'generalPostID': widget
+                                          .postData["general"][index]['id']
                                     });
                                     if (deleteResponse != null) {
                                       final status = deleteResponse['status'];
@@ -1312,23 +1362,23 @@ class PostListState extends State<PostList> {
                           : Container(),
                     ]),
                 const SizedBox(height: 5),
-                Text(postData["general"][index]["title"],
+                Text(widget.postData["general"][index]["title"],
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 16,
                         fontWeight: FontWeight.w900,
                         color: textColor)),
                 const SizedBox(height: 15),
-                Text(postData["general"][index]["description"],
+                Text(widget.postData["general"][index]["description"],
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                         color: textColor)),
                 const SizedBox(height: 10),
-                postData["general"][index]["image"] != null
+                widget.postData["general"][index]["image"] != null
                     ? Image.network(
-                        "${apiService.mediaUrl}${postData["general"][index]["image"]}",
+                        "${apiService.mediaUrl}${widget.postData["general"][index]["image"]}",
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) {
                             return child;
@@ -1348,7 +1398,8 @@ class PostListState extends State<PostList> {
                     : Image.asset('assets/stock_general_image.png',
                         width: double.infinity),
                 const SizedBox(height: 15),
-                Text("Posted By: ${postData['general'][index]['username']}",
+                Text(
+                    "Posted By: ${widget.postData['general'][index]['username']}",
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 10,
@@ -1363,19 +1414,25 @@ class PostListState extends State<PostList> {
                         GestureDetector(
                           onTap: () {
                             // Handle Like General Post Operation
-                            handleLikeDislikePost("general",
-                                postData["general"][index]["id"], "like");
+                            handleLikeDislikePost(
+                                "general",
+                                widget.postData["general"][index]["id"],
+                                "like");
                           },
                           child: Icon(Icons.thumb_up,
                               size: 20,
-                              color: isLikePostStatus("general",
-                                          postData['general'][index]['id']) ==
+                              color: isLikePostStatus(
+                                          "general",
+                                          widget.postData['general'][index]
+                                              ['id']) ==
                                       1
                                   ? iconSelectedColor
                                   : iconColor),
                         ),
                         const SizedBox(width: 4),
-                        Text(postData["general"][index]["likes"].toString(),
+                        Text(
+                            widget.postData["general"][index]["likes"]
+                                .toString(),
                             style: TextStyle(
                                 fontFamily: "OpenSans",
                                 fontSize: 13,
@@ -1386,19 +1443,25 @@ class PostListState extends State<PostList> {
                         GestureDetector(
                           onTap: () {
                             // Handle Dislike General Post Operation
-                            handleLikeDislikePost("general",
-                                postData["general"][index]["id"], "dislike");
+                            handleLikeDislikePost(
+                                "general",
+                                widget.postData["general"][index]["id"],
+                                "dislike");
                           },
                           child: Icon(Icons.thumb_down,
                               size: 20,
-                              color: isLikePostStatus("general",
-                                          postData['general'][index]['id']) ==
+                              color: isLikePostStatus(
+                                          "general",
+                                          widget.postData['general'][index]
+                                              ['id']) ==
                                       -1
                                   ? iconSelectedColor
                                   : iconColor),
                         ),
                         const SizedBox(width: 4),
-                        Text(postData["general"][index]["dislikes"].toString(),
+                        Text(
+                            widget.postData["general"][index]["dislikes"]
+                                .toString(),
                             style: TextStyle(
                                 fontFamily: "OpenSans",
                                 fontSize: 13,
@@ -1435,7 +1498,7 @@ class PostListState extends State<PostList> {
                   visible: commentSectionExpandedState["general"][index],
                   child: PostComments(
                       postType: widget.postListType,
-                      postID: postData["general"][index]["id"]),
+                      postID: widget.postData["general"][index]["id"]),
                 ),
                 const SizedBox(height: 16),
                 const Divider(height: 0),
@@ -1447,7 +1510,7 @@ class PostListState extends State<PostList> {
 
   @override
   Widget build(BuildContext context) {
-    if (isJoinedGroup) {
+    if (widget.isJoinedGroup) {
       switch (widget.postListType) {
         case "crime":
           return displayCrimePosts(context);
@@ -1720,130 +1783,138 @@ class PostCommentsState extends State<PostComments> {
   @override
   void dispose() {
     commentController.dispose();
-    commentChannel.close();
+    commentChannel.sink.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextField(
-          controller: commentController,
-          style: TextStyle(
-              fontFamily: "OpenSans",
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: textColor),
-          decoration: InputDecoration(
-            hintText: 'Add a comment...',
-            labelStyle: TextStyle(
-                fontFamily: "OpenSans",
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: textColor),
-            suffixIcon: IconButton(
-              icon: Icon(Icons.send, color: iconColor, size: 20),
-              onPressed: submitComment,
-            ),
-          ),
-        ),
-        const SizedBox(height: 20),
-        SizedBox(
-            height: 200,
-            child: ListView.builder(
-              itemCount: comments.length,
-              itemBuilder: (context, index) {
-                return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Wrap(spacing: 10.0, runSpacing: 4.0, children: [
-                        Text(
-                            "${comments[index]['username']}: ${comments[index]['content']}",
-                            style: TextStyle(
-                                fontFamily: "OpenSans",
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: textColor)),
-                        residentID == comments[index]['authorID']
-                            ? Row(children: [
-                                GestureDetector(
-                                    onTap: () {
-                                      // Navigate to edit post comment screen
-                                      Navigator.pushNamed(
-                                          context, '/editPostComment',
-                                          arguments: {
-                                            "commentID": comments[index]['id'],
-                                            "commentData": comments[index],
-                                            "commentType": widget.postType
-                                          }).then((_) {
-                                        getData();
-                                      });
-                                    },
-                                    child: Icon(Icons.edit,
-                                        color: iconColor, size: 15)),
-                                const SizedBox(width: 10.0),
-                                GestureDetector(
-                                    onTap: () async {
-                                      // Handle delete post comment
-                                      dynamic apiFunction;
-                                      if (widget.postType == 'crime') {
-                                        apiFunction = apiService
-                                            .deleteCrimePostCommentAPI;
-                                      } else if (widget.postType ==
-                                          'complaint') {
-                                        apiFunction = apiService
-                                            .deleteComplaintPostCommentAPI;
-                                      } else if (widget.postType == 'event') {
-                                        apiFunction = apiService
-                                            .deleteEventPostCommentAPI;
-                                      } else if (widget.postType == 'general') {
-                                        apiFunction = apiService
-                                            .deleteGeneralPostCommentAPI;
-                                      }
+    return comments != null
+        ? Column(
+            children: [
+              TextField(
+                controller: commentController,
+                style: TextStyle(
+                    fontFamily: "OpenSans",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: textColor),
+                decoration: InputDecoration(
+                  hintText: 'Add a comment...',
+                  labelStyle: TextStyle(
+                      fontFamily: "OpenSans",
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: textColor),
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.send, color: iconColor, size: 20),
+                    onPressed: submitComment,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                  height: 200,
+                  child: ListView.builder(
+                    itemCount: comments.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Wrap(spacing: 10.0, runSpacing: 4.0, children: [
+                              Text(
+                                  "${comments[index]['username']}: ${comments[index]['content']}",
+                                  style: TextStyle(
+                                      fontFamily: "OpenSans",
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: textColor)),
+                              residentID == comments[index]['authorID']
+                                  ? Row(children: [
+                                      GestureDetector(
+                                          onTap: () {
+                                            // Navigate to edit post comment screen
+                                            Navigator.pushNamed(
+                                                context, '/editPostComment',
+                                                arguments: {
+                                                  "commentID": comments[index]
+                                                      ['id'],
+                                                  "commentData":
+                                                      comments[index],
+                                                  "commentType": widget.postType
+                                                }).then((_) {
+                                              getData();
+                                            });
+                                          },
+                                          child: Icon(Icons.edit,
+                                              color: iconColor, size: 15)),
+                                      const SizedBox(width: 10.0),
+                                      GestureDetector(
+                                          onTap: () async {
+                                            // Handle delete post comment
+                                            dynamic apiFunction;
+                                            if (widget.postType == 'crime') {
+                                              apiFunction = apiService
+                                                  .deleteCrimePostCommentAPI;
+                                            } else if (widget.postType ==
+                                                'complaint') {
+                                              apiFunction = apiService
+                                                  .deleteComplaintPostCommentAPI;
+                                            } else if (widget.postType ==
+                                                'event') {
+                                              apiFunction = apiService
+                                                  .deleteEventPostCommentAPI;
+                                            } else if (widget.postType ==
+                                                'general') {
+                                              apiFunction = apiService
+                                                  .deleteGeneralPostCommentAPI;
+                                            }
 
-                                      final commentResponse =
-                                          await apiFunction({
-                                        'token': authService.getAuthToken(),
-                                        '${widget.postType}PostCommentID':
-                                            comments[index]['id']
-                                      });
-                                      if (commentResponse != null) {
-                                        final status =
-                                            commentResponse['status'];
-                                        final message =
-                                            commentResponse['data']['message'];
-                                        if (status > 0) {
-                                          // Success
-                                          // ignore: use_build_context_synchronously
-                                          popupService.showSuccessPopup(
-                                              context,
-                                              "Delete Comment Success",
-                                              message, () {
-                                            getData();
-                                          });
-                                        } else {
-                                          // Error
-                                          // ignore: use_build_context_synchronously
-                                          popupService.showErrorPopup(
-                                              context,
-                                              "Delete Comment Failed",
-                                              message,
-                                              () {});
-                                        }
-                                      }
-                                    },
-                                    child: Icon(Icons.delete,
-                                        color: iconColor2, size: 15))
-                              ])
-                            : Container(),
-                      ]),
-                      const SizedBox(height: 15),
-                    ]);
-              },
-            )),
-      ],
-    );
+                                            final commentResponse =
+                                                await apiFunction({
+                                              'token':
+                                                  authService.getAuthToken(),
+                                              '${widget.postType}PostCommentID':
+                                                  comments[index]['id']
+                                            });
+                                            if (commentResponse != null) {
+                                              final status =
+                                                  commentResponse['status'];
+                                              final message =
+                                                  commentResponse['data']
+                                                      ['message'];
+                                              if (status > 0) {
+                                                // Success
+                                                // ignore: use_build_context_synchronously
+                                                popupService.showSuccessPopup(
+                                                    context,
+                                                    "Delete Comment Success",
+                                                    message, () {
+                                                  getData();
+                                                });
+                                              } else {
+                                                // Error
+                                                // ignore: use_build_context_synchronously
+                                                popupService.showErrorPopup(
+                                                    context,
+                                                    "Delete Comment Failed",
+                                                    message,
+                                                    () {});
+                                              }
+                                            }
+                                          },
+                                          child: Icon(Icons.delete,
+                                              color: iconColor2, size: 15))
+                                    ])
+                                  : Container(),
+                            ]),
+                            const SizedBox(height: 15),
+                          ]);
+                    },
+                  )),
+            ],
+          )
+        : Container();
   }
 }
 
