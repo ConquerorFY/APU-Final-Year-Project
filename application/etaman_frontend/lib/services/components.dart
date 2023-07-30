@@ -739,7 +739,8 @@ class PostListState extends State<PostList> {
                   visible: commentSectionExpandedState["crime"][index],
                   child: PostComments(
                       postType: widget.postListType,
-                      postID: widget.postData["crime"][index]["id"]),
+                      postID: widget.postData["crime"][index]["id"],
+                      nGroupID: widget.nGroupID),
                 ),
                 const SizedBox(height: 16),
                 const Divider(height: 0),
@@ -964,7 +965,8 @@ class PostListState extends State<PostList> {
                   visible: commentSectionExpandedState["complaint"][index],
                   child: PostComments(
                       postType: widget.postListType,
-                      postID: widget.postData["complaint"][index]["id"]),
+                      postID: widget.postData["complaint"][index]["id"],
+                      nGroupID: widget.nGroupID),
                 ),
                 const SizedBox(height: 16),
                 const Divider(height: 0),
@@ -1281,7 +1283,8 @@ class PostListState extends State<PostList> {
                   visible: commentSectionExpandedState["event"][index],
                   child: PostComments(
                       postType: widget.postListType,
-                      postID: widget.postData["event"][index]["id"]),
+                      postID: widget.postData["event"][index]["id"],
+                      nGroupID: widget.nGroupID),
                 ),
                 const SizedBox(height: 16),
                 const Divider(height: 0),
@@ -1498,7 +1501,8 @@ class PostListState extends State<PostList> {
                   visible: commentSectionExpandedState["general"][index],
                   child: PostComments(
                       postType: widget.postListType,
-                      postID: widget.postData["general"][index]["id"]),
+                      postID: widget.postData["general"][index]["id"],
+                      nGroupID: widget.nGroupID),
                 ),
                 const SizedBox(height: 16),
                 const Divider(height: 0),
@@ -1533,7 +1537,12 @@ class PostListState extends State<PostList> {
 class PostComments extends StatefulWidget {
   final String postType;
   final int postID;
-  const PostComments({super.key, required this.postType, required this.postID});
+  final int nGroupID;
+  const PostComments(
+      {super.key,
+      required this.postType,
+      required this.postID,
+      required this.nGroupID});
 
   @override
   PostCommentsState createState() => PostCommentsState();
@@ -1550,6 +1559,7 @@ class PostCommentsState extends State<PostComments> {
   dynamic iconColor2;
 
   dynamic residentID;
+  dynamic groupID;
   dynamic comments;
   dynamic commentChannel;
   TextEditingController commentController = TextEditingController();
@@ -1658,6 +1668,7 @@ class PostCommentsState extends State<PostComments> {
         // Success
         setState(() {
           residentID = residentResponse['data']['list']['id'];
+          groupID = residentResponse['data']['list']['groupID'];
         });
         getComments();
       }
@@ -1792,26 +1803,28 @@ class PostCommentsState extends State<PostComments> {
     return comments != null
         ? Column(
             children: [
-              TextField(
-                controller: commentController,
-                style: TextStyle(
-                    fontFamily: "OpenSans",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: textColor),
-                decoration: InputDecoration(
-                  hintText: 'Add a comment...',
-                  labelStyle: TextStyle(
-                      fontFamily: "OpenSans",
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: textColor),
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.send, color: iconColor, size: 20),
-                    onPressed: submitComment,
-                  ),
-                ),
-              ),
+              groupID == widget.nGroupID
+                  ? TextField(
+                      controller: commentController,
+                      style: TextStyle(
+                          fontFamily: "OpenSans",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: textColor),
+                      decoration: InputDecoration(
+                        hintText: 'Add a comment...',
+                        labelStyle: TextStyle(
+                            fontFamily: "OpenSans",
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: textColor),
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.send, color: iconColor, size: 20),
+                          onPressed: submitComment,
+                        ),
+                      ),
+                    )
+                  : Container(),
               const SizedBox(height: 20),
               SizedBox(
                   height: 200,

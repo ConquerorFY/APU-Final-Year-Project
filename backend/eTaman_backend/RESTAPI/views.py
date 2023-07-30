@@ -121,10 +121,51 @@ def getNeighborhoodGroupRule(request):
 def getAllPost(request):
     try:
         # Get all posts data
-        crimePostData = CrimePostSerializer(CrimePostModel.objects.all(), many=True).data
-        complaintPostData = ComplaintPostSerializer(ComplaintPostModel.objects.all(), many=True).data
-        eventPostData = EventPostSerializer(EventPostModel.objects.all(), many=True).data
-        generalPostData = GeneralPostSerializer(GeneralPostModel.objects.all(), many=True).data
+        crimePost = CrimePostModel.objects.all()
+        crimePostData = []
+        for post in crimePost:
+            username = post.reporterID.username
+            groupID = post.reporterID.groupID.id
+            crimePostData.append({
+                'username': username,
+                'groupID': groupID,
+                **CrimePostSerializer(post).data
+            })
+
+        complaintPost = ComplaintPostModel.objects.all()
+        complaintPostData = []
+        for post in complaintPost:
+            username = post.reporterID.username
+            groupID = post.reporterID.groupID.id
+            complaintPostData.append({
+                'username': username,
+                'groupID': groupID,
+                **ComplaintPostSerializer(post).data
+            })
+
+        eventPost = EventPostModel.objects.all()
+        eventPostData = []
+        for post in eventPost:
+            username = post.organizerID.username
+            groupID = post.organizerID.groupID.id
+            eventPostData.append({
+                'username': username,
+                'groupID': groupID,
+                'hasJoined': False,
+                **EventPostSerializer(post).data
+            })
+
+        generalPost = GeneralPostModel.objects.all()
+        generalPostData = []
+        for post in generalPost:
+            username = post.authorID.username
+            groupID = post.authorID.groupID.id
+            generalPostData.append({
+                'username': username,
+                'groupID': groupID,
+                **GeneralPostSerializer(post).data
+            })
+
         return JsonResponse({
             'data': {
                 'message': ALL_POSTS_FOUND,

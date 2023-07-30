@@ -4,6 +4,7 @@ import 'package:etaman_frontend/services/components.dart';
 import 'package:etaman_frontend/services/logging.dart';
 import 'package:etaman_frontend/services/popup.dart';
 import 'package:etaman_frontend/services/settings.dart';
+import 'package:etaman_frontend/services/tooltip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoding_resolver/geocoding_resolver.dart';
@@ -34,6 +35,7 @@ class MapViewState extends State<MapView> {
   List<double> otherGroupLatitudes = [];
   List<double> otherGroupLongtitudes = [];
   List<String> otherGroupNames = [];
+  List<int> otherGroupID = [];
 
   @override
   void initState() {
@@ -73,6 +75,9 @@ class MapViewState extends State<MapView> {
           });
           setState(() {
             otherGroupNames.add(group['name']);
+          });
+          setState(() {
+            otherGroupID.add(group['id']);
           });
         }
         getCurrentUserLocation();
@@ -150,25 +155,17 @@ class MapViewState extends State<MapView> {
     // Add current joined group location (if any)
     if (currentGroupName != null) {
       markersList.add(Marker(
-        width: 40.0,
-        height: 40.0,
-        point: LatLng(currentGroupLatitude, currentGroupLongtitude),
-        builder: (ctx) => Tooltip(
-          waitDuration: Duration(seconds: settings.mapWaitDuration),
-          showDuration: Duration(seconds: settings.mapShowDuration),
-          padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
-          textStyle: TextStyle(
-              fontFamily: 'OpenSans',
-              fontSize: 10,
-              color: settings.mapTooltipTextColor,
-              fontWeight: FontWeight.bold),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(3),
-              color: settings.mapTooltipBgColor),
-          message: currentGroupName,
-          child: Icon(Icons.location_on, color: settings.mapPrimaryMarkerColor),
-        ),
-      ));
+          width: 40.0,
+          height: 40.0,
+          point: LatLng(currentGroupLatitude, currentGroupLongtitude),
+          builder: (ctx) => InteractiveTooltip(
+              message: currentGroupName,
+              onTap: () {
+                // Navigate to home page
+                Navigator.pushNamed(ctx, '/home');
+              },
+              child: Icon(Icons.location_on,
+                  color: settings.mapPrimaryMarkerColor))));
     }
 
     // Add other group location
@@ -176,27 +173,21 @@ class MapViewState extends State<MapView> {
       if (otherGroupLatitudes[i] != currentGroupLatitude &&
           otherGroupLongtitudes[i] != currentGroupLongtitude) {
         markersList.add(Marker(
-          width: 40.0,
-          height: 40.0,
-          point: LatLng(otherGroupLatitudes[i], otherGroupLongtitudes[i]),
-          builder: (ctx) => Tooltip(
-            waitDuration: Duration(seconds: settings.mapWaitDuration),
-            showDuration: Duration(seconds: settings.mapShowDuration),
-            padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
-            height: 35,
-            textStyle: TextStyle(
-                fontFamily: 'OpenSans',
-                fontSize: 10,
-                color: settings.mapTooltipTextColor,
-                fontWeight: FontWeight.bold),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(3),
-                color: settings.mapTooltipBgColor),
-            message: otherGroupNames[i],
-            child: Icon(Icons.location_on,
-                color: settings.mapSecondaryMarkerColor),
-          ),
-        ));
+            width: 40.0,
+            height: 40.0,
+            point: LatLng(otherGroupLatitudes[i], otherGroupLongtitudes[i]),
+            builder: (ctx) => InteractiveTooltip(
+                message: otherGroupNames[i],
+                height: 35.0,
+                onTap: () {
+                  // Navigate to view other group posts screen
+                  Navigator.pushNamed(ctx, '/viewOtherGroupPost', arguments: {
+                    'groupID': otherGroupID[i],
+                    'groupName': otherGroupNames[i]
+                  });
+                },
+                child: Icon(Icons.location_on,
+                    color: settings.mapSecondaryMarkerColor))));
       }
     }
 
@@ -205,22 +196,12 @@ class MapViewState extends State<MapView> {
       width: 40.0,
       height: 40.0,
       point: currentUserLocation,
-      builder: (ctx) => Tooltip(
-          waitDuration: Duration(seconds: settings.mapWaitDuration),
-          showDuration: Duration(seconds: settings.mapShowDuration),
-          padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
-          height: 35,
-          textStyle: TextStyle(
-              fontFamily: 'OpenSans',
-              fontSize: 10,
-              color: settings.mapTooltipTextColor,
-              fontWeight: FontWeight.bold),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(3),
-              color: settings.mapTooltipBgColor),
+      builder: (ctx) => InteractiveTooltip(
           message: "You",
-          child: Icon(Icons.my_location,
-              color: settings.mapPrimaryUserMarkerColor)),
+          height: 35.0,
+          onTap: () {},
+          child:
+              Icon(Icons.my_location, color: settings.mapTertiaryMarkerColor)),
     ));
 
     return MarkerLayer(

@@ -313,6 +313,22 @@ class ApiService {
     }
   }
 
+  // Get All Neighborhood Group Posts API
+  dynamic getAllPostsAPI() async {
+    try {
+      final url = Uri.parse("$baseUrl/getPostAll/");
+
+      final response = await get(url);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Get All Posts - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Get All Posts - $e");
+      return null;
+    }
+  }
+
   // Get All Posts Within Same Neighborhood Group API
   dynamic getAllNeighborhoodPostsAPI(body) async {
     try {

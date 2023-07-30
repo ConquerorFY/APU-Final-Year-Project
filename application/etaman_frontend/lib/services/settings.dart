@@ -1279,6 +1279,7 @@ class Settings {
   Color mapPrimaryMarkerColor = Colors.red;
   Color mapPrimaryUserMarkerColor = const Color.fromARGB(200, 0, 255, 255);
   Color mapSecondaryMarkerColor = Colors.blue;
+  Color mapTertiaryMarkerColor = Colors.orange;
 
   Color joinGroupBgColor = Colors.green;
   Color joinGroupBgColor2 = Colors.green.shade600;
