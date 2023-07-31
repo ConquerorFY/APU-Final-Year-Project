@@ -63,7 +63,7 @@ class BookedFacilitiesState extends State<BookedFacilities> {
     getData();
   }
 
-  void getData() async {
+  Future<void> getData() async {
     final residentResponse = await apiService
         .getResidentDataAPI({"token": authService.getAuthToken()});
     if (residentResponse != null) {
@@ -97,82 +97,103 @@ class BookedFacilitiesState extends State<BookedFacilities> {
   Widget build(BuildContext context) {
     return bookedFacilitiesData != null
         ? Scaffold(
-            body: bookedFacilitiesData.length > 0
-                ? ListView.builder(
-                    itemCount: bookedFacilitiesData.length,
-                    itemBuilder: (context, index) {
-                      final facility = bookedFacilitiesData[index];
-                      return Card(
-                        child: ListTile(
-                          leading: Icon(
-                            Icons.bookmark,
-                            color: settings.facilitiesIconColor,
-                          ),
-                          title: Text(facility['name'],
-                              style: TextStyle(
-                                  fontFamily: 'OpenSans',
-                                  color: settings.facilitiesTextColor,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700)),
-                          subtitle: Text(facility['description'],
-                              style: TextStyle(
-                                  fontFamily: 'OpenSans',
-                                  color: settings.facilitiesTextColor,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w500)),
-                          trailing: ElevatedButton(
-                            onPressed: () async {
-                              // Implement functionality for returning facility
-                              Map<String, dynamic> returnData = {
-                                "token": authService.getAuthToken(),
-                                "facilitiesID": facility['id']
-                              };
-                              final returnResponse = await apiService
-                                  .returnGroupFacilitiesAPI(returnData);
-                              if (returnResponse != null) {
-                                final status = returnResponse['status'];
-                                if (status > 0) {
-                                  // Success
-                                  final message =
-                                      returnResponse['data']['message'];
-                                  // ignore: use_build_context_synchronously
-                                  popupService.showSuccessPopup(
-                                      context, "Return Success", message, () {
-                                    getData();
-                                  });
-                                } else {
-                                  // Error
-                                  final message =
-                                      returnResponse['data']['message'];
-                                  // ignore: use_build_context_synchronously
-                                  popupService.showErrorPopup(
-                                      context, "Return Failed", message, () {});
-                                }
-                              }
-                            },
-                            style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        settings.facilitiesButtonColor)),
-                            child: Text('Return',
-                                style: TextStyle(
-                                    fontFamily: 'OpenSans',
-                                    color: settings.facilitiesText2Color,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700)),
-                          ),
-                        ),
-                      );
-                    },
-                  )
-                : Center(
-                    child: Text("No booked facilities found!",
-                        style: TextStyle(
-                            fontFamily: 'OpenSans',
-                            color: settings.facilitiesTextColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700))),
-          )
+            body: RefreshIndicator(
+                onRefresh: getData,
+                child: FutureBuilder(
+                    future: Future.delayed(const Duration(seconds: 1)),
+                    builder: (context, snapshot) {
+                      return bookedFacilitiesData.length > 0
+                          ? ListView.builder(
+                              itemCount: bookedFacilitiesData.length,
+                              itemBuilder: (context, index) {
+                                final facility = bookedFacilitiesData[index];
+                                return Card(
+                                  child: ListTile(
+                                    leading: Icon(
+                                      Icons.bookmark,
+                                      color: settings.facilitiesIconColor,
+                                    ),
+                                    title: Text(facility['name'],
+                                        style: TextStyle(
+                                            fontFamily: 'OpenSans',
+                                            color: settings.facilitiesTextColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700)),
+                                    subtitle: Text(facility['description'],
+                                        style: TextStyle(
+                                            fontFamily: 'OpenSans',
+                                            color: settings.facilitiesTextColor,
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w500)),
+                                    trailing: ElevatedButton(
+                                      onPressed: () async {
+                                        // Implement functionality for returning facility
+                                        Map<String, dynamic> returnData = {
+                                          "token": authService.getAuthToken(),
+                                          "facilitiesID": facility['id']
+                                        };
+                                        final returnResponse = await apiService
+                                            .returnGroupFacilitiesAPI(
+                                                returnData);
+                                        if (returnResponse != null) {
+                                          final status =
+                                              returnResponse['status'];
+                                          if (status > 0) {
+                                            // Success
+                                            final message =
+                                                returnResponse['data']
+                                                    ['message'];
+                                            // ignore: use_build_context_synchronously
+                                            popupService.showSuccessPopup(
+                                                context,
+                                                "Return Success",
+                                                message, () {
+                                              getData();
+                                            });
+                                          } else {
+                                            // Error
+                                            final message =
+                                                returnResponse['data']
+                                                    ['message'];
+                                            // ignore: use_build_context_synchronously
+                                            popupService.showErrorPopup(
+                                                context,
+                                                "Return Failed",
+                                                message,
+                                                () {});
+                                          }
+                                        }
+                                      },
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  settings
+                                                      .facilitiesButtonColor)),
+                                      child: Text('Return',
+                                          style: TextStyle(
+                                              fontFamily: 'OpenSans',
+                                              color:
+                                                  settings.facilitiesText2Color,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w700)),
+                                    ),
+                                  ),
+                                );
+                              },
+                            )
+                          : ListView.builder(
+                              padding: const EdgeInsets.all(16.0),
+                              itemCount: 1,
+                              itemBuilder: ((context, index) {
+                                return Center(
+                                    child: Text("No booked facilities found!",
+                                        style: TextStyle(
+                                            fontFamily: 'OpenSans',
+                                            color: settings.facilitiesTextColor,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w700)));
+                              }));
+                    })))
         : Loading();
   }
 }
@@ -291,13 +312,19 @@ class FacilitiesState extends State<Facilities> {
                                   );
                                 },
                               )
-                            : Center(
-                                child: Text("No facilities found!",
-                                    style: TextStyle(
-                                        fontFamily: 'OpenSans',
-                                        color: settings.facilitiesTextColor,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w700))),
+                            : ListView.builder(
+                                padding: const EdgeInsets.all(16.0),
+                                itemCount: 1,
+                                itemBuilder: (context, index) {
+                                  return Center(
+                                      child: Text("No facilities found!",
+                                          style: TextStyle(
+                                              fontFamily: 'OpenSans',
+                                              color:
+                                                  settings.facilitiesTextColor,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w700)));
+                                }),
                         Positioned(
                           bottom: 16.0,
                           right: 16.0,
