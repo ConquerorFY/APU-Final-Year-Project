@@ -200,7 +200,7 @@ class FacilitiesState extends State<Facilities> {
     getData();
   }
 
-  void getData() async {
+  Future<void> getData() async {
     final residentResponse = await apiService
         .getResidentDataAPI({"token": authService.getAuthToken()});
     if (residentResponse != null) {
@@ -267,47 +267,56 @@ class FacilitiesState extends State<Facilities> {
   Widget build(BuildContext context) {
     return facilitiesData != null
         ? Scaffold(
-            body: Stack(children: [
-            facilitiesData.length > 0
-                ? ListView.builder(
-                    padding: const EdgeInsets.all(16.0),
-                    itemCount: facilitiesData.length,
-                    itemBuilder: (context, index) {
-                      dynamic facility = facilitiesData[index];
-                      return FacilityCard(
-                        id: facility['id'],
-                        name: facility['name'],
-                        description: facility['description'],
-                        status: facility['status'],
-                        holder: facility['holderUsername'],
-                        residentUsername: residentData['username'],
-                        isLeader: residentData['isLeader'],
-                        updateParent: getData,
-                      );
-                    },
-                  )
-                : Center(
-                    child: Text("No facilities found!",
-                        style: TextStyle(
-                            fontFamily: 'OpenSans',
-                            color: settings.facilitiesTextColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700))),
-            Positioned(
-              bottom: 16.0,
-              right: 16.0,
-              child: FloatingActionButton(
-                backgroundColor: settings.bottomNavBarBgColor,
-                onPressed: () {
-                  // Navigate to register facilities screen
-                  Navigator.pushNamed(context, '/registerfacilities').then((_) {
-                    getData();
-                  });
-                },
-                child: Icon(Icons.add, color: settings.bottomNavBarTextColor),
-              ),
-            ),
-          ]))
+            body: RefreshIndicator(
+                onRefresh: getData,
+                child: FutureBuilder(
+                    future: Future.delayed(const Duration(seconds: 1)),
+                    builder: ((context, snapshot) {
+                      return Stack(children: [
+                        facilitiesData.length > 0
+                            ? ListView.builder(
+                                padding: const EdgeInsets.all(16.0),
+                                itemCount: facilitiesData.length,
+                                itemBuilder: (context, index) {
+                                  dynamic facility = facilitiesData[index];
+                                  return FacilityCard(
+                                    id: facility['id'],
+                                    name: facility['name'],
+                                    description: facility['description'],
+                                    status: facility['status'],
+                                    holder: facility['holderUsername'],
+                                    residentUsername: residentData['username'],
+                                    isLeader: residentData['isLeader'],
+                                    updateParent: getData,
+                                  );
+                                },
+                              )
+                            : Center(
+                                child: Text("No facilities found!",
+                                    style: TextStyle(
+                                        fontFamily: 'OpenSans',
+                                        color: settings.facilitiesTextColor,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w700))),
+                        Positioned(
+                          bottom: 16.0,
+                          right: 16.0,
+                          child: FloatingActionButton(
+                            backgroundColor: settings.bottomNavBarBgColor,
+                            onPressed: () {
+                              // Navigate to register facilities screen
+                              Navigator.pushNamed(
+                                      context, '/registerfacilities')
+                                  .then((_) {
+                                getData();
+                              });
+                            },
+                            child: Icon(Icons.add,
+                                color: settings.bottomNavBarTextColor),
+                          ),
+                        ),
+                      ]);
+                    }))))
         : Loading();
   }
 }
