@@ -86,6 +86,7 @@ class HomeState extends State<Home> {
         ? Scaffold(
             appBar: TopAppBar(isImplyLeading: false),
             body: RefreshIndicator(
+                color: settings.loadingBgColor,
                 onRefresh: getData,
                 child: FutureBuilder(
                     future: Future.delayed(const Duration(seconds: 1)),

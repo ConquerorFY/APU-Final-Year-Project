@@ -130,6 +130,7 @@ class ManageGroupState extends State<ManageGroup> {
               elevation: 5.0,
             ),
             body: RefreshIndicator(
+                color: settings.loadingBgColor,
                 onRefresh: getResidentData,
                 child: FutureBuilder(
                     future: Future.delayed(const Duration(seconds: 1)),

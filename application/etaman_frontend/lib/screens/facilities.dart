@@ -98,6 +98,7 @@ class BookedFacilitiesState extends State<BookedFacilities> {
     return bookedFacilitiesData != null
         ? Scaffold(
             body: RefreshIndicator(
+                color: settings.loadingBgColor,
                 onRefresh: getData,
                 child: FutureBuilder(
                     future: Future.delayed(const Duration(seconds: 1)),
@@ -289,6 +290,7 @@ class FacilitiesState extends State<Facilities> {
     return facilitiesData != null
         ? Scaffold(
             body: RefreshIndicator(
+                color: settings.loadingBgColor,
                 onRefresh: getData,
                 child: FutureBuilder(
                     future: Future.delayed(const Duration(seconds: 1)),

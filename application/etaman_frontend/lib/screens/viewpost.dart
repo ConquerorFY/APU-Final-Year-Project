@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:etaman_frontend/services/api.dart';
 import 'package:etaman_frontend/services/auth.dart';
 import 'package:etaman_frontend/services/components.dart';
@@ -34,6 +32,7 @@ class ViewPostState extends State<ViewPost> {
   };
   dynamic rID = 0;
   dynamic nID = 0;
+  dynamic groupID = 0;
   bool bIsJoinedGroup = true;
 
   @override
@@ -41,7 +40,7 @@ class ViewPostState extends State<ViewPost> {
     super.initState();
   }
 
-  void getData(groupID) async {
+  Future<void> getData() async {
     // Get All Posts
     final groupResponse = await apiService.getAllPostsAPI();
     if (groupResponse != null) {
@@ -85,10 +84,12 @@ class ViewPostState extends State<ViewPost> {
   Widget build(BuildContext context) {
     final arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    final groupID = arguments['groupID'];
     final groupName = arguments['groupName'];
     if (pData == null) {
-      getData(groupID);
+      setState(() {
+        groupID = arguments['groupID'];
+      });
+      getData();
     }
 
     return pData != null
@@ -104,33 +105,42 @@ class ViewPostState extends State<ViewPost> {
               shadowColor: settings.topNavBarBgColor,
               elevation: 5.0,
             ),
-            body: Stack(children: [
-              Builder(builder: (BuildContext innerContext) {
-                return GestureDetector(
-                    onHorizontalDragEnd: (details) {
-                      if (details.primaryVelocity! < 0) {
-                        Scaffold.of(innerContext).openDrawer();
-                      }
-                    },
-                    child: ListView(
-                      children: <Widget>[
-                        const SizedBox(height: 12),
-                        PostTypeFilterSection(
-                            updatePostListType: changeFilteredPostListType,
-                            postListType: filteredPostListType),
-                        const Divider(height: 0),
-                        const SizedBox(height: 10),
-                        PostList(
-                            postListType: filteredPostListType,
-                            postData: pData,
-                            isJoinedGroup: bIsJoinedGroup,
-                            nGroupID: nID,
-                            residentID: rID,
-                            userData: uData),
-                      ],
-                    ));
-              }),
-            ]),
+            body: RefreshIndicator(
+                color: settings.loadingBgColor,
+                onRefresh: getData,
+                child: FutureBuilder(
+                  future: Future.delayed(const Duration(seconds: 1)),
+                  builder: (context, snapshot) {
+                    return Stack(children: [
+                      Builder(builder: (BuildContext innerContext) {
+                        return GestureDetector(
+                            onHorizontalDragEnd: (details) {
+                              if (details.primaryVelocity! < 0) {
+                                Scaffold.of(innerContext).openDrawer();
+                              }
+                            },
+                            child: ListView(
+                              children: <Widget>[
+                                const SizedBox(height: 12),
+                                PostTypeFilterSection(
+                                    updatePostListType:
+                                        changeFilteredPostListType,
+                                    postListType: filteredPostListType),
+                                const Divider(height: 0),
+                                const SizedBox(height: 10),
+                                PostList(
+                                    postListType: filteredPostListType,
+                                    postData: pData,
+                                    isJoinedGroup: bIsJoinedGroup,
+                                    nGroupID: nID,
+                                    residentID: rID,
+                                    userData: uData),
+                              ],
+                            ));
+                      }),
+                    ]);
+                  },
+                )),
           )
         : Loading();
   }
