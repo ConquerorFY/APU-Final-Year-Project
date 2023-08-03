@@ -2279,8 +2279,8 @@ class BottomNavBar extends StatelessWidget {
             label: ""), // Facilities
         BottomNavigationBarItem(
             backgroundColor: backgroundColor,
-            icon: Icon(Icons.settings, color: textColor),
-            label: ""), // Settings
+            icon: Icon(Icons.chat, color: textColor),
+            label: ""), // Chat
       ],
       onTap: (int index) {
         switch (index) {
@@ -2297,11 +2297,8 @@ class BottomNavBar extends StatelessWidget {
             Navigator.pushNamed(context, '/facilities');
             break;
           case 3:
-            // Navigate to Settings Screen
-            Navigator.pushNamed(context, '/settings').then((_) {
-              Navigator.pop(context);
-              Navigator.pushNamed(context, '/home');
-            });
+            // Navigate to Chat Screen
+            Navigator.pushNamed(context, '/chat');
             break;
         }
       },

@@ -1372,4 +1372,20 @@ class Settings {
 
   Color loadingBgColor = Colors.green.shade600;
   Color loadingColor = Colors.green.shade200;
+
+  Color chatIsMeMessageBubbleColor = Colors.green;
+  Color chatNotMeMessageBubbleColor = Colors.grey.shade500;
+  Color chatMessageBubbleLabelColor = Colors.green.shade900;
+  Color chatMessageBubbleTextColor = Colors.white;
+  Color chatIconColor = Colors.green;
+
+  Color residentListBgColor = Colors.green;
+  Color residentListBgColor2 = Colors.red;
+  Color residentListTextColor = Colors.green;
+  Color residentListTextColor2 = Colors.white;
+  Color residentListTextShadowColor = Colors.green.shade900;
+  Color residentListIconColor = Colors.green;
+  Color residentListCursorColor = Colors.green;
+  Color residentListBorderColor = Colors.green;
+  double residentListBorderWidth = 1.0;
 }

@@ -1,3 +1,4 @@
+import 'package:etaman_frontend/screens/chat.dart';
 import 'package:etaman_frontend/screens/creategroup.dart';
 import 'package:etaman_frontend/screens/createpost.dart';
 import 'package:etaman_frontend/screens/editfacilities.dart';
@@ -5,6 +6,7 @@ import 'package:etaman_frontend/screens/editgroup.dart';
 import 'package:etaman_frontend/screens/editpost.dart';
 import 'package:etaman_frontend/screens/editpostcomment.dart';
 import 'package:etaman_frontend/screens/facilities.dart';
+import 'package:etaman_frontend/screens/findresidents.dart';
 import 'package:etaman_frontend/screens/joingroup.dart';
 import 'package:etaman_frontend/screens/managegroup.dart';
 import 'package:etaman_frontend/screens/map.dart';
@@ -38,5 +40,7 @@ void main() => runApp(MaterialApp(initialRoute: '/', routes: {
       '/registerfacilities': (context) => const RegisterFacilities(),
       '/editfacilities': (context) => const EditFacilities(),
       '/settings': (context) => const SettingsView(),
+      '/chat': (context) => const Chat(),
+      '/findResidents': (context) => const ResidentsList(),
       '/loading': (context) => Loading(),
     }));
