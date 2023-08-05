@@ -1,6 +1,7 @@
 import json
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
+from django.db.models import Q
 from .models import *
 from .serializers import *
 from .constants import * 
@@ -1417,7 +1418,40 @@ def getAllNeighborhoodGroupResidents(request):
     except NeighborhoodGroupModel.DoesNotExist:
         return JsonResponse({'data': {'message': NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
+# Get all chats between 2 residents
+@api_view(['POST'])
+def getChatHistoryBetweenResidents(request):
+    try:
+        # Get resident ID
+        residentID = decodeJWTToken(request.data['token'])['id']
+        chatData = ChatSerializer(ChatModel.objects.filter(Q(sender=residentID) | Q(receiver=residentID)), many=True).data
+        return JsonResponse({'data': {'message': ALL_CHAT_FOUND, 'list': chatData}, 'status': SUCCESS_CODE}, status=201)
+    except ChatModel.DoesNotExist:
+        return JsonResponse({'data': {'message': CHAT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
+# Create chat between 2 residents
+@api_view(['POST'])
+def createChatBetweenResidents(request):
+    try:
+        # Get resident ID (sender)
+        senderID = decodeJWTToken(request.data['token'])['id']
+        # Get receiver ID
+        receiverID = request.data['receiver']
+        content = request.data['content']
+        previous = request.data['previous'] if 'previous' in request.data else 0
+        chatData = ChatSerializer(data={'sender': senderID, 'receiver': receiverID, 'content': content, 'previous': previous})
+        if chatData.is_valid():
+            chatData.save()
+            return JsonResponse({'data': {'message': CHAT_CREATED_SUCCESSFUL}, 'status': SUCCESS_CODE}, status=201)
+        else:
+            # An error has occured
+            return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
+    except ChatModel.DoesNotExist:
+        return JsonResponse({'data': {'message': CHAT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
+    except ResidentModel.DoesNotExist:
+        return JsonResponse({'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
 
 
 

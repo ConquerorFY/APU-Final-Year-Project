@@ -97,4 +97,8 @@ FACILITIES_UPDATED_SUCCESSFUL = "The Neighborhood Facilities Has Been Updated Su
 FACILITIES_DELETED_SUCCESSFUL = "The Neighborhood Facilities Has Been Deleted Successfully!"
 ALL_FACILITIES_FOUND = "All Neighborhood Facilities Have Been Successfully Discovered!"
 
+CHAT_DATABASE_NOT_EXIST = "The Chat Does Not Exist!"
+CHAT_CREATED_SUCCESSFUL = "The Chat Has Been Created Successfully!"
+ALL_CHAT_FOUND = "All Chat Have Been Successfully Discovered!"
+
 DATABASE_WRITE_ERROR = "An Error Has Occured! Please Try Again!"

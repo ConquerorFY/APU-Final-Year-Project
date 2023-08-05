@@ -80,3 +80,9 @@ class FacilitiesSerializer(serializers.ModelSerializer):
     class Meta:
         model = FacilitiesModel
         fields = ('id', 'name', 'description', 'status', 'holder', 'groupID')
+
+# Chat Serializer
+class ChatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChatModel
+        fields = ('id', 'sender', 'receiver', 'content', 'previous')

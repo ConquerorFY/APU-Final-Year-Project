@@ -93,6 +93,10 @@ urlpatterns = [
     path('returnFacilities/', views.returnNeighborhoodFacilities),
     path('updateFacilities/', views.updateNeighborhoodFacilities),
     path('deleteFacilities/', views.deleteNeighborhoodFacilities),
+
+    # Chat API
+    path('getChat/', views.getChatHistoryBetweenResidents),
+    path('createChat/', views.createChatBetweenResidents),
 ]
 
 websocket_urlpatterns = [

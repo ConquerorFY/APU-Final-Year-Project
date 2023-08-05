@@ -126,3 +126,10 @@ class FacilitiesModel(models.Model):
     status = models.CharField(max_length=100, blank=False)
     holder = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
     groupID = models.ForeignKey(NeighborhoodGroupModel, null=True, on_delete=models.SET_NULL)
+
+# Chat Model
+class ChatModel(models.Model):
+    sender = models.ForeignKey(ResidentModel, related_name='sender', on_delete=models.CASCADE)
+    receiver = models.ForeignKey(ResidentModel, related_name='receiver', on_delete=models.CASCADE)
+    content = models.CharField(max_length=1000, blank=False)
+    previous = models.IntegerField(default=0)
