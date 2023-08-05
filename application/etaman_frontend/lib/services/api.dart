@@ -1361,4 +1361,56 @@ class ApiService {
       return null;
     }
   }
+
+  // Get all residents data (only ID, Name, Username and Neighborhood Group Name)
+  dynamic getAllResidentsData() async {
+    try {
+      final url = Uri.parse("$baseUrl/getResidentAll/");
+
+      final response = await get(url);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Get All Residents Data - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Get All Residents Data - $e");
+      return null;
+    }
+  }
+
+  // Get Chat History Betwen 2 Residents
+  dynamic getChatHistory(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/getChat/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Get Chat History - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Get Chat History - $e");
+      return null;
+    }
+  }
+
+  // Submit Chat Message
+  dynamic submitChatMessage(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/createChat/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info("Submit Chat Message - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Submit Chat Message - $e");
+      return null;
+    }
+  }
 }

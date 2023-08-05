@@ -37,11 +37,15 @@ def getAllResidentData(request):
     try:
         residents = ResidentSerializer(ResidentModel.objects.all(), many=True)
         residentsData = residents.data
-        filteredResidentsData = []
-        # Filter out password in all data entries
+        # Filter out vital details in all data entries
         for i in range(len(residentsData)):
-            filteredResidentsData.append(OrderedDict((key, value) for key, value in residentsData[i].items() if key != "password"))
-        return JsonResponse({"data": {"message": ALL_RESIDENT_DATA_FOUND, "list": filteredResidentsData}, "status": SUCCESS_CODE})
+            residentsData[i] = {
+                'id': residentsData[i]['id'],
+                'name': residentsData[i]['name'],
+                'username': residentsData[i]['username'],
+                'groupName': NeighborhoodGroupModel.objects.get(pk=residentsData[i]['groupID']).name if residentsData[i]['groupID'] != None else '-'
+            }
+        return JsonResponse({"data": {"message": ALL_RESIDENT_DATA_FOUND, "list": residentsData}, "status": SUCCESS_CODE}, status=201)
     except ResidentModel.DoesNotExist:
         return JsonResponse({'data': {"message": RESIDENT_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
 
@@ -1422,9 +1426,14 @@ def getAllNeighborhoodGroupResidents(request):
 @api_view(['POST'])
 def getChatHistoryBetweenResidents(request):
     try:
-        # Get resident ID
-        residentID = decodeJWTToken(request.data['token'])['id']
-        chatData = ChatSerializer(ChatModel.objects.filter(Q(sender=residentID) | Q(receiver=residentID)), many=True).data
+        # Get resident ID (senderID)
+        senderID = decodeJWTToken(request.data['token'])['id']
+        # Get receiver ID
+        receiverID = request.data['receiver']
+        chatData = ChatSerializer(ChatModel.objects.filter((Q(sender=senderID) & Q(receiver=receiverID)) | (Q(receiver=senderID) & Q(sender=receiverID))), many=True).data
+        for i in range(len(chatData)):
+            chatData[i]['senderUsername'] = ResidentModel.objects.get(pk=chatData[i]['sender']).username
+            chatData[i]['receiverUsername'] = ResidentModel.objects.get(pk=chatData[i]['receiver']).username
         return JsonResponse({'data': {'message': ALL_CHAT_FOUND, 'list': chatData}, 'status': SUCCESS_CODE}, status=201)
     except ChatModel.DoesNotExist:
         return JsonResponse({'data': {'message': CHAT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)

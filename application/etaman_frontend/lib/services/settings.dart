@@ -1234,6 +1234,7 @@ class Settings {
   Color leftDrawerTextColor = Colors.white;
 
   Color bottomNavBarBgColor = Colors.green;
+  Color bottomNavBarBgColor2 = const Color.fromARGB(50, 0, 255, 0);
   Color bottomNavBarTextColor = Colors.white;
 
   Color postTypeFilterSectionTextColor = Colors.green.shade500;

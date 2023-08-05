@@ -1,3 +1,5 @@
+import 'package:etaman_frontend/services/api.dart';
+import 'package:etaman_frontend/services/auth.dart';
 import 'package:etaman_frontend/services/components.dart';
 import 'package:etaman_frontend/services/settings.dart';
 import 'package:flutter/material.dart';
@@ -10,22 +12,71 @@ class Chat extends StatefulWidget {
 }
 
 class ChatState extends State<Chat> {
-  final List<dynamic> messages = [
-    {'sender': "User 1", 'message': "Hello!"},
-    {'sender': "User 2", 'message': "Hi there!"},
-    {'sender': "User 1", 'message': "How are you?"},
-    {'sender': "User 2", 'message': "I'm doing well, thanks!"},
-  ];
+  List<dynamic> messages = [];
   Settings settings = Settings();
-  TextEditingController _textEditingController = TextEditingController();
+  ApiService apiService = ApiService();
+  AuthService authService = AuthService();
+  final TextEditingController _chatController = TextEditingController();
+  dynamic selectedResidentID;
+  dynamic loggedInResidentID;
 
-  void sendMessage() {
-    String message = _textEditingController.text.trim();
+  @override
+  void initState() {
+    super.initState();
+    getLoggedInResidentID();
+  }
+
+  Future<void> getLoggedInResidentID() async {
+    final responseData = await apiService
+        .getResidentDataAPI({"token": authService.getAuthToken()});
+    if (responseData != null) {
+      final status = responseData['status'];
+      if (status > 0) {
+        // Success
+        setState(() {
+          loggedInResidentID = responseData['data']['list']['id'];
+        });
+      }
+    }
+  }
+
+  Future<void> getData() async {
+    final responseData = await apiService.getChatHistory(
+        {'token': authService.getAuthToken(), 'receiver': selectedResidentID});
+    if (responseData != null) {
+      final status = responseData['status'];
+      if (status > 0) {
+        // Success
+        dynamic chats = responseData['data']['list'];
+        chats.sort((a, b) => a['previous'].compareTo(b['previous']) as int);
+        setState(() {
+          messages = chats;
+        });
+      }
+    }
+  }
+
+  void sendMessage() async {
+    String message = _chatController.text.trim();
     if (message.isNotEmpty) {
-      setState(() {
-        messages.add({'sender': "User 1", 'message': message});
-        _textEditingController.clear();
-      });
+      // Ensure that the message is not empty
+      Map<String, dynamic> chatData = {
+        "receiver": selectedResidentID,
+        "content": message,
+        "token": authService.getAuthToken(),
+      };
+      if (messages.isNotEmpty) {
+        chatData['previous'] = messages.last['id'];
+      }
+      final chatResponse = await apiService.submitChatMessage(chatData);
+      if (chatResponse != null) {
+        final status = chatResponse['status'];
+        if (status > 0) {
+          // Success
+          getData();
+          _chatController.clear();
+        }
+      }
     }
   }
 
@@ -62,10 +113,6 @@ class ChatState extends State<Chat> {
     );
   }
 
-  Future<void> getData() async {
-    int a = await 1;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,58 +132,77 @@ class ChatState extends State<Chat> {
                                 Scaffold.of(innerContext).openDrawer();
                               }
                             },
-                            child: Column(children: [
-                              Expanded(
-                                child: ListView.builder(
-                                  itemCount: messages.length,
-                                  itemBuilder: (context, index) {
-                                    return buildMessageBubble(
-                                      messages[index]['sender'],
-                                      messages[index]['message'],
-                                      messages[index]['sender'] == "User 1",
-                                    );
-                                  },
-                                ),
-                              ),
-                              const Divider(height: 1),
-                              Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Row(
-                                  children: [
+                            child: selectedResidentID != null
+                                ? Column(children: [
                                     Expanded(
-                                      child: TextField(
-                                        cursorColor:
-                                            settings.chatIsMeMessageBubbleColor,
-                                        controller: _textEditingController,
-                                        decoration:
-                                            const InputDecoration.collapsed(
-                                          hintText: 'Type your message...',
-                                          hintStyle:
-                                              TextStyle(fontFamily: 'OpenSans'),
-                                        ),
+                                      child: ListView.builder(
+                                        itemCount: messages.length,
+                                        itemBuilder: (context, index) {
+                                          return buildMessageBubble(
+                                            messages[index]['senderUsername'],
+                                            messages[index]['content'],
+                                            messages[index]['sender'] ==
+                                                loggedInResidentID,
+                                          );
+                                        },
                                       ),
                                     ),
-                                    IconButton(
-                                      icon: Icon(Icons.send,
-                                          color: settings.chatIconColor),
-                                      onPressed: sendMessage,
+                                    const Divider(height: 1),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: TextField(
+                                              cursorColor: settings
+                                                  .chatIsMeMessageBubbleColor,
+                                              controller: _chatController,
+                                              decoration: const InputDecoration
+                                                  .collapsed(
+                                                hintText:
+                                                    'Type your message...',
+                                                hintStyle: TextStyle(
+                                                    fontFamily: 'OpenSans'),
+                                              ),
+                                            ),
+                                          ),
+                                          IconButton(
+                                            icon: Icon(Icons.send,
+                                                color: settings.chatIconColor),
+                                            onPressed: sendMessage,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ]));
+                                  ])
+                                : Container(
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    color: Colors.white,
+                                    child: Center(
+                                        child: Text("No residents selected!",
+                                            style: TextStyle(
+                                                fontFamily: 'OpenSans',
+                                                color: settings
+                                                    .chatIsMeMessageBubbleColor,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w700))),
+                                  ));
                       },
                     ),
                     Positioned(
                       bottom: 50.0,
                       right: 16.0,
                       child: FloatingActionButton(
-                        backgroundColor: settings.bottomNavBarBgColor,
-                        onPressed: () {
+                        backgroundColor: settings.bottomNavBarBgColor2,
+                        hoverColor: settings.bottomNavBarBgColor,
+                        onPressed: () async {
                           // Navigate to find residents screen
-                          Navigator.pushNamed(context, '/findResidents')
-                              .then((_) {
+                          dynamic receivedData = await Navigator.pushNamed(
+                              context, '/findResidents');
+                          setState(() {
+                            selectedResidentID = receivedData['receiverID'];
                             getData();
                           });
                         },

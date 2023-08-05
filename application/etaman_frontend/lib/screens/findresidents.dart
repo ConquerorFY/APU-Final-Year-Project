@@ -1,3 +1,5 @@
+import 'package:etaman_frontend/services/api.dart';
+import 'package:etaman_frontend/services/auth.dart';
 import 'package:etaman_frontend/services/settings.dart';
 import 'package:flutter/material.dart';
 
@@ -9,31 +11,58 @@ class ResidentsList extends StatefulWidget {
 }
 
 class ResidentsListState extends State<ResidentsList> {
-  final List<Map> allUsers = [
-    {'name': 'Ryan Lim Fang Yung', 'username': 'ryan', 'group': 'Ampang Gang'},
-    {'name': 'Andrew', 'username': 'andrew', 'group': 'Ampang Gang'},
-    // Add more users
-  ];
-  List<Map> displayedUsers = [];
+  late List<dynamic> allUsers;
+  List<dynamic> displayedUsers = [];
+  dynamic loggedInUserID;
   Settings settings = Settings();
+  ApiService apiService = ApiService();
+  AuthService authService = AuthService();
 
   @override
   void initState() {
     super.initState();
-    displayedUsers = allUsers; // Initialize the displayed users with all users
+    getData();
   }
 
   void filterUsers(String query) {
     setState(() {
       displayedUsers = allUsers
           .where((user) =>
-              user['username'].toLowerCase().contains(query.toLowerCase()))
+              user['name'].toLowerCase().contains(query.toLowerCase()))
           .toList();
     });
   }
 
   Future<void> getData() async {
-    int a = await 1;
+    final responseData = await apiService.getAllResidentsData();
+    if (responseData != null) {
+      final status = responseData['status'];
+      if (status > 0) {
+        // Success
+        setState(() {
+          allUsers = responseData['data']['list'];
+        });
+        setState(() {
+          // Initialize the displayed users with all users
+          displayedUsers = allUsers;
+        });
+        getLoggedInUserID();
+      }
+    }
+  }
+
+  Future<void> getLoggedInUserID() async {
+    final responseData = await apiService
+        .getResidentDataAPI({'token': authService.getAuthToken()});
+    if (responseData != null) {
+      final status = responseData['status'];
+      if (status > 0) {
+        // Success
+        setState(() {
+          loggedInUserID = responseData['data']['list']['id'];
+        });
+      }
+    }
   }
 
   @override
@@ -79,43 +108,47 @@ class ResidentsListState extends State<ResidentsList> {
                           ),
                         ),
                       ),
-                      displayedUsers.isNotEmpty
+                      displayedUsers.isNotEmpty && loggedInUserID != null
                           ? Expanded(
                               child: ListView.builder(
                                 itemCount: displayedUsers.length,
                                 itemBuilder: (context, index) {
                                   final user = displayedUsers[index];
-                                  return ListTile(
-                                    title: Text(user['name'],
-                                        style: TextStyle(
-                                            fontFamily: "OpenSans",
-                                            fontSize: 15.0,
-                                            color:
-                                                settings.residentListTextColor,
-                                            fontWeight: FontWeight.w900)),
-                                    subtitle: Text(user['username'],
-                                        style: TextStyle(
-                                            fontFamily: "OpenSans",
-                                            fontSize: 13.0,
-                                            color:
-                                                settings.residentListTextColor,
-                                            fontWeight: FontWeight.w500)),
-                                    trailing: Text(user['group'],
-                                        style: TextStyle(
-                                            fontFamily: "OpenSans",
-                                            fontSize: 10.0,
-                                            color:
-                                                settings.residentListTextColor,
-                                            fontWeight: FontWeight.w800)),
-                                    leading: IconButton(
-                                      icon: Icon(Icons.arrow_forward_ios,
-                                          color: settings.residentListIconColor,
-                                          size: 20.0),
-                                      onPressed: () {
-                                        // Perform action when the button/icon is pressed
-                                      },
-                                    ),
-                                  );
+                                  return loggedInUserID != user['id']
+                                      ? ListTile(
+                                          title: Text(user['name'],
+                                              style: TextStyle(
+                                                  fontFamily: "OpenSans",
+                                                  fontSize: 15.0,
+                                                  color: settings
+                                                      .residentListTextColor,
+                                                  fontWeight: FontWeight.w900)),
+                                          subtitle: Text(
+                                              "${user['username']}#${user['id']}",
+                                              style: TextStyle(
+                                                  fontFamily: "OpenSans",
+                                                  fontSize: 13.0,
+                                                  color: settings
+                                                      .residentListTextColor,
+                                                  fontWeight: FontWeight.w500)),
+                                          trailing: Text(user['groupName'],
+                                              style: TextStyle(
+                                                  fontFamily: "OpenSans",
+                                                  fontSize: 10.0,
+                                                  color: settings
+                                                      .residentListTextColor,
+                                                  fontWeight: FontWeight.w800)),
+                                          leading: Icon(Icons.arrow_forward_ios,
+                                              color: settings
+                                                  .residentListIconColor,
+                                              size: 20.0),
+                                          onTap: () {
+                                            // Select the target resident and show chat messages
+                                            Navigator.pop(context,
+                                                {'receiverID': user['id']});
+                                          },
+                                        )
+                                      : Container();
                                 },
                               ),
                             )
