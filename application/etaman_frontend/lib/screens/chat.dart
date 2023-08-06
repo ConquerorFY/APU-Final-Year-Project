@@ -80,7 +80,8 @@ class ChatState extends State<Chat> {
     }
   }
 
-  Widget buildMessageBubble(String sender, String message, bool isMe) {
+  Widget buildMessageBubble(
+      String sender, String message, dynamic imageUrl, bool isMe) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
@@ -88,6 +89,16 @@ class ChatState extends State<Chat> {
         crossAxisAlignment:
             isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
+          imageUrl != null
+              ? CircleAvatar(
+                  radius: 15,
+                  backgroundImage:
+                      NetworkImage("${apiService.mediaUrl}$imageUrl"),
+                )
+              : const CircleAvatar(
+                  radius: 15,
+                  backgroundImage: AssetImage("assets/avatar.png"),
+                ),
           Text(sender,
               style: TextStyle(
                   fontFamily: "OpenSans",
@@ -141,6 +152,7 @@ class ChatState extends State<Chat> {
                                           return buildMessageBubble(
                                             messages[index]['senderUsername'],
                                             messages[index]['content'],
+                                            messages[index]['senderImage'],
                                             messages[index]['sender'] ==
                                                 loggedInResidentID,
                                           );

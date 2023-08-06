@@ -28,7 +28,7 @@ class ResidentsListState extends State<ResidentsList> {
     setState(() {
       displayedUsers = allUsers
           .where((user) =>
-              user['name'].toLowerCase().contains(query.toLowerCase()))
+              user['username'].toLowerCase().contains(query.toLowerCase()))
           .toList();
     });
   }
@@ -138,10 +138,17 @@ class ResidentsListState extends State<ResidentsList> {
                                                   color: settings
                                                       .residentListTextColor,
                                                   fontWeight: FontWeight.w800)),
-                                          leading: Icon(Icons.arrow_forward_ios,
-                                              color: settings
-                                                  .residentListIconColor,
-                                              size: 20.0),
+                                          leading: user['image'] != null
+                                              ? CircleAvatar(
+                                                  radius: 25,
+                                                  backgroundImage: NetworkImage(
+                                                      "${apiService.mediaUrl}${user['image']}"),
+                                                )
+                                              : const CircleAvatar(
+                                                  radius: 25,
+                                                  backgroundImage: AssetImage(
+                                                      "assets/avatar.png"),
+                                                ),
                                           onTap: () {
                                             // Select the target resident and show chat messages
                                             Navigator.pop(context,

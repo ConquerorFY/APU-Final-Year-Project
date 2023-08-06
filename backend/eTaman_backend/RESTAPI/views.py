@@ -43,6 +43,7 @@ def getAllResidentData(request):
                 'id': residentsData[i]['id'],
                 'name': residentsData[i]['name'],
                 'username': residentsData[i]['username'],
+                'image': residentsData[i]['image'],
                 'groupName': NeighborhoodGroupModel.objects.get(pk=residentsData[i]['groupID']).name if residentsData[i]['groupID'] != None else '-'
             }
         return JsonResponse({"data": {"message": ALL_RESIDENT_DATA_FOUND, "list": residentsData}, "status": SUCCESS_CODE}, status=201)
@@ -1432,8 +1433,12 @@ def getChatHistoryBetweenResidents(request):
         receiverID = request.data['receiver']
         chatData = ChatSerializer(ChatModel.objects.filter((Q(sender=senderID) & Q(receiver=receiverID)) | (Q(receiver=senderID) & Q(sender=receiverID))), many=True).data
         for i in range(len(chatData)):
-            chatData[i]['senderUsername'] = ResidentModel.objects.get(pk=chatData[i]['sender']).username
-            chatData[i]['receiverUsername'] = ResidentModel.objects.get(pk=chatData[i]['receiver']).username
+            sender = ResidentModel.objects.get(pk=chatData[i]['sender'])
+            receiver = ResidentModel.objects.get(pk=chatData[i]['receiver'])
+            chatData[i]['senderUsername'] = sender.username
+            chatData[i]['receiverUsername'] = receiver.username
+            chatData[i]['senderImage'] = sender.image.url if hasattr(sender, 'image') and sender.image else None
+            chatData[i]['receiverImage'] = receiver.image.url if hasattr(receiver, 'image') and receiver.image else None
         return JsonResponse({'data': {'message': ALL_CHAT_FOUND, 'list': chatData}, 'status': SUCCESS_CODE}, status=201)
     except ChatModel.DoesNotExist:
         return JsonResponse({'data': {'message': CHAT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}, status=404)
