@@ -62,6 +62,7 @@ class Settings {
         leftDrawerTextColor = Colors.white;
 
         bottomNavBarBgColor = Colors.blue;
+        bottomNavBarBgColor2 = const Color.fromARGB(50, 173, 216, 255);
         bottomNavBarTextColor = Colors.white;
 
         postTypeFilterSectionTextColor = Colors.blue.shade500;
@@ -198,6 +199,22 @@ class Settings {
 
         loadingBgColor = Colors.blue.shade600;
         loadingColor = Colors.blue.shade200;
+
+        chatIsMeMessageBubbleColor = Colors.blue;
+        chatNotMeMessageBubbleColor = Colors.grey.shade500;
+        chatMessageBubbleLabelColor = Colors.blue.shade900;
+        chatMessageBubbleTextColor = Colors.white;
+        chatIconColor = Colors.blue;
+
+        residentListBgColor = Colors.blue;
+        residentListBgColor2 = Colors.red;
+        residentListTextColor = Colors.blue;
+        residentListTextColor2 = Colors.white;
+        residentListTextShadowColor = Colors.blue.shade900;
+        residentListIconColor = Colors.blue;
+        residentListCursorColor = Colors.blue;
+        residentListBorderColor = Colors.blue;
+        residentListBorderWidth = 1.0;
         break;
       case "green":
         popupBgColor = Colors.white;
@@ -229,6 +246,7 @@ class Settings {
         leftDrawerTextColor = Colors.white;
 
         bottomNavBarBgColor = Colors.green;
+        bottomNavBarBgColor2 = const Color.fromARGB(50, 0, 255, 0);
         bottomNavBarTextColor = Colors.white;
 
         postTypeFilterSectionTextColor = Colors.green.shade500;
@@ -365,6 +383,22 @@ class Settings {
 
         loadingBgColor = Colors.green.shade600;
         loadingColor = Colors.green.shade200;
+
+        chatIsMeMessageBubbleColor = Colors.green;
+        chatNotMeMessageBubbleColor = Colors.grey.shade500;
+        chatMessageBubbleLabelColor = Colors.green.shade900;
+        chatMessageBubbleTextColor = Colors.white;
+        chatIconColor = Colors.green;
+
+        residentListBgColor = Colors.green;
+        residentListBgColor2 = Colors.red;
+        residentListTextColor = Colors.green;
+        residentListTextColor2 = Colors.white;
+        residentListTextShadowColor = Colors.green.shade900;
+        residentListIconColor = Colors.green;
+        residentListCursorColor = Colors.green;
+        residentListBorderColor = Colors.green;
+        residentListBorderWidth = 1.0;
         break;
       case "orange":
         popupBgColor = Colors.white;
@@ -396,6 +430,7 @@ class Settings {
         leftDrawerTextColor = Colors.white;
 
         bottomNavBarBgColor = Colors.orange;
+        bottomNavBarBgColor2 = const Color.fromARGB(50, 255, 179, 0);
         bottomNavBarTextColor = Colors.white;
 
         postTypeFilterSectionTextColor = Colors.orange.shade500;
@@ -532,6 +567,22 @@ class Settings {
 
         loadingBgColor = Colors.orange.shade600;
         loadingColor = Colors.orange.shade200;
+
+        chatIsMeMessageBubbleColor = Colors.orange;
+        chatNotMeMessageBubbleColor = Colors.grey.shade500;
+        chatMessageBubbleLabelColor = Colors.orange.shade900;
+        chatMessageBubbleTextColor = Colors.white;
+        chatIconColor = Colors.blue;
+
+        residentListBgColor = Colors.orange;
+        residentListBgColor2 = Colors.red;
+        residentListTextColor = Colors.orange;
+        residentListTextColor2 = Colors.white;
+        residentListTextShadowColor = Colors.orange.shade900;
+        residentListIconColor = Colors.orange;
+        residentListCursorColor = Colors.orange;
+        residentListBorderColor = Colors.orange;
+        residentListBorderWidth = 1.0;
         break;
       case "black":
         popupBgColor = Colors.white;
@@ -563,6 +614,7 @@ class Settings {
         leftDrawerTextColor = Colors.white;
 
         bottomNavBarBgColor = Colors.black;
+        bottomNavBarBgColor2 = const Color.fromARGB(50, 0, 0, 0);
         bottomNavBarTextColor = Colors.white;
 
         postTypeFilterSectionTextColor = Colors.black;
@@ -699,6 +751,22 @@ class Settings {
 
         loadingBgColor = Colors.black;
         loadingColor = Colors.white;
+
+        chatIsMeMessageBubbleColor = Colors.black;
+        chatNotMeMessageBubbleColor = Colors.grey.shade500;
+        chatMessageBubbleLabelColor = Colors.black;
+        chatMessageBubbleTextColor = Colors.white;
+        chatIconColor = Colors.black;
+
+        residentListBgColor = Colors.black;
+        residentListBgColor2 = Colors.red;
+        residentListTextColor = Colors.black;
+        residentListTextColor2 = Colors.white;
+        residentListTextShadowColor = Colors.black;
+        residentListIconColor = Colors.black;
+        residentListCursorColor = Colors.black;
+        residentListBorderColor = Colors.black;
+        residentListBorderWidth = 1.0;
         break;
       case "indigo":
         popupBgColor = Colors.white;
@@ -730,6 +798,7 @@ class Settings {
         leftDrawerTextColor = Colors.white;
 
         bottomNavBarBgColor = Colors.indigo;
+        bottomNavBarBgColor2 = const Color.fromARGB(50, 75, 0, 130);
         bottomNavBarTextColor = Colors.white;
 
         postTypeFilterSectionTextColor = Colors.indigo.shade500;
@@ -866,6 +935,22 @@ class Settings {
 
         loadingBgColor = Colors.indigo.shade600;
         loadingColor = Colors.indigo.shade200;
+
+        chatIsMeMessageBubbleColor = Colors.indigo;
+        chatNotMeMessageBubbleColor = Colors.grey.shade500;
+        chatMessageBubbleLabelColor = Colors.indigo.shade900;
+        chatMessageBubbleTextColor = Colors.white;
+        chatIconColor = Colors.indigo;
+
+        residentListBgColor = Colors.indigo;
+        residentListBgColor2 = Colors.red;
+        residentListTextColor = Colors.indigo;
+        residentListTextColor2 = Colors.white;
+        residentListTextShadowColor = Colors.indigo.shade900;
+        residentListIconColor = Colors.indigo;
+        residentListCursorColor = Colors.indigo;
+        residentListBorderColor = Colors.indigo;
+        residentListBorderWidth = 1.0;
         break;
       case "purple":
         popupBgColor = Colors.white;
@@ -897,6 +982,7 @@ class Settings {
         leftDrawerTextColor = Colors.white;
 
         bottomNavBarBgColor = Colors.purple;
+        bottomNavBarBgColor2 = const Color.fromARGB(50, 128, 0, 128);
         bottomNavBarTextColor = Colors.white;
 
         postTypeFilterSectionTextColor = Colors.purple.shade500;
@@ -1033,6 +1119,22 @@ class Settings {
 
         loadingBgColor = Colors.purple.shade600;
         loadingColor = Colors.purple.shade200;
+
+        chatIsMeMessageBubbleColor = Colors.purple;
+        chatNotMeMessageBubbleColor = Colors.grey.shade500;
+        chatMessageBubbleLabelColor = Colors.purple.shade900;
+        chatMessageBubbleTextColor = Colors.white;
+        chatIconColor = Colors.purple;
+
+        residentListBgColor = Colors.purple;
+        residentListBgColor2 = Colors.red;
+        residentListTextColor = Colors.purple;
+        residentListTextColor2 = Colors.white;
+        residentListTextShadowColor = Colors.purple.shade900;
+        residentListIconColor = Colors.purple;
+        residentListCursorColor = Colors.purple;
+        residentListBorderColor = Colors.purple;
+        residentListBorderWidth = 1.0;
         break;
       case "pink":
         popupBgColor = Colors.white;
@@ -1064,6 +1166,7 @@ class Settings {
         leftDrawerTextColor = Colors.white;
 
         bottomNavBarBgColor = Colors.pink;
+        bottomNavBarBgColor2 = const Color.fromARGB(50, 255, 192, 203);
         bottomNavBarTextColor = Colors.white;
 
         postTypeFilterSectionTextColor = Colors.pink.shade500;
@@ -1200,6 +1303,22 @@ class Settings {
 
         loadingBgColor = Colors.pink.shade600;
         loadingColor = Colors.pink.shade200;
+
+        chatIsMeMessageBubbleColor = Colors.pink;
+        chatNotMeMessageBubbleColor = Colors.grey.shade500;
+        chatMessageBubbleLabelColor = Colors.pink.shade900;
+        chatMessageBubbleTextColor = Colors.white;
+        chatIconColor = Colors.pink;
+
+        residentListBgColor = Colors.pink;
+        residentListBgColor2 = Colors.red;
+        residentListTextColor = Colors.pink;
+        residentListTextColor2 = Colors.white;
+        residentListTextShadowColor = Colors.pink.shade900;
+        residentListIconColor = Colors.pink;
+        residentListCursorColor = Colors.pink;
+        residentListBorderColor = Colors.pink;
+        residentListBorderWidth = 1.0;
         break;
     }
   }

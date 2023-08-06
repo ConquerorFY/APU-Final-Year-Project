@@ -145,14 +145,19 @@ class JoinGroupState extends State<JoinGroup> {
           backgroundColor: settings.editProfileBgColor,
           title: isEditing
               ? TextField(
+                  cursorColor: settings.joinGroupTextFieldTextColor,
                   autofocus: true,
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
                       fontFamily: "OpenSans",
                       color: settings.editProfileTextFieldText2Color),
-                  decoration: const InputDecoration(
-                      labelText: 'Enter Address...', border: InputBorder.none),
+                  decoration: InputDecoration(
+                      focusColor: settings.joinGroupTextFieldTextColor,
+                      labelText: 'Enter Address...',
+                      labelStyle: TextStyle(
+                          color: settings.joinGroupTextFieldTextColor),
+                      border: InputBorder.none),
                   onSubmitted: (val) {
                     setState(() {
                       filterGroupName = val;

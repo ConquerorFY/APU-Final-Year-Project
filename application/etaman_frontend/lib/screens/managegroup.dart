@@ -264,7 +264,7 @@ class ManageGroupState extends State<ManageGroup> {
                                   const SizedBox(height: 5.0),
                                   SingleChildScrollView(
                                       child: SizedBox(
-                                    height: 200,
+                                    height: 150,
                                     child: ListView.builder(
                                       itemCount: groupData.length,
                                       itemBuilder: (context, index) {
@@ -537,7 +537,7 @@ class ManageGroupState extends State<ManageGroup> {
                                   const SizedBox(height: 5.0),
                                   SingleChildScrollView(
                                       child: SizedBox(
-                                    height: 200,
+                                    height: 150,
                                     child: ListView.builder(
                                       itemCount: joinRequestsData.length,
                                       itemBuilder: (context, index) {
