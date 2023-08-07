@@ -180,3 +180,68 @@ class CommentConsumer(WebsocketConsumer):
             return {'data': {'message': GENERAL_POST_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}
         except ResidentModel.DoesNotExist:
             return {'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}
+
+class ChatConsumer(WebsocketConsumer):
+    def connect(self):
+        params = parse_qs(self.scope.get('query_string').decode('utf-8'))
+        self.resident_1 = params.get('resident1', [''])[0]
+        self.resident_2 = params.get('resident2', [''])[0]
+        self.group_name = f"{self.resident_1}_{self.resident_2}Chat" if int(self.resident_1) > int(self.resident_2) else f"{self.resident_2}_{self.resident_1}Chat"
+
+        async_to_sync(self.channel_layer.group_add) (
+            self.group_name,
+            self.channel_name   # will be created automatically for each user
+        )
+
+        self.accept()
+
+    def receive(self, text_data):
+        chat_data_json = json.loads(text_data)
+        response_data_json = {}
+        # Broadcast message to every user within the same group
+        response_data_json = self.handleChat(chat_data_json)
+        print(response_data_json)
+        async_to_sync(self.channel_layer.group_send)(
+            self.group_name,
+            {   
+                'type': 'chat',
+                'data': response_data_json['data'],
+                'status': response_data_json['status']
+            }
+        )
+
+    def chat(self, event):
+        # Broadcast messages to all channels within the same group
+        self.send(text_data=json.dumps({
+            'data': event['data'],
+            'status': event['status']
+        }))
+
+    def disconnect(self, code):
+        super().disconnect(code)
+        async_to_sync(self.channel_layer.group_discard) (self.group_name, self.channel_name)
+
+    def handleChat(self, comment_data):
+        try:
+            # Get resident ID (sender)
+            senderID = decodeJWTToken(comment_data['token'])['id']
+            # Get receiver ID
+            receiverID = comment_data['receiver']
+            content = comment_data['content']
+            previous = comment_data['previous'] if 'previous' in comment_data else 0
+            chatData = ChatSerializer(data={'sender': senderID, 'receiver': receiverID, 'content': content, 'previous': previous})
+            sender = ResidentModel.objects.get(pk=senderID)
+            receiver = ResidentModel.objects.get(pk=receiverID)
+            if chatData.is_valid():
+                chatData.save()
+                return {'data': {'message': CHAT_CREATED_SUCCESSFUL, 'list': {**chatData.data, 'senderUsername': sender.username, 
+                    'senderImage': sender.image.url if hasattr(sender, 'image') and sender.image else None, 
+                    'receiverUsername': receiver.username, 'receiverImage': receiver.image.url if hasattr(receiver, 'image') and receiver.image else None}}, 
+                    'status': SUCCESS_CODE}
+            else:
+                # An error has occured
+                return {'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}
+        except ChatModel.DoesNotExist:
+            return {'data': {'message': CHAT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}
+        except ResidentModel.DoesNotExist:
+            return {'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}

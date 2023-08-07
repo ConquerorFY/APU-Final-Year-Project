@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:etaman_frontend/services/api.dart';
 import 'package:etaman_frontend/services/auth.dart';
 import 'package:etaman_frontend/services/components.dart';
 import 'package:etaman_frontend/services/settings.dart';
 import 'package:flutter/material.dart';
+import 'package:web_socket_channel/io.dart';
 
 class Chat extends StatefulWidget {
   const Chat({super.key});
@@ -19,6 +22,7 @@ class ChatState extends State<Chat> {
   final TextEditingController _chatController = TextEditingController();
   dynamic selectedResidentID;
   dynamic loggedInResidentID;
+  dynamic chatChannel;
 
   @override
   void initState() {
@@ -54,12 +58,41 @@ class ChatState extends State<Chat> {
         });
       }
     }
+
+    chatChannel?.sink?.close();
+    chatChannel = IOWebSocketChannel.connect(
+        "${apiService.wsUrl}/chats/?resident1=$loggedInResidentID&resident2=$selectedResidentID");
+    chatChannel.stream.asBroadcastStream().listen((message) {
+      setState(() {
+        messages.add(jsonDecode(message)['data']['list']);
+        _chatController.clear();
+      });
+    });
   }
 
   void sendMessage() async {
     String message = _chatController.text.trim();
     if (message.isNotEmpty) {
       // Ensure that the message is not empty
+      // Map<String, dynamic> chatData = {
+      //   "receiver": selectedResidentID,
+      //   "content": message,
+      //   "token": authService.getAuthToken(),
+      // };
+      // if (messages.isNotEmpty) {
+      //   chatData['previous'] = messages.last['id'];
+      // }
+      // final chatResponse = await apiService.submitChatMessage(chatData);
+      // if (chatResponse != null) {
+      //   final status = chatResponse['status'];
+      //   if (status > 0) {
+      //     // Success
+      //     getData();
+      //     _chatController.clear();
+      //   }
+      // }
+
+      // Web Socket (Real Time)
       Map<String, dynamic> chatData = {
         "receiver": selectedResidentID,
         "content": message,
@@ -68,15 +101,7 @@ class ChatState extends State<Chat> {
       if (messages.isNotEmpty) {
         chatData['previous'] = messages.last['id'];
       }
-      final chatResponse = await apiService.submitChatMessage(chatData);
-      if (chatResponse != null) {
-        final status = chatResponse['status'];
-        if (status > 0) {
-          // Success
-          getData();
-          _chatController.clear();
-        }
-      }
+      chatChannel.sink.add(jsonEncode(chatData));
     }
   }
 
