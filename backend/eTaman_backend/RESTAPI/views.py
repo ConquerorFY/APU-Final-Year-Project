@@ -226,7 +226,7 @@ def getResidentData(request):
         id = decodeJWTToken(request.data["token"])["id"]
         resident = ResidentModel.objects.get(pk=id)
         residentData = {
-            'groupName': resident.groupID.name if resident.groupID != None else '',
+            'groupName': resident.groupID.name if resident.groupID != None else '-',
             'groupState': resident.groupID.state if resident.groupID != None else '',
             'groupCity': resident.groupID.city if resident.groupID != None else '',
             'groupPostcode': resident.groupID.postcode if resident.groupID != None else '',

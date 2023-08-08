@@ -371,7 +371,6 @@ class CreatePostState extends State<CreatePost> {
         TextFormField(
           key: _eventDateKey,
           initialValue: DateFormat('yyyy-MM-dd').format(DateTime.now()),
-          readOnly: true,
           validator: (value) {
             return validator.validateDate(value);
           },
@@ -400,7 +399,6 @@ class CreatePostState extends State<CreatePost> {
         TextFormField(
             key: _eventTimeKey,
             initialValue: DateFormat('HH:mm:ss').format(DateTime.now()),
-            readOnly: true,
             validator: (value) {
               return validator.validateTime(value);
             },

@@ -368,6 +368,21 @@ class RegisterState extends State<Register> {
                             "Please ensure all fields are valid before submitting!",
                             () {});
                       } else {
+                        bool isValidatedAddress =
+                            await validator.validateAddress(
+                                _streetKey.currentState?.value,
+                                _postcodeKey.currentState?.value,
+                                _cityKey.currentState?.value,
+                                _stateKey.currentState?.value);
+                        if (!isValidatedAddress) {
+                          // ignore: use_build_context_synchronously
+                          popupService.showErrorPopup(
+                              context,
+                              "Validation Message",
+                              "Please ensure the address details provided are valid (in Malaysia) before submitting!",
+                              () {});
+                          return;
+                        }
                         final response =
                             await apiService.registerAccountAPI(userData);
                         if (response != null) {

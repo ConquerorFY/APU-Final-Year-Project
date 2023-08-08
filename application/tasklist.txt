@@ -14,7 +14,7 @@ Residents:
     - Edit Posts Screen [X]
     - Edit Posts Comment Screen [X]
     - Settings Screen [X]
-    - Private Chat Among Residents (?)
+    - Private Chat Among Residents [X]
     - Crime Heat Map Across Malaysia (?)
 
 Resident Leader:
@@ -31,7 +31,7 @@ Resident Leader:
     - Edit Posts Screen [X]
     - Edit Posts Comment Screen [X]
     - Settings Screen [X]
-    - Private Chat Among Residents (?)
+    - Private Chat Among Residents [X]
     - Crime Heat Map Across Malaysia (?)
 
 Admin:

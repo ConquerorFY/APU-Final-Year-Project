@@ -1,3 +1,5 @@
+import 'package:geocoding_resolver/geocoding_resolver.dart';
+
 class Validator {
   // Profile
   final nameRegExp = RegExp(r'^[a-zA-Z ]+$');
@@ -19,6 +21,8 @@ class Validator {
   final venueRegExp = RegExp(r'^[a-zA-Z0-9 ]+$');
   final rulesRegExp = RegExp(r'.*');
   final contentRegExp = RegExp(r'.*');
+
+  GeoCoder geoCoder = GeoCoder();
 
   // Private constructor to prevent external instantiation
   Validator._();
@@ -85,6 +89,13 @@ class Validator {
       return 'Please enter a valid street!';
     }
     return null;
+  }
+
+  validateAddress(street, postcode, city, state) async {
+    String addr = "$street, $postcode $city, $state, Malaysia";
+    List<LookupAddress> addresses =
+        await geoCoder.getAddressSuggestions(address: addr);
+    return addresses.isNotEmpty ? true : false;
   }
 
   validateContact(contact) {
