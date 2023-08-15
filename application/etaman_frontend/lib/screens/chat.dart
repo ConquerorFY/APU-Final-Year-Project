@@ -194,6 +194,10 @@ class ChatState extends State<Chat> {
                                             child: TextField(
                                               cursorColor: settings
                                                   .chatIsMeMessageBubbleColor,
+                                              style: TextStyle(
+                                                  fontFamily: 'OpenSans',
+                                                  color: settings
+                                                      .chatIsMeMessageBubbleColor),
                                               controller: _chatController,
                                               decoration: const InputDecoration
                                                   .collapsed(

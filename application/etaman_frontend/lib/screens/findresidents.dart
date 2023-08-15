@@ -92,6 +92,9 @@ class ResidentsListState extends State<ResidentsList> {
                         child: TextField(
                           onChanged: filterUsers,
                           cursorColor: settings.residentListTextColor,
+                          style: TextStyle(
+                              color: settings.residentListTextColor,
+                              fontFamily: 'OpenSans'),
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(

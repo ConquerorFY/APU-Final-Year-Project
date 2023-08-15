@@ -71,4 +71,4 @@
     In any case, regardless of the specific location, Flutter will still resolve and use the packages installed in the 
     designated directory when running your Flutter application.
 
-9. 
+9. Build IOS Application for flutter code (can only build in Mac): flutter build ios

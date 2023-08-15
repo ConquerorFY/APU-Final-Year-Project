@@ -154,7 +154,7 @@ class JoinGroupState extends State<JoinGroup> {
                       color: settings.editProfileTextFieldText2Color),
                   decoration: InputDecoration(
                       focusColor: settings.joinGroupTextFieldTextColor,
-                      labelText: 'Enter Address...',
+                      labelText: 'Enter Group Name...',
                       labelStyle: TextStyle(
                           color: settings.joinGroupTextFieldTextColor),
                       border: InputBorder.none),

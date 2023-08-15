@@ -120,7 +120,7 @@ class ManageGroupState extends State<ManageGroup> {
         ? Scaffold(
             appBar: AppBar(
               backgroundColor: settings.manageGroupBgColor,
-              title: Text('Manage Neighborhood Group',
+              title: Text('Manage Group',
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w800,

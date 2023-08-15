@@ -35,6 +35,7 @@ class InteractiveTooltip extends StatelessWidget {
               color: settings.mapTooltipBgColor),
           height: height,
           message: message,
+          triggerMode: TooltipTriggerMode.tap,
           child: child),
     );
   }

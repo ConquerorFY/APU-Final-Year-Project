@@ -87,7 +87,10 @@ class ProfileState extends State<Profile> {
                                 if (loadingProgress == null) {
                                   return child;
                                 } else {
-                                  return const CircularProgressIndicator();
+                                  return CircularProgressIndicator(
+                                      backgroundColor: settings.loadingColor,
+                                      color: settings.loadingBgColor,
+                                      strokeWidth: 4.0);
                                 }
                               },
                               errorBuilder: (context, error, stackTrace) {
