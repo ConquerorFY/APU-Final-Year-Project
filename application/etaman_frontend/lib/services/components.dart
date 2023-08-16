@@ -627,10 +627,11 @@ class PostListState extends State<PostList> {
                           if (loadingProgress == null) {
                             return child;
                           } else {
-                            return CircularProgressIndicator(
-                                backgroundColor: settings.loadingColor,
-                                color: settings.loadingBgColor,
-                                strokeWidth: 4.0);
+                            return Center(
+                                child: CircularProgressIndicator(
+                                    backgroundColor: settings.loadingColor,
+                                    color: settings.loadingBgColor,
+                                    strokeWidth: 4.0));
                           }
                         },
                         errorBuilder: (context, error, stackTrace) {
@@ -853,10 +854,11 @@ class PostListState extends State<PostList> {
                           if (loadingProgress == null) {
                             return child;
                           } else {
-                            return CircularProgressIndicator(
-                                backgroundColor: settings.loadingColor,
-                                color: settings.loadingBgColor,
-                                strokeWidth: 4.0);
+                            return Center(
+                                child: CircularProgressIndicator(
+                                    backgroundColor: settings.loadingColor,
+                                    color: settings.loadingBgColor,
+                                    strokeWidth: 4.0));
                           }
                         },
                         errorBuilder: (context, error, stackTrace) {
@@ -1176,10 +1178,11 @@ class PostListState extends State<PostList> {
                           if (loadingProgress == null) {
                             return child;
                           } else {
-                            return CircularProgressIndicator(
-                                backgroundColor: settings.loadingColor,
-                                color: settings.loadingBgColor,
-                                strokeWidth: 4.0);
+                            return Center(
+                                child: CircularProgressIndicator(
+                                    backgroundColor: settings.loadingColor,
+                                    color: settings.loadingBgColor,
+                                    strokeWidth: 4.0));
                           }
                         },
                         errorBuilder: (context, error, stackTrace) {
@@ -1395,10 +1398,11 @@ class PostListState extends State<PostList> {
                           if (loadingProgress == null) {
                             return child;
                           } else {
-                            return CircularProgressIndicator(
-                                backgroundColor: settings.loadingColor,
-                                color: settings.loadingBgColor,
-                                strokeWidth: 4.0);
+                            return Center(
+                                child: CircularProgressIndicator(
+                                    backgroundColor: settings.loadingColor,
+                                    color: settings.loadingBgColor,
+                                    strokeWidth: 4.0));
                           }
                         },
                         errorBuilder: (context, error, stackTrace) {

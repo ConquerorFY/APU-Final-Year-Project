@@ -139,6 +139,39 @@ class MapViewState extends State<MapView> {
 
   dynamic getCurrentUserLocation() async {
     try {
+      // Test if location services are enabled
+      bool isLocationServiceEnabled =
+          await Geolocator.isLocationServiceEnabled();
+      if (!isLocationServiceEnabled) {
+        // ignore: use_build_context_synchronously
+        popupService.showErrorPopup(
+            context, "Location Error", "Your location service is not opened!",
+            () {
+          Navigator.pop(context);
+        });
+        return;
+      }
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.deniedForever) {
+          // ignore: use_build_context_synchronously
+          popupService.showErrorPopup(context, "Location Error",
+              "Your location permission is denied forever!", () {
+            Navigator.pop(context);
+          });
+          return;
+        }
+        if (permission == LocationPermission.denied) {
+          // ignore: use_build_context_synchronously
+          popupService.showErrorPopup(
+              context, "Location Error", "Your location permission is denied!",
+              () {
+            Navigator.pop(context);
+          });
+          return;
+        }
+      }
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
       setState(() {
