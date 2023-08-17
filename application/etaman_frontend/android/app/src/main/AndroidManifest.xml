@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
-        android:label="etaman_frontend"
+        android:label="eTaman"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
