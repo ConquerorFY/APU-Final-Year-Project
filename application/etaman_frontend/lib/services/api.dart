@@ -12,12 +12,12 @@ class ApiService {
   // Logger
   EtamanLogger logger = EtamanLogger(); // logger
 
-  // final baseUrl = "http://localhost:8000/api";
-  // final mediaUrl = "http://localhost:8000";
-  // final wsUrl = "ws://localhost:8000/ws";
-  final baseUrl = "http://13.92.190.149:8000/api";
-  final mediaUrl = "http://13.92.190.149:8000";
-  final wsUrl = "ws://13.92.190.149:8000/ws";
+  final baseUrl = "http://localhost:8000/api";
+  final mediaUrl = "http://localhost:8000";
+  final wsUrl = "ws://localhost:8000/ws";
+  // final baseUrl = "http://13.92.190.149:8000/api";
+  // final mediaUrl = "http://13.92.190.149:8000";
+  // final wsUrl = "ws://13.92.190.149:8000/ws";
 
   // Register Resident Account API
   dynamic registerAccountAPI(body) async {

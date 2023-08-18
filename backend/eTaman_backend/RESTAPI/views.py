@@ -6,8 +6,7 @@ from .models import *
 from .serializers import *
 from .constants import * 
 from .password import *
-from collections import OrderedDict
-from datetime import datetime
+from datetime import datetime, timezone
 
 # Create your views here.
 
@@ -401,7 +400,7 @@ def getAllNeighborhoodGroupPost(request):
         # Get neighborhood group ID
         groupID = request.data["groupID"]
         # Get all posts data
-        crimePost = CrimePostModel.objects.filter(reporterID__groupID=groupID)    # reporterID__groupID -> the groupID field that is located in the table that is referenced by reporterID (foreign key)
+        crimePost = CrimePostModel.objects.filter(groupID=groupID)    # reporterID__groupID -> the groupID field that is located in the table that is referenced by reporterID (foreign key)
         crimePostData = []
         for post in crimePost:
             username = post.reporterID.username
@@ -409,7 +408,7 @@ def getAllNeighborhoodGroupPost(request):
                 'username': username,
                 **CrimePostSerializer(post).data
             })
-        complaintPost = ComplaintPostModel.objects.filter(reporterID__groupID=groupID)
+        complaintPost = ComplaintPostModel.objects.filter(groupID=groupID)
         complaintPostData = []
         for post in complaintPost:
             username = post.reporterID.username
@@ -417,24 +416,27 @@ def getAllNeighborhoodGroupPost(request):
                 'username': username,
                 **ComplaintPostSerializer(post).data
             })
-        eventPost = EventPostModel.objects.filter(organizerID__groupID=groupID)
+        eventPost = EventPostModel.objects.filter(groupID=groupID)
         eventPostData = []
         for post in eventPost:
             username = post.organizerID.username
             participantsList = json.loads(post.participants)
-            if residentId in participantsList:
-                eventPostData.append({
-                    'username': username,
-                    'hasJoined': True,
-                    **EventPostSerializer(post).data
-                })
-            else:
-                eventPostData.append({
-                    'username': username,
-                    'hasJoined': False,
-                    **EventPostSerializer(post).data
-                })
-        generalPost = GeneralPostModel.objects.filter(authorID__groupID=groupID)
+            eventDateTime = post.datetime
+            currentDateTime = datetime.now(timezone.utc)
+            if currentDateTime <= eventDateTime and post.organizerID.groupID != None and post.organizerID.groupID.id == groupID:
+                if residentId in participantsList:
+                    eventPostData.append({
+                        'username': username,
+                        'hasJoined': True,
+                        **EventPostSerializer(post).data
+                    })
+                else:
+                    eventPostData.append({
+                        'username': username,
+                        'hasJoined': False,
+                        **EventPostSerializer(post).data
+                    })
+        generalPost = GeneralPostModel.objects.filter(groupID=groupID)
         generalPostData = []
         for post in generalPost:
             username = post.authorID.username
@@ -481,7 +483,8 @@ def createCrimePost(request):
             'reporterID': residentId, 
             'title': request.data['title'],
             'description': request.data['description'],
-            'actions': request.data['actions']
+            'actions': request.data['actions'],
+            'groupID': ResidentModel.objects.get(pk=residentId).groupID.id
         }
         crimePostData = CrimePostSerializer(data = crimeData)
         # Check whether all data is valid
@@ -603,7 +606,8 @@ def createCrimePostComment(request):
             newCrimePostComment = {
                 'content': request.data['content'],
                 'postID': crimePostID,
-                'authorID': residentID
+                'authorID': residentID,
+                'groupID': residentData.groupID.id
             }
             newCrimePostCommentData = CrimePostCommentSerializer(data = newCrimePostComment)
             # Check whether all data is valid
@@ -637,7 +641,8 @@ def createComplaintPost(request):
             "title": request.data['title'],
             'description': request.data['description'],
             'reporterID': residentId,
-            'isAnonymous': request.data['isAnonymous']
+            'isAnonymous': request.data['isAnonymous'],
+            'groupID': ResidentModel.objects.get(pk=residentId).groupID.id
         }
         complaintPostData = ComplaintPostSerializer(data = complaintData)
         # Check whether all data is valid
@@ -759,7 +764,8 @@ def createComplaintPostComment(request):
             newComplaintPostComment = {
                 'content': request.data['content'],
                 'postID': complaintPostID,
-                'authorID': residentID
+                'authorID': residentID,
+                'groupID': residentData.groupID.id
             }
             newComplaintPostCommentData = ComplaintPostCommentSerializer(data = newComplaintPostComment)
             # Check whether all data is valid
@@ -799,7 +805,8 @@ def createEventPost(request):
             'title': request.data['title'],
             'description': request.data['description'],
             'organizerID': residentId,
-            'participants': "[]"
+            'participants': "[]",
+            'groupID': ResidentModel.objects.get(pk=residentId).groupID.id
         }
         eventPostData = EventPostSerializer(data = eventData)
         # Check whether all data is valid
@@ -920,7 +927,8 @@ def createEventPostComment(request):
             newEventPostComment = {
                 'content': request.data['content'],
                 'postID': eventPostID,
-                'authorID': residentID
+                'authorID': residentID,
+                'groupID': residentData.groupID.id
             }
             newEventPostCommentData = EventPostCommentSerializer(data = newEventPostComment)
             # Check whether all data is valid
@@ -1012,7 +1020,8 @@ def createGeneralPost(request):
             'title': request.data['title'],
             'image': image,
             'description': request.data['description'],
-            'authorID': residentId
+            'authorID': residentId,
+            'groupID': ResidentModel.objects.get(pk=residentId).groupID.id
         }
         generalPostData = GeneralPostSerializer(data = generalData)
         # Check whether all data is valid
@@ -1133,7 +1142,8 @@ def createGeneralPostComment(request):
             newGeneralPostComment = {
                 'content': request.data['content'],
                 'postID': generalPostID,
-                'authorID': residentID
+                'authorID': residentID,
+                'groupID': residentData.groupID.id
             }
             newGeneralPostCommentData = GeneralPostCommentSerializer(data = newGeneralPostComment)
             # Check whether all data is valid

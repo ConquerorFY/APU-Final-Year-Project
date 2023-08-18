@@ -56,6 +56,7 @@ class CrimePostModel(models.Model):
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
     reporterID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
+    groupID = models.ForeignKey(NeighborhoodGroupModel, null=True, on_delete=models.SET_NULL)
 
 # Crime Post Comment Model
 class CrimePostCommentModel(models.Model):
@@ -63,6 +64,7 @@ class CrimePostCommentModel(models.Model):
     content = models.CharField(max_length=2000, blank=False)
     postID = models.ForeignKey(CrimePostModel, null=True, on_delete=models.CASCADE)
     authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.CASCADE)
+    groupID = models.ForeignKey(NeighborhoodGroupModel, null=True, on_delete=models.CASCADE)
 
 # Complaint Post Model
 class ComplaintPostModel(models.Model):
@@ -75,6 +77,7 @@ class ComplaintPostModel(models.Model):
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
     reporterID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
+    groupID = models.ForeignKey(NeighborhoodGroupModel, null=True, on_delete=models.SET_NULL)
 
 # Complaint Post Comment Model
 class ComplaintPostCommentModel(models.Model):
@@ -82,6 +85,7 @@ class ComplaintPostCommentModel(models.Model):
     content = models.CharField(max_length=2000, blank=False)
     postID = models.ForeignKey(ComplaintPostModel, null=True, on_delete=models.CASCADE)
     authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.CASCADE)
+    groupID = models.ForeignKey(NeighborhoodGroupModel, null=True, on_delete=models.CASCADE)
 
 # Event Post Model
 class EventPostModel(models.Model):
@@ -94,6 +98,7 @@ class EventPostModel(models.Model):
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
     organizerID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
+    groupID = models.ForeignKey(NeighborhoodGroupModel, null=True, on_delete=models.SET_NULL)
 
 # Event Post Comment Model
 class EventPostCommentModel(models.Model):
@@ -101,6 +106,7 @@ class EventPostCommentModel(models.Model):
     content = models.CharField(max_length=2000, blank=False)
     postID = models.ForeignKey(EventPostModel, null=True, on_delete=models.CASCADE)
     authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.CASCADE)
+    groupID = models.ForeignKey(NeighborhoodGroupModel, null=True, on_delete=models.CASCADE)
 
 # General Post Model
 class GeneralPostModel(models.Model):
@@ -111,6 +117,7 @@ class GeneralPostModel(models.Model):
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
     authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.SET_NULL)
+    groupID = models.ForeignKey(NeighborhoodGroupModel, null=True, on_delete=models.SET_NULL)
 
 # General Post Comment Model
 class GeneralPostCommentModel(models.Model):
@@ -118,6 +125,7 @@ class GeneralPostCommentModel(models.Model):
     content = models.CharField(max_length=2000, blank=False)
     postID = models.ForeignKey(GeneralPostModel, null=True, on_delete=models.CASCADE)
     authorID = models.ForeignKey(ResidentModel, null=True, on_delete=models.CASCADE)
+    groupID = models.ForeignKey(NeighborhoodGroupModel, null=True, on_delete=models.CASCADE)
 
 # Facilities Model
 class FacilitiesModel(models.Model):
