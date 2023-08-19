@@ -5,6 +5,7 @@ import 'package:etaman_frontend/screens/editfacilities.dart';
 import 'package:etaman_frontend/screens/editgroup.dart';
 import 'package:etaman_frontend/screens/editpost.dart';
 import 'package:etaman_frontend/screens/editpostcomment.dart';
+import 'package:etaman_frontend/screens/emergency.dart';
 import 'package:etaman_frontend/screens/facilities.dart';
 import 'package:etaman_frontend/screens/findresidents.dart';
 import 'package:etaman_frontend/screens/joingroup.dart';
@@ -43,4 +44,5 @@ void main() => runApp(MaterialApp(initialRoute: '/', routes: {
       '/chat': (context) => const Chat(),
       '/findResidents': (context) => const ResidentsList(),
       '/loading': (context) => Loading(),
+      '/emergency': (context) => const Emergency(),
     }));

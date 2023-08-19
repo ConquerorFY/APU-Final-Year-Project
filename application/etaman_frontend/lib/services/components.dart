@@ -2306,6 +2306,10 @@ class BottomNavBar extends StatelessWidget {
             backgroundColor: backgroundColor,
             icon: Icon(Icons.chat, color: textColor),
             label: ""), // Chat
+        BottomNavigationBarItem(
+            backgroundColor: backgroundColor,
+            icon: Icon(Icons.emergency, color: textColor),
+            label: ""), // Emergency
       ],
       onTap: (int index) {
         switch (index) {
@@ -2324,6 +2328,10 @@ class BottomNavBar extends StatelessWidget {
           case 3:
             // Navigate to Chat Screen
             Navigator.pushNamed(context, '/chat');
+            break;
+          case 4:
+            // Navigate to Emergency Screen
+            Navigator.pushNamed(context, '/emergency');
             break;
         }
       },

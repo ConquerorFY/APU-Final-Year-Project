@@ -1508,4 +1508,8 @@ class Settings {
   Color residentListCursorColor = Colors.green;
   Color residentListBorderColor = Colors.green;
   double residentListBorderWidth = 1.0;
+
+  Color emergencyBgColor = Colors.red;
+  Color emergencyTextColor = Colors.white;
+  Color emergencyTextColor2 = Colors.green;
 }
