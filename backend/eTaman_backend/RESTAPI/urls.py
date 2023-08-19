@@ -101,5 +101,6 @@ urlpatterns = [
 
 websocket_urlpatterns = [
     re_path(r'ws/comments/', consumers.CommentConsumer.as_asgi()),
-    re_path(r'ws/chats/', consumers.ChatConsumer.as_asgi())
+    re_path(r'ws/chats/', consumers.ChatConsumer.as_asgi()),
+    re_path(r'ws/emergency/', consumers.EmergencyConsumer.as_asgi())
 ]

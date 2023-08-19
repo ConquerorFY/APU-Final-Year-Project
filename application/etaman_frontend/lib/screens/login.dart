@@ -27,6 +27,20 @@ class LoginState extends State<Login> {
   String usernameVal = '';
   String passwordVal = '';
 
+  void setupEmergencyChannel() async {
+    final residentResponse = await apiService
+        .getResidentDataAPI({'token': authService.getAuthToken()});
+    if (residentResponse != null) {
+      final status = residentResponse['status'];
+      if (status > 0) {
+        final groupID = residentResponse['data']['list']['groupID'];
+        if (groupID != null) {
+          authService.initEmergencyChannel(apiService.wsUrl, groupID);
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -174,6 +188,7 @@ class LoginState extends State<Login> {
                                   // Set auth token
                                   final authToken = response["data"]["token"];
                                   authService.setAuthToken(authToken);
+                                  setupEmergencyChannel();
                                   // Success message
                                   // ignore: use_build_context_synchronously
                                   popupService.showSuccessPopup(

@@ -182,19 +182,31 @@ class EmergencyState extends State<Emergency> {
                       PizzaButton(
                         crimeEmergency: () {
                           // Handle Crime Emergency
+                          authService.sendEmergencyChannel({
+                            'token': authService.getAuthToken(),
+                            'emergencyType': 'crime'
+                          });
                         },
                         medicalEmergency: () {
                           // Handle Medical Emergency
+                          authService.sendEmergencyChannel({
+                            'token': authService.getAuthToken(),
+                            'emergencyType': 'medical'
+                          });
                         },
                         fireEmergency: () {
                           // Handle Fire Emergency
+                          authService.sendEmergencyChannel({
+                            'token': authService.getAuthToken(),
+                            'emergencyType': 'fire'
+                          });
                         },
                       ),
                       const SizedBox(height: 50.0),
                       FractionallySizedBox(
                           widthFactor: 0.8,
                           child: Text(
-                              'After pressing the button, the requested personnel will be dispatched to your location',
+                              'After pressing the button, the requested personnel will be dispatched to your home address',
                               softWrap: true,
                               style: TextStyle(
                                   fontFamily: 'OpenSans',

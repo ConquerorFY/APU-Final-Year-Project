@@ -245,3 +245,60 @@ class ChatConsumer(WebsocketConsumer):
             return {'data': {'message': CHAT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}
         except ResidentModel.DoesNotExist:
             return {'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}
+
+class EmergencyConsumer(WebsocketConsumer):
+    def connect(self):
+        params = parse_qs(self.scope.get('query_string').decode('utf-8'))
+        self.group_id = params.get('id', [''])[0]
+        self.group_name = f"ID{self.group_id}Group"
+
+        async_to_sync(self.channel_layer.group_add) (
+            self.group_name,
+            self.channel_name   # will be created automatically for each user
+        )
+
+        self.accept()
+
+    def receive(self, text_data):
+        emergency_data_json = json.loads(text_data)
+        response_data_json = {}
+        # Broadcast message to every user within the same group
+        response_data_json = self.handleEmergency(emergency_data_json)
+        print(response_data_json)
+        async_to_sync(self.channel_layer.group_send)(
+            self.group_name,
+            {   
+                'type': 'emergency',
+                'data': response_data_json['data'],
+                'status': response_data_json['status']
+            }
+        )
+
+    def emergency(self, event):
+        # Broadcast messages to all channels within the same group
+        self.send(text_data=json.dumps({
+            'data': event['data'],
+            'status': event['status']
+        }))
+
+    def disconnect(self, code):
+        super().disconnect(code)
+        async_to_sync(self.channel_layer.group_discard) (self.group_name, self.channel_name)
+
+    def handleEmergency(self, emergency_data):
+        try:
+            # Get resident ID
+            residentID = decodeJWTToken(emergency_data['token'])['id']
+            resident = ResidentModel.objects.get(pk=residentID)
+            # Get emergency type
+            emergencyType = emergency_data['emergencyType']
+            emergencyMessage = ''
+            if emergencyType == 'crime':
+                emergencyMessage = f"{resident.username} has reported a crime incident just now!"
+            elif emergencyType == 'medical':
+                emergencyMessage = f"{resident.username} has reported a medical incident just now!"
+            elif emergencyType == 'fire':
+                emergencyMessage = f"{resident.username} has reported a fire incident just now!"
+            return {'data': {'message': emergencyMessage}, 'status': SUCCESS_CODE}
+        except ResidentModel.DoesNotExist:
+            return {'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}

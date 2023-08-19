@@ -1512,4 +1512,7 @@ class Settings {
   Color emergencyBgColor = Colors.red;
   Color emergencyTextColor = Colors.white;
   Color emergencyTextColor2 = Colors.green;
+
+  Color snackbarBgColor = Colors.grey.shade600;
+  Color snackbarTextColor = Colors.white;
 }
