@@ -215,6 +215,13 @@ class Settings {
         residentListCursorColor = Colors.blue;
         residentListBorderColor = Colors.blue;
         residentListBorderWidth = 1.0;
+
+        emergencyBgColor = Colors.red;
+        emergencyTextColor = Colors.white;
+        emergencyTextColor2 = Colors.blue;
+
+        snackbarBgColor = Colors.grey.shade600;
+        snackbarTextColor = Colors.white;
         break;
       case "green":
         popupBgColor = Colors.white;
@@ -399,6 +406,13 @@ class Settings {
         residentListCursorColor = Colors.green;
         residentListBorderColor = Colors.green;
         residentListBorderWidth = 1.0;
+
+        emergencyBgColor = Colors.red;
+        emergencyTextColor = Colors.white;
+        emergencyTextColor2 = Colors.green;
+
+        snackbarBgColor = Colors.grey.shade600;
+        snackbarTextColor = Colors.white;
         break;
       case "orange":
         popupBgColor = Colors.white;
@@ -583,6 +597,13 @@ class Settings {
         residentListCursorColor = Colors.orange;
         residentListBorderColor = Colors.orange;
         residentListBorderWidth = 1.0;
+
+        emergencyBgColor = Colors.red;
+        emergencyTextColor = Colors.white;
+        emergencyTextColor2 = Colors.orange;
+
+        snackbarBgColor = Colors.grey.shade600;
+        snackbarTextColor = Colors.white;
         break;
       case "black":
         popupBgColor = Colors.white;
@@ -767,6 +788,13 @@ class Settings {
         residentListCursorColor = Colors.black;
         residentListBorderColor = Colors.black;
         residentListBorderWidth = 1.0;
+
+        emergencyBgColor = Colors.red;
+        emergencyTextColor = Colors.white;
+        emergencyTextColor2 = Colors.black;
+
+        snackbarBgColor = Colors.grey.shade600;
+        snackbarTextColor = Colors.white;
         break;
       case "indigo":
         popupBgColor = Colors.white;
@@ -951,6 +979,13 @@ class Settings {
         residentListCursorColor = Colors.indigo;
         residentListBorderColor = Colors.indigo;
         residentListBorderWidth = 1.0;
+
+        emergencyBgColor = Colors.red;
+        emergencyTextColor = Colors.white;
+        emergencyTextColor2 = Colors.indigo;
+
+        snackbarBgColor = Colors.grey.shade600;
+        snackbarTextColor = Colors.white;
         break;
       case "purple":
         popupBgColor = Colors.white;
@@ -1135,6 +1170,13 @@ class Settings {
         residentListCursorColor = Colors.purple;
         residentListBorderColor = Colors.purple;
         residentListBorderWidth = 1.0;
+
+        emergencyBgColor = Colors.red;
+        emergencyTextColor = Colors.white;
+        emergencyTextColor2 = Colors.purple;
+
+        snackbarBgColor = Colors.grey.shade600;
+        snackbarTextColor = Colors.white;
         break;
       case "pink":
         popupBgColor = Colors.white;
@@ -1319,6 +1361,13 @@ class Settings {
         residentListCursorColor = Colors.pink;
         residentListBorderColor = Colors.pink;
         residentListBorderWidth = 1.0;
+
+        emergencyBgColor = Colors.red;
+        emergencyTextColor = Colors.white;
+        emergencyTextColor2 = Colors.pink;
+
+        snackbarBgColor = Colors.grey.shade600;
+        snackbarTextColor = Colors.white;
         break;
     }
   }

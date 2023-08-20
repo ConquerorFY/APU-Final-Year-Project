@@ -2145,6 +2145,7 @@ class LeftDrawerState extends State<LeftDrawer> {
                 if (status > 0) {
                   // Success
                   authService.clearAuthToken();
+                  authService.closeEmergencyChannel();
                   // ignore: use_build_context_synchronously
                   popupService
                       .showSuccessPopup(context, "Logout Success", message, () {

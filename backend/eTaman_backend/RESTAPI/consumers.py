@@ -295,10 +295,13 @@ class EmergencyConsumer(WebsocketConsumer):
             emergencyMessage = ''
             if emergencyType == 'crime':
                 emergencyMessage = f"{resident.username} has reported a crime incident just now!"
+                # Send crime report to police ...
             elif emergencyType == 'medical':
                 emergencyMessage = f"{resident.username} has reported a medical incident just now!"
+                # Send medical report to hospital ...
             elif emergencyType == 'fire':
                 emergencyMessage = f"{resident.username} has reported a fire incident just now!"
+                # Send fire report to fire brigade ...
             return {'data': {'message': emergencyMessage}, 'status': SUCCESS_CODE}
         except ResidentModel.DoesNotExist:
             return {'data': {'message': RESIDENT_DATABASE_NOT_EXIST}, 'status': ERROR_CODE}

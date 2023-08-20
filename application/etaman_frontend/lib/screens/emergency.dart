@@ -186,6 +186,11 @@ class EmergencyState extends State<Emergency> {
                             'token': authService.getAuthToken(),
                             'emergencyType': 'crime'
                           });
+                          popupService.showSuccessPopup(
+                              context,
+                              "Report Success",
+                              "Your crime emergency has been reported successfully to the authorities!",
+                              () {});
                         },
                         medicalEmergency: () {
                           // Handle Medical Emergency
@@ -193,6 +198,11 @@ class EmergencyState extends State<Emergency> {
                             'token': authService.getAuthToken(),
                             'emergencyType': 'medical'
                           });
+                          popupService.showSuccessPopup(
+                              context,
+                              "Report Success",
+                              "Your medical emergency has been reported successfully to the authorities!",
+                              () {});
                         },
                         fireEmergency: () {
                           // Handle Fire Emergency
@@ -200,6 +210,11 @@ class EmergencyState extends State<Emergency> {
                             'token': authService.getAuthToken(),
                             'emergencyType': 'fire'
                           });
+                          popupService.showSuccessPopup(
+                              context,
+                              "Report Success",
+                              "Your fire emergency has been reported successfully to the authorities!",
+                              () {});
                         },
                       ),
                       const SizedBox(height: 50.0),
