@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 10, 2023 at 01:08 PM
+-- Generation Time: Aug 20, 2023 at 09:15 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -263,7 +263,40 @@ INSERT INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`,
 (47, '2023-08-08 07:30:47.458125', '8', 'Jazz', 3, '', 9, 1),
 (48, '2023-08-08 15:20:43.359148', '2', 'Ryan', 2, '[{\"changed\": {\"fields\": [\"City\"]}}]', 9, 1),
 (49, '2023-08-08 15:20:50.399177', '4', 'Andrew Wiggins', 2, '[{\"changed\": {\"fields\": [\"City\"]}}]', 9, 1),
-(50, '2023-08-08 15:23:33.465501', '10', 'KL Family', 2, '[{\"changed\": {\"fields\": [\"City\"]}}]', 8, 1);
+(50, '2023-08-08 15:23:33.465501', '10', 'KL Family', 2, '[{\"changed\": {\"fields\": [\"City\"]}}]', 8, 1),
+(51, '2023-08-18 13:47:32.178495', '3', 'CrimePostModel object (3)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 11, 1),
+(52, '2023-08-18 13:47:37.834006', '4', 'CrimePostModel object (4)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 11, 1),
+(53, '2023-08-18 13:47:43.076368', '5', 'CrimePostModel object (5)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 11, 1),
+(54, '2023-08-18 13:47:53.372997', '6', 'CrimePostCommentModel object (6)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 16, 1),
+(55, '2023-08-18 13:47:58.818717', '8', 'CrimePostCommentModel object (8)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 16, 1),
+(56, '2023-08-18 13:48:03.196145', '9', 'CrimePostCommentModel object (9)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 16, 1),
+(57, '2023-08-18 13:48:07.457791', '10', 'CrimePostCommentModel object (10)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 16, 1),
+(58, '2023-08-18 13:48:32.972466', '3', 'ComplaintPostModel object (3)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 12, 1),
+(59, '2023-08-18 13:48:37.850206', '4', 'ComplaintPostModel object (4)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 12, 1),
+(60, '2023-08-18 13:48:43.846858', '5', 'ComplaintPostModel object (5)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 12, 1),
+(61, '2023-08-18 13:48:52.056137', '6', 'ComplaintPostModel object (6)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 12, 1),
+(62, '2023-08-18 13:48:57.461051', '5', 'ComplaintPostModel object (5)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 12, 1),
+(63, '2023-08-18 13:49:19.937595', '1', 'ComplaintPostCommentModel object (1)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 18, 1),
+(64, '2023-08-18 13:49:24.434060', '2', 'ComplaintPostCommentModel object (2)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 18, 1),
+(65, '2023-08-18 13:49:28.306043', '3', 'ComplaintPostCommentModel object (3)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 18, 1),
+(66, '2023-08-18 13:49:33.630381', '4', 'ComplaintPostCommentModel object (4)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 18, 1),
+(67, '2023-08-18 13:49:38.377619', '5', 'ComplaintPostCommentModel object (5)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 18, 1),
+(68, '2023-08-18 13:49:55.673626', '2', 'EventPostModel object (2)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 13, 1),
+(69, '2023-08-18 13:50:00.871291', '3', 'EventPostModel object (3)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 13, 1),
+(70, '2023-08-18 13:50:07.830717', '1', 'EventPostCommentModel object (1)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 17, 1),
+(71, '2023-08-18 13:50:12.061108', '2', 'EventPostCommentModel object (2)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 17, 1),
+(72, '2023-08-18 13:50:17.178695', '3', 'EventPostCommentModel object (3)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 17, 1),
+(73, '2023-08-18 13:50:21.989016', '5', 'EventPostCommentModel object (5)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 17, 1),
+(74, '2023-08-18 13:50:26.901170', '18', 'EventPostCommentModel object (18)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 17, 1),
+(75, '2023-08-18 13:50:32.316854', '19', 'EventPostCommentModel object (19)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 17, 1),
+(76, '2023-08-18 13:50:43.814133', '2', 'GeneralPostModel object (2)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 14, 1),
+(77, '2023-08-18 13:50:49.147638', '3', 'GeneralPostModel object (3)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 14, 1),
+(78, '2023-08-18 13:50:54.317525', '4', 'GeneralPostModel object (4)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 14, 1),
+(79, '2023-08-18 13:50:59.368479', '5', 'GeneralPostModel object (5)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 14, 1),
+(80, '2023-08-18 13:51:06.243208', '1', 'GeneralPostCommentModel object (1)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 15, 1),
+(81, '2023-08-18 13:51:11.156172', '3', 'GeneralPostCommentModel object (3)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 15, 1),
+(82, '2023-08-18 13:54:14.179785', '2', 'ComplaintPostModel object (2)', 2, '[{\"changed\": {\"fields\": [\"Image\", \"GroupID\"]}}]', 12, 1),
+(83, '2023-08-18 13:54:30.548936', '1', 'GeneralPostModel object (1)', 2, '[{\"changed\": {\"fields\": [\"Image\", \"GroupID\"]}}]', 14, 1);
 
 -- --------------------------------------------------------
 
@@ -356,7 +389,8 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (34, 'RESTAPI', '0015_auto_20230711_2258', '2023-07-11 14:58:11.737479'),
 (35, 'RESTAPI', '0016_residentmodel_image', '2023-07-20 10:01:01.654063'),
 (36, 'RESTAPI', '0017_auto_20230725_0051', '2023-07-24 16:51:31.128413'),
-(37, 'RESTAPI', '0018_chatmodel', '2023-08-05 04:57:13.480417');
+(37, 'RESTAPI', '0018_chatmodel', '2023-08-05 04:57:13.480417'),
+(38, 'RESTAPI', '0019_auto_20230818_2146', '2023-08-18 13:46:51.299827');
 
 -- --------------------------------------------------------
 
@@ -431,19 +465,20 @@ CREATE TABLE `restapi_complaintpostcommentmodel` (
   `datetime` datetime(6) NOT NULL,
   `content` varchar(2000) NOT NULL,
   `authorID_id` bigint(20) DEFAULT NULL,
-  `postID_id` bigint(20) DEFAULT NULL
+  `postID_id` bigint(20) DEFAULT NULL,
+  `groupID_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16;
 
 --
 -- Dumping data for table `restapi_complaintpostcommentmodel`
 --
 
-INSERT INTO `restapi_complaintpostcommentmodel` (`id`, `datetime`, `content`, `authorID_id`, `postID_id`) VALUES
-(1, '2023-06-29 07:25:03.330375', 'Thanks for letting us know of this issue!', 2, 2),
-(2, '2023-06-29 07:25:25.347433', 'Thanks for sharing!', 2, 2),
-(3, '2023-07-08 15:11:58.105084', 'Hope you would take action on this matter Mr. David!!', 2, 2),
-(4, '2023-07-13 07:51:23.262283', 'Yes, it is affecting me too!', 2, 4),
-(5, '2023-07-30 08:10:57.314408', 'Please adhere to it!!', 1, 5);
+INSERT INTO `restapi_complaintpostcommentmodel` (`id`, `datetime`, `content`, `authorID_id`, `postID_id`, `groupID_id`) VALUES
+(1, '2023-06-29 07:25:03.330375', 'Thanks for letting us know of this issue!', 2, 2, 10),
+(2, '2023-06-29 07:25:25.347433', 'Thanks for sharing!', 2, 2, 10),
+(3, '2023-07-08 15:11:58.105084', 'Hope you would take action on this matter Mr. David!!', 2, 2, 10),
+(4, '2023-07-13 07:51:23.262283', 'Yes, it is affecting me too!', 2, 4, 10),
+(5, '2023-07-30 08:10:57.314408', 'Please adhere to it!!', 1, 5, 9);
 
 -- --------------------------------------------------------
 
@@ -461,19 +496,20 @@ CREATE TABLE `restapi_complaintpostmodel` (
   `reporterID_id` bigint(20) DEFAULT NULL,
   `dislikes` int(11) NOT NULL,
   `likes` int(11) NOT NULL,
-  `image` varchar(100) DEFAULT NULL
+  `image` varchar(100) DEFAULT NULL,
+  `groupID_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16;
 
 --
 -- Dumping data for table `restapi_complaintpostmodel`
 --
 
-INSERT INTO `restapi_complaintpostmodel` (`id`, `datetime`, `title`, `description`, `target`, `isAnonymous`, `reporterID_id`, `dislikes`, `likes`, `image`) VALUES
-(2, '2023-06-28 08:01:27.490374', 'Car Occupying House Front!', 'Your car that is parked in front of my house has caused great incovenience to me and my family', 'Mr David', 0, 2, 1, 1, ''),
-(3, '2023-07-13 06:57:08.282394', 'Smelly Rubbish', 'Every morning the rubbish is very smelly', 'Mr. Lim', 1, 2, 0, 0, 'images/complaint/GroundFloor.png'),
-(4, '2023-07-13 07:50:44.148166', 'Regarding noise pollution', 'Your house is very noisy at night and it is disturbing me and my family', 'Mr Low from House Number 20', 1, 4, 0, 0, 'images/complaint/Regarding_noise_pollution.jpg'),
-(5, '2023-07-13 15:32:00.306892', 'Too Noisy at Night', 'Please keep it down during night time', 'Mr Davis', 1, 3, 0, 2, 'images/complaint/Too_Noisy_at_Night.jpg'),
-(6, '2023-07-13 15:35:12.981066', 'Dog Poop In Front of House', 'Please ensure that your dog would not poop in front of my door', 'Mr James', 1, 3, 0, 1, 'images/complaint/Dog_Poop_In_Front_of_House.jpg');
+INSERT INTO `restapi_complaintpostmodel` (`id`, `datetime`, `title`, `description`, `target`, `isAnonymous`, `reporterID_id`, `dislikes`, `likes`, `image`, `groupID_id`) VALUES
+(2, '2023-06-28 08:01:27.490374', 'Car Occupying House Front!', 'Your car that is parked in front of my house has caused great incovenience to me and my family', 'Mr David', 0, 2, 1, 1, 'images/complaint/Too_Noisy_at_Night_igzSYK0.jpg', 10),
+(3, '2023-07-13 06:57:08.282394', 'Smelly Rubbish', 'Every morning the rubbish is very smelly', 'Mr. Lim', 1, 2, 0, 0, 'images/complaint/GroundFloor.png', 10),
+(4, '2023-07-13 07:50:44.148166', 'Regarding noise pollution', 'Your house is very noisy at night and it is disturbing me and my family', 'Mr Low from House Number 20', 1, 4, 0, 0, 'images/complaint/Regarding_noise_pollution.jpg', 10),
+(5, '2023-07-13 15:32:00.306892', 'Too Noisy at Night', 'Please keep it down during night time', 'Mr Davis', 1, 3, 0, 3, 'images/complaint/Too_Noisy_at_Night.jpg', 9),
+(6, '2023-07-13 15:35:12.981066', 'Dog Poop In Front of House', 'Please ensure that your dog would not poop in front of my door', 'Mr James', 1, 3, 0, 1, 'images/complaint/Dog_Poop_In_Front_of_House.jpg', 9);
 
 -- --------------------------------------------------------
 
@@ -486,18 +522,19 @@ CREATE TABLE `restapi_crimepostcommentmodel` (
   `datetime` datetime(6) NOT NULL,
   `content` varchar(2000) NOT NULL,
   `authorID_id` bigint(20) DEFAULT NULL,
-  `postID_id` bigint(20) DEFAULT NULL
+  `postID_id` bigint(20) DEFAULT NULL,
+  `groupID_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16;
 
 --
 -- Dumping data for table `restapi_crimepostcommentmodel`
 --
 
-INSERT INTO `restapi_crimepostcommentmodel` (`id`, `datetime`, `content`, `authorID_id`, `postID_id`) VALUES
-(6, '2023-07-24 17:04:04.319356', 'Noted with thanks!', 4, 3),
-(8, '2023-07-27 09:49:10.109512', 'Nice!', 2, 3),
-(9, '2023-07-29 09:42:25.698943', 'Thanks for this!', 4, 3),
-(10, '2023-07-29 09:42:58.773936', 'Very grateful!', 4, 3);
+INSERT INTO `restapi_crimepostcommentmodel` (`id`, `datetime`, `content`, `authorID_id`, `postID_id`, `groupID_id`) VALUES
+(6, '2023-07-24 17:04:04.319356', 'Noted with thanks!', 4, 3, 10),
+(8, '2023-07-27 09:49:10.109512', 'Nice!', 2, 3, 10),
+(9, '2023-07-29 09:42:25.698943', 'Thanks for this!', 4, 3, 10),
+(10, '2023-07-29 09:42:58.773936', 'Very grateful!', 4, 3, 10);
 
 -- --------------------------------------------------------
 
@@ -514,17 +551,19 @@ CREATE TABLE `restapi_crimepostmodel` (
   `actions` varchar(2000) NOT NULL,
   `reporterID_id` bigint(20) DEFAULT NULL,
   `dislikes` int(11) NOT NULL,
-  `likes` int(11) NOT NULL
+  `likes` int(11) NOT NULL,
+  `groupID_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16;
 
 --
 -- Dumping data for table `restapi_crimepostmodel`
 --
 
-INSERT INTO `restapi_crimepostmodel` (`id`, `datetime`, `image`, `title`, `description`, `actions`, `reporterID_id`, `dislikes`, `likes`) VALUES
-(3, '2023-06-27 01:09:45.000000', 'images/crime/DHCP.png', 'House Burglary', 'Mr. John\'s car has been stolen!!', 'Contacted the police', 2, 1, 1),
-(4, '2023-07-12 22:37:02.000000', 'images/crime/Car_Tyre_Puncture.jpg', 'Car Tyre Puncture!', 'My car got punctured by someone', 'Called the authorities', 2, 0, 2),
-(5, '2023-07-12 22:42:47.000000', 'images/crime/Bicycle_Stolen.jpg', 'Bicycle Stolen', 'My bicycle have been stolen', 'Called the police', 4, 0, 1);
+INSERT INTO `restapi_crimepostmodel` (`id`, `datetime`, `image`, `title`, `description`, `actions`, `reporterID_id`, `dislikes`, `likes`, `groupID_id`) VALUES
+(3, '2023-06-27 01:09:45.000000', 'images/crime/DHCP.png', 'House Burglary!!', 'Mr. John\'s car has been stolen!!', 'Contacted the police', 2, 1, 1, 10),
+(4, '2023-07-12 22:37:02.000000', 'images/crime/Car_Tyre_Puncture.jpg', 'Car Tyre Puncture!', 'My car got punctured by someone', 'Called the authorities', 2, 0, 2, 10),
+(5, '2023-07-12 22:42:47.000000', 'images/crime/Bicycle_Stolen.jpg', 'Bicycle Stolen', 'My bicycle have been stolen', 'Called the police', 4, 0, 1, 10),
+(6, '2023-08-18 21:59:17.000000', 'images/crime/House_Burglary.jpg', 'House Burglary', 'My house was broken in while I was away', 'Called the police', 2, 0, 0, 10);
 
 -- --------------------------------------------------------
 
@@ -537,20 +576,22 @@ CREATE TABLE `restapi_eventpostcommentmodel` (
   `datetime` datetime(6) NOT NULL,
   `content` varchar(2000) NOT NULL,
   `authorID_id` bigint(20) DEFAULT NULL,
-  `postID_id` bigint(20) DEFAULT NULL
+  `postID_id` bigint(20) DEFAULT NULL,
+  `groupID_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16;
 
 --
 -- Dumping data for table `restapi_eventpostcommentmodel`
 --
 
-INSERT INTO `restapi_eventpostcommentmodel` (`id`, `datetime`, `content`, `authorID_id`, `postID_id`) VALUES
-(1, '2023-06-29 07:48:42.538468', 'Thanks for hosting this event!', 2, 1),
-(2, '2023-06-29 07:48:51.225279', 'Thanks for organizing!', 2, 1),
-(3, '2023-07-08 15:57:40.635247', 'Awesome!', 2, 1),
-(5, '2023-07-11 05:41:22.352330', 'I\'m going too!', 4, 1),
-(18, '2023-07-29 08:36:31.353430', 'Looking forward to meet you guys!!', 2, 1),
-(19, '2023-07-29 08:37:21.716329', 'See you guys there!', 2, 1);
+INSERT INTO `restapi_eventpostcommentmodel` (`id`, `datetime`, `content`, `authorID_id`, `postID_id`, `groupID_id`) VALUES
+(1, '2023-06-29 07:48:42.538468', 'Thanks for hosting this event!', 2, 1, 10),
+(2, '2023-06-29 07:48:51.225279', 'Thanks for organizing!', 2, 1, 10),
+(3, '2023-07-08 15:57:40.635247', 'Awesome!', 2, 1, 10),
+(5, '2023-07-11 05:41:22.352330', 'I\'m going too!', 4, 1, 10),
+(18, '2023-07-29 08:36:31.353430', 'Looking forward to meet you guys!!', 2, 1, 10),
+(19, '2023-07-29 08:37:21.716329', 'See you guys there!', 2, 1, 10),
+(20, '2023-08-18 14:30:15.571015', 'Come and join!!', 2, 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -568,17 +609,19 @@ CREATE TABLE `restapi_eventpostmodel` (
   `datetime` datetime(6) NOT NULL,
   `dislikes` int(11) NOT NULL,
   `likes` int(11) NOT NULL,
-  `image` varchar(100) DEFAULT NULL
+  `image` varchar(100) DEFAULT NULL,
+  `groupID_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16;
 
 --
 -- Dumping data for table `restapi_eventpostmodel`
 --
 
-INSERT INTO `restapi_eventpostmodel` (`id`, `venue`, `title`, `description`, `participants`, `organizerID_id`, `datetime`, `dislikes`, `likes`, `image`) VALUES
-(1, 'Norah\'s House (No. 13)', 'Hari Raya Open House Celebration', 'Open house celebration for hari raya!', '[2, 4]', 2, '2023-06-28 16:13:25.000000', 1, 1, ''),
-(2, 'Jason\'s House (No. 15)', 'New Year Celebration', 'Celebration for the 2024 New Years', '[]', 2, '2024-01-01 00:00:00.000000', 0, 1, 'images/event/ServerFarmLAN.png'),
-(3, 'Jason House No 17', 'Johnny Birthday Celebration', 'We are organizing a birthday party for Johnny', '[3, 1]', 1, '2023-07-13 16:53:54.000000', 0, 1, 'images/event/Johnny_Birthday_Celebration.jpg');
+INSERT INTO `restapi_eventpostmodel` (`id`, `venue`, `title`, `description`, `participants`, `organizerID_id`, `datetime`, `dislikes`, `likes`, `image`, `groupID_id`) VALUES
+(1, 'Norah\'s House (No. 13)', 'Hari Raya Open House Celebration', 'Open house celebration for hari raya!', '[2, 4]', 2, '2023-06-28 16:13:25.000000', 1, 1, '', NULL),
+(2, 'Jason\'s House (No. 15)', 'New Year Celebration', 'Celebration for the 2024 New Years', '[2]', 2, '2024-01-01 00:00:00.000000', 0, 1, 'images/event/ServerFarmLAN.png', 10),
+(3, 'Jason House No 17', 'Johnny Birthday Celebration', 'We are organizing a birthday party for Johnny', '[3, 1]', 1, '2023-07-13 16:53:54.000000', 0, 1, 'images/event/Johnny_Birthday_Celebration.jpg', 9),
+(4, 'Nora House', 'Grandmother 80th Birthday', 'Come and celebrate together!', '[2]', 4, '2023-08-31 22:00:00.000000', 0, 1, 'images/event/Grandmother_80th_Birthday.jpg', 10);
 
 -- --------------------------------------------------------
 
@@ -617,16 +660,17 @@ CREATE TABLE `restapi_generalpostcommentmodel` (
   `datetime` datetime(6) NOT NULL,
   `content` varchar(2000) NOT NULL,
   `authorID_id` bigint(20) DEFAULT NULL,
-  `postID_id` bigint(20) DEFAULT NULL
+  `postID_id` bigint(20) DEFAULT NULL,
+  `groupID_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16;
 
 --
 -- Dumping data for table `restapi_generalpostcommentmodel`
 --
 
-INSERT INTO `restapi_generalpostcommentmodel` (`id`, `datetime`, `content`, `authorID_id`, `postID_id`) VALUES
-(1, '2023-06-29 07:52:33.381109', 'Thanks for sharing this wonderful information!!!', 2, 1),
-(3, '2023-07-28 16:19:01.449376', 'Hold cleanups often!', 4, 1);
+INSERT INTO `restapi_generalpostcommentmodel` (`id`, `datetime`, `content`, `authorID_id`, `postID_id`, `groupID_id`) VALUES
+(1, '2023-06-29 07:52:33.381109', 'Thanks for sharing this wonderful information!!!', 2, 1, 10),
+(3, '2023-07-28 16:19:01.449376', 'Hold cleanups often!', 4, 1, 10);
 
 -- --------------------------------------------------------
 
@@ -642,19 +686,20 @@ CREATE TABLE `restapi_generalpostmodel` (
   `authorID_id` bigint(20) DEFAULT NULL,
   `dislikes` int(11) NOT NULL,
   `likes` int(11) NOT NULL,
-  `image` varchar(100) DEFAULT NULL
+  `image` varchar(100) DEFAULT NULL,
+  `groupID_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16;
 
 --
 -- Dumping data for table `restapi_generalpostmodel`
 --
 
-INSERT INTO `restapi_generalpostmodel` (`id`, `datetime`, `title`, `description`, `authorID_id`, `dislikes`, `likes`, `image`) VALUES
-(1, '2023-06-28 08:28:50.825848', 'How to make the neighborhood cleaner?', 'Lately the neighborhood has been getting very dirty and unhygenic. Any suggestions to help solve this issue?', 2, 1, 1, ''),
-(2, '2023-07-13 07:00:18.271249', 'Advice for low income', 'Anyone has any job recommendations?', 2, 0, 0, 'images/general/VLSM_Table_2.png'),
-(3, '2023-07-13 09:00:07.553974', 'Things to buy a 4 year old child', 'What to buy for a 4 year old child', 1, 0, 0, 'images/general/Things_to_buy_a_4_year_old_child.jpg'),
-(4, '2023-07-13 15:11:41.077164', 'Regarding whether to renovate house', 'Should I renovate my house to a bigger and newer one', 3, 0, 0, 'images/general/Regarding_whether_to_renovate_house.jpg'),
-(5, '2023-07-13 15:22:37.050562', 'Regarding fixing the playground', 'Any ideas on when to conduct maintenance activities for the playground', 3, 0, 0, 'images/general/Regarding_fixing_the_playground.jpg');
+INSERT INTO `restapi_generalpostmodel` (`id`, `datetime`, `title`, `description`, `authorID_id`, `dislikes`, `likes`, `image`, `groupID_id`) VALUES
+(1, '2023-06-28 08:28:50.825848', 'How to make the neighborhood cleaner?', 'Lately the neighborhood has been getting very dirty and unhygenic. Any suggestions to help solve this issue?', 2, 1, 1, 'images/general/Things_to_buy_a_4_year_old_child_grgWVTq.jpg', 10),
+(2, '2023-07-13 07:00:18.271249', 'Advice for low income', 'Anyone has any job recommendations?', 2, 0, 0, 'images/general/VLSM_Table_2.png', 10),
+(3, '2023-07-13 09:00:07.553974', 'Things to buy a 4 year old child', 'What to buy for a 4 year old child', 1, 0, 0, 'images/general/Things_to_buy_a_4_year_old_child.jpg', 9),
+(4, '2023-07-13 15:11:41.077164', 'Regarding whether to renovate house', 'Should I renovate my house to a bigger and newer one', 3, 0, 0, 'images/general/Regarding_whether_to_renovate_house.jpg', 9),
+(5, '2023-07-13 15:22:37.050562', 'Regarding fixing the playground', 'Any ideas on when to conduct maintenance activities for the playground', 3, 0, 0, 'images/general/Regarding_fixing_the_playground.jpg', 9);
 
 -- --------------------------------------------------------
 
@@ -722,7 +767,7 @@ CREATE TABLE `restapi_residentmodel` (
 
 INSERT INTO `restapi_residentmodel` (`id`, `name`, `email`, `contact`, `state`, `city`, `street`, `postcode`, `username`, `password`, `isLeader`, `groupID_id`, `userData`, `image`) VALUES
 (1, 'Jason', 'jason@live.com', '011-2232123', 'Pahang', 'Kuantan', 'Jalan Bentang', 51000, 'jason', '$2b$12$zY9Qa4ubZwsBBq2h5CBcwOYWkPHfNOdav4W/u9j/gCjWnA9eba1R.', 1, 9, '{\"crimePostLikes\": [], \"crimePostDislikes\": [], \"complaintPostLikes\": [5], \"complaintPostDislikes\": [], \"eventPostLikes\": [], \"eventPostDislikes\": [], \"generalPostLikes\": [], \"generalPostDislikes\": []}', ''),
-(2, 'Ryan', 'ryan@live.com', '011-2232123', 'Selangor', 'Ampang', 'Jalan Bukit Indah 3/21', 68000, 'ryan', '$2b$12$IVZg1J3Wo.oHZTA7TrOJVOBSS97vdb5r9G/5.hLlXH1Jk/reWgsTm', 1, 10, '{\"crimePostLikes\": [4, 5], \"crimePostDislikes\": [1, 3], \"complaintPostLikes\": [2], \"complaintPostDislikes\": [], \"eventPostLikes\": [2, 1], \"eventPostDislikes\": [], \"generalPostLikes\": [1], \"generalPostDislikes\": []}', 'images/profile/Profile_Image_BuEvqS9.jpg'),
+(2, 'Ryan', 'ryan@live.com', '011-2232123', 'Selangor', 'Ampang', 'Jalan Bukit Indah 3/21', 68000, 'ryan', '$2b$12$IVZg1J3Wo.oHZTA7TrOJVOBSS97vdb5r9G/5.hLlXH1Jk/reWgsTm', 1, 10, '{\"crimePostLikes\": [4, 5], \"crimePostDislikes\": [1, 3], \"complaintPostLikes\": [2, 5], \"complaintPostDislikes\": [], \"eventPostLikes\": [2, 1, 4], \"eventPostDislikes\": [], \"generalPostLikes\": [1], \"generalPostDislikes\": []}', 'images/profile/Profile_Image_BuEvqS9.jpg'),
 (3, 'Jonathan', 'jona@live.com', '011-3332123', 'Pahang', 'Kuantan', 'Jalan Bentang', 51000, 'jona', '$2b$12$/a7np7icEmcVTwMJzcKyPu5g4VRFp3L4eJ3jLw2QrR35oN3Xmmbui', 0, 9, '{\"crimePostLikes\": [], \"crimePostDislikes\": [], \"complaintPostLikes\": [6, 5], \"complaintPostDislikes\": [], \"eventPostLikes\": [3], \"eventPostDislikes\": [], \"generalPostLikes\": [], \"generalPostDislikes\": []}', ''),
 (4, 'Andrew Wiggins', 'jona@live.com', '011-3332123', 'Selangor', 'Ampang', 'Jalan Bukit Indah 3/21', 68000, 'andrew', '$2b$12$5gYZqoAX4FDh/GQ8x7hx0ehXz/DdYKzh9dFUzleqVrvBqd0QPCT/.', 0, 10, '{\"crimePostLikes\": [1, 3, 4], \"crimePostDislikes\": [], \"complaintPostLikes\": [], \"complaintPostDislikes\": [2], \"eventPostLikes\": [], \"eventPostDislikes\": [1], \"generalPostLikes\": [], \"generalPostDislikes\": [1]}', 'images/profile/Profile_Image_C0J6f9U.jpg'),
 (5, 'Giorno', 'jona@live.com', '011-3332123', 'Selangor', 'KL', 'Jalan Bukit Indah 3/21', 68000, 'giorno', '$2b$12$Ufqt72fsZ4GoNLxQKHD1OesnqnI0pDgLIHIt7FLwZIm8Cw7Ttq0mi', 0, NULL, '{\"crimePostLikes\": [],\"crimePostDislikes\": [],\"complaintPostLikes\": [],\"complaintPostDislikes\": [],\"eventPostLikes\": [],\"eventPostDislikes\": [],\"generalPostLikes\": [],\"generalPostDislikes\": []}', NULL),
@@ -831,14 +876,16 @@ ALTER TABLE `restapi_chatmodel`
 ALTER TABLE `restapi_complaintpostcommentmodel`
   ADD PRIMARY KEY (`id`),
   ADD KEY `RESTAPI_complaintpos_authorID_id_43407fa7_fk_RESTAPI_r` (`authorID_id`),
-  ADD KEY `RESTAPI_complaintpos_postID_id_bb6d00f7_fk_RESTAPI_c` (`postID_id`);
+  ADD KEY `RESTAPI_complaintpos_postID_id_bb6d00f7_fk_RESTAPI_c` (`postID_id`),
+  ADD KEY `RESTAPI_complaintpos_groupID_id_53bb6d53_fk_RESTAPI_n` (`groupID_id`);
 
 --
 -- Indexes for table `restapi_complaintpostmodel`
 --
 ALTER TABLE `restapi_complaintpostmodel`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `RESTAPI_complaintpos_reporterID_id_5a3945f4_fk_RESTAPI_r` (`reporterID_id`);
+  ADD KEY `RESTAPI_complaintpos_reporterID_id_5a3945f4_fk_RESTAPI_r` (`reporterID_id`),
+  ADD KEY `RESTAPI_complaintpos_groupID_id_7428f522_fk_RESTAPI_n` (`groupID_id`);
 
 --
 -- Indexes for table `restapi_crimepostcommentmodel`
@@ -846,14 +893,16 @@ ALTER TABLE `restapi_complaintpostmodel`
 ALTER TABLE `restapi_crimepostcommentmodel`
   ADD PRIMARY KEY (`id`),
   ADD KEY `RESTAPI_crimepostcom_authorID_id_b3b8c9bd_fk_RESTAPI_r` (`authorID_id`),
-  ADD KEY `RESTAPI_crimepostcom_postID_id_3edeeb92_fk_RESTAPI_c` (`postID_id`);
+  ADD KEY `RESTAPI_crimepostcom_postID_id_3edeeb92_fk_RESTAPI_c` (`postID_id`),
+  ADD KEY `RESTAPI_crimepostcom_groupID_id_e30a48a3_fk_RESTAPI_n` (`groupID_id`);
 
 --
 -- Indexes for table `restapi_crimepostmodel`
 --
 ALTER TABLE `restapi_crimepostmodel`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `RESTAPI_crimepostmod_reporterID_id_32e6850b_fk_RESTAPI_r` (`reporterID_id`);
+  ADD KEY `RESTAPI_crimepostmod_reporterID_id_32e6850b_fk_RESTAPI_r` (`reporterID_id`),
+  ADD KEY `RESTAPI_crimepostmod_groupID_id_f35485dc_fk_RESTAPI_n` (`groupID_id`);
 
 --
 -- Indexes for table `restapi_eventpostcommentmodel`
@@ -861,14 +910,16 @@ ALTER TABLE `restapi_crimepostmodel`
 ALTER TABLE `restapi_eventpostcommentmodel`
   ADD PRIMARY KEY (`id`),
   ADD KEY `RESTAPI_eventpostcom_authorID_id_a8563e8c_fk_RESTAPI_r` (`authorID_id`),
-  ADD KEY `RESTAPI_eventpostcom_postID_id_6ba92b90_fk_RESTAPI_e` (`postID_id`);
+  ADD KEY `RESTAPI_eventpostcom_postID_id_6ba92b90_fk_RESTAPI_e` (`postID_id`),
+  ADD KEY `RESTAPI_eventpostcom_groupID_id_a62a1dfe_fk_RESTAPI_n` (`groupID_id`);
 
 --
 -- Indexes for table `restapi_eventpostmodel`
 --
 ALTER TABLE `restapi_eventpostmodel`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `RESTAPI_eventpostmod_organizerID_id_37bb27c8_fk_RESTAPI_r` (`organizerID_id`);
+  ADD KEY `RESTAPI_eventpostmod_organizerID_id_37bb27c8_fk_RESTAPI_r` (`organizerID_id`),
+  ADD KEY `RESTAPI_eventpostmod_groupID_id_334a5078_fk_RESTAPI_n` (`groupID_id`);
 
 --
 -- Indexes for table `restapi_facilitiesmodel`
@@ -884,14 +935,16 @@ ALTER TABLE `restapi_facilitiesmodel`
 ALTER TABLE `restapi_generalpostcommentmodel`
   ADD PRIMARY KEY (`id`),
   ADD KEY `RESTAPI_generalpostc_authorID_id_17253b8f_fk_RESTAPI_r` (`authorID_id`),
-  ADD KEY `RESTAPI_generalpostc_postID_id_06c85ae2_fk_RESTAPI_g` (`postID_id`);
+  ADD KEY `RESTAPI_generalpostc_postID_id_06c85ae2_fk_RESTAPI_g` (`postID_id`),
+  ADD KEY `RESTAPI_generalpostc_groupID_id_c7e80835_fk_RESTAPI_n` (`groupID_id`);
 
 --
 -- Indexes for table `restapi_generalpostmodel`
 --
 ALTER TABLE `restapi_generalpostmodel`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `RESTAPI_generalpostm_authorID_id_0251bf20_fk_RESTAPI_r` (`authorID_id`);
+  ADD KEY `RESTAPI_generalpostm_authorID_id_0251bf20_fk_RESTAPI_r` (`authorID_id`),
+  ADD KEY `RESTAPI_generalpostm_groupID_id_98eb5c36_fk_RESTAPI_n` (`groupID_id`);
 
 --
 -- Indexes for table `restapi_joinrequestmodel`
@@ -978,7 +1031,7 @@ ALTER TABLE `django_content_type`
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `restapi_chatmodel`
@@ -1008,19 +1061,19 @@ ALTER TABLE `restapi_crimepostcommentmodel`
 -- AUTO_INCREMENT for table `restapi_crimepostmodel`
 --
 ALTER TABLE `restapi_crimepostmodel`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `restapi_eventpostcommentmodel`
 --
 ALTER TABLE `restapi_eventpostcommentmodel`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `restapi_eventpostmodel`
 --
 ALTER TABLE `restapi_eventpostmodel`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `restapi_facilitiesmodel`
@@ -1044,7 +1097,7 @@ ALTER TABLE `restapi_generalpostmodel`
 -- AUTO_INCREMENT for table `restapi_joinrequestmodel`
 --
 ALTER TABLE `restapi_joinrequestmodel`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `restapi_neighborhoodgroupmodel`
@@ -1107,12 +1160,14 @@ ALTER TABLE `restapi_chatmodel`
 --
 ALTER TABLE `restapi_complaintpostcommentmodel`
   ADD CONSTRAINT `RESTAPI_complaintpos_authorID_id_43407fa7_fk_RESTAPI_r` FOREIGN KEY (`authorID_id`) REFERENCES `restapi_residentmodel` (`id`),
+  ADD CONSTRAINT `RESTAPI_complaintpos_groupID_id_53bb6d53_fk_RESTAPI_n` FOREIGN KEY (`groupID_id`) REFERENCES `restapi_neighborhoodgroupmodel` (`id`),
   ADD CONSTRAINT `RESTAPI_complaintpos_postID_id_bb6d00f7_fk_RESTAPI_c` FOREIGN KEY (`postID_id`) REFERENCES `restapi_complaintpostmodel` (`id`);
 
 --
 -- Constraints for table `restapi_complaintpostmodel`
 --
 ALTER TABLE `restapi_complaintpostmodel`
+  ADD CONSTRAINT `RESTAPI_complaintpos_groupID_id_7428f522_fk_RESTAPI_n` FOREIGN KEY (`groupID_id`) REFERENCES `restapi_neighborhoodgroupmodel` (`id`),
   ADD CONSTRAINT `RESTAPI_complaintpos_reporterID_id_5a3945f4_fk_RESTAPI_r` FOREIGN KEY (`reporterID_id`) REFERENCES `restapi_residentmodel` (`id`);
 
 --
@@ -1120,12 +1175,14 @@ ALTER TABLE `restapi_complaintpostmodel`
 --
 ALTER TABLE `restapi_crimepostcommentmodel`
   ADD CONSTRAINT `RESTAPI_crimepostcom_authorID_id_b3b8c9bd_fk_RESTAPI_r` FOREIGN KEY (`authorID_id`) REFERENCES `restapi_residentmodel` (`id`),
+  ADD CONSTRAINT `RESTAPI_crimepostcom_groupID_id_e30a48a3_fk_RESTAPI_n` FOREIGN KEY (`groupID_id`) REFERENCES `restapi_neighborhoodgroupmodel` (`id`),
   ADD CONSTRAINT `RESTAPI_crimepostcom_postID_id_3edeeb92_fk_RESTAPI_c` FOREIGN KEY (`postID_id`) REFERENCES `restapi_crimepostmodel` (`id`);
 
 --
 -- Constraints for table `restapi_crimepostmodel`
 --
 ALTER TABLE `restapi_crimepostmodel`
+  ADD CONSTRAINT `RESTAPI_crimepostmod_groupID_id_f35485dc_fk_RESTAPI_n` FOREIGN KEY (`groupID_id`) REFERENCES `restapi_neighborhoodgroupmodel` (`id`),
   ADD CONSTRAINT `RESTAPI_crimepostmod_reporterID_id_32e6850b_fk_RESTAPI_r` FOREIGN KEY (`reporterID_id`) REFERENCES `restapi_residentmodel` (`id`);
 
 --
@@ -1133,12 +1190,14 @@ ALTER TABLE `restapi_crimepostmodel`
 --
 ALTER TABLE `restapi_eventpostcommentmodel`
   ADD CONSTRAINT `RESTAPI_eventpostcom_authorID_id_a8563e8c_fk_RESTAPI_r` FOREIGN KEY (`authorID_id`) REFERENCES `restapi_residentmodel` (`id`),
+  ADD CONSTRAINT `RESTAPI_eventpostcom_groupID_id_a62a1dfe_fk_RESTAPI_n` FOREIGN KEY (`groupID_id`) REFERENCES `restapi_neighborhoodgroupmodel` (`id`),
   ADD CONSTRAINT `RESTAPI_eventpostcom_postID_id_6ba92b90_fk_RESTAPI_e` FOREIGN KEY (`postID_id`) REFERENCES `restapi_eventpostmodel` (`id`);
 
 --
 -- Constraints for table `restapi_eventpostmodel`
 --
 ALTER TABLE `restapi_eventpostmodel`
+  ADD CONSTRAINT `RESTAPI_eventpostmod_groupID_id_334a5078_fk_RESTAPI_n` FOREIGN KEY (`groupID_id`) REFERENCES `restapi_neighborhoodgroupmodel` (`id`),
   ADD CONSTRAINT `RESTAPI_eventpostmod_organizerID_id_37bb27c8_fk_RESTAPI_r` FOREIGN KEY (`organizerID_id`) REFERENCES `restapi_residentmodel` (`id`);
 
 --
@@ -1153,13 +1212,15 @@ ALTER TABLE `restapi_facilitiesmodel`
 --
 ALTER TABLE `restapi_generalpostcommentmodel`
   ADD CONSTRAINT `RESTAPI_generalpostc_authorID_id_17253b8f_fk_RESTAPI_r` FOREIGN KEY (`authorID_id`) REFERENCES `restapi_residentmodel` (`id`),
+  ADD CONSTRAINT `RESTAPI_generalpostc_groupID_id_c7e80835_fk_RESTAPI_n` FOREIGN KEY (`groupID_id`) REFERENCES `restapi_neighborhoodgroupmodel` (`id`),
   ADD CONSTRAINT `RESTAPI_generalpostc_postID_id_06c85ae2_fk_RESTAPI_g` FOREIGN KEY (`postID_id`) REFERENCES `restapi_generalpostmodel` (`id`);
 
 --
 -- Constraints for table `restapi_generalpostmodel`
 --
 ALTER TABLE `restapi_generalpostmodel`
-  ADD CONSTRAINT `RESTAPI_generalpostm_authorID_id_0251bf20_fk_RESTAPI_r` FOREIGN KEY (`authorID_id`) REFERENCES `restapi_residentmodel` (`id`);
+  ADD CONSTRAINT `RESTAPI_generalpostm_authorID_id_0251bf20_fk_RESTAPI_r` FOREIGN KEY (`authorID_id`) REFERENCES `restapi_residentmodel` (`id`),
+  ADD CONSTRAINT `RESTAPI_generalpostm_groupID_id_98eb5c36_fk_RESTAPI_n` FOREIGN KEY (`groupID_id`) REFERENCES `restapi_neighborhoodgroupmodel` (`id`);
 
 --
 -- Constraints for table `restapi_joinrequestmodel`
