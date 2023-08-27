@@ -58,7 +58,7 @@ class EditFacilitiesState extends State<EditFacilities> {
       return Scaffold(
           appBar: AppBar(
             backgroundColor: settings.editProfileBgColor,
-            title: Text('Edit Profile',
+            title: Text('Edit Facilities',
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w800,

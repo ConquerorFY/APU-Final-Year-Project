@@ -219,7 +219,7 @@ class LoginState extends State<Login> {
                                           color:
                                               settings.loginTextFieldIconColor),
                                       const SizedBox(width: 8.0),
-                                      Text('Login As User',
+                                      Text('Login',
                                           style: TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
