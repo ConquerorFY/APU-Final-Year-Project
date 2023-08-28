@@ -109,7 +109,7 @@ class EditPostCommentState extends State<EditPostComment> {
                     decoration: InputDecoration(
                       labelStyle: TextStyle(
                           color: settings.editPostCommentTextFieldTextColor),
-                      labelText: 'Title',
+                      labelText: 'Content',
                       enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                               color:

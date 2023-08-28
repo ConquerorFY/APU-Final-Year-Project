@@ -620,6 +620,15 @@ class PostListState extends State<PostList> {
                         fontWeight: FontWeight.w600,
                         color: textColor)),
                 const SizedBox(height: 10),
+                Text("Actions: ${widget.postData["crime"][index]["actions"]}",
+                    style: TextStyle(
+                        fontFamily: "OpenSans",
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        decoration: TextDecoration.underline,
+                        decorationThickness: 2.0,
+                        color: textColor)),
+                const SizedBox(height: 10),
                 widget.postData["crime"][index]["image"] != null
                     ? Image.network(
                         "${apiService.mediaUrl}${widget.postData["crime"][index]["image"]}",
