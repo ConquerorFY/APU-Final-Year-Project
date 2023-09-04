@@ -12,6 +12,7 @@ class AuthService {
   SnackbarService snackbar = SnackbarService();
   String _authToken = "";
   dynamic emergencyChannel;
+  dynamic residentGroupID;
 
   void setAuthToken(String tokenVal) {
     _authToken = tokenVal;
@@ -27,18 +28,25 @@ class AuthService {
 
   void initEmergencyChannel(wsUrl, groupID) {
     emergencyChannel?.sink?.close();
-    emergencyChannel =
-        IOWebSocketChannel.connect("$wsUrl/emergency/?id=$groupID");
-    emergencyChannel.stream.asBroadcastStream().listen((message) {
-      snackbar.initSnackbar(jsonDecode(message)['data']['message']);
-    });
+    residentGroupID = groupID;
+    if (residentGroupID != null) {
+      emergencyChannel =
+          IOWebSocketChannel.connect("$wsUrl/emergency/?id=$residentGroupID");
+      emergencyChannel.stream.asBroadcastStream().listen((message) {
+        snackbar.initSnackbar(jsonDecode(message)['data']['message']);
+      });
+    }
   }
 
   void sendEmergencyChannel(emergencyData) {
-    emergencyChannel.sink.add(jsonEncode(emergencyData));
+    if (residentGroupID != null) {
+      emergencyChannel.sink.add(jsonEncode(emergencyData));
+    }
   }
 
   void closeEmergencyChannel() {
-    emergencyChannel.sink.close();
+    if (residentGroupID != null) {
+      emergencyChannel.sink.close();
+    }
   }
 }

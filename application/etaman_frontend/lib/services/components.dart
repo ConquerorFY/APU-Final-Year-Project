@@ -2283,6 +2283,7 @@ class FacilitiesTopAppBar extends StatelessWidget
 // ignore: must_be_immutable
 class BottomNavBar extends StatelessWidget {
   Settings settings = Settings();
+  AuthService authService = AuthService();
 
   dynamic backgroundColor;
   dynamic textColor;
@@ -2316,10 +2317,11 @@ class BottomNavBar extends StatelessWidget {
             backgroundColor: backgroundColor,
             icon: Icon(Icons.chat, color: textColor),
             label: ""), // Chat
-        BottomNavigationBarItem(
-            backgroundColor: backgroundColor,
-            icon: Icon(Icons.emergency, color: textColor),
-            label: ""), // Emergency
+        if (authService.residentGroupID != null)
+          BottomNavigationBarItem(
+              backgroundColor: backgroundColor,
+              icon: Icon(Icons.emergency, color: textColor),
+              label: ""), // Emergency
       ],
       onTap: (int index) {
         switch (index) {
