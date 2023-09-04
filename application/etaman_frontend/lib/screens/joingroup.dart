@@ -21,7 +21,7 @@ class JoinGroupState extends State<JoinGroup> {
   int? targetGroupID;
   bool isEditing = false;
   String filterGroupName = '';
-  String appBarTitle = "Join Group";
+  String appBarTitle = "Search Group";
 
   Validator validator = Validator();
   ApiService apiService = ApiService();
