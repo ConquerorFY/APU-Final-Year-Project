@@ -130,7 +130,7 @@ def getAllPost(request):
         crimePostData = []
         for post in crimePost:
             username = post.reporterID.username
-            groupID = post.reporterID.groupID.id
+            groupID = post.groupID.id
             crimePostData.append({
                 'username': username,
                 'groupID': groupID,
@@ -141,7 +141,7 @@ def getAllPost(request):
         complaintPostData = []
         for post in complaintPost:
             username = post.reporterID.username
-            groupID = post.reporterID.groupID.id
+            groupID = post.groupID.id
             complaintPostData.append({
                 'username': username,
                 'groupID': groupID,
@@ -151,20 +151,24 @@ def getAllPost(request):
         eventPost = EventPostModel.objects.all()
         eventPostData = []
         for post in eventPost:
-            username = post.organizerID.username
-            groupID = post.organizerID.groupID.id
-            eventPostData.append({
-                'username': username,
-                'groupID': groupID,
-                'hasJoined': False,
-                **EventPostSerializer(post).data
-            })
+            if post.groupID != None:
+                eventDateTime = post.datetime
+                currentDateTime = datetime.now(timezone.utc)
+                if currentDateTime <= eventDateTime:
+                    username = post.organizerID.username
+                    groupID = post.groupID.id
+                    eventPostData.append({
+                        'username': username,
+                        'groupID': groupID,
+                        'hasJoined': False,
+                        **EventPostSerializer(post).data
+                    })
 
         generalPost = GeneralPostModel.objects.all()
         generalPostData = []
         for post in generalPost:
             username = post.authorID.username
-            groupID = post.authorID.groupID.id
+            groupID = post.groupID.id
             generalPostData.append({
                 'username': username,
                 'groupID': groupID,
