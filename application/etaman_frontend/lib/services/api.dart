@@ -316,6 +316,25 @@ class ApiService {
     }
   }
 
+  // Delete Rejected Neighborhood Group Join Request
+  dynamic deleteRejectedNeighborhoodGroupJoinRequestAPI(body) async {
+    try {
+      final url = Uri.parse("$baseUrl/deleteRejectedJoinGroupRequest/");
+      final headers = {'Content-Type': 'application/json'};
+      final jsonBody = jsonEncode(body);
+
+      final response = await post(url, headers: headers, body: jsonBody);
+      final responseData = jsonDecode(response.body);
+
+      logger.info(
+          "Delete Rejected Neighborhood Group Join Request - $responseData");
+      return responseData;
+    } catch (e) {
+      logger.error("Delete Rejected Neighborhood Group Join Request - $e");
+      return null;
+    }
+  }
+
   // Get All Neighborhood Group Posts API
   dynamic getAllPostsAPI() async {
     try {

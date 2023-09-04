@@ -45,6 +45,7 @@ class ResidentModel(models.Model):
 class JoinRequestModel(models.Model):
     residentID = models.OneToOneField(ResidentModel, null=True, on_delete=models.SET_NULL)
     groupID = models.ForeignKey(NeighborhoodGroupModel, null=True, on_delete=models.SET_NULL)
+    status = models.CharField(max_length=100, blank=False, default="Processing")
 
 # Crime Post Model
 class CrimePostModel(models.Model):

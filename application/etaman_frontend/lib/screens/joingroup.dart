@@ -29,6 +29,20 @@ class JoinGroupState extends State<JoinGroup> {
   AuthService authService = AuthService();
   Settings settings = Settings();
 
+  void checkDeleteRejectedRequest(context) async {
+    final joinRequestResponse = await apiService
+        .deleteRejectedNeighborhoodGroupJoinRequestAPI(
+            {'residentID': authService.getAuthToken()});
+    if (joinRequestResponse != null) {
+      final status = joinRequestResponse['status'];
+      if (status > 0) {
+        // Success
+        popupService.showErrorPopup(context, "Join Request Rejected",
+            "You have been rejected from joining the group!", () {});
+      }
+    }
+  }
+
   void toggleEditMode() {
     setState(() {
       isEditing = !isEditing;
@@ -140,6 +154,7 @@ class JoinGroupState extends State<JoinGroup> {
     final screenWidth = MediaQuery.of(context).size.width;
     int crossAxisCount = screenWidth ~/ 160; // Adjust the divisor as needed
 
+    checkDeleteRejectedRequest(context);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: settings.editProfileBgColor,

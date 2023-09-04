@@ -25,7 +25,7 @@ class ResidentSerializer(serializers.ModelSerializer):
 class JoinRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = JoinRequestModel
-        fields = ('id', 'residentID', 'groupID')
+        fields = ('id', 'residentID', 'groupID', 'status')
 
 # Crime Post Serializer
 class CrimePostSerializer(serializers.ModelSerializer):

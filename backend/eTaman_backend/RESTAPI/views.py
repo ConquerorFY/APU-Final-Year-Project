@@ -96,13 +96,14 @@ def getAllNeighborhoodGroupJoinRequest(request):
         joinRequestsList = []
         requestData = JoinRequestSerializer(neighborhoodGroup, many=True).data
         for request in requestData:
-            residentData = ResidentModel.objects.get(pk=request['residentID'])
-            joinRequestsList.append({
-                'residentName': residentData.name,
-                'residentEmail': residentData.email,
-                'residentContact': residentData.contact,
-                **request
-            })
+            if request['status'] != 'Rejected':
+                residentData = ResidentModel.objects.get(pk=request['residentID'])
+                joinRequestsList.append({
+                    'residentName': residentData.name,
+                    'residentEmail': residentData.email,
+                    'residentContact': residentData.contact,
+                    **request
+                })
         return JsonResponse({"data": {"message": ALL_JOIN_REQUEST_DATA_FOUND, "list": joinRequestsList}, "status": SUCCESS_CODE}, status=201)
     except JoinRequestModel.DoesNotExist:
         return JsonResponse({"data": {"message": JOIN_REQUEST_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
@@ -333,6 +334,20 @@ def createNeighborhoodGroupJoinRequest(request):
     except NeighborhoodGroupModel.DoesNotExist:
         return JsonResponse({"data": {"message": NEIGHBORHOOD_GROUP_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
 
+# Delete rejected neighborhood group join request
+@api_view(['POST'])
+def deleteRejectedeNeighborhoodGroupJoinRequest(request):
+    try:
+        # Get resident ID
+        resident = decodeJWTToken(request.data['residentID'])['id']
+        requestData = JoinRequestModel.objects.get(residentID=resident)
+        if requestData.status == 'Rejected':
+            requestData.delete()
+            return JsonResponse({'data': {"message": JOIN_REQUEST_REJECTED_SUCCESSFULLY}, "status": SUCCESS_CODE}, status=201)
+        return JsonResponse({'data': {"message": JOIN_REQUEST_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=400)
+    except JoinRequestModel.DoesNotExist:
+        return JsonResponse({"data": {"message": JOIN_REQUEST_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
+
 # Approve / Reject neighborhood group join request
 @api_view(['POST'])
 def approveRejectNeighborhoodGroupJoinRequest(request):
@@ -353,8 +368,9 @@ def approveRejectNeighborhoodGroupJoinRequest(request):
             requestData.delete()
             return JsonResponse({'data': {"message": JOIN_REQUEST_APPROVED_SUCCESSFULLY}, "status": SUCCESS_CODE}, status=201)
         elif action == "reject":
-            # Delete request data
-            requestData.delete()
+            # Set request data as rejected
+            requestData.status = "Rejected"
+            requestData.save()
             return JsonResponse({'data': {"message": JOIN_REQUEST_REJECTED_SUCCESSFULLY}, "status": SUCCESS_CODE}, status=201)
     except JoinRequestModel.DoesNotExist:
         return JsonResponse({"data": {"message": JOIN_REQUEST_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
