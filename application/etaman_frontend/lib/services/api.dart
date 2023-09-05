@@ -484,12 +484,14 @@ class ApiService {
         }
       });
 
-      File image = body['image'] as File;
-      var stream = ByteStream(image.openRead());
-      var length = await image.length();
-      var multipartFile = MultipartFile('image', stream, length,
-          filename: '${request.fields['title']}.jpg');
-      request.files.add(multipartFile);
+      if (body['image'] != null) {
+        File image = body['image'] as File;
+        var stream = ByteStream(image.openRead());
+        var length = await image.length();
+        var multipartFile = MultipartFile('image', stream, length,
+            filename: '${request.fields['title']}.jpg');
+        request.files.add(multipartFile);
+      }
 
       final response = await request.send();
       final responseBody = await response.stream.bytesToString();
@@ -587,12 +589,14 @@ class ApiService {
         }
       });
 
-      File image = body['image'] as File;
-      var stream = ByteStream(image.openRead());
-      var length = await image.length();
-      var multipartFile = MultipartFile('image', stream, length,
-          filename: '${request.fields['title']}.jpg');
-      request.files.add(multipartFile);
+      if (body['image'] != null) {
+        File image = body['image'] as File;
+        var stream = ByteStream(image.openRead());
+        var length = await image.length();
+        var multipartFile = MultipartFile('image', stream, length,
+            filename: '${request.fields['title']}.jpg');
+        request.files.add(multipartFile);
+      }
 
       final response = await request.send();
       final responseBody = await response.stream.bytesToString();
@@ -726,12 +730,14 @@ class ApiService {
         }
       });
 
-      File image = body['image'] as File;
-      var stream = ByteStream(image.openRead());
-      var length = await image.length();
-      var multipartFile = MultipartFile('image', stream, length,
-          filename: '${request.fields['title']}.jpg');
-      request.files.add(multipartFile);
+      if (body['image'] != null) {
+        File image = body['image'] as File;
+        var stream = ByteStream(image.openRead());
+        var length = await image.length();
+        var multipartFile = MultipartFile('image', stream, length,
+            filename: '${request.fields['title']}.jpg');
+        request.files.add(multipartFile);
+      }
 
       final response = await request.send();
       final responseBody = await response.stream.bytesToString();
