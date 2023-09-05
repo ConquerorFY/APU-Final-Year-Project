@@ -13,6 +13,7 @@ RESIDENT_LOGIN_SUCCESS = "Login Successful!"
 RESIDENT_LOGOUT_SUCCESS = "Logout Successful!"
 RESIDENT_LEAVE_NEIGHBORHOOD_GROUP_SUCCESSUL = "The Resident Has Successfully Leave the Neighborhood Group!"
 RESIDENT_LEAVE_NEIGHBORHOOD_RESIDENT_LEADER = "You are the resident leader and not permitted to leave!"
+RESIDENT_MUST_RETURN_ALL_FACILITIES = "You must return all neighborhood facilities before leaving!"
 RESIDENT_KICK_SUCCESS = "The Resident Has Been Successfully Kicked Out of the Neighborhood Group!"
 
 DEFAULT_RESIDENT_LEADER_STATUS = False

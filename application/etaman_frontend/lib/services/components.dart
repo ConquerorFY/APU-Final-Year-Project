@@ -2297,6 +2297,7 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      backgroundColor: backgroundColor,
       currentIndex: selectedIndex,
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
@@ -2311,12 +2312,13 @@ class BottomNavBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
             backgroundColor: backgroundColor,
-            icon: Icon(Icons.miscellaneous_services, color: textColor),
-            label: ""), // Facilities
-        BottomNavigationBarItem(
-            backgroundColor: backgroundColor,
             icon: Icon(Icons.chat, color: textColor),
             label: ""), // Chat
+        if (authService.residentGroupID != null)
+          BottomNavigationBarItem(
+              backgroundColor: backgroundColor,
+              icon: Icon(Icons.miscellaneous_services, color: textColor),
+              label: ""), // Facilities
         if (authService.residentGroupID != null)
           BottomNavigationBarItem(
               backgroundColor: backgroundColor,
@@ -2334,12 +2336,12 @@ class BottomNavBar extends StatelessWidget {
             Navigator.pushNamed(context, "/map");
             break;
           case 2:
-            // Navigate to Facilities Screen
-            Navigator.pushNamed(context, '/facilities');
-            break;
-          case 3:
             // Navigate to Chat Screen
             Navigator.pushNamed(context, '/chat');
+            break;
+          case 3:
+            // Navigate to Facilities Screen
+            Navigator.pushNamed(context, '/facilities');
             break;
           case 4:
             // Navigate to Emergency Screen

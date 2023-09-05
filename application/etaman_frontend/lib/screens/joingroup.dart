@@ -421,6 +421,9 @@ class JoinGroupState extends State<JoinGroup> {
                                                                   context,
                                                                   "Leave Group Success",
                                                                   message, () {
+                                                            authService
+                                                                    .residentGroupID =
+                                                                null;
                                                             getData();
                                                           });
                                                         } else {

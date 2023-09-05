@@ -254,6 +254,6 @@ class ChatState extends State<Chat> {
                   ]);
                 })),
         drawer: const LeftDrawer(),
-        bottomNavigationBar: BottomNavBar(selectedIndex: 3));
+        bottomNavigationBar: BottomNavBar(selectedIndex: 2));
   }
 }

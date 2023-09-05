@@ -34,7 +34,7 @@ class FacilitiesContainer extends StatelessWidget {
           }),
         ]),
         drawer: const LeftDrawer(),
-        bottomNavigationBar: BottomNavBar(selectedIndex: 2),
+        bottomNavigationBar: BottomNavBar(selectedIndex: 3),
       ),
     );
   }

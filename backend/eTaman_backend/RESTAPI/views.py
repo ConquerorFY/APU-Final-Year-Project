@@ -386,15 +386,22 @@ def leaveNeighborhoodGroup(request):
         if residentInfo.isLeader:
             return JsonResponse({'data': {'message': RESIDENT_LEAVE_NEIGHBORHOOD_RESIDENT_LEADER}, 'status': ERROR_CODE}, status=400)
         residentData = ResidentSerializer(residentInfo, data={"groupID": None}, partial=True)
+        facilitiesData = FacilitiesModel.objects.filter(holder=residentInfo)
         # Check whether all data is valid
         if residentData.is_valid():
-            residentData.save()
-            return JsonResponse({'data': {'message': RESIDENT_LEAVE_NEIGHBORHOOD_GROUP_SUCCESSUL}, 'status': SUCCESS_CODE}, status=201)
+            if facilitiesData.exists():
+                # need to return all borrowed facilities first
+                return JsonResponse({'data': {'message': RESIDENT_MUST_RETURN_ALL_FACILITIES}, 'status': ERROR_CODE}, status=400)
+            else:
+                residentData.save()
+                return JsonResponse({'data': {'message': RESIDENT_LEAVE_NEIGHBORHOOD_GROUP_SUCCESSUL}, 'status': SUCCESS_CODE}, status=201)
         else:
             # An error has occured
             return JsonResponse({'data': {'message': DATABASE_WRITE_ERROR}, 'status': ERROR_CODE}, status=400)
     except ResidentModel.DoesNotExist:
         return JsonResponse({"data": {"message": RESIDENT_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
+    except FacilitiesModel.DoesNotExist:
+        return JsonResponse({"data": {"message": FACILITIES_DATABASE_NOT_EXIST}, "status": ERROR_CODE}, status=404)
 
 # Get particular neighborhood group join requests
 @api_view(['POST'])

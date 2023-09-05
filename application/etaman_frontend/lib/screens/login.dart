@@ -34,9 +34,7 @@ class LoginState extends State<Login> {
       final status = residentResponse['status'];
       if (status > 0) {
         final groupID = residentResponse['data']['list']['groupID'];
-        if (groupID != null) {
-          authService.initEmergencyChannel(apiService.wsUrl, groupID);
-        }
+        authService.initEmergencyChannel(apiService.wsUrl, groupID);
       }
     }
   }
