@@ -43,7 +43,7 @@ class MapViewState extends State<MapView> {
     getAllGroupData();
   }
 
-  void getAllGroupData() async {
+  Future<void> getAllGroupData() async {
     // Get All Neighborhood Group Info
     final groupInfo = await apiService.getAllNeighborhoodGroupsAPI();
     if (groupInfo != null) {
@@ -242,6 +242,21 @@ class MapViewState extends State<MapView> {
     );
   }
 
+  void resetData() {
+    setState(() {
+      groupData = null;
+      currentGroupID = null;
+      currentGroupName = null;
+      currentGroupLatitude = null;
+      currentGroupLongtitude = null;
+      currentUserLocation = null;
+      otherGroupLatitudes = [];
+      otherGroupLongtitudes = [];
+      otherGroupNames = [];
+      otherGroupID = [];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return currentGroupLatitude != null &&
@@ -272,7 +287,9 @@ class MapViewState extends State<MapView> {
                   onPressed: () {
                     Navigator.pushNamed(context, '/joingroup').then(
                       (_) {
-                        getAllGroupData();
+                        resetData();
+                        getAllGroupData()
+                            .then((_) => generateLocationMarkers());
                       },
                     );
                   },
