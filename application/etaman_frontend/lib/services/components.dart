@@ -2307,20 +2307,50 @@ class LeftDrawerState extends State<LeftDrawer> {
             },
           ),
           ListTile(
-            leading:
-                const Icon(Icons.miscellaneous_services, color: Colors.black),
-            title: const Text('Facilities',
+            leading: const Icon(Icons.chat, color: Colors.black),
+            title: const Text('Chat',
                 style: TextStyle(
                     fontFamily: "OpenSans",
                     fontWeight: FontWeight.w600,
                     fontSize: 18)),
             onTap: () {
               // Handle facilities screen navigation
-              Navigator.pushNamed(context, '/facilities').then((_) {
+              Navigator.pushNamed(context, '/chat').then((_) {
                 getData();
               });
             },
           ),
+          if (authService.residentGroupID != null)
+            ListTile(
+              leading:
+                  const Icon(Icons.miscellaneous_services, color: Colors.black),
+              title: const Text('Facilities',
+                  style: TextStyle(
+                      fontFamily: "OpenSans",
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18)),
+              onTap: () {
+                // Handle facilities screen navigation
+                Navigator.pushNamed(context, '/facilities').then((_) {
+                  getData();
+                });
+              },
+            ),
+          if (authService.residentGroupID != null)
+            ListTile(
+              leading: const Icon(Icons.emergency, color: Colors.black),
+              title: const Text('Emergency',
+                  style: TextStyle(
+                      fontFamily: "OpenSans",
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18)),
+              onTap: () {
+                // Handle facilities screen navigation
+                Navigator.pushNamed(context, '/emergency').then((_) {
+                  getData();
+                });
+              },
+            ),
           ListTile(
             leading: const Icon(Icons.settings, color: Colors.black),
             title: const Text('Settings',
