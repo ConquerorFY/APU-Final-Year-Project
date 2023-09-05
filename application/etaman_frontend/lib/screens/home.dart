@@ -21,6 +21,7 @@ class HomeState extends State<Home> {
   Settings settings = Settings();
 
   String filteredPostListType = 'crime';
+  bool filteredIsOwnPost = false;
   dynamic pData;
   dynamic uData;
   dynamic rID;
@@ -80,6 +81,12 @@ class HomeState extends State<Home> {
     });
   }
 
+  void changeFilteredIsOwnPost(bool isOwnPost) {
+    setState(() {
+      filteredIsOwnPost = isOwnPost;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return pData != null
@@ -102,6 +109,11 @@ class HomeState extends State<Home> {
                               child: ListView(
                                 children: <Widget>[
                                   const SizedBox(height: 12),
+                                  OwnPostFilterSection(
+                                      updateIsOwnPost: changeFilteredIsOwnPost,
+                                      isOwnPost: filteredIsOwnPost),
+                                  const Divider(height: 0),
+                                  const SizedBox(height: 10),
                                   PostTypeFilterSection(
                                       updatePostListType:
                                           changeFilteredPostListType,
@@ -110,6 +122,7 @@ class HomeState extends State<Home> {
                                   const SizedBox(height: 10),
                                   PostList(
                                       postListType: filteredPostListType,
+                                      isOwnPost: filteredIsOwnPost,
                                       postData: pData,
                                       isJoinedGroup: bIsJoinedGroup,
                                       nGroupID: nID,

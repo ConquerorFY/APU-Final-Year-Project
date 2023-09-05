@@ -131,6 +131,7 @@ class ViewPostState extends State<ViewPost> {
                                 PostList(
                                     postListType: filteredPostListType,
                                     postData: pData,
+                                    isOwnPost: false,
                                     isJoinedGroup: bIsJoinedGroup,
                                     nGroupID: nID,
                                     residentID: rID,

@@ -8,6 +8,166 @@ import 'package:etaman_frontend/services/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
 
+// Own Post Filter Section Widget
+class OwnPostFilterSection extends StatefulWidget {
+  final Function(bool) updateIsOwnPost;
+  final bool isOwnPost;
+  const OwnPostFilterSection(
+      {super.key, required this.updateIsOwnPost, required this.isOwnPost});
+
+  @override
+  OwnPostFilterSectionState createState() => OwnPostFilterSectionState();
+}
+
+class OwnPostFilterSectionState extends State<OwnPostFilterSection> {
+  ApiService apiService = ApiService();
+  AuthService authService = AuthService();
+  PopupService popupService = PopupService();
+  Settings settings = Settings();
+
+  dynamic textColor;
+  dynamic iconColor;
+  dynamic selectedTextColor;
+  dynamic selectedIconColor;
+
+  dynamic allIconColor;
+  dynamic allTextColor;
+  dynamic ownIconColor;
+  dynamic ownTextColor;
+
+  final postTypes = ["All Posts", "My Posts"];
+
+  @override
+  void initState() {
+    super.initState();
+    setColor();
+    // Default Selected Post Type When Init
+    if (!widget.isOwnPost) {
+      setFilterColor(0);
+    } else {
+      setFilterColor(1);
+    }
+  }
+
+  void setColor() {
+    // Set Text & Icon Color
+    setState(() {
+      textColor = settings.postTypeFilterSectionTextColor;
+    });
+    setState(() {
+      iconColor = settings.postTypeFilterSectionIconColor;
+    });
+    setState(() {
+      selectedTextColor = settings.postTypeFilterSectionTextSelectedColor;
+    });
+    setState(() {
+      selectedIconColor = settings.postTypeFilterSectionIconSelectedColor;
+    });
+    resetAllColor();
+  }
+
+  void resetAllColor() {
+    // Set Post Filter Color (Icon and Text)
+    setState(() {
+      allIconColor = iconColor;
+    });
+    setState(() {
+      allTextColor = textColor;
+    });
+    setState(() {
+      ownIconColor = iconColor;
+    });
+    setState(() {
+      ownTextColor = textColor;
+    });
+  }
+
+  void setFilterColor(postType) {
+    switch (postType) {
+      case 1:
+        // Own Posts
+        setState(() {
+          ownIconColor = selectedIconColor;
+        });
+        setState(() {
+          ownTextColor = selectedTextColor;
+        });
+        break;
+      case 0:
+        // All Posts
+        setState(() {
+          allIconColor = selectedIconColor;
+        });
+        setState(() {
+          allTextColor = selectedTextColor;
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 55,
+      child: Padding(
+          padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: postTypes.length,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: const EdgeInsets.fromLTRB(3, 3, 8, 3),
+                child: Column(
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () {
+                        // Handle onTap event here
+                        resetAllColor();
+                        setFilterColor(index);
+                        switch (index) {
+                          case 0:
+                            // When All Post Filter is clicked
+                            widget.updateIsOwnPost(false);
+                            break;
+                          case 1:
+                            // When Own Post Filter is clicked
+                            widget.updateIsOwnPost(true);
+                            break;
+                          default:
+                            break;
+                        }
+                      },
+                      child: index == 0
+                          ? Icon(Icons.all_inbox,
+                              color: allIconColor, size: 25.0)
+                          : index == 1
+                              ? Icon(Icons.my_library_books,
+                                  color: ownIconColor, size: 25.0)
+                              : null,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(postTypes[index],
+                        style: TextStyle(
+                          color: index == 0
+                              ? allTextColor
+                              : index == 1
+                                  ? ownTextColor
+                                  : null,
+                          fontFamily: "OpenSans",
+                          fontSize: 9,
+                          fontWeight: FontWeight.bold,
+                        )),
+                  ],
+                ),
+              );
+            },
+          )),
+    );
+  }
+}
+
 // Post Type Filter Section Widget
 class PostTypeFilterSection extends StatefulWidget {
   final Function(String) updatePostListType;
@@ -155,7 +315,7 @@ class PostTypeFilterSectionState extends State<PostTypeFilterSection> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100,
+      height: 55,
       child: Padding(
           padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
           child: ListView.builder(
@@ -163,7 +323,7 @@ class PostTypeFilterSectionState extends State<PostTypeFilterSection> {
             itemCount: postTypes.length,
             itemBuilder: (context, index) {
               return Container(
-                margin: const EdgeInsets.all(8),
+                margin: const EdgeInsets.fromLTRB(3, 3, 8, 3),
                 child: Column(
                   children: <Widget>[
                     GestureDetector(
@@ -194,19 +354,19 @@ class PostTypeFilterSectionState extends State<PostTypeFilterSection> {
                       },
                       child: index == 0
                           ? Icon(Icons.local_police_outlined,
-                              color: crimeIconColor, size: 40.0)
+                              color: crimeIconColor, size: 25.0)
                           : index == 1
                               ? Icon(Icons.sentiment_very_dissatisfied,
-                                  color: complaintIconColor, size: 40.0)
+                                  color: complaintIconColor, size: 25.0)
                               : index == 2
                                   ? Icon(Icons.event,
-                                      color: eventIconColor, size: 40.0)
+                                      color: eventIconColor, size: 25.0)
                                   : index == 3
                                       ? Icon(Icons.mail,
-                                          color: generalIconColor, size: 40.0)
+                                          color: generalIconColor, size: 25.0)
                                       : null,
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 4),
                     Text(postTypes[index],
                         style: TextStyle(
                           color: index == 0
@@ -219,7 +379,7 @@ class PostTypeFilterSectionState extends State<PostTypeFilterSection> {
                                           ? generalTextColor
                                           : null,
                           fontFamily: "OpenSans",
-                          fontSize: 12,
+                          fontSize: 9,
                           fontWeight: FontWeight.bold,
                         )),
                   ],
@@ -235,6 +395,7 @@ class PostTypeFilterSectionState extends State<PostTypeFilterSection> {
 // ignore: must_be_immutable
 class PostList extends StatefulWidget {
   final String postListType;
+  final bool isOwnPost;
   dynamic postData;
   dynamic userData;
   dynamic residentID;
@@ -243,6 +404,7 @@ class PostList extends StatefulWidget {
   PostList(
       {super.key,
       required this.postListType,
+      required this.isOwnPost,
       required this.postData,
       required this.userData,
       required this.residentID,
@@ -260,6 +422,7 @@ class PostListState extends State<PostList> {
   Utils utils = Utils();
   Settings settings = Settings();
 
+  dynamic filteredPostData = {};
   dynamic textColor;
   dynamic iconColor;
   dynamic iconSelectedColor;
@@ -271,6 +434,48 @@ class PostListState extends State<PostList> {
   void initState() {
     super.initState();
     initData();
+  }
+
+  @override
+  void didUpdateWidget(PostList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    initData();
+  }
+
+  void filterPostData(postData) {
+    // Check whether is the Own Post Section
+    if (widget.isOwnPost) {
+      setState(() {
+        filteredPostData["crime"] = postData["crime"]
+            .where((post) => post['reporterID'] == widget.residentID)
+            .toList();
+        filteredPostData["complaint"] = postData["complaint"]
+            .where((post) => post['reporterID'] == widget.residentID)
+            .toList();
+        filteredPostData["event"] = postData["event"]
+            .where((post) => post['organizerID'] == widget.residentID)
+            .toList();
+        filteredPostData["general"] = postData["general"]
+            .where((post) => post['authorID'] == widget.residentID)
+            .toList();
+      });
+    } else {
+      setState(() {
+        filteredPostData["crime"] = postData["crime"];
+        filteredPostData["complaint"] = postData["complaint"];
+        filteredPostData["event"] = postData["event"];
+        filteredPostData["general"] = postData["general"];
+      });
+    }
+    // Init Comment Expanded State
+    setState(() {
+      commentSectionExpandedState = {
+        "crime": List.filled(filteredPostData["crime"].length, false),
+        "complaint": List.filled(filteredPostData["complaint"].length, false),
+        "event": List.filled(filteredPostData["event"].length, false),
+        "general": List.filled(filteredPostData["general"].length, false),
+      };
+    });
   }
 
   void initData() async {
@@ -290,15 +495,7 @@ class PostListState extends State<PostList> {
     setState(() {
       buttonCancelColor = settings.postListButtonCancelColor;
     });
-    // Init Comment Expanded State
-    setState(() {
-      commentSectionExpandedState = {
-        "crime": List.filled(widget.postData["crime"].length, false),
-        "complaint": List.filled(widget.postData["complaint"].length, false),
-        "event": List.filled(widget.postData["event"].length, false),
-        "general": List.filled(widget.postData["general"].length, false),
-      };
-    });
+    filterPostData(widget.postData);
   }
 
   void getData() async {
@@ -335,9 +532,7 @@ class PostListState extends State<PostList> {
               "event": groupResponse["data"]["event"],
               "general": groupResponse["data"]["general"]
             };
-            setState(() {
-              widget.postData = data;
-            });
+            filterPostData(data);
           }
         }
       }
@@ -538,7 +733,7 @@ class PostListState extends State<PostList> {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: widget.postData["crime"].length,
+      itemCount: filteredPostData["crime"].length,
       itemBuilder: (context, index) {
         return Container(
           padding: const EdgeInsets.fromLTRB(30, 16, 30, 16),
@@ -550,7 +745,7 @@ class PostListState extends State<PostList> {
                     children: [
                       Icon(Icons.local_police_outlined,
                           color: iconColor, size: 15),
-                      widget.postData["crime"][index]['reporterID'] ==
+                      filteredPostData["crime"][index]['reporterID'] ==
                               widget.residentID
                           ? Row(children: [
                               GestureDetector(
@@ -559,7 +754,7 @@ class PostListState extends State<PostList> {
                                     Navigator.pushNamed(context, '/editPost',
                                         arguments: {
                                           "groupID": widget.nGroupID,
-                                          "postData": widget.postData["crime"]
+                                          "postData": filteredPostData["crime"]
                                               [index],
                                           "postType": "crime"
                                         }).then((_) {
@@ -575,7 +770,7 @@ class PostListState extends State<PostList> {
                                     final deleteResponse =
                                         await apiService.deleteCrimePostAPI({
                                       'token': authService.getAuthToken(),
-                                      'crimePostID': widget.postData["crime"]
+                                      'crimePostID': filteredPostData["crime"]
                                           [index]['id']
                                     });
                                     if (deleteResponse != null) {
@@ -606,21 +801,21 @@ class PostListState extends State<PostList> {
                           : Container(),
                     ]),
                 const SizedBox(height: 5),
-                Text(widget.postData["crime"][index]["title"],
+                Text(filteredPostData["crime"][index]["title"],
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 16,
                         fontWeight: FontWeight.w900,
                         color: textColor)),
                 const SizedBox(height: 15),
-                Text(widget.postData["crime"][index]["description"],
+                Text(filteredPostData["crime"][index]["description"],
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                         color: textColor)),
                 const SizedBox(height: 10),
-                Text("Actions: ${widget.postData["crime"][index]["actions"]}",
+                Text("Actions: ${filteredPostData["crime"][index]["actions"]}",
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 12,
@@ -629,9 +824,9 @@ class PostListState extends State<PostList> {
                         decorationThickness: 2.0,
                         color: textColor)),
                 const SizedBox(height: 10),
-                widget.postData["crime"][index]["image"] != null
+                filteredPostData["crime"][index]["image"] != null
                     ? Image.network(
-                        "${apiService.mediaUrl}${widget.postData["crime"][index]["image"]}",
+                        "${apiService.mediaUrl}${filteredPostData["crime"][index]["image"]}",
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) {
                             return child;
@@ -656,7 +851,7 @@ class PostListState extends State<PostList> {
                         width: double.infinity),
                 const SizedBox(height: 15),
                 Text(
-                    "Posted By: ${widget.postData['crime'][index]['username']}",
+                    "Posted By: ${filteredPostData['crime'][index]['username']}",
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 10,
@@ -672,13 +867,13 @@ class PostListState extends State<PostList> {
                           onTap: () {
                             // Handle Like Crime Post Operation
                             handleLikeDislikePost("crime",
-                                widget.postData["crime"][index]["id"], "like");
+                                filteredPostData["crime"][index]["id"], "like");
                           },
                           child: Icon(Icons.thumb_up,
                               size: 20,
                               color: isLikePostStatus(
                                           "crime",
-                                          widget.postData['crime'][index]
+                                          filteredPostData['crime'][index]
                                               ['id']) ==
                                       1
                                   ? iconSelectedColor
@@ -686,7 +881,8 @@ class PostListState extends State<PostList> {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                            widget.postData["crime"][index]["likes"].toString(),
+                            filteredPostData["crime"][index]["likes"]
+                                .toString(),
                             style: TextStyle(
                                 fontFamily: "OpenSans",
                                 fontSize: 13,
@@ -699,14 +895,14 @@ class PostListState extends State<PostList> {
                             // Handle Dislike Crime Post Operation
                             handleLikeDislikePost(
                                 "crime",
-                                widget.postData["crime"][index]["id"],
+                                filteredPostData["crime"][index]["id"],
                                 "dislike");
                           },
                           child: Icon(Icons.thumb_down,
                               size: 20,
                               color: isLikePostStatus(
                                           "crime",
-                                          widget.postData['crime'][index]
+                                          filteredPostData['crime'][index]
                                               ['id']) ==
                                       -1
                                   ? iconSelectedColor
@@ -714,7 +910,7 @@ class PostListState extends State<PostList> {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                            widget.postData["crime"][index]["dislikes"]
+                            filteredPostData["crime"][index]["dislikes"]
                                 .toString(),
                             style: TextStyle(
                                 fontFamily: "OpenSans",
@@ -752,7 +948,7 @@ class PostListState extends State<PostList> {
                   visible: commentSectionExpandedState["crime"][index],
                   child: PostComments(
                       postType: widget.postListType,
-                      postID: widget.postData["crime"][index]["id"],
+                      postID: filteredPostData["crime"][index]["id"],
                       nGroupID: widget.nGroupID),
                 ),
                 const SizedBox(height: 16),
@@ -767,7 +963,7 @@ class PostListState extends State<PostList> {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: widget.postData["complaint"].length,
+      itemCount: filteredPostData["complaint"].length,
       itemBuilder: (context, index) {
         return Container(
           padding: const EdgeInsets.fromLTRB(30, 16, 30, 16),
@@ -779,7 +975,7 @@ class PostListState extends State<PostList> {
                     children: [
                       Icon(Icons.sentiment_very_dissatisfied,
                           color: iconColor, size: 15),
-                      widget.postData["complaint"][index]['reporterID'] ==
+                      filteredPostData["complaint"][index]['reporterID'] ==
                               widget.residentID
                           ? Row(children: [
                               GestureDetector(
@@ -835,30 +1031,30 @@ class PostListState extends State<PostList> {
                           : Container(),
                     ]),
                 const SizedBox(height: 5),
-                Text(widget.postData["complaint"][index]["title"],
+                Text(filteredPostData["complaint"][index]["title"],
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 16,
                         fontWeight: FontWeight.w900,
                         color: textColor)),
                 const SizedBox(height: 15),
-                Text("To: ${widget.postData['complaint'][index]['target']}",
+                Text("To: ${filteredPostData['complaint'][index]['target']}",
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                         color: textColor)),
                 const SizedBox(height: 5),
-                Text(widget.postData["complaint"][index]["description"],
+                Text(filteredPostData["complaint"][index]["description"],
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                         color: textColor)),
                 const SizedBox(height: 10),
-                widget.postData["complaint"][index]["image"] != null
+                filteredPostData["complaint"][index]["image"] != null
                     ? Image.network(
-                        "${apiService.mediaUrl}${widget.postData["complaint"][index]["image"]}",
+                        "${apiService.mediaUrl}${filteredPostData["complaint"][index]["image"]}",
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) {
                             return child;
@@ -883,7 +1079,7 @@ class PostListState extends State<PostList> {
                         width: double.infinity),
                 const SizedBox(height: 15),
                 Text(
-                    "Posted By: ${!widget.postData['complaint'][index]['isAnonymous'] ? widget.postData['complaint'][index]['username'] : '-'}",
+                    "Posted By: ${!filteredPostData['complaint'][index]['isAnonymous'] ? filteredPostData['complaint'][index]['username'] : '-'}",
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 10,
@@ -900,14 +1096,14 @@ class PostListState extends State<PostList> {
                             // Handle Like Complaint Post Operation
                             handleLikeDislikePost(
                                 "complaint",
-                                widget.postData["complaint"][index]["id"],
+                                filteredPostData["complaint"][index]["id"],
                                 "like");
                           },
                           child: Icon(Icons.thumb_up,
                               size: 20,
                               color: isLikePostStatus(
                                           "complaint",
-                                          widget.postData['complaint'][index]
+                                          filteredPostData['complaint'][index]
                                               ['id']) ==
                                       1
                                   ? iconSelectedColor
@@ -915,7 +1111,7 @@ class PostListState extends State<PostList> {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                            widget.postData["complaint"][index]["likes"]
+                            filteredPostData["complaint"][index]["likes"]
                                 .toString(),
                             style: TextStyle(
                                 fontFamily: "OpenSans",
@@ -929,14 +1125,14 @@ class PostListState extends State<PostList> {
                             // Handle Dislike Complaint Post Operation
                             handleLikeDislikePost(
                                 "complaint",
-                                widget.postData["complaint"][index]["id"],
+                                filteredPostData["complaint"][index]["id"],
                                 "dislike");
                           },
                           child: Icon(Icons.thumb_down,
                               size: 20,
                               color: isLikePostStatus(
                                           "complaint",
-                                          widget.postData['complaint'][index]
+                                          filteredPostData['complaint'][index]
                                               ['id']) ==
                                       -1
                                   ? iconSelectedColor
@@ -944,7 +1140,7 @@ class PostListState extends State<PostList> {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                            widget.postData["complaint"][index]["dislikes"]
+                            filteredPostData["complaint"][index]["dislikes"]
                                 .toString(),
                             style: TextStyle(
                                 fontFamily: "OpenSans",
@@ -982,7 +1178,7 @@ class PostListState extends State<PostList> {
                   visible: commentSectionExpandedState["complaint"][index],
                   child: PostComments(
                       postType: widget.postListType,
-                      postID: widget.postData["complaint"][index]["id"],
+                      postID: filteredPostData["complaint"][index]["id"],
                       nGroupID: widget.nGroupID),
                 ),
                 const SizedBox(height: 16),
@@ -994,12 +1190,12 @@ class PostListState extends State<PostList> {
   }
 
   ElevatedButton createJoinLeaveEventButton(context, index) {
-    return !widget.postData["event"][index]["hasJoined"]
+    return !filteredPostData["event"][index]["hasJoined"]
         ? ElevatedButton(
             onPressed: () async {
               // Join the event
               Map<String, dynamic> joinEventData = {
-                "eventPostID": widget.postData["event"][index]["id"],
+                "eventPostID": filteredPostData["event"][index]["id"],
                 "token": authService.getAuthToken()
               };
               final joinEventResponse =
@@ -1036,7 +1232,7 @@ class PostListState extends State<PostList> {
             onPressed: () async {
               // Join the event
               Map<String, dynamic> leaveEventData = {
-                "eventPostID": widget.postData["event"][index]["id"],
+                "eventPostID": filteredPostData["event"][index]["id"],
                 "token": authService.getAuthToken()
               };
               final leaveEventResponse =
@@ -1076,7 +1272,7 @@ class PostListState extends State<PostList> {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: widget.postData["event"].length,
+      itemCount: filteredPostData["event"].length,
       itemBuilder: (context, index) {
         return Container(
           padding: const EdgeInsets.fromLTRB(30, 16, 30, 16),
@@ -1087,7 +1283,7 @@ class PostListState extends State<PostList> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Icon(Icons.event, color: iconColor, size: 15),
-                      widget.postData["event"][index]['organizerID'] ==
+                      filteredPostData["event"][index]['organizerID'] ==
                               widget.residentID
                           ? Row(children: [
                               GestureDetector(
@@ -1096,7 +1292,7 @@ class PostListState extends State<PostList> {
                                     Navigator.pushNamed(context, '/editPost',
                                         arguments: {
                                           "groupID": widget.nGroupID,
-                                          "postData": widget.postData["event"]
+                                          "postData": filteredPostData["event"]
                                               [index],
                                           "postType": "event"
                                         }).then((_) {
@@ -1112,7 +1308,7 @@ class PostListState extends State<PostList> {
                                     final deleteResponse =
                                         await apiService.deleteEventPostAPI({
                                       'token': authService.getAuthToken(),
-                                      'eventPostID': widget.postData["event"]
+                                      'eventPostID': filteredPostData["event"]
                                           [index]['id']
                                     });
                                     if (deleteResponse != null) {
@@ -1143,7 +1339,7 @@ class PostListState extends State<PostList> {
                           : Container(),
                     ]),
                 const SizedBox(height: 5),
-                Text(widget.postData["event"][index]["title"],
+                Text(filteredPostData["event"][index]["title"],
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 16,
@@ -1151,14 +1347,14 @@ class PostListState extends State<PostList> {
                         color: textColor)),
                 const SizedBox(height: 15),
                 Text(
-                    "Time: ${utils.formatDateTime(widget.postData['event'][index]['datetime'])}",
+                    "Time: ${utils.formatDateTime(filteredPostData['event'][index]['datetime'])}",
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                         color: textColor)),
                 const SizedBox(height: 5),
-                Text("Venue: ${widget.postData['event'][index]['venue']}",
+                Text("Venue: ${filteredPostData['event'][index]['venue']}",
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 14,
@@ -1166,23 +1362,23 @@ class PostListState extends State<PostList> {
                         color: textColor)),
                 const SizedBox(height: 5),
                 Text(
-                    "Total Participants: ${jsonDecode(widget.postData['event'][index]['participants']).length}",
+                    "Total Participants: ${jsonDecode(filteredPostData['event'][index]['participants']).length}",
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                         color: textColor)),
                 const SizedBox(height: 10),
-                Text(widget.postData["event"][index]["description"],
+                Text(filteredPostData["event"][index]["description"],
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                         color: textColor)),
                 const SizedBox(height: 10),
-                widget.postData["event"][index]["image"] != null
+                filteredPostData["event"][index]["image"] != null
                     ? Image.network(
-                        "${apiService.mediaUrl}${widget.postData["event"][index]["image"]}",
+                        "${apiService.mediaUrl}${filteredPostData["event"][index]["image"]}",
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) {
                             return child;
@@ -1207,7 +1403,7 @@ class PostListState extends State<PostList> {
                         width: double.infinity),
                 const SizedBox(height: 15),
                 Text(
-                    "Posted By: ${widget.postData['event'][index]['username']}",
+                    "Posted By: ${filteredPostData['event'][index]['username']}",
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 10,
@@ -1223,13 +1419,13 @@ class PostListState extends State<PostList> {
                           onTap: () {
                             // Handle Like Event Post Operation
                             handleLikeDislikePost("event",
-                                widget.postData["event"][index]["id"], "like");
+                                filteredPostData["event"][index]["id"], "like");
                           },
                           child: Icon(Icons.thumb_up,
                               size: 20,
                               color: isLikePostStatus(
                                           "event",
-                                          widget.postData['event'][index]
+                                          filteredPostData['event'][index]
                                               ['id']) ==
                                       1
                                   ? iconSelectedColor
@@ -1237,7 +1433,8 @@ class PostListState extends State<PostList> {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                            widget.postData["event"][index]["likes"].toString(),
+                            filteredPostData["event"][index]["likes"]
+                                .toString(),
                             style: TextStyle(
                                 fontFamily: "OpenSans",
                                 fontSize: 13,
@@ -1251,14 +1448,14 @@ class PostListState extends State<PostList> {
                             // Handle Dislike Event Post Operation
                             handleLikeDislikePost(
                                 "event",
-                                widget.postData["event"][index]["id"],
+                                filteredPostData["event"][index]["id"],
                                 "dislike");
                           },
                           child: Icon(Icons.thumb_down,
                               size: 20,
                               color: isLikePostStatus(
                                           "event",
-                                          widget.postData['event'][index]
+                                          filteredPostData['event'][index]
                                               ['id']) ==
                                       -1
                                   ? iconSelectedColor
@@ -1266,7 +1463,7 @@ class PostListState extends State<PostList> {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                            widget.postData["event"][index]["dislikes"]
+                            filteredPostData["event"][index]["dislikes"]
                                 .toString(),
                             style: TextStyle(
                                 fontFamily: "OpenSans",
@@ -1304,7 +1501,7 @@ class PostListState extends State<PostList> {
                   visible: commentSectionExpandedState["event"][index],
                   child: PostComments(
                       postType: widget.postListType,
-                      postID: widget.postData["event"][index]["id"],
+                      postID: filteredPostData["event"][index]["id"],
                       nGroupID: widget.nGroupID),
                 ),
                 const SizedBox(height: 16),
@@ -1319,7 +1516,7 @@ class PostListState extends State<PostList> {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: widget.postData["general"].length,
+      itemCount: filteredPostData["general"].length,
       itemBuilder: (context, index) {
         return Container(
           padding: const EdgeInsets.fromLTRB(30, 16, 30, 16),
@@ -1330,7 +1527,7 @@ class PostListState extends State<PostList> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Icon(Icons.mail, color: iconColor, size: 15),
-                      widget.postData["general"][index]['authorID'] ==
+                      filteredPostData["general"][index]['authorID'] ==
                               widget.residentID
                           ? Row(children: [
                               GestureDetector(
@@ -1339,8 +1536,9 @@ class PostListState extends State<PostList> {
                                     Navigator.pushNamed(context, '/editPost',
                                         arguments: {
                                           "groupID": widget.nGroupID,
-                                          "postData": widget.postData["general"]
-                                              [index],
+                                          "postData":
+                                              filteredPostData["general"]
+                                                  [index],
                                           "postType": "general"
                                         }).then((_) {
                                       getData();
@@ -1386,23 +1584,23 @@ class PostListState extends State<PostList> {
                           : Container(),
                     ]),
                 const SizedBox(height: 5),
-                Text(widget.postData["general"][index]["title"],
+                Text(filteredPostData["general"][index]["title"],
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 16,
                         fontWeight: FontWeight.w900,
                         color: textColor)),
                 const SizedBox(height: 15),
-                Text(widget.postData["general"][index]["description"],
+                Text(filteredPostData["general"][index]["description"],
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                         color: textColor)),
                 const SizedBox(height: 10),
-                widget.postData["general"][index]["image"] != null
+                filteredPostData["general"][index]["image"] != null
                     ? Image.network(
-                        "${apiService.mediaUrl}${widget.postData["general"][index]["image"]}",
+                        "${apiService.mediaUrl}${filteredPostData["general"][index]["image"]}",
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) {
                             return child;
@@ -1427,7 +1625,7 @@ class PostListState extends State<PostList> {
                         width: double.infinity),
                 const SizedBox(height: 15),
                 Text(
-                    "Posted By: ${widget.postData['general'][index]['username']}",
+                    "Posted By: ${filteredPostData['general'][index]['username']}",
                     style: TextStyle(
                         fontFamily: "OpenSans",
                         fontSize: 10,
@@ -1444,14 +1642,14 @@ class PostListState extends State<PostList> {
                             // Handle Like General Post Operation
                             handleLikeDislikePost(
                                 "general",
-                                widget.postData["general"][index]["id"],
+                                filteredPostData["general"][index]["id"],
                                 "like");
                           },
                           child: Icon(Icons.thumb_up,
                               size: 20,
                               color: isLikePostStatus(
                                           "general",
-                                          widget.postData['general'][index]
+                                          filteredPostData['general'][index]
                                               ['id']) ==
                                       1
                                   ? iconSelectedColor
@@ -1459,7 +1657,7 @@ class PostListState extends State<PostList> {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                            widget.postData["general"][index]["likes"]
+                            filteredPostData["general"][index]["likes"]
                                 .toString(),
                             style: TextStyle(
                                 fontFamily: "OpenSans",
@@ -1473,14 +1671,14 @@ class PostListState extends State<PostList> {
                             // Handle Dislike General Post Operation
                             handleLikeDislikePost(
                                 "general",
-                                widget.postData["general"][index]["id"],
+                                filteredPostData["general"][index]["id"],
                                 "dislike");
                           },
                           child: Icon(Icons.thumb_down,
                               size: 20,
                               color: isLikePostStatus(
                                           "general",
-                                          widget.postData['general'][index]
+                                          filteredPostData['general'][index]
                                               ['id']) ==
                                       -1
                                   ? iconSelectedColor
@@ -1488,7 +1686,7 @@ class PostListState extends State<PostList> {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                            widget.postData["general"][index]["dislikes"]
+                            filteredPostData["general"][index]["dislikes"]
                                 .toString(),
                             style: TextStyle(
                                 fontFamily: "OpenSans",
@@ -1526,7 +1724,7 @@ class PostListState extends State<PostList> {
                   visible: commentSectionExpandedState["general"][index],
                   child: PostComments(
                       postType: widget.postListType,
-                      postID: widget.postData["general"][index]["id"],
+                      postID: filteredPostData["general"][index]["id"],
                       nGroupID: widget.nGroupID),
                 ),
                 const SizedBox(height: 16),
