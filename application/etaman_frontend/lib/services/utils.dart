@@ -18,4 +18,15 @@ class Utils {
     }
     return input[0].toUpperCase() + input.substring(1);
   }
+
+  Map<String, String> splitDateTime(input) {
+    // Parse input into a DateTime object
+    DateTime dateTime = DateTime.parse(input);
+    // Format the date and time as strings
+    String date =
+        "${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}";
+    String time =
+        "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}:${dateTime.second.toString().padLeft(2, '0')}";
+    return {"date": date, "time": time};
+  }
 }

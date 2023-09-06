@@ -497,9 +497,15 @@ class EditPostState extends State<EditPost> {
     final Map<String, dynamic>? arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
     if (arguments != null) {
+      Map<String, String> dateTime =
+          utils.splitDateTime(arguments['postData']['datetime']);
       setState(() {
         groupID = arguments['groupID'];
-        postData = arguments['postData'];
+        postData = {
+          ...arguments['postData'],
+          'date': dateTime['date'],
+          'time': dateTime['time']
+        };
         postType = arguments['postType'];
       });
 
@@ -738,8 +744,10 @@ class EditPostState extends State<EditPost> {
                           () {});
                     } else {
                       // Filter out attributes that are not changed / updated by user
-                      eventData
-                          .removeWhere((key, value) => postData[key] == value);
+                      eventData.removeWhere((key, value) =>
+                          postData[key] == value &&
+                          key != 'date' &&
+                          key != 'time');
                       // Add token and eventPostID into eventData
                       eventData['eventPostID'] = postData['id'].toString();
                       eventData['token'] = authService.getAuthToken();

@@ -1724,6 +1724,7 @@ def updateComplaintPostComment(request):
 # Update event post
 @api_view(['PATCH'])
 def updateEventPost(request):
+    global datetime
     try:
         # Get Event Post ID
         eventPostID = request.data["eventPostID"]
@@ -1731,9 +1732,18 @@ def updateEventPost(request):
         # Get Resident ID
         residentID = decodeJWTToken(request.data["token"])["id"]
         residentData = ResidentModel.objects.get(pk=residentID)
+        # Get datetime field attributes and values
+        date = datetime.strptime(request.data['date'], "%Y-%m-%d").date()
+        time = datetime.strptime(request.data['time'], "%H:%M:%S").time()
+        dt = datetime.combine(date, time)
         # Check if either the resident is the owner or the resident is the resident leader
         if eventPostData.organizerID.id == residentData.id or (eventPostData.organizerID.groupID.id == residentData.groupID.id and residentData.isLeader):
-            newEventPostData = EventPostSerializer(eventPostData, data=request.data, partial=True)
+            newEventData = {key: value for key, value in request.data.items() if key not in ['date', 'time']}
+            newEventData = {
+                **newEventData,
+                'datetime': dt
+            }
+            newEventPostData = EventPostSerializer(eventPostData, data=newEventData, partial=True)
             # Check whether data is valid
             if newEventPostData.is_valid():
                 newEventPostData.save()
