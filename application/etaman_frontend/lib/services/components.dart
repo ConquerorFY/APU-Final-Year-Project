@@ -984,8 +984,9 @@ class PostListState extends State<PostList> {
                                     Navigator.pushNamed(context, '/editPost',
                                         arguments: {
                                           "groupID": widget.nGroupID,
-                                          "postData": widget
-                                              .postData["complaint"][index],
+                                          "postData":
+                                              filteredPostData["complaint"]
+                                                  [index],
                                           "postType": "complaint"
                                         }).then((_) {
                                       getData();
@@ -1000,8 +1001,9 @@ class PostListState extends State<PostList> {
                                     final deleteResponse = await apiService
                                         .deleteComplaintPostAPI({
                                       'token': authService.getAuthToken(),
-                                      'complaintPostID': widget
-                                          .postData["complaint"][index]['id']
+                                      'complaintPostID':
+                                          filteredPostData["complaint"][index]
+                                              ['id']
                                     });
                                     if (deleteResponse != null) {
                                       final status = deleteResponse['status'];
