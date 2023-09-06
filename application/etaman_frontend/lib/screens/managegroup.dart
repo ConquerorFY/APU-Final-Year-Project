@@ -392,9 +392,9 @@ class ManageGroupState extends State<ManageGroup> {
                                                                     }
                                                                   },
                                                                   style: ElevatedButton.styleFrom(
-                                                                      maximumSize:
-                                                                          const Size.square(
-                                                                              90.0),
+                                                                      maximumSize: const Size
+                                                                          .square(
+                                                                          90.0),
                                                                       backgroundColor:
                                                                           settings
                                                                               .manageGroupButtonColor),
@@ -472,9 +472,9 @@ class ManageGroupState extends State<ManageGroup> {
                                                                     }
                                                                   },
                                                                   style: ElevatedButton.styleFrom(
-                                                                      maximumSize:
-                                                                          const Size.square(
-                                                                              90.0),
+                                                                      maximumSize: const Size
+                                                                          .square(
+                                                                          90.0),
                                                                       backgroundColor:
                                                                           settings
                                                                               .manageGroupButtonColor2),
@@ -517,150 +517,160 @@ class ManageGroupState extends State<ManageGroup> {
                                       ),
                                     )),
                                     const SizedBox(height: 30.0),
-                                    Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text("Pending Join Requests",
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                                fontFamily: 'OpenSans',
-                                                color: settings
-                                                    .manageGroupTextColor,
-                                                fontSize: 14,
-                                                decoration:
-                                                    TextDecoration.underline,
-                                                fontWeight: FontWeight.w600))),
-                                    const SizedBox(height: 5.0),
-                                    SingleChildScrollView(
-                                        child: SizedBox(
-                                      height: 150,
-                                      child: ListView.builder(
-                                        itemCount: joinRequestsData.length,
-                                        itemBuilder: (context, index) {
-                                          final resident =
-                                              joinRequestsData[index];
-                                          return ListTile(
-                                              isThreeLine: true,
-                                              leading: Text("${index + 1}.",
-                                                  style: TextStyle(
-                                                      fontFamily: 'OpenSans',
-                                                      color: settings
-                                                          .manageGroupTextColor,
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w600)),
-                                              title: Text(
-                                                  resident['residentName'],
-                                                  style: TextStyle(
-                                                      fontFamily: 'OpenSans',
-                                                      color: settings
-                                                          .manageGroupTextColor,
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w900)),
-                                              subtitle: Column(children: [
-                                                Text(resident['residentEmail'],
+                                    if (isLeaderLoggedIn)
+                                      Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text("Pending Join Requests",
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                  fontFamily: 'OpenSans',
+                                                  color: settings
+                                                      .manageGroupTextColor,
+                                                  fontSize: 14,
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  fontWeight:
+                                                      FontWeight.w600))),
+                                    if (isLeaderLoggedIn)
+                                      const SizedBox(height: 5.0),
+                                    if (isLeaderLoggedIn)
+                                      SingleChildScrollView(
+                                          child: SizedBox(
+                                        height: 150,
+                                        child: ListView.builder(
+                                          itemCount: joinRequestsData.length,
+                                          itemBuilder: (context, index) {
+                                            final resident =
+                                                joinRequestsData[index];
+                                            return ListTile(
+                                                isThreeLine: true,
+                                                leading: Text("${index + 1}.",
                                                     style: TextStyle(
                                                         fontFamily: 'OpenSans',
                                                         color: settings
                                                             .manageGroupTextColor,
-                                                        fontSize: 12,
+                                                        fontSize: 14,
                                                         fontWeight:
-                                                            FontWeight.w500)),
-                                                const SizedBox(height: 5.0),
-                                                Text(
-                                                    resident['residentContact'],
+                                                            FontWeight.w600)),
+                                                title: Text(
+                                                    resident['residentName'],
                                                     style: TextStyle(
                                                         fontFamily: 'OpenSans',
                                                         color: settings
                                                             .manageGroupTextColor,
-                                                        fontSize: 12,
+                                                        fontSize: 14,
                                                         fontWeight:
-                                                            FontWeight.w500)),
-                                              ]),
-                                              trailing: SingleChildScrollView(
-                                                  child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                    Column(children: [
-                                                      ElevatedButton(
-                                                        onPressed: () {
-                                                          // Approve Request
-                                                          handleJoinRequest(
-                                                              resident['id'],
-                                                              "approve");
-                                                        },
-                                                        style: ElevatedButton.styleFrom(
-                                                            maximumSize:
-                                                                const Size
-                                                                        .square(
-                                                                    90.0),
-                                                            backgroundColor:
-                                                                settings
-                                                                    .manageGroupButtonColor),
-                                                        child: Row(children: [
-                                                          Icon(Icons.done,
-                                                              size: 20.0,
-                                                              color: settings
-                                                                  .manageGroupText2Color),
-                                                          const SizedBox(
-                                                              width: 3.0),
-                                                          Text("Approve",
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                      'OpenSans',
-                                                                  color: settings
-                                                                      .manageGroupText2Color,
-                                                                  fontSize: 8,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600))
-                                                        ]),
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      ElevatedButton(
-                                                        onPressed: () {
-                                                          // Reject Request
-                                                          handleJoinRequest(
-                                                              resident['id'],
-                                                              "reject");
-                                                        },
-                                                        style: ElevatedButton.styleFrom(
-                                                            maximumSize:
-                                                                const Size
-                                                                        .square(
-                                                                    90.0),
-                                                            backgroundColor:
-                                                                settings
-                                                                    .manageGroupButtonColor2),
-                                                        child: Row(children: [
-                                                          Icon(
-                                                              Icons
-                                                                  .cancel_rounded,
-                                                              size: 20.0,
-                                                              color: settings
-                                                                  .manageGroupText2Color),
-                                                          const SizedBox(
-                                                              width: 3.0),
-                                                          Text("Reject",
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                      'OpenSans',
-                                                                  color: settings
-                                                                      .manageGroupText2Color,
-                                                                  fontSize: 8,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600))
-                                                        ]),
-                                                      ),
-                                                    ])
-                                                  ])));
-                                        },
-                                      ),
-                                    )),
+                                                            FontWeight.w900)),
+                                                subtitle: Column(children: [
+                                                  Text(
+                                                      resident['residentEmail'],
+                                                      style: TextStyle(
+                                                          fontFamily:
+                                                              'OpenSans',
+                                                          color: settings
+                                                              .manageGroupTextColor,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w500)),
+                                                  const SizedBox(height: 5.0),
+                                                  Text(
+                                                      resident[
+                                                          'residentContact'],
+                                                      style: TextStyle(
+                                                          fontFamily:
+                                                              'OpenSans',
+                                                          color: settings
+                                                              .manageGroupTextColor,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w500)),
+                                                ]),
+                                                trailing: SingleChildScrollView(
+                                                    child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                      Column(children: [
+                                                        ElevatedButton(
+                                                          onPressed: () {
+                                                            // Approve Request
+                                                            handleJoinRequest(
+                                                                resident['id'],
+                                                                "approve");
+                                                          },
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                                  maximumSize:
+                                                                      const Size
+                                                                          .square(
+                                                                          90.0),
+                                                                  backgroundColor:
+                                                                      settings
+                                                                          .manageGroupButtonColor),
+                                                          child: Row(children: [
+                                                            Icon(Icons.done,
+                                                                size: 20.0,
+                                                                color: settings
+                                                                    .manageGroupText2Color),
+                                                            const SizedBox(
+                                                                width: 3.0),
+                                                            Text("Approve",
+                                                                style: TextStyle(
+                                                                    fontFamily:
+                                                                        'OpenSans',
+                                                                    color: settings
+                                                                        .manageGroupText2Color,
+                                                                    fontSize: 8,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600))
+                                                          ]),
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 5.0),
+                                                        ElevatedButton(
+                                                          onPressed: () {
+                                                            // Reject Request
+                                                            handleJoinRequest(
+                                                                resident['id'],
+                                                                "reject");
+                                                          },
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                                  maximumSize:
+                                                                      const Size
+                                                                          .square(
+                                                                          90.0),
+                                                                  backgroundColor:
+                                                                      settings
+                                                                          .manageGroupButtonColor2),
+                                                          child: Row(children: [
+                                                            Icon(
+                                                                Icons
+                                                                    .cancel_rounded,
+                                                                size: 20.0,
+                                                                color: settings
+                                                                    .manageGroupText2Color),
+                                                            const SizedBox(
+                                                                width: 3.0),
+                                                            Text("Reject",
+                                                                style: TextStyle(
+                                                                    fontFamily:
+                                                                        'OpenSans',
+                                                                    color: settings
+                                                                        .manageGroupText2Color,
+                                                                    fontSize: 8,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600))
+                                                          ]),
+                                                        ),
+                                                      ])
+                                                    ])));
+                                          },
+                                        ),
+                                      )),
                                   ]))),
                           residentData['isLeader']
                               ? Positioned(
