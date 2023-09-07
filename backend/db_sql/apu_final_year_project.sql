@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 20, 2023 at 09:15 AM
+-- Generation Time: Sep 07, 2023 at 06:50 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -169,7 +169,7 @@ CREATE TABLE `auth_user` (
 --
 
 INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
-(1, 'pbkdf2_sha256$260000$5ZrquFtHwk4EGopNr4vqCf$k62xPv+PXv+XGYiC/VjzCF4rrjJdJAk2xj6mzB7K5Vk=', '2023-08-06 03:55:54.418446', 1, 'admin', '', '', 'tp055343@mail.apu.edu.my', 1, 1, '2023-06-21 14:29:09.963212');
+(1, 'pbkdf2_sha256$260000$5ZrquFtHwk4EGopNr4vqCf$k62xPv+PXv+XGYiC/VjzCF4rrjJdJAk2xj6mzB7K5Vk=', '2023-09-04 07:47:31.150952', 1, 'admin', '', '', 'tp055343@mail.apu.edu.my', 1, 1, '2023-06-21 14:29:09.963212');
 
 -- --------------------------------------------------------
 
@@ -296,7 +296,8 @@ INSERT INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`,
 (80, '2023-08-18 13:51:06.243208', '1', 'GeneralPostCommentModel object (1)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 15, 1),
 (81, '2023-08-18 13:51:11.156172', '3', 'GeneralPostCommentModel object (3)', 2, '[{\"changed\": {\"fields\": [\"GroupID\"]}}]', 15, 1),
 (82, '2023-08-18 13:54:14.179785', '2', 'ComplaintPostModel object (2)', 2, '[{\"changed\": {\"fields\": [\"Image\", \"GroupID\"]}}]', 12, 1),
-(83, '2023-08-18 13:54:30.548936', '1', 'GeneralPostModel object (1)', 2, '[{\"changed\": {\"fields\": [\"Image\", \"GroupID\"]}}]', 14, 1);
+(83, '2023-08-18 13:54:30.548936', '1', 'GeneralPostModel object (1)', 2, '[{\"changed\": {\"fields\": [\"Image\", \"GroupID\"]}}]', 14, 1),
+(84, '2023-09-06 08:21:45.547255', '5', 'EventPostModel object (5)', 3, '', 13, 1);
 
 -- --------------------------------------------------------
 
@@ -390,7 +391,8 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (35, 'RESTAPI', '0016_residentmodel_image', '2023-07-20 10:01:01.654063'),
 (36, 'RESTAPI', '0017_auto_20230725_0051', '2023-07-24 16:51:31.128413'),
 (37, 'RESTAPI', '0018_chatmodel', '2023-08-05 04:57:13.480417'),
-(38, 'RESTAPI', '0019_auto_20230818_2146', '2023-08-18 13:46:51.299827');
+(38, 'RESTAPI', '0019_auto_20230818_2146', '2023-08-18 13:46:51.299827'),
+(39, 'RESTAPI', '0020_joinrequestmodel_status', '2023-09-04 09:10:51.285901');
 
 -- --------------------------------------------------------
 
@@ -412,6 +414,7 @@ INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALU
 ('0xr4wcbmy4e8pj7gyvmpbljekwbrv45c', '.eJxVjDsOwjAQBe_iGllef3cp6TmDZXstHECOFCcV4u4QKQW0b2beS8S0rS1uoy5xYnEWIE6_W07lUfsO-J76bZZl7usyZbkr8qBDXmeuz8vh_h20NNq3xqqqQzSYiSBkRdqwZ9CAqVDQAYECInnnFNrgjEFniT0Bg2UdlHh_AJ-kNZY:1qHm9S:ZJ_gA4Uw4eFR_1Jy0ium4UDMJA7losuZVUB9IxXLjQ0', '2023-07-21 14:09:38.251477'),
 ('1hd8vbjegg1hae57rs0yocmu54uf9qqs', '.eJxVjDsOwjAQBe_iGllef3cp6TmDZXstHECOFCcV4u4QKQW0b2beS8S0rS1uoy5xYnEWIE6_W07lUfsO-J76bZZl7usyZbkr8qBDXmeuz8vh_h20NNq3xqqqQzSYiSBkRdqwZ9CAqVDQAYECInnnFNrgjEFniT0Bg2UdlHh_AJ-kNZY:1qN804:II6112U8CVgHNPDsrgIm4kg-gGd7simn_hvZTcIRizU', '2023-08-05 08:30:04.527099'),
 ('jrpc3llewkt1n17l5b9q7dacr4mvt6pr', '.eJxVjDsOwjAQBe_iGllef3cp6TmDZXstHECOFCcV4u4QKQW0b2beS8S0rS1uoy5xYnEWIE6_W07lUfsO-J76bZZl7usyZbkr8qBDXmeuz8vh_h20NNq3xqqqQzSYiSBkRdqwZ9CAqVDQAYECInnnFNrgjEFniT0Bg2UdlHh_AJ-kNZY:1qSUry:ZlpgFLufQvZeIKneKL7v6JDYzyUy5HVKDpR1YENqj8w', '2023-08-20 03:55:54.423413'),
+('ni8yhe65dil7chu1q5tmljzw9q344408', '.eJxVjDsOwjAQBe_iGllef3cp6TmDZXstHECOFCcV4u4QKQW0b2beS8S0rS1uoy5xYnEWIE6_W07lUfsO-J76bZZl7usyZbkr8qBDXmeuz8vh_h20NNq3xqqqQzSYiSBkRdqwZ9CAqVDQAYECInnnFNrgjEFniT0Bg2UdlHh_AJ-kNZY:1qd4J1:Ui1mVqbnKCSoCH51PrCtLQQI2Nv1cTznm3T2B5DqC5g', '2023-09-18 07:47:31.174957'),
 ('v7f3apeuuf5fkk1bv7chbh3acj3ync4f', '.eJxVjDsOwjAQBe_iGllef3cp6TmDZXstHECOFCcV4u4QKQW0b2beS8S0rS1uoy5xYnEWIE6_W07lUfsO-J76bZZl7usyZbkr8qBDXmeuz8vh_h20NNq3xqqqQzSYiSBkRdqwZ9CAqVDQAYECInnnFNrgjEFniT0Bg2UdlHh_AJ-kNZY:1qCFGq:oEZ6ACxH2j0Y8wCJSoJzkfKEfUI3EYXxmC0AulJ30Sw', '2023-07-06 08:02:24.478944');
 
 -- --------------------------------------------------------
@@ -477,7 +480,6 @@ INSERT INTO `restapi_complaintpostcommentmodel` (`id`, `datetime`, `content`, `a
 (1, '2023-06-29 07:25:03.330375', 'Thanks for letting us know of this issue!', 2, 2, 10),
 (2, '2023-06-29 07:25:25.347433', 'Thanks for sharing!', 2, 2, 10),
 (3, '2023-07-08 15:11:58.105084', 'Hope you would take action on this matter Mr. David!!', 2, 2, 10),
-(4, '2023-07-13 07:51:23.262283', 'Yes, it is affecting me too!', 2, 4, 10),
 (5, '2023-07-30 08:10:57.314408', 'Please adhere to it!!', 1, 5, 9);
 
 -- --------------------------------------------------------
@@ -506,10 +508,9 @@ CREATE TABLE `restapi_complaintpostmodel` (
 
 INSERT INTO `restapi_complaintpostmodel` (`id`, `datetime`, `title`, `description`, `target`, `isAnonymous`, `reporterID_id`, `dislikes`, `likes`, `image`, `groupID_id`) VALUES
 (2, '2023-06-28 08:01:27.490374', 'Car Occupying House Front!', 'Your car that is parked in front of my house has caused great incovenience to me and my family', 'Mr David', 0, 2, 1, 1, 'images/complaint/Too_Noisy_at_Night_igzSYK0.jpg', 10),
-(3, '2023-07-13 06:57:08.282394', 'Smelly Rubbish', 'Every morning the rubbish is very smelly', 'Mr. Lim', 1, 2, 0, 0, 'images/complaint/GroundFloor.png', 10),
-(4, '2023-07-13 07:50:44.148166', 'Regarding noise pollution', 'Your house is very noisy at night and it is disturbing me and my family', 'Mr Low from House Number 20', 1, 4, 0, 0, 'images/complaint/Regarding_noise_pollution.jpg', 10),
 (5, '2023-07-13 15:32:00.306892', 'Too Noisy at Night', 'Please keep it down during night time', 'Mr Davis', 1, 3, 0, 3, 'images/complaint/Too_Noisy_at_Night.jpg', 9),
-(6, '2023-07-13 15:35:12.981066', 'Dog Poop In Front of House', 'Please ensure that your dog would not poop in front of my door', 'Mr James', 1, 3, 0, 1, 'images/complaint/Dog_Poop_In_Front_of_House.jpg', 9);
+(6, '2023-07-13 15:35:12.981066', 'Dog Poop In Front of House', 'Please ensure that your dog would not poop in front of my door', 'Mr James', 1, 3, 0, 1, 'images/complaint/Dog_Poop_In_Front_of_House.jpg', 9),
+(13, '2023-09-06 08:19:28.172867', 'Loud music at night', 'Please keep it down at night :(', 'Mr Noah', 0, 4, 0, 0, '', 10);
 
 -- --------------------------------------------------------
 
@@ -531,10 +532,11 @@ CREATE TABLE `restapi_crimepostcommentmodel` (
 --
 
 INSERT INTO `restapi_crimepostcommentmodel` (`id`, `datetime`, `content`, `authorID_id`, `postID_id`, `groupID_id`) VALUES
-(6, '2023-07-24 17:04:04.319356', 'Noted with thanks!', 4, 3, 10),
+(6, '2023-07-24 17:04:04.319356', 'Noted with thanks!!', 4, 3, 10),
 (8, '2023-07-27 09:49:10.109512', 'Nice!', 2, 3, 10),
 (9, '2023-07-29 09:42:25.698943', 'Thanks for this!', 4, 3, 10),
-(10, '2023-07-29 09:42:58.773936', 'Very grateful!', 4, 3, 10);
+(10, '2023-07-29 09:42:58.773936', 'Very grateful!', 4, 3, 10),
+(12, '2023-09-05 11:03:31.127629', 'Haizz sad :(', 4, 5, NULL);
 
 -- --------------------------------------------------------
 
@@ -562,7 +564,7 @@ CREATE TABLE `restapi_crimepostmodel` (
 INSERT INTO `restapi_crimepostmodel` (`id`, `datetime`, `image`, `title`, `description`, `actions`, `reporterID_id`, `dislikes`, `likes`, `groupID_id`) VALUES
 (3, '2023-06-27 01:09:45.000000', 'images/crime/DHCP.png', 'House Burglary!!', 'Mr. John\'s car has been stolen!!', 'Contacted the police', 2, 1, 1, 10),
 (4, '2023-07-12 22:37:02.000000', 'images/crime/Car_Tyre_Puncture.jpg', 'Car Tyre Puncture!', 'My car got punctured by someone', 'Called the authorities', 2, 0, 2, 10),
-(5, '2023-07-12 22:42:47.000000', 'images/crime/Bicycle_Stolen.jpg', 'Bicycle Stolen', 'My bicycle have been stolen', 'Called the police', 4, 0, 1, 10),
+(5, '2023-07-12 22:42:47.000000', 'images/crime/Bicycle_Stolen.jpg', 'Bicycle Stolen', 'My bicycle have been stolen', 'Called the police', 4, 0, 2, 10),
 (6, '2023-08-18 21:59:17.000000', 'images/crime/House_Burglary.jpg', 'House Burglary', 'My house was broken in while I was away', 'Called the police', 2, 0, 0, 10);
 
 -- --------------------------------------------------------
@@ -591,7 +593,8 @@ INSERT INTO `restapi_eventpostcommentmodel` (`id`, `datetime`, `content`, `autho
 (5, '2023-07-11 05:41:22.352330', 'I\'m going too!', 4, 1, 10),
 (18, '2023-07-29 08:36:31.353430', 'Looking forward to meet you guys!!', 2, 1, 10),
 (19, '2023-07-29 08:37:21.716329', 'See you guys there!', 2, 1, 10),
-(20, '2023-08-18 14:30:15.571015', 'Come and join!!', 2, 4, NULL);
+(20, '2023-08-18 14:30:15.571015', 'Come and join!!', 2, 4, NULL),
+(21, '2023-09-06 08:45:49.873790', 'Congrats!!', 2, 7, NULL);
 
 -- --------------------------------------------------------
 
@@ -619,9 +622,10 @@ CREATE TABLE `restapi_eventpostmodel` (
 
 INSERT INTO `restapi_eventpostmodel` (`id`, `venue`, `title`, `description`, `participants`, `organizerID_id`, `datetime`, `dislikes`, `likes`, `image`, `groupID_id`) VALUES
 (1, 'Norah\'s House (No. 13)', 'Hari Raya Open House Celebration', 'Open house celebration for hari raya!', '[2, 4]', 2, '2023-06-28 16:13:25.000000', 1, 1, '', NULL),
-(2, 'Jason\'s House (No. 15)', 'New Year Celebration', 'Celebration for the 2024 New Years', '[2]', 2, '2024-01-01 00:00:00.000000', 0, 1, 'images/event/ServerFarmLAN.png', 10),
+(2, 'Jason\'s House (No. 15)', 'New Year Celebration', 'Celebration for the 2024 New Years', '[2, 4]', 2, '2024-01-01 00:00:00.000000', 0, 1, 'images/event/ServerFarmLAN.png', 10),
 (3, 'Jason House No 17', 'Johnny Birthday Celebration', 'We are organizing a birthday party for Johnny', '[3, 1]', 1, '2023-07-13 16:53:54.000000', 0, 1, 'images/event/Johnny_Birthday_Celebration.jpg', 9),
-(4, 'Nora House', 'Grandmother 80th Birthday', 'Come and celebrate together!', '[2]', 4, '2023-08-31 22:00:00.000000', 0, 1, 'images/event/Grandmother_80th_Birthday.jpg', 10);
+(4, 'Nora House', 'Grandmother 80th Birthday', 'Come and celebrate together!', '[2]', 4, '2023-08-31 22:00:00.000000', 0, 1, 'images/event/Grandmother_80th_Birthday.jpg', 10),
+(7, 'Unit 18', 'SPM Celebration', 'Celebrate my son having good results!', '[2]', 4, '2024-01-03 12:00:00.000000', 0, 1, '', 10);
 
 -- --------------------------------------------------------
 
@@ -645,8 +649,8 @@ CREATE TABLE `restapi_facilitiesmodel` (
 INSERT INTO `restapi_facilitiesmodel` (`id`, `name`, `description`, `status`, `groupID_id`, `holder_id`) VALUES
 (1, 'Gym', 'The gymnasium located at Level 5', 'Available', 9, NULL),
 (2, 'Swimming Pool', 'The swimming pool located at Level 3', 'Available', 9, NULL),
-(7, 'Gym', 'The in door gym at No 15!', 'Occupied', 10, 2),
-(8, 'Playground', 'The outdoor playground at central park', 'Available', 10, NULL),
+(7, 'Gym', 'The in door gym at No 15!', 'Available', 10, NULL),
+(8, 'Playground', 'The outdoor playground at central park', 'Occupied', 10, 4),
 (11, 'Sauna', 'Located at Level 5 Open 10am to 10pm every day', 'Available', 9, NULL);
 
 -- --------------------------------------------------------
@@ -699,7 +703,8 @@ INSERT INTO `restapi_generalpostmodel` (`id`, `datetime`, `title`, `description`
 (2, '2023-07-13 07:00:18.271249', 'Advice for low income', 'Anyone has any job recommendations?', 2, 0, 0, 'images/general/VLSM_Table_2.png', 10),
 (3, '2023-07-13 09:00:07.553974', 'Things to buy a 4 year old child', 'What to buy for a 4 year old child', 1, 0, 0, 'images/general/Things_to_buy_a_4_year_old_child.jpg', 9),
 (4, '2023-07-13 15:11:41.077164', 'Regarding whether to renovate house', 'Should I renovate my house to a bigger and newer one', 3, 0, 0, 'images/general/Regarding_whether_to_renovate_house.jpg', 9),
-(5, '2023-07-13 15:22:37.050562', 'Regarding fixing the playground', 'Any ideas on when to conduct maintenance activities for the playground', 3, 0, 0, 'images/general/Regarding_fixing_the_playground.jpg', 9);
+(5, '2023-07-13 15:22:37.050562', 'Regarding fixing the playground', 'Any ideas on when to conduct maintenance activities for the playground', 3, 0, 0, 'images/general/Regarding_fixing_the_playground.jpg', 9),
+(6, '2023-09-05 09:41:39.872718', 'How to increase income?', 'Need some advice for adding my income.', 4, 0, 1, 'images/general/null.jpg', 10);
 
 -- --------------------------------------------------------
 
@@ -710,7 +715,8 @@ INSERT INTO `restapi_generalpostmodel` (`id`, `datetime`, `title`, `description`
 CREATE TABLE `restapi_joinrequestmodel` (
   `id` bigint(20) NOT NULL,
   `groupID_id` bigint(20) DEFAULT NULL,
-  `residentID_id` bigint(20) DEFAULT NULL
+  `residentID_id` bigint(20) DEFAULT NULL,
+  `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16;
 
 -- --------------------------------------------------------
@@ -736,7 +742,9 @@ CREATE TABLE `restapi_neighborhoodgroupmodel` (
 INSERT INTO `restapi_neighborhoodgroupmodel` (`id`, `name`, `state`, `city`, `street`, `postcode`, `rules`) VALUES
 (9, 'KUANTAN FAMILY', 'Pahang', 'Kuantan', 'Kampung Padang', 25200, 'No advertisements allowed! \n Only matters about the neighborhood!'),
 (10, 'Ampang Family', 'Selangor', 'Ampang', 'Jalan Bukit Indah 3/21', 68000, 'Must be relevant to the neighborhood group!'),
-(12, 'Rawang Gang', 'Selangor', 'Rawang', 'Jalan AEON Rawang', 48000, 'Be kind and considerate to each other!');
+(12, 'Rawang Gang', 'Selangor', 'Rawang', 'Jalan AEON Rawang', 48000, 'Be kind and considerate to each other!'),
+(13, 'George Town Group', 'Penang', 'George Town', 'Jalan Sultan Ahmad Shah', 10050, 'Be kind!'),
+(14, 'Seremban Group', 'Negeri Sembilan', 'Seremban', 'Jalan Rasah', 10800, 'No Spam!');
 
 -- --------------------------------------------------------
 
@@ -767,13 +775,14 @@ CREATE TABLE `restapi_residentmodel` (
 
 INSERT INTO `restapi_residentmodel` (`id`, `name`, `email`, `contact`, `state`, `city`, `street`, `postcode`, `username`, `password`, `isLeader`, `groupID_id`, `userData`, `image`) VALUES
 (1, 'Jason', 'jason@live.com', '011-2232123', 'Pahang', 'Kuantan', 'Jalan Bentang', 51000, 'jason', '$2b$12$zY9Qa4ubZwsBBq2h5CBcwOYWkPHfNOdav4W/u9j/gCjWnA9eba1R.', 1, 9, '{\"crimePostLikes\": [], \"crimePostDislikes\": [], \"complaintPostLikes\": [5], \"complaintPostDislikes\": [], \"eventPostLikes\": [], \"eventPostDislikes\": [], \"generalPostLikes\": [], \"generalPostDislikes\": []}', ''),
-(2, 'Ryan', 'ryan@live.com', '011-2232123', 'Selangor', 'Ampang', 'Jalan Bukit Indah 3/21', 68000, 'ryan', '$2b$12$IVZg1J3Wo.oHZTA7TrOJVOBSS97vdb5r9G/5.hLlXH1Jk/reWgsTm', 1, 10, '{\"crimePostLikes\": [4, 5], \"crimePostDislikes\": [1, 3], \"complaintPostLikes\": [2, 5], \"complaintPostDislikes\": [], \"eventPostLikes\": [2, 1, 4], \"eventPostDislikes\": [], \"generalPostLikes\": [1], \"generalPostDislikes\": []}', 'images/profile/Profile_Image_BuEvqS9.jpg'),
+(2, 'Ryan', 'ryan@live.com', '011-2232123', 'Selangor', 'Ampang', 'Jalan Bukit Indah 3/21', 68000, 'ryan', '$2b$12$IVZg1J3Wo.oHZTA7TrOJVOBSS97vdb5r9G/5.hLlXH1Jk/reWgsTm', 0, 10, '{\"crimePostLikes\": [4, 5], \"crimePostDislikes\": [1, 3], \"complaintPostLikes\": [2, 5], \"complaintPostDislikes\": [], \"eventPostLikes\": [2, 1, 4, 7], \"eventPostDislikes\": [], \"generalPostLikes\": [1, 6], \"generalPostDislikes\": []}', 'images/profile/Profile_Image_BuEvqS9.jpg'),
 (3, 'Jonathan', 'jona@live.com', '011-3332123', 'Pahang', 'Kuantan', 'Jalan Bentang', 51000, 'jona', '$2b$12$/a7np7icEmcVTwMJzcKyPu5g4VRFp3L4eJ3jLw2QrR35oN3Xmmbui', 0, 9, '{\"crimePostLikes\": [], \"crimePostDislikes\": [], \"complaintPostLikes\": [6, 5], \"complaintPostDislikes\": [], \"eventPostLikes\": [3], \"eventPostDislikes\": [], \"generalPostLikes\": [], \"generalPostDislikes\": []}', ''),
-(4, 'Andrew Wiggins', 'jona@live.com', '011-3332123', 'Selangor', 'Ampang', 'Jalan Bukit Indah 3/21', 68000, 'andrew', '$2b$12$5gYZqoAX4FDh/GQ8x7hx0ehXz/DdYKzh9dFUzleqVrvBqd0QPCT/.', 0, 10, '{\"crimePostLikes\": [1, 3, 4], \"crimePostDislikes\": [], \"complaintPostLikes\": [], \"complaintPostDislikes\": [2], \"eventPostLikes\": [], \"eventPostDislikes\": [1], \"generalPostLikes\": [], \"generalPostDislikes\": [1]}', 'images/profile/Profile_Image_C0J6f9U.jpg'),
+(4, 'Andrew Wiggins', 'jona@live.com', '011-3332123', 'Selangor', 'Ampang', 'Jalan Bukit Indah 3/21', 68000, 'andrew', '$2b$12$5gYZqoAX4FDh/GQ8x7hx0ehXz/DdYKzh9dFUzleqVrvBqd0QPCT/.', 1, 10, '{\"crimePostLikes\": [1, 3, 4, 5], \"crimePostDislikes\": [], \"complaintPostLikes\": [8], \"complaintPostDislikes\": [2], \"eventPostLikes\": [], \"eventPostDislikes\": [1], \"generalPostLikes\": [], \"generalPostDislikes\": [1]}', 'images/profile/Profile_Image_C0J6f9U.jpg'),
 (5, 'Giorno', 'jona@live.com', '011-3332123', 'Selangor', 'KL', 'Jalan Bukit Indah 3/21', 68000, 'giorno', '$2b$12$Ufqt72fsZ4GoNLxQKHD1OesnqnI0pDgLIHIt7FLwZIm8Cw7Ttq0mi', 0, NULL, '{\"crimePostLikes\": [],\"crimePostDislikes\": [],\"complaintPostLikes\": [],\"complaintPostDislikes\": [],\"eventPostLikes\": [],\"eventPostDislikes\": [],\"generalPostLikes\": [],\"generalPostDislikes\": []}', NULL),
 (6, 'Joshua', 'joshua@mail.com', '0112322212', 'Kelantan', 'Kota Bharu', 'Jalan', 10222, 'joshua', '$2b$12$ddBI82KWFpw/B6DJqnUVmu9L3pgLbdBi0nFff10tODNnI6sOVmV3m', 1, 12, '{\"crimePostLikes\": [],\"crimePostDislikes\": [],\"complaintPostLikes\": [],\"complaintPostDislikes\": [],\"eventPostLikes\": [],\"eventPostDislikes\": [],\"generalPostLikes\": [],\"generalPostDislikes\": []}', NULL),
-(7, 'May', 'may@live.com', '011-12121333', 'Penang', 'George Town', 'Jalan Tering', 81000, 'may', '$2b$12$OOm/EWAWWsRDmBVOaCzwfuZapAmGEl0ESFCKVIG1LmVcAn2YBRLva', 0, NULL, '{\"crimePostLikes\": [],\"crimePostDislikes\": [],\"complaintPostLikes\": [],\"complaintPostDislikes\": [],\"eventPostLikes\": [],\"eventPostDislikes\": [],\"generalPostLikes\": [],\"generalPostDislikes\": []}', ''),
-(9, 'JAzz', 'jazz@mail.com', '011-123123123', 'Negeri Sembilan', 'Seremban', 'Jalan Rasah', 70300, 'jazz', '$2b$12$OoRZmLZdLvO5MBsvr2KO0.GCYdITiOZ4fAmyGQBLqD8luA8ZKkCha', 0, NULL, '{\"crimePostLikes\": [],\"crimePostDislikes\": [],\"complaintPostLikes\": [],\"complaintPostDislikes\": [],\"eventPostLikes\": [],\"eventPostDislikes\": [],\"generalPostLikes\": [],\"generalPostDislikes\": []}', '');
+(7, 'May', 'may@live.com', '011-12121333', 'Penang', 'George Town', 'Jalan Tering', 81000, 'may', '$2b$12$OOm/EWAWWsRDmBVOaCzwfuZapAmGEl0ESFCKVIG1LmVcAn2YBRLva', 1, 13, '{\"crimePostLikes\": [],\"crimePostDislikes\": [],\"complaintPostLikes\": [],\"complaintPostDislikes\": [],\"eventPostLikes\": [],\"eventPostDislikes\": [],\"generalPostLikes\": [],\"generalPostDislikes\": []}', ''),
+(9, 'JAzz', 'jazz@mail.com', '011-123123123', 'Negeri Sembilan', 'Seremban', 'Jalan Rasah', 70300, 'jazz', '$2b$12$OoRZmLZdLvO5MBsvr2KO0.GCYdITiOZ4fAmyGQBLqD8luA8ZKkCha', 1, 14, '{\"crimePostLikes\": [],\"crimePostDislikes\": [],\"complaintPostLikes\": [],\"complaintPostDislikes\": [],\"eventPostLikes\": [],\"eventPostDislikes\": [],\"generalPostLikes\": [],\"generalPostDislikes\": []}', ''),
+(10, 'dd', '2@mail.com', '1111111111', 'Selangor', 'Ampang', 'Jalan Bukit Indah 3/22', 68000, 'aaa', '$2b$12$3j9NsDgDgv2.mL45sEXPcuir6xmn2Q4J0moELkLRiHtotPr197d.K', 0, NULL, '{\"crimePostLikes\": [],\"crimePostDislikes\": [],\"complaintPostLikes\": [],\"complaintPostDislikes\": [],\"eventPostLikes\": [],\"eventPostDislikes\": [],\"generalPostLikes\": [],\"generalPostDislikes\": []}', '');
 
 -- --------------------------------------------------------
 
@@ -1031,7 +1040,7 @@ ALTER TABLE `django_content_type`
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `restapi_chatmodel`
@@ -1043,37 +1052,37 @@ ALTER TABLE `restapi_chatmodel`
 -- AUTO_INCREMENT for table `restapi_complaintpostcommentmodel`
 --
 ALTER TABLE `restapi_complaintpostcommentmodel`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `restapi_complaintpostmodel`
 --
 ALTER TABLE `restapi_complaintpostmodel`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `restapi_crimepostcommentmodel`
 --
 ALTER TABLE `restapi_crimepostcommentmodel`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `restapi_crimepostmodel`
 --
 ALTER TABLE `restapi_crimepostmodel`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `restapi_eventpostcommentmodel`
 --
 ALTER TABLE `restapi_eventpostcommentmodel`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `restapi_eventpostmodel`
 --
 ALTER TABLE `restapi_eventpostmodel`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `restapi_facilitiesmodel`
@@ -1091,25 +1100,25 @@ ALTER TABLE `restapi_generalpostcommentmodel`
 -- AUTO_INCREMENT for table `restapi_generalpostmodel`
 --
 ALTER TABLE `restapi_generalpostmodel`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `restapi_joinrequestmodel`
 --
 ALTER TABLE `restapi_joinrequestmodel`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `restapi_neighborhoodgroupmodel`
 --
 ALTER TABLE `restapi_neighborhoodgroupmodel`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `restapi_residentmodel`
 --
 ALTER TABLE `restapi_residentmodel`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `restapi_testmodel`
