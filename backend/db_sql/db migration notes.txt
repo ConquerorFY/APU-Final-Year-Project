@@ -1,0 +1,4 @@
+When trying to migrate MySQL database to another device, make sure to not directly create DB and import the SQL file
+Instead, try to create the DB, run migrations (manage.py migrate) and then only import the SQL file
+
+This is to avoid issues such as ValueError('The database backend does not accept 0 as a value for AutoField') from occuring
