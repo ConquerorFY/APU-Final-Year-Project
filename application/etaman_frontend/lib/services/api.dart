@@ -12,9 +12,12 @@ class ApiService {
   // Logger
   EtamanLogger logger = EtamanLogger(); // logger
 
+  // Local Development Server API Endpoints
   final baseUrl = "http://localhost:8000/api";
   final mediaUrl = "http://localhost:8000";
   final wsUrl = "ws://localhost:8000/ws";
+
+  // Deployed Server API Endpoints
   // final baseUrl = "http://13.92.190.149:8000/api";
   // final mediaUrl = "http://13.92.190.149:8000";
   // final wsUrl = "ws://13.92.190.149:8000/ws";

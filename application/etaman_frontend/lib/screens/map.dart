@@ -80,8 +80,8 @@ class MapViewState extends State<MapView> {
             otherGroupID.add(group['id']);
           });
         }
-        getCurrentUserLocation();
       });
+      getCurrentUserLocation();
     } catch (e) {
       logger.error(e);
     }

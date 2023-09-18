@@ -10,3 +10,24 @@
 8. Roll back migrations: python manage.py migrate <appname> <000X_migration_name> --fake
     Followed by: python manage.py migrate --fake-initial (to remigrate the latest migration)
 9. Create any missing database tables and columns without running migrations: python manage.py migrate --run-syncdb
+
+
+How to export MySQL data out and import to new database (just data):
+1. Export data of a specific model in a specific app: manage.py dumpdata <appname>.<ModelName> --indent 2 > data.json
+    Export data from all models: manage.py dumpdata --output=data.json
+    Export data (to CSV format): pip install django-import-export
+
+                                In your Django app, create a resource class in your app's resources.py:
+                                from import_export import resources
+                                from .models import YourModel
+                                class YourModelResource(resources.ModelResource):
+                                    class Meta:
+                                        model = YourModel
+
+                                Then, use the dumpdata command:
+                                manage.py dumpdata app_name.YourModel --output=data.csv --format=csv
+2. Create new database at the new device: manage.py migrate
+3. Reset existing database (clean the database data): manage.py flush
+    Another method: manage.py migrate <appname> zero
+4. Load data back into the new database: manage.py loaddata data.json
+    For CSV files: manage.py loaddata data.csv
