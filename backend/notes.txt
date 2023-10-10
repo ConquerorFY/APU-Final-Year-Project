@@ -31,3 +31,18 @@ How to export MySQL data out and import to new database (just data):
     Another method: manage.py migrate <appname> zero
 4. Load data back into the new database: manage.py loaddata data.json
     For CSV files: manage.py loaddata data.csv
+
+
+How to fix error in importing database (Django Python loaddata fails with django.db.utils.IntegrityError)
+Explanation: In your local database you create some ContentType instances.
+            when you migrate your remote database all ContentType for your models created again.
+            but when you want to load data you try to load this instances again.
+2 Solutions:
+    1. Remove all content types instances from remote host using django shell
+        python manage.py shell
+        >>> from django.contrib.contenttypes.models import ContentType
+        >>> ContentType.objects.all().delete()
+    2. Remove content type instances from dumped data
+        python manage.py dumpdata --exclude contenttypes
+Mitigation: Do not export the contenttypes tables into the fixture
+Reference: https://stackoverflow.com/questions/57958722/django-python-loaddata-fails-with-django-db-utils-integrityerror
